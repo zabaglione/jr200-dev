@@ -1,0 +1,11 @@
+build/
+dist/
+.cache/
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+local-data/
+.env
+.env.*
+!.env.example

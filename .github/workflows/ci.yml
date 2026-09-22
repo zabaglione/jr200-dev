@@ -1,0 +1,39 @@
+name: Repository checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: repository-checks-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  required:
+    name: repository-contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate initial contracts and selection tests
+        run: make check
+      - name: Show affected candidates (not build verification)
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          python3 tools/ci_plan.py --base "$BASE_SHA" > ci-plan.json
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          plan = json.loads(Path('ci-plan.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+              out.write('## Initial repository validation\n')
+              out.write('Selector and repository contracts only; game pipelines are not enabled.\n')
+              out.write(f"Build candidates: {len(plan['build_candidates'])}; test candidates: {len(plan['test_candidates'])}.\n")
+              out.write(f"Unclassified inputs: {len(plan['unclassified_paths'])} (conservative selection).\n")
+          PY
