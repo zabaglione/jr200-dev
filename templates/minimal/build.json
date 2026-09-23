@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "minimal",
+  "source": "src/main.asm",
+  "output": "minimal.cjr",
+  "load_address": "0x1000",
+  "entry_address": "0x1000",
+  "entry_symbol": "start",
+  "regions": [
+    {
+      "name": "program",
+      "kind": "code",
+      "start": "0x1000",
+      "end": "0x10ff"
+    }
+  ],
+  "inputs": {
+    "assembly": [
+      "src/jr200.inc",
+      "src/main.asm"
+    ],
+    "sdk": [],
+    "assets": []
+  },
+  "execution": {
+    "loader": "cjr",
+    "launch": "basic_usr",
+    "command": "A=USR($1000)",
+    "return": "rts",
+    "stack": "caller"
+  }
+}

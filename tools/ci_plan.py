@@ -12,10 +12,16 @@ import sys
 from typing import Any
 
 FIELDS = ('build_inputs', 'test_inputs', 'doc_inputs')
-POLICY = ('ci/**', '.github/workflows/**', 'tools/ci_plan.py',
-          'tools/check_repository.py', 'tests/**', 'Makefile', 'toolchain.lock.json')
+POLICY = ('ci/targets.json', '.github/workflows/**', 'tools/ci_plan.py',
+          'tools/check_repository.py', 'tools/game_project.py',
+          'tools/ci_pipeline.py', 'tests/**', 'rules/jr200.json',
+          'mk/**', 'Makefile', 'toolchain.lock.json')
+TEST_POLICY = ('ci/runner.lock.json', 'emulator.lock.json',
+               'tools/emulator_runner.py', 'tools/jr200_wasm_runner.mjs',
+               'tools/png_rgba.py')
 DOCS = ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
-        'docs/**', '.github/ISSUE_TEMPLATE/**', '.github/pull_request_template.md')
+        'docs/**', 'sdk/README.md', '.github/ISSUE_TEMPLATE/**',
+        '.github/pull_request_template.md')
 WIKI = ('tools/wiki/**', 'games/catalog.json')
 INFRA = ('.gitignore', '.gitattributes', '.editorconfig')
 
@@ -35,13 +41,16 @@ def matches(path: str, patterns: list[str] | tuple[str, ...]) -> bool:
 def validate_registry(value: Any) -> dict[str, dict[str, Any]]:
     if not isinstance(value, dict) or set(value) != {'schema_version', 'targets'}:
         raise ValueError('Registry requires schema_version and targets')
-    if type(value['schema_version']) is not int or value['schema_version'] != 1:
+    version = value['schema_version']
+    if type(version) is not int or version not in (1, 2):
         raise ValueError('Unsupported registry schema')
     if not isinstance(value['targets'], list):
         raise ValueError('targets must be an array')
     targets: dict[str, dict[str, Any]] = {}
-    expected = {'id', 'kind', 'depends_on', *FIELDS}
+    expected_v1 = {'id', 'kind', 'depends_on', *FIELDS}
+    expected_v2 = {*expected_v1, 'project', 'runner'}
     for item in value['targets']:
+        expected = expected_v1 if version == 1 else expected_v2
         if not isinstance(item, dict) or set(item) != expected:
             raise ValueError('Invalid target fields')
         name = item['id']
@@ -49,6 +58,16 @@ def validate_registry(value: Any) -> dict[str, dict[str, Any]]:
             raise ValueError('Invalid target ID')
         if name in targets or item['kind'] not in ('game', 'sample', 'sdk', 'tool'):
             raise ValueError('Duplicate target or invalid kind')
+        normalized = dict(item)
+        if version == 1:
+            root = ('sdk/' if item['kind'] == 'sdk' else 'games/') + name
+            normalized['project'] = root
+            normalized['runner'] = 'legacy-unconfigured'
+        else:
+            if not path_ok(item['project']) or any(c in item['project'] for c in '*?['):
+                raise ValueError(f'{name}: unsafe project path')
+            if item['runner'] not in ('jr200-project', 'python'):
+                raise ValueError(f'{name}: invalid runner')
         for key in (*FIELDS, 'depends_on'):
             seq = item[key]
             if not isinstance(seq, list) or not all(isinstance(p, str) for p in seq):
@@ -59,7 +78,7 @@ def validate_registry(value: Any) -> dict[str, dict[str, Any]]:
             raise ValueError(f'{name}: no build inputs')
         if any(not path_ok(p) for key in FIELDS for p in item[key]):
             raise ValueError(f'{name}: unsafe input pattern')
-        targets[name] = item
+        targets[name] = normalized
     done: set[str] = set()
     active: set[str] = set()
 
@@ -114,6 +133,10 @@ def select(registry: Any, changed: list[str], force: bool = False) -> dict[str, 
             builds.update(targets)
             for name in targets:
                 reasons[name].add('policy:' + path)
+        elif matches(path, TEST_POLICY):
+            tests.update(targets)
+            for name in targets:
+                reasons[name].add('test-policy:' + path)
         elif declared:
             pass
         elif matches(path, DOCS):

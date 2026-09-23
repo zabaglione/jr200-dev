@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "machine": "Panasonic JR-200/JR-200U",
+  "cpu": {
+    "processor": "MN1800A",
+    "documented_instruction_set": "M6800",
+    "documented_machine_codes": 197,
+    "unassigned_machine_codes": 59,
+    "forbidden_mnemonics": [
+      "nba"
+    ]
+  },
+  "loadable_regions": [
+    {
+      "name": "user_ram",
+      "start": "0x0800",
+      "end": "0x7fff"
+    }
+  ],
+  "reserved_regions": [
+    {
+      "name": "basic_work",
+      "start": "0x0000",
+      "end": "0x07ff"
+    },
+    {
+      "name": "expansion_1",
+      "start": "0x8000",
+      "end": "0x9fff"
+    },
+    {
+      "name": "basic_rom_1",
+      "start": "0xa000",
+      "end": "0xbfff"
+    },
+    {
+      "name": "video_ram",
+      "start": "0xc000",
+      "end": "0xc7ff"
+    },
+    {
+      "name": "mn1271_io",
+      "start": "0xc800",
+      "end": "0xc9ff"
+    },
+    {
+      "name": "crtc_io",
+      "start": "0xca00",
+      "end": "0xcbff"
+    },
+    {
+      "name": "expansion_io",
+      "start": "0xcc00",
+      "end": "0xcfff"
+    },
+    {
+      "name": "character_ram",
+      "start": "0xd000",
+      "end": "0xd7ff"
+    },
+    {
+      "name": "expansion_rom",
+      "start": "0xd800",
+      "end": "0xdfff"
+    },
+    {
+      "name": "basic_rom_2",
+      "start": "0xe000",
+      "end": "0xffff"
+    }
+  ],
+  "vectors": {
+    "irq": "0xfff8",
+    "swi": "0xfffa",
+    "nmi": "0xfffc",
+    "reset": "0xfffe"
+  }
+}

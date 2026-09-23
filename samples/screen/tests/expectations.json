@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "runtime": {
+    "default_profile": "synthetic-ci",
+    "profiles": [
+      {
+        "profile": "synthetic-ci",
+        "mode": "synthetic-injection",
+        "max_cycles": 50000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {"name": "status", "address": "0x1200", "length": 1},
+          {"name": "glyph", "address": "0xc000", "length": 8},
+          {"name": "screen-code", "address": "0xc250", "length": 1},
+          {"name": "screen-attribute", "address": "0xc650", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "status": "01",
+            "glyph": "183c7edbff245aa5",
+            "screen-code": "00",
+            "screen-attribute": "47"
+          },
+          "framebuffer_sha256": "03d52a822a38a30222766796c5d68b2e1220b718bf6ddc5dcf0161f9fca68377",
+          "pcm": null,
+          "cassette": null
+        }
+      }
+    ]
+  },
+  "notes": "The synthetic runner checks the screen code, attribute, original PCG bytes, and rendered framebuffer. Hardware remains unverified."
+}

@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: BSD-3-Clause
 import copy
+import hashlib
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -15,13 +17,14 @@ from check_repository import check
 def target(name, kind='game', deps=()):
     root = ('sdk/' if kind == 'sdk' else 'games/') + name
     return {'id': name, 'kind': kind, 'depends_on': list(deps),
+            'project': root, 'runner': 'jr200-project',
             'build_inputs': [root + '/src/**', root + '/assets/**', root + '/build.json'],
             'test_inputs': [root + '/tests/**'],
             'doc_inputs': [root + '/README.md', root + '/game.json', root + '/media/**']}
 
 
 def registry():
-    return {'schema_version': 1, 'targets': [target('sound', 'sdk'),
+    return {'schema_version': 2, 'targets': [target('sound', 'sdk'),
             target('engine', 'sdk', ('sound',)), target('alpha', deps=('engine',)),
             target('beta')]}
 
@@ -82,8 +85,23 @@ class SelectionTests(unittest.TestCase):
         self.assertEqual(p['unclassified_paths'], ['new-tool.py'])
 
     def test_policy_changes(self):
-        for path in ('ci/targets.json', '.github/workflows/ci.yml', 'toolchain.lock.json'):
+        for path in ('ci/targets.json', '.github/workflows/ci.yml', 'toolchain.lock.json',
+                     'tools/game_project.py', 'rules/jr200.json',
+                     'templates/minimal/src/main.asm', 'mk/game.mk'):
             self.assertEqual(len(select(registry(), [path])['build_candidates']), 4)
+
+    def test_declared_runner_change_is_test_only(self):
+        plan = select(registry(), ['emulator.lock.json'])
+        self.assertEqual(plan['build_candidates'], [])
+        self.assertEqual(len(plan['test_candidates']), 4)
+
+    def test_runner_adapter_and_png_change_test_every_target(self):
+        for path in ('tools/emulator_runner.py', 'tools/jr200_wasm_runner.mjs',
+                     'tools/png_rgba.py', 'ci/runner.lock.json'):
+            with self.subTest(path=path):
+                plan = select(registry(), [path])
+                self.assertEqual(plan['build_candidates'], [])
+                self.assertEqual(len(plan['test_candidates']), 4)
 
     def test_empty_registry(self):
         p = select({'schema_version': 1, 'targets': []}, ['README.md'])
@@ -130,16 +148,43 @@ class SelectionTests(unittest.TestCase):
     def test_initial_contract(self):
         check(Path(__file__).resolve().parents[1])
 
-    def test_initial_guard_rejects_game_registration(self):
+    def test_repository_accepts_registered_sample_contract(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             for name in ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
-                         'docs/DEVELOPMENT.md', 'docs/CI.md'):
+                         'docs/DEVELOPMENT.md', 'docs/CI.md', 'docs/JRASM.md',
+                         'docs/PROJECTS.md', 'docs/RELEASE_AUDIT.md', 'docs/RUNNER.md',
+                         'docs/WIKI.md', 'rules/README.md'):
                 path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text('x')
+            source_root = Path(__file__).resolve().parents[1]
+            shutil.copy2(source_root / 'rules/jr200.json', root / 'rules/jr200.json')
+            shutil.copytree(source_root / 'templates/minimal', root / 'templates/minimal',
+                            ignore=shutil.ignore_patterns('build'))
+            shutil.copytree(source_root / 'sdk', root / 'sdk')
+            shutil.copytree(source_root / 'samples', root / 'samples',
+                            ignore=shutil.ignore_patterns('build'))
             (root / 'ci').mkdir(); (root / 'games').mkdir()
-            (root / 'ci/targets.json').write_text(json.dumps(registry()))
-            (root / 'games/catalog.json').write_text('{"schema_version": 1, "games": []}')
-            with self.assertRaisesRegex(ValueError, 'pipeline'):
+            shutil.copytree(source_root / 'games/side-catch', root / 'games/side-catch',
+                            ignore=shutil.ignore_patterns('build'))
+            shutil.copytree(source_root / 'games/relic-dive', root / 'games/relic-dive',
+                            ignore=shutil.ignore_patterns('build'))
+            shutil.copy2(source_root / 'ci/targets.json', root / 'ci/targets.json')
+            shutil.copy2(source_root / 'ci/runner.lock.json', root / 'ci/runner.lock.json')
+            shutil.copy2(source_root / 'emulator.lock.json', root / 'emulator.lock.json')
+            fixture = root / 'tests/fixtures/jrasm/minimal.asm'
+            fixture.parent.mkdir(parents=True); fixture.write_text('x')
+            lock = json.loads((source_root / 'toolchain.lock.json').read_text())
+            lock['jrasm']['fixture']['source'] = 'tests/fixtures/jrasm/minimal.asm'
+            lock['jrasm']['fixture']['inputs'] = {
+                'tests/fixtures/jrasm/minimal.asm': hashlib.sha256(b'x').hexdigest()
+            }
+            (root / 'toolchain.lock.json').write_text(json.dumps(lock))
+            shutil.copy2(source_root / 'games/catalog.json', root / 'games/catalog.json')
+            check(root)
+            targets = json.loads((root / 'ci/targets.json').read_text())
+            targets['targets'][0]['project'] = 'templates/missing'
+            (root / 'ci/targets.json').write_text(json.dumps(targets))
+            with self.assertRaisesRegex(ValueError, '[Pp]roject'):
                 check(root)
 
 

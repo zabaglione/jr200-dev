@@ -1,4 +1,252 @@
 {
-  "schema_version": 1,
-  "targets": []
+  "schema_version": 2,
+  "targets": [
+    {
+      "id": "minimal",
+      "kind": "sample",
+      "project": "templates/minimal",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "templates/minimal/Makefile",
+        "templates/minimal/assets/**",
+        "templates/minimal/build.json",
+        "templates/minimal/src/**",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "ci/runner.lock.json",
+        "emulator.lock.json",
+        "templates/minimal/tests/**",
+        "tests/test_game_project.py",
+        "tools/ci_pipeline.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs"
+      ],
+      "doc_inputs": [
+        "templates/minimal/README.md",
+        "templates/minimal/game.json",
+        "templates/minimal/media/**"
+      ]
+    },
+    {
+      "id": "screen-sample",
+      "kind": "sample",
+      "project": "samples/screen",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "samples/screen/Makefile",
+        "samples/screen/assets/**",
+        "samples/screen/build.json",
+        "samples/screen/src/**",
+        "sdk/jr200.inc",
+        "sdk/screen.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "samples/screen/tests/**"
+      ],
+      "doc_inputs": [
+        "samples/screen/README.md",
+        "samples/screen/game.json",
+        "samples/screen/media/**"
+      ]
+    },
+    {
+      "id": "input-sample",
+      "kind": "sample",
+      "project": "samples/input",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "samples/input/Makefile",
+        "samples/input/assets/**",
+        "samples/input/build.json",
+        "samples/input/src/**",
+        "sdk/input.inc",
+        "sdk/jr200.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "samples/input/tests/**"
+      ],
+      "doc_inputs": [
+        "samples/input/README.md",
+        "samples/input/game.json",
+        "samples/input/media/**"
+      ]
+    },
+    {
+      "id": "sound-sample",
+      "kind": "sample",
+      "project": "samples/sound",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "samples/sound/Makefile",
+        "samples/sound/assets/**",
+        "samples/sound/build.json",
+        "samples/sound/src/**",
+        "sdk/jr200.inc",
+        "sdk/sound.inc",
+        "sdk/timing.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "samples/sound/tests/**"
+      ],
+      "doc_inputs": [
+        "samples/sound/README.md",
+        "samples/sound/game.json",
+        "samples/sound/media/**"
+      ]
+    },
+    {
+      "id": "joystick-sample",
+      "kind": "sample",
+      "project": "samples/joystick",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "samples/joystick/Makefile",
+        "samples/joystick/assets/**",
+        "samples/joystick/build.json",
+        "samples/joystick/src/**",
+        "sdk/joystick.inc",
+        "sdk/jr200.inc",
+        "sdk/screen.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "samples/joystick/tests/**",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs"
+      ],
+      "doc_inputs": [
+        "samples/joystick/README.md",
+        "samples/joystick/game.json",
+        "samples/joystick/media/**"
+      ]
+    },
+    {
+      "id": "game-loop-sample",
+      "kind": "sample",
+      "project": "samples/game-loop",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "samples/game-loop/Makefile",
+        "samples/game-loop/assets/**",
+        "samples/game-loop/build.json",
+        "samples/game-loop/src/**",
+        "sdk/input.inc",
+        "sdk/jr200.inc",
+        "sdk/screen.inc",
+        "sdk/sound.inc",
+        "sdk/timing.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "samples/game-loop/tests/**"
+      ],
+      "doc_inputs": [
+        "samples/game-loop/README.md",
+        "samples/game-loop/game.json",
+        "samples/game-loop/media/**"
+      ]
+    },
+    {
+      "id": "side-catch",
+      "kind": "game",
+      "project": "games/side-catch",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/side-catch/Makefile",
+        "games/side-catch/assets/**",
+        "games/side-catch/build.json",
+        "games/side-catch/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/input.inc",
+        "sdk/jr200.inc",
+        "sdk/screen.inc",
+        "sdk/sound.inc",
+        "sdk/timing.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "games/side-catch/tests/**"
+      ],
+      "doc_inputs": [
+        "games/side-catch/README.md",
+        "games/side-catch/game.json",
+        "games/side-catch/media/**"
+      ]
+    },
+    {
+      "id": "relic-dive",
+      "kind": "game",
+      "project": "games/relic-dive",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/relic-dive/LICENSE",
+        "games/relic-dive/Makefile",
+        "games/relic-dive/THIRD_PARTY_NOTICES.md",
+        "games/relic-dive/assets/**",
+        "games/relic-dive/build.json",
+        "games/relic-dive/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/jr200.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/relic-dive/tests/**",
+        "tests/test_relic_dive.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/relic-dive/README.md",
+        "games/relic-dive/UPSTREAM.md",
+        "games/relic-dive/game.json",
+        "games/relic-dive/media/**"
+      ]
+    }
+  ]
 }

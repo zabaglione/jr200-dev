@@ -1,4 +1,29 @@
 {
-  "schema_version": 1,
-  "games": []
+  "schema_version": 2,
+  "games": [
+    {
+      "id": "side-catch",
+      "project": "games/side-catch",
+      "status": "candidate",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "6edb58a3edfb35ed50f3bbb95ad223516189d8f06d673badcb76adaf7e8b0af2",
+      "package": {
+        "file": "side-catch-0.1.0.zip",
+        "sha256": "c1b8fea51cf6abc5a6776bac01eb8064750ab8b3a98d4ef88c5a3ab95b6bb481",
+        "release_url": null
+      },
+      "wiki": {
+        "slug": "side-catch",
+        "publish": false,
+        "play_url": null,
+        "screenshot": {
+          "file": "media/screenshot.png",
+          "sha256": "2f887c8a15b6bbed56560e86675569381267de410d968837b20966103c566689",
+          "framebuffer_sha256": "62f18ea1658dbbe8c53cf90b104b727134d3c2cec71a45ffc8fb53607c69b575",
+          "profile": "synthetic-screenshot"
+        }
+      }
+    }
+  ]
 }

@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "runtime": {
+    "default_profile": "synthetic-ci",
+    "profiles": [
+      {
+        "profile": "synthetic-ci",
+        "mode": "synthetic-injection",
+        "max_cycles": 1000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {
+            "name": "program",
+            "address": "0x1000",
+            "length": 2
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "program": "0139"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "local-rom-mload",
+        "mode": "rom-cassette",
+        "max_cycles": 15000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 4000000, "code": "0x6d", "pressed": true},
+          {"kind": "key", "cycle": 4150000, "code": "0x6d", "pressed": false},
+          {"kind": "key", "cycle": 4300000, "code": "0x6c", "pressed": true},
+          {"kind": "key", "cycle": 4450000, "code": "0x6c", "pressed": false},
+          {"kind": "key", "cycle": 4600000, "code": "0x6f", "pressed": true},
+          {"kind": "key", "cycle": 4750000, "code": "0x6f", "pressed": false},
+          {"kind": "key", "cycle": 4900000, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 5050000, "code": "0x61", "pressed": false},
+          {"kind": "key", "cycle": 5200000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 5350000, "code": "0x64", "pressed": false},
+          {"kind": "key", "cycle": 5500000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 5650000, "code": "0x0d", "pressed": false}
+        ],
+        "observations": [
+          {
+            "name": "program",
+            "address": "0x1000",
+            "length": 2
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "program": "0139"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": {
+            "state": 6,
+            "mode": 1,
+            "remote": false
+          }
+        }
+      }
+    ]
+  },
+  "notes": "The default synthetic profile uses direct memory injection. The opt-in local ROM profile types MLOAD and requires user-provided ROM and font assets. Neither is hardware evidence."
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "sound-sample",
+  "source": "src/main.asm",
+  "output": "sound-sample.cjr",
+  "load_address": "0x1000",
+  "entry_address": "0x1000",
+  "entry_symbol": "start",
+  "regions": [
+    {"name": "program", "kind": "code", "start": "0x1000", "end": "0x11ff"},
+    {"name": "runtime", "kind": "data", "start": "0x1200", "end": "0x12ff"}
+  ],
+  "inputs": {
+    "assembly": ["src/main.asm"],
+    "sdk": ["sdk/jr200.inc", "sdk/sound.inc", "sdk/timing.inc"],
+    "assets": []
+  },
+  "execution": {
+    "loader": "cjr",
+    "launch": "basic_usr",
+    "command": "A=USR($1000)",
+    "return": "rts",
+    "stack": "caller"
+  }
+}

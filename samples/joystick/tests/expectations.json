@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "runtime": {
+    "default_profile": "local-rom-joystick",
+    "profiles": [
+      {
+        "profile": "local-rom-joystick",
+        "mode": "rom-cassette",
+        "max_cycles": 30000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "joystick", "cycle": 24000000, "player": 0, "state": "0xea"},
+          {"kind": "joystick", "cycle": 24000000, "player": 1, "state": "0xd5"},
+          {"kind": "text", "cycle": 25000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "key", "cycle": 28000000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 28100000, "code": "0x0d", "pressed": false}
+        ],
+        "observations": [
+          {"name": "raw", "address": "0x1400", "length": 2},
+          {"name": "pressed", "address": "0x1402", "length": 2},
+          {"name": "status", "address": "0x1404", "length": 1},
+          {"name": "screen-title", "address": "0xc128", "length": 15},
+          {"name": "screen-header", "address": "0xc164", "length": 17},
+          {"name": "screen-1p", "address": "0xc180", "length": 20},
+          {"name": "screen-2p", "address": "0xc1c0", "length": 20},
+          {"name": "attributes-1p", "address": "0xc580", "length": 20},
+          {"name": "attributes-2p", "address": "0xc5c0", "length": 20}
+        ],
+        "breakpoints": ["0x1003"],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x1003",
+          "memory": {
+            "raw": "ead5",
+            "pressed": "152a",
+            "status": "01",
+            "screen-title": "4a4f59535449434b2053414d504c45",
+            "screen-header": "552044204c205220412042202020524157",
+            "screen-1p": "31503a2055202e204c202e2041202e2020204541",
+            "screen-2p": "32503a202e2044202e2052202e20422020204435",
+            "attributes-1p": "0505050505050505050505050505050505050505",
+            "attributes-2p": "0606060606060606060606060606060606060606"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
+      }
+    ]
+  },
+  "notes": "This profile requires user-provided JR-200 ROM and FONT assets, loads the CJR through MLOAD, and replays active-low states for both joystick ports. Physical hardware remains unverified."
+}

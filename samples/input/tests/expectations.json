@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "runtime": {
+    "default_profile": "synthetic-ci",
+    "profiles": [
+      {
+        "profile": "synthetic-ci",
+        "mode": "synthetic-injection",
+        "max_cycles": 250000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 200, "code": "0x61", "pressed": true}
+        ],
+        "observations": [
+          {"name": "status", "address": "0x1200", "length": 1},
+          {"name": "key-latch", "address": "0xc801", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {"status": "01", "key-latch": "61"},
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "timeout-no-key",
+        "mode": "synthetic-injection",
+        "max_cycles": 250000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {"name": "status", "address": "0x1200", "length": 1},
+          {"name": "key-latch", "address": "0xc801", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {"status": "00", "key-latch": "00"},
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      }
+    ]
+  },
+  "notes": "The default profile replays one direct key press. The timeout profile verifies that missing input returns zero instead of reporting success. Hardware remains unverified."
+}

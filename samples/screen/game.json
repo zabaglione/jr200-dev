@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "screen-sample",
+  "title": "Screen and PCG Sample",
+  "version": "0.1.0-dev",
+  "summary": "Clears the text screen and displays one original user-defined character.",
+  "license": "BSD-3-Clause",
+  "distribution": {
+    "format": "cjr",
+    "file": "screen-sample.cjr"
+  },
+  "load": {
+    "method": "cjr_loader",
+    "address": "0x1000"
+  },
+  "run": {
+    "method": "basic_usr",
+    "command": "A=USR($1000)",
+    "entry_address": "0x1000",
+    "return": "RTS"
+  },
+  "verification": {
+    "emulator": "not_run",
+    "hardware": "not_run"
+  }
+}

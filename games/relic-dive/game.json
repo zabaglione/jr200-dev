@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "relic-dive",
+  "title": "RELIC DIVE",
+  "version": "0.1.0-dev",
+  "summary": "A JR-200 color port of the JR-100 16 KB turn-based dungeon crawler.",
+  "license": "MIT",
+  "distribution": {"format": "cjr", "file": "relic-dive.cjr"},
+  "load": {"method": "cjr_loader", "address": "0x1000"},
+  "run": {"method": "basic_usr", "command": "A=USR($1000)", "entry_address": "0x1000", "return": "RTS"},
+  "verification": {"emulator": "passed", "hardware": "not_run"}
+}

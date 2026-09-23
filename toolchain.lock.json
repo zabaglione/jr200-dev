@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "jrasm": {
+    "repository": "https://github.com/ypsitau/jrasm.git",
+    "revision": "45d0ba18aed74bf09465db5dde3933618ae0b314",
+    "version": "1.0.2",
+    "banner": "JR-200 Assembler 1.0.2 Copyright (C) 2018 ypsitau",
+    "license": "NOASSERTION",
+    "redistribution": false,
+    "build": {
+      "cmake_minimum": "3.16",
+      "platforms": {
+        "Darwin": {
+          "cxx_flags": []
+        },
+        "Linux": {
+          "cxx_flags": [
+            "-include",
+            "cstring",
+            "-include",
+            "strings.h",
+            "-fno-delete-null-pointer-checks"
+          ]
+        }
+      }
+    },
+    "fixture": {
+      "source": "tests/fixtures/jrasm/minimal.asm",
+      "inputs": {
+        "tests/fixtures/jrasm/minimal.asm": "e3dc3a915f9da69ad7894ff495dc94765e8b27885937d900ec7fb5e97d1fa80a",
+        "tests/fixtures/jrasm/minimal.inc": "9de82cafa934e9ce740b9ed4f25aff2578fe6a4c221ecbbe81b79a85a860d0df"
+      },
+      "sha256": "7a6b2699a2412e7d1d1983d9293b0725e56b51a7dc923204a6171c5b5ea30601",
+      "size": 61,
+      "timeout_seconds": 10
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "joystick-sample",
+  "source": "src/main.asm",
+  "output": "joystick-sample.cjr",
+  "load_address": "0x1000",
+  "entry_address": "0x1000",
+  "entry_symbol": "start",
+  "regions": [
+    {"name": "program", "kind": "code", "start": "0x1000", "end": "0x13ff"},
+    {"name": "runtime", "kind": "data", "start": "0x1400", "end": "0x14ff"}
+  ],
+  "inputs": {
+    "assembly": ["src/main.asm"],
+    "sdk": ["sdk/joystick.inc", "sdk/jr200.inc", "sdk/screen.inc"],
+    "assets": []
+  },
+  "execution": {
+    "loader": "cjr",
+    "launch": "basic_usr",
+    "command": "A=USR($1000)",
+    "return": "rts",
+    "stack": "caller"
+  }
+}

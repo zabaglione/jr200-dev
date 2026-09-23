@@ -1,0 +1,108 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "runtime": {
+    "default_profile": "synthetic-ci",
+    "profiles": [
+      {
+        "profile": "synthetic-ci",
+        "mode": "synthetic-injection",
+        "max_cycles": 180000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 45000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 60000, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 105000, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 120000, "code": "0x71", "pressed": true}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x1400", "length": 5},
+          {"name": "glyphs", "address": "0xc000", "length": 16},
+          {"name": "playfield", "address": "0xc28e", "length": 3},
+          {"name": "sound-control", "address": "0xc812", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "state": "0201020071",
+            "glyphs": "183c7e5a3c244281185a3ce7e73c5a18",
+            "playfield": "002020",
+            "sound-control": "00"
+          },
+          "framebuffer_sha256": "2649f6d899db56ca00ddf6695e350ce01d88112d236160e0df316eddecceb74e",
+          "pcm": {
+            "minimum_frames": 100,
+            "minimum_nonzero_frames": 1,
+            "maximum_dropped_frames": 0
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-screenshot",
+        "mode": "synthetic-injection",
+        "max_cycles": 140000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 45000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 60000, "code": "0x72", "pressed": true}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x1400", "length": 5},
+          {"name": "glyphs", "address": "0xc000", "length": 16},
+          {"name": "playfield", "address": "0xc28e", "length": 3},
+          {"name": "sound-control", "address": "0xc812", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0001010072",
+            "glyphs": "183c7e5a3c244281185a3ce7e73c5a18",
+            "playfield": "010020",
+            "sound-control": "00"
+          },
+          "framebuffer_sha256": "62f18ea1658dbbe8c53cf90b104b727134d3c2cec71a45ffc8fb53607c69b575",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "local-rom-basic-return",
+        "mode": "rom-cassette",
+        "max_cycles": 37000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 25000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "key", "cycle": 27500000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 28500000, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 29500000, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 30500000, "code": "0x71", "pressed": true},
+          {"kind": "text", "cycle": 31500000, "text": "\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "text", "cycle": 33000000, "text": "a=usr($1300)\r", "key_duration": 75000, "key_interval": 150000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x1400", "length": 5},
+          {"name": "glyphs", "address": "0xc000", "length": 16}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "020102a571",
+            "glyphs": "183c7e5a3c244281185a3ce7e73c5a18"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
+      }
+    ]
+  },
+  "notes": "The synthetic profile verifies two wins, restart, q exit, display memory, and PCM. The local ROM profile adds normal MLOAD and a second BASIC probe call. Hardware remains unverified."
+}

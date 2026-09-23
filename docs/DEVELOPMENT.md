@@ -30,7 +30,7 @@ C++→WASMはエミュレータ側の実装方式であり、このSDKがJR-200�
 ## ゲームの単位
 
 各 `games/<id>/` に `src/`、組込み用 `assets/`、`tests/`、`Makefile`、`build.json`、
-紹介用 `README.md`・`game.json`・`media/` を持たせる計画とする。
+紹介用 `README.md`・`game.json`・`media/` を持たせる。
 `build.json` はロード／エントリ・メモリ条件・依存・変換条件等、`game.json` は公開用メタデータを担当する。
 テスト・起動条件を紹介用メタデータに隠して、説明文変更として検証を省略しない。
 

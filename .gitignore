@@ -1,6 +1,9 @@
 build/
 dist/
 .cache/
+.external/
+tmp/
+.ci-cache/
 .venv/
 __pycache__/
 *.py[cod]

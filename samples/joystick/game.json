@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "joystick-sample",
+  "title": "Joystick Input Sample",
+  "version": "0.1.0-dev",
+  "summary": "Continuously displays both JR-200 joystick ports using the BASIC ROM input scan.",
+  "license": "BSD-3-Clause",
+  "distribution": {"format": "cjr", "file": "joystick-sample.cjr"},
+  "load": {"method": "cjr_loader", "address": "0x1000"},
+  "run": {"method": "basic_usr", "command": "A=USR($1000)", "entry_address": "0x1000", "return": "RTS"},
+  "verification": {"emulator": "not_run", "hardware": "not_run"}
+}

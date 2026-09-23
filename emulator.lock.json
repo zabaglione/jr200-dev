@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "runner_contract_version": 1,
+  "runner_version": "0.3.0",
+  "source": {
+    "repository": "https://github.com/zabaglione/jr200-web-emulator",
+    "revision": "81e4174c550e20e166b0431b4235ba3b7650da76",
+    "availability": "local_build_only",
+    "release_asset": null
+  },
+  "build": {
+    "emulator_version": "0.0.1",
+    "emscripten_version": "6.0.9",
+    "codec_api_version": 1,
+    "system_api_version": 6
+  },
+  "module_files": [
+    {
+      "path": "jr200_codec.mjs",
+      "size": 16813,
+      "sha256": "9b80046b09f058df7c9fddac4675a50be5a9ad0cb9256f5f37f0acb607eeb3d7"
+    },
+    {
+      "path": "jr200_codec.wasm",
+      "size": 82172,
+      "sha256": "c79dc6843861a2358e54c11b73541db20e5adb8ea9c616c648357fb12932c846"
+    }
+  ],
+  "hosts": [
+    {
+      "os": "macos",
+      "arch": "arm64",
+      "status": "verified"
+    },
+    {
+      "os": "linux",
+      "arch": "x86_64",
+      "status": "contract_only"
+    }
+  ],
+  "execution": {
+    "node_minimum": "20.0.0",
+    "request_format": "jr200-runner-request-v1",
+    "result_format": "jr200-runner-result-v1",
+    "timeout_seconds": 30,
+    "exit_codes": {
+      "success": 0,
+      "invalid_request": 2,
+      "missing_asset": 3,
+      "timeout": 4,
+      "incompatible_runner": 5,
+      "expectation_failed": 6,
+      "internal_error": 7
+    }
+  },
+  "evidence": {
+    "synthetic_injection": "emulator",
+    "rom_cassette": "emulator_with_local_rom",
+    "hardware": "not_run"
+  }
+}

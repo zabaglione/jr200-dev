@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "minimal",
+  "title": "Minimal JR-200 Project",
+  "version": "0.0.0-dev",
+  "summary": "A minimal self-authored JR-200 CJR project.",
+  "license": "BSD-3-Clause",
+  "distribution": {
+    "format": "cjr",
+    "file": "minimal.cjr"
+  },
+  "load": {
+    "method": "cjr_loader",
+    "address": "0x1000"
+  },
+  "run": {
+    "method": "basic_usr",
+    "command": "A=USR($1000)",
+    "entry_address": "0x1000",
+    "return": "RTS"
+  },
+  "verification": {
+    "emulator": "not_run",
+    "hardware": "not_run"
+  }
+}

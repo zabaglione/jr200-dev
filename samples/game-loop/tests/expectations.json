@@ -1,0 +1,101 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "runtime": {
+    "default_profile": "synthetic-ci",
+    "profiles": [
+      {
+        "profile": "synthetic-ci",
+        "mode": "synthetic-injection",
+        "max_cycles": 100000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 5000, "code": "0x71", "pressed": true}
+        ],
+        "observations": [
+          {"name": "status", "address": "0x1200", "length": 1},
+          {"name": "frame", "address": "0x1201", "length": 1},
+          {"name": "glyph", "address": "0xc000", "length": 8},
+          {"name": "sound-control", "address": "0xc812", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "status": "01",
+            "frame": "01",
+            "glyph": "183c7edbff245aa5",
+            "sound-control": "00"
+          },
+          "framebuffer_sha256": "03d52a822a38a30222766796c5d68b2e1220b718bf6ddc5dcf0161f9fca68377",
+          "pcm": {
+            "minimum_frames": 100,
+            "minimum_nonzero_frames": 1,
+            "maximum_dropped_frames": 0
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "local-rom-basic-return",
+        "mode": "rom-cassette",
+        "max_cycles": 27000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "text",
+            "cycle": 4000000,
+            "text": "mload\r",
+            "key_duration": 150000,
+            "key_interval": 300000
+          },
+          {
+            "kind": "text",
+            "cycle": 18000000,
+            "text": "a=usr($1000)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          },
+          {"kind": "key", "cycle": 20200000, "code": "0x71", "pressed": true},
+          {"kind": "key", "cycle": 20275000, "code": "0x71", "pressed": false},
+          {
+            "kind": "text",
+            "cycle": 21000000,
+            "text": "\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          },
+          {
+            "kind": "text",
+            "cycle": 22500000,
+            "text": "a=usr($1180)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          }
+        ],
+        "observations": [
+          {"name": "entry", "address": "0x1000", "length": 8},
+          {"name": "status", "address": "0x1200", "length": 1},
+          {"name": "return-proof", "address": "0x1202", "length": 1},
+          {"name": "glyph", "address": "0xc000", "length": 8}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "entry": "4fb71200b71201b7",
+            "status": "01",
+            "return-proof": "a5",
+            "glyph": "183c7edbff245aa5"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
+      }
+    ]
+  },
+  "notes": "The default profile replays q through the direct key path. The local ROM profile MLOADs through cassette, runs the loop from BASIC, clears the q left in the BASIC line buffer, then calls a second probe routine to prove BASIC regained control. Hardware remains unverified."
+}
