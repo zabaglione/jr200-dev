@@ -1,0 +1,68 @@
+# JR100dev作品のJR-200移植契約
+
+JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約です。
+作業状況はIssue（#10〜#26）で管理し、この文書には移植の判断基準だけを置きます。
+
+## 参照基準
+
+| 対象 | revision |
+| --- | --- |
+| 参考作品・Wiki原稿 | `zabaglione/jr100dev@9a3921c4371d84c55fc468879dbed2f00fe42960` |
+| 開発環境の着手時点 | `zabaglione/jr200-dev@92fc54dee29447b2de33a122fed2b26cf4e48bd9` |
+| Webエミュレータ | `zabaglione/jr200-web-emulator@c4c0c30f98c5878480c31af8595b6307e66b8ef0` |
+
+上流の作品一覧は [`porting/jr100-ledger.json`](porting/jr100-ledger.json) に固定します。
+台帳は上流の`collection.json`、`library.json`、`SOURCES.md`と各作品の`game.json`から作った
+メタデータ評価で、プレイ試験の結果ではありません。入力3ファイルのSHA-256を台帳に記録し、
+`tests/test_porting_ledger.py`が51件の一意性、6ジャンル、手書きASM 7件／Pythonルール44件、
+第1弾の境界を検査します。
+
+## 引き継がないもの
+
+- JR-100のPRG、BIN、MiSTer向け配布物、pyjr100emuのプレイURL、JR-100画面の画像。
+- JR-100のVIA、PCG、キーボードmatrix、framebufferのアドレス、および`$0300`起動のABI。
+- MB8861H固有命令（`ADX`など）と未文書opcode。JR-200では`rules/`の禁止命令検査に従う。
+- JR100devの専用Pythonコンパイラ、`native/runtime.asm`、`common/`のコード。機能の仕様として読み、
+  JR-200 SDKの規則で書き直す。汎用コンパイラやJR100のツールチェーンは新設しない。
+- JR-100のCTRL+C、パッド配線、固定60 Hz clockの前提。JR-200で実測した方式に置き換える。
+
+## 再実装の方針
+
+1. 上流の`rules.py`と面データを仕様として読み、機種に依存しない検証用モデルを
+   `tests/`へPythonで書く。モデルは8-bit演算を含めて上流の値の変化を再現する。
+2. ゲーム本体はjrasmのM6800 assemblyで手書きする。面データは上流の値を`.db`で持ち、
+   出典と上流のhashを作品の`UPSTREAM.md`へ記録する。
+3. まず上流の規則・面・操作回数・勝敗を再現し、その後でJR-200の属性色と音を足す。
+   色だけで状態を区別させず、文字や模様も変える。
+4. 固定runnerの入力replayでRAM上の状態を観測し、検証用モデルの期待値と照合する。
+   画面hashだけで規則の正しさを合格にしない。
+5. 由来はMIT。作品directoryに上流`LICENSE`全文、`UPSTREAM.md`、組込みSDKのBSD noticeを置く。
+
+## 操作の対応
+
+JR-200のキーは押下時のKey-On eventで読みます（`sdk/keys.inc`）。data latchは離上後も前の値を
+保持するため、ターン制作品は押下eventだけを使い、保持が必要な作品は別の保持入力契約を使います。
+
+| JR100dev | JR-200版 |
+| --- | --- |
+| W/A/S/D、パッド方向 | W/A/S/D。ジョイスティックは作品ごとに実測してから掲載 |
+| RETURN、パッドボタン | RETURN |
+| SPACE（面のやり直し確認） | SPACE。確認の初期選択はNO |
+| CTRL+C（BASICへ戻る） | ESCまたはCTRL+C |
+
+## 第1弾の固定仕様
+
+上流revisionは上記のとおりです。作品ごとのJR-200側の変更は表示・入力・音だけに限ります。
+
+| 作品 | 上流版 | 維持する遊び | JR-200で変えるもの | Issue |
+| --- | --- | --- | --- | --- |
+| LUMEN CROSS | 2.0.0 | 5×5盤、十字反転、18面の初期配置式、60回上限、PAR表、PERFECT表示 | 盤面の色分け、影響範囲の予告記号、反転音 | #21 |
+| CORNER CROWN | 1.5.1 | 8×8盤、8方向の挟み返し、パス、双方手なしで終局、最大捕獲を選ぶ相手、同数は敗北 | 石の色と形、返す演出、効果音 | #22 |
+| CIRCUIT WORKS | 2.1.0 | 3段ゲート（AND/OR/XOR）、全8入力の試験、22問の目標表、TESTS回数 | 信号の色、一致・不一致の記号、効果音 | #23 |
+| HEARTH ZERO | 2.1.0 | 薪・食料・火・壁、3種類の寒波×12日、3夜の予報、上限30/24、壁は最大2 | 資源記号と色、炎と雪の表示、効果音 | #24 |
+| BRICK PULSE | 2.3.1 | 12面、各3球、装甲、ドローン（3面目から）、爆弾（6面目から）、W/S/G | 色分け、JR-200の保持入力、効果音 | #25 |
+| RELIC DIVE | 1.6.1 | 既存移植（`games/relic-dive/UPSTREAM.md`） | 既存の属性色 | #14 |
+
+SIDE CATCHはJR-200向け自作の導線確認作品で、JR100devの台帳には含めません。
+残る45作品は台帳の`candidate`です。第1弾の受入後に、台帳の難度・必要SDK・難所から
+次の少数作品を選びます（#26）。一括移植はしません。

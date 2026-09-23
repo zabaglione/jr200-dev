@@ -13,7 +13,7 @@ from wiki.generate import catalog_entries
 def check(root: Path) -> None:
     for path in ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
                  'docs/DEVELOPMENT.md', 'docs/CI.md', 'docs/JRASM.md',
-                 'docs/PROJECTS.md', 'docs/RELEASE_AUDIT.md', 'docs/RUNNER.md',
+                 'docs/PORTING.md', 'docs/PROJECTS.md', 'docs/RELEASE_AUDIT.md', 'docs/RUNNER.md',
                  'docs/WIKI.md', 'rules/README.md',
                  'sdk/README.md'):
         if not (root / path).read_text(encoding='utf-8').strip():

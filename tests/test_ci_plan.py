@@ -153,7 +153,7 @@ class SelectionTests(unittest.TestCase):
             root = Path(directory)
             for name in ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
                          'docs/DEVELOPMENT.md', 'docs/CI.md', 'docs/JRASM.md',
-                         'docs/PROJECTS.md', 'docs/RELEASE_AUDIT.md', 'docs/RUNNER.md',
+                         'docs/PORTING.md', 'docs/PROJECTS.md', 'docs/RELEASE_AUDIT.md', 'docs/RUNNER.md',
                          'docs/WIKI.md', 'rules/README.md'):
                 path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text('x')
             source_root = Path(__file__).resolve().parents[1]

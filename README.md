@@ -25,7 +25,7 @@ runnerはローカル固定bundleで実行確認済みですが、CIから取得
 仕様は [開発範囲](docs/DEVELOPMENT.md)、機種固有条件は [JR-200開発ルール](rules/README.md)、
 ゲームの構造と操作は [ゲームプロジェクト契約](docs/PROJECTS.md)、runnerは
 [固定エミュレータrunner契約](docs/RUNNER.md)、CIは [選択的CI](docs/CI.md)、
-Wikiは [Wiki生成とローカル同期](docs/WIKI.md)、
+Wikiは [Wiki生成とローカル同期](docs/WIKI.md)、JR100devからの移植は [移植契約](docs/PORTING.md)、
 公開可否は [初版候補の公開前監査](docs/RELEASE_AUDIT.md)、
 作業順序は [開発計画Issue](https://github.com/zabaglione/jr200-dev/issues/1) を参照してください。
 
