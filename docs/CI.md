@@ -106,6 +106,10 @@ bundleが利用できる場合はdefaultだけでなく、対象が宣言した�
 配布資産未公開の間はruntime未実施を明記し、構造試験成功をエミュレータ成功へ読み替えません。
 runner lockやadapterだけの変更はtest fingerprintを無効化し、build fingerprintを変えません。
 
+2026-09-23の[private main CI](https://github.com/zabaglione/jr200-dev/actions/runs/35818266477)では、
+repository契約、全8 targetのbuild・構造試験、required gateが成功しました。
+固定runner Release資産はまだなく、各targetのエミュレータ実行は`not_run`です。
+
 ## トリガー・公開・費用
 
 初期トリガーはmainへのpush、main向けPR、手動実行のみ。作業branchのpushとPRを二重起動しない。

@@ -71,8 +71,10 @@ bannerが同じでも固定commitから作られた実行ファイルだとは�
 
 同日、Docker上のUbuntu 24.04 / arm64、GCC 13.3.0、CMake 3.28.3でも、
 lock済みLinux設定により同じ61 bytesとSHA-256を確認しました。
-GitHub ActionsのUbuntu x64確認はworkflow実行後に別途記録します。
+2026-09-23には別のfresh cloneをmacOS arm64で作り、固定jrasmのfixtureと8 targetの
+CJR buildを再確認しました。[GitHub ActionsのUbuntu x64実行](https://github.com/zabaglione/jr200-dev/actions/runs/35818266477)
+でも固定jrasmのbuild／fixtureと全8 targetのbuild・構造試験が成功しています。
 
 これはCJR生成の合成試験です。エミュレータ起動、実ROMでのLOAD、実機動作は確認していません。
-GitHub Actionsでは再buildが必要なtarget job内で同じ固定commitとfixtureを検査する構成ですが、
-この未push版についてremote workflowはまだ実行していません。
+GitHub Actionsでは再buildが必要なtarget job内で同じ固定commitとfixtureを検査します。
+上記remote workflowの成功はエミュレータ／実ROM／実機による動作確認ではありません。

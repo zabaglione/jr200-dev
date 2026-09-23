@@ -61,8 +61,15 @@ publication gateです。「secretが存在しない」という無限定な保�
 - private Wikiの初期化と基本案内4ページのpushを確認した。作品ページとゲーム実行リンクは未公開。
 - 公開Webエミュレータには固定カタログからのワンクリック読込み機能が追加されたが、
   カタログは空で、CJRは配布していない。
+- source 139ファイルをnoreply identityのcommit `211a64f`へ固定し、private `main`へpushした。
+  [remote CI](https://github.com/zabaglione/jr200-dev/actions/runs/35818266477)は、
+  repository契約、全8 targetのbuild・構造試験、required gateに合格した。
+  ただし固定runner資産がないため、CIでのエミュレータ実行は`not_run`である。
+- 別のfresh clone（Mac arm64）で`make check`の114件、固定jrasmのfixture、
+  template・5 sample・2 gameの計8 targetのCJR buildが合格した。
+  このfresh cloneではrunner実行と作品package生成は行っていない。
 - `SIDE CATCH`の候補packageはdirty tree由来のまま。固定runnerのRelease資産もない。
   `publication_ready=false`のため、作品Releaseと開発リポジトリのpublic化は保留する。
 
-この更新は2026-09-22の監査結果を遡って変更するものではない。remote CIとfresh cloneの
-受入は、これからのsource commit後に別途実測する。
+この更新は2026-09-22の監査結果を遡って変更するものではない。上述のremote CIと
+fresh cloneの確認はsource buildまでであり、ゲームのruntimeや物理JR-200の証拠ではない。
