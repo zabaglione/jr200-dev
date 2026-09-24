@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "expected_entry_address": "0x1000",
-  "notes": "Memory expectations are computed by games/lumen-cross/tests/model.py (upstream rules 2.0.0), not recorded from the emulator; the emulator result must match them. Framebuffer hashes of title/start/first-clear fix the gallery images. Replays leave 1.7M cycles after each cross press so its five-pose animation finishes. stack-guard shows the game stack stayed above 0x4f10. The runner drains PCM only at the end, so long runs drop old frames.",
+  "notes": "Memory expectations are computed by games/lumen-cross/tests/model.py (upstream rules 2.0.0), not recorded from the emulator; the emulator result must match them. Framebuffer hashes of title/start/first-clear fix the gallery images. Replays leave 1.7M cycles after each cross press so its five-pose animation finishes. stack-guard shows the game stack stayed above 0x4f10. The runner drains PCM only at the end, so long runs drop old frames. CI acceptance test-only scenario 4.",
   "runtime": {
     "default_profile": "synthetic-first-clear",
     "profiles": [
