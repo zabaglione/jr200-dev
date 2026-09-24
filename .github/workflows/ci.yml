@@ -39,11 +39,20 @@ jobs:
       matrix: ${{ steps.planner.outputs.matrix }}
       has_targets: ${{ steps.planner.outputs.has_targets }}
       plan_sha256: ${{ steps.planner.outputs.plan_sha256 }}
+      trusted_run_id: ${{ steps.trusted.outputs.trusted_run_id }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Fetch latest successful main snapshot
+        id: trusted
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          python3 tools/ci_snapshot.py download
+          --output .ci-cache/trusted-state
+          --github-output "$GITHUB_OUTPUT"
       - name: Select targets and calculate fingerprints
         id: planner
         env:
@@ -59,6 +68,7 @@ jobs:
             --base "$BASE_SHA" \
             --platform ubuntu-24.04-x86_64 \
             --output ci-plan.json \
+            --trusted-state .ci-cache/trusted-state \
             --github-output "$GITHUB_OUTPUT" \
             --summary "$GITHUB_STEP_SUMMARY" \
             "$@"
@@ -68,6 +78,7 @@ jobs:
     needs: plan
     if: needs.plan.outputs.has_targets == 'true'
     runs-on: ubuntu-24.04
+    cache-mode: read
     timeout-minutes: 15
     strategy:
       fail-fast: false
@@ -76,14 +87,25 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
 
-      - name: Restore build by exact fingerprint
-        id: build-cache
-        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ${{ matrix.project }}/build
-          key: jr200-build-v1-${{ matrix.platform }}-${{ matrix.id }}-${{ matrix.build_fingerprint }}
-          lookup-only: false
+      - name: Fetch prior trusted snapshot
+        if: needs.plan.outputs.trusted_run_id != '0'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRUSTED_RUN_ID: ${{ needs.plan.outputs.trusted_run_id }}
+        run: >-
+          python3 tools/ci_snapshot.py download
+          --run-id "$TRUSTED_RUN_ID"
+          --output .ci-cache/trusted-state
+
+      - name: Restore validated target snapshot when compatible
+        run: >-
+          python3 tools/ci_snapshot.py restore
+          --target "${{ matrix.id }}"
+          --platform "${{ matrix.platform }}"
+          --build-fingerprint "${{ matrix.build_fingerprint }}"
+          --test-fingerprint "${{ matrix.test_fingerprint }}"
 
       - name: Validate restored build and artifact hash
         id: build-valid
@@ -93,14 +115,6 @@ jobs:
           --target "${{ matrix.id }}"
           --platform "${{ matrix.platform }}"
           --build-fingerprint "${{ matrix.build_fingerprint }}"
-
-      - name: Restore successful test receipt by exact fingerprint
-        id: receipt-cache
-        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: .ci-cache/receipts/${{ matrix.id }}
-          key: jr200-receipt-v1-${{ matrix.platform }}-${{ matrix.id }}-${{ matrix.test_fingerprint }}
-          lookup-only: false
 
       - name: Validate receipt against restored artifact
         id: receipt-valid
@@ -158,41 +172,90 @@ jobs:
           --build-fingerprint "${{ matrix.build_fingerprint }}"
           --test-fingerprint "${{ matrix.test_fingerprint }}"
 
-      - name: Save verified build on main only
-        if: >-
-          success() && github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-          steps.receipt-valid.outcome != 'success' && steps.build-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ${{ matrix.project }}/build
-          key: jr200-build-v1-${{ matrix.platform }}-${{ matrix.id }}-${{ matrix.build_fingerprint }}
+      - name: Package verified target for trusted main snapshot
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: >-
+          python3 tools/ci_snapshot.py package
+          --target "${{ matrix.id }}"
+          --platform "${{ matrix.platform }}"
+          --build-fingerprint "${{ matrix.build_fingerprint }}"
+          --test-fingerprint "${{ matrix.test_fingerprint }}"
+          --output ".ci-cache/snapshot-entry/${{ matrix.id }}"
 
-      - name: Save successful receipt on main only
-        if: >-
-          success() && github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-          steps.receipt-valid.outcome != 'success' && steps.receipt-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+      - name: Upload target result on main only
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          path: .ci-cache/receipts/${{ matrix.id }}
-          key: jr200-receipt-v1-${{ matrix.platform }}-${{ matrix.id }}-${{ matrix.test_fingerprint }}
+          name: target-${{ matrix.id }}
+          path: .ci-cache/snapshot-entry/${{ matrix.id }}
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Summarize target decision
         if: always()
+        env:
+          TARGET_ID: ${{ matrix.id }}
+          TARGET_REASON: ${{ matrix.reason }}
+          BUILD_REQUIRED: ${{ matrix.build_required }}
+          BUILD_OUTCOME: ${{ steps.build-valid.outcome }}
+          RECEIPT_OUTCOME: ${{ steps.receipt-valid.outcome }}
         run: |
           {
-            echo "## Target ${{ matrix.id }}"
+            printf '## Target %s\n' "$TARGET_ID"
             echo
-            echo "- Reason: ${{ matrix.reason }}"
-            echo "- Source/build input changed: ${{ matrix.build_required }}"
-            echo "- Build cache validation: ${{ steps.build-valid.outcome }}"
-            echo "- Full receipt validation: ${{ steps.receipt-valid.outcome }}"
+            printf '%s\n' "- Reason: $TARGET_REASON"
+            printf '%s\n' "- Source/build input changed: $BUILD_REQUIRED"
+            printf '%s\n' "- Build artifact validation: $BUILD_OUTCOME"
+            printf '%s\n' "- Full receipt validation: $RECEIPT_OUTCOME"
             echo "- Emulator verification: not_run"
             echo "- Hardware verification: not_run"
           } >> "$GITHUB_STEP_SUMMARY"
 
+  trusted-snapshot:
+    name: trusted-snapshot
+    needs: [repository-contracts, plan, verify-targets]
+    if: >-
+      always() && github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      needs.repository-contracts.result == 'success' && needs.plan.result == 'success' &&
+      (needs.verify-targets.result == 'success' ||
+       (needs.plan.outputs.has_targets == 'false' && needs.verify-targets.result == 'skipped'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Fetch prior trusted snapshot
+        if: needs.plan.outputs.trusted_run_id != '0'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRUSTED_RUN_ID: ${{ needs.plan.outputs.trusted_run_id }}
+        run: >-
+          python3 tools/ci_snapshot.py download
+          --run-id "$TRUSTED_RUN_ID"
+          --output .ci-cache/trusted-state
+      - name: Assemble verified snapshot of all current targets
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SELECTED_MATRIX: ${{ needs.plan.outputs.matrix }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        run: >-
+          python3 tools/ci_snapshot.py assemble
+          --run-id "$CURRENT_RUN_ID"
+          --selected-json "$SELECTED_MATRIX"
+          --output .ci-cache/trusted-output
+      - name: Upload trusted main snapshot
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: trusted-targets-v1
+          path: .ci-cache/trusted-output
+          if-no-files-found: error
+          retention-days: 90
+
   required-gate:
     name: required-gate
-    needs: [repository-contracts, plan, verify-targets]
+    needs: [repository-contracts, plan, verify-targets, trusted-snapshot]
     if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -206,9 +269,13 @@ jobs:
           PLAN_RESULT: ${{ needs.plan.result }}
           TARGETS_RESULT: ${{ needs.verify-targets.result }}
           HAS_TARGETS: ${{ needs.plan.outputs.has_targets || 'false' }}
+          SNAPSHOT_RESULT: ${{ needs.trusted-snapshot.result }}
+          SNAPSHOT_REQUIRED: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: >-
           python3 tools/ci_pipeline.py gate
           --required-result "$REQUIRED_RESULT"
           --plan-result "$PLAN_RESULT"
           --targets-result "$TARGETS_RESULT"
           --has-targets "$HAS_TARGETS"
+          --snapshot-result "$SNAPSHOT_RESULT"
+          --snapshot-required "$SNAPSHOT_REQUIRED"

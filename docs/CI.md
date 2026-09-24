@@ -3,8 +3,10 @@
 ## 実装済み範囲と未実装の境界
 
 `tools/ci_plan.py` は宣言済み入力と逆依存を使う分類器、`tools/ci_pipeline.py` は旧・新graph、
-内容fingerprint、build cache、成功receipt、dynamic matrix、最終gateを扱う実行器です。
-`minimal`、画面、入力、ジョイスティック、音声、game loopのsample、`SIDE CATCH`、`RELIC DIVE` の8 targetを登録し、
+内容fingerprint、成功receipt、dynamic matrix、最終gateを扱う実行器です。
+`tools/ci_snapshot.py` は成功したmainの全targetについて検証済みCJR・build report・receiptを
+GitHub Actions artifactへ保存し、次のrunで全targetのfingerprintと内容hashを照合します。
+`minimal`、画面、入力、ジョイスティック、音声、game loop、移植fixtureのsampleと7作品の14 targetを登録し、
 固定jrasmからCJRを作る実ジョブへ接続しています。
 共有SDKは独立artifact targetではなく、各projectの `inputs.sdk` とtargetの `build_inputs` へ
 正確なsource dependencyとして登録します。これによりmodule変更は、そのfileを使用するtargetだけを選択します。
@@ -70,29 +72,29 @@ build fingerprintはtarget設定、build入力のpathとSHA-256、推移依存�
 test入力、runner lock、emulator lock、test toolから計算します。testだけが変わった場合は同一build fingerprintの
 CJRを再利用し、testを再実行できます。
 
-復元cacheは次を満たした場合だけ使います。
+復元snapshotは次を満たした場合だけ使います。
 
 1. target、platform、期待fingerprintが `ci-build.json` と一致する。
 2. CJRとbuild reportのsize／SHA-256が記録と一致する。
 3. build reportがassembler／CJR layout合格を記録し、CJRを再parseしてentryと宣言領域を満たす。
 4. test省略には、上記artifactと完全なtest fingerprintへ結び付いた成功receiptも必要。
 
-cache miss、内容破損、失敗・取消でreceiptがない場合は再実行します。cache hit表示だけでは省略しません。
-破損したimmutable keyは上書きせず、そのrunでは再buildします。必要なら `cache_contract` を更新して
-全keyを切り替えます。
-
-PRはdefault branchのcacheをrestoreできますが、save step自体をmain pushに限定します。
-GitHubの低信頼triggerに対するread-only cache制限も維持し、`pull_request_target` は使用しません。
+成功したmain runのsnapshotがない、期限切れ、内容破損、または現在のfingerprintと異なる場合は
+当該targetを再実行します。前回のrunが失敗・取消された場合、そのrunを信頼済み記録の起点にしません。
+snapshot artifactはrunのevent・branch・conclusion・HEADとの祖先関係とZIP digestを検査します。
+同じbuild fingerprintのCJRを復元でき、test fingerprintだけ異なる場合はtestを再実行します。
+PRはmainのsnapshotを読めますが、trusted snapshotの書込みはmain pushだけです。
+cache tokenはread-onlyとし、`pull_request_target` は使用しません。
 
 ## 現在のパイプライン
 
 1. `repository-contracts` が構造とCI自身の回帰試験を実行する。
 2. plannerがtracked入力、実依存、旧・新graphを照合し、fingerprintとmatrixを作る。
-3. target jobが完全一致のbuild cacheと成功receiptを内容hashまで検査する。
+3. target jobが対応するsnapshotのbuildと成功receiptを内容hashまで検査する。
 4. 不足するbuildだけ固定jrasmを外部sourceから作り、対象targetだけをbuildする。
 5. 完全receiptがなければtarget testを実行し、成功後だけreceiptを作る。
-6. main pushだけがbuild／receipt cacheを保存する。
-7. `required-gate` がplanner・必要jobの失敗／取消／想定外skipを失敗にする。
+6. main pushだけが各targetの検証済み成果物を集約し、全targetのsnapshotを保存する。
+7. `required-gate` がplanner・必要job・main snapshotの失敗／取消／想定外skipを失敗にする。
 
 直前commitとの差だけでは、失敗／取消を挟んだ変更を見逃す。全ターゲットの現在fingerprintを信頼済み記録と照合する。
 キャッシュ欠落・hash不一致・toolchain更新は再実行し、キャッシュhitだけを合格根拠にしない。
