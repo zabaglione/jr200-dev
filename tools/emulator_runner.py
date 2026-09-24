@@ -48,25 +48,29 @@ def write_json(path: Path, value: Any) -> None:
 
 def validate_lock(value: Any) -> dict[str, Any]:
     fields = {'schema_version', 'runner_contract_version', 'runner_version', 'source',
-              'build', 'module_files', 'hosts', 'execution', 'evidence'}
+              'build', 'module_files', 'notice_files', 'hosts', 'execution', 'evidence'}
     if not isinstance(value, dict) or set(value) != fields:
         raise RunnerError('Invalid emulator lock fields')
-    if value['schema_version'] != 1 or value['runner_contract_version'] != 1:
+    if value['schema_version'] != 2 or value['runner_contract_version'] != 1:
         raise RunnerError('Unsupported emulator lock schema or contract')
     if not isinstance(value['runner_version'], str) or VERSION.fullmatch(
             value['runner_version']) is None:
         raise RunnerError('Invalid runner version')
     source = value['source']
     if (not isinstance(source, dict)
-            or set(source) != {'repository', 'revision', 'availability', 'release_asset'}
+            or set(source) != {'repository', 'revision', 'availability',
+                               'release_asset', 'release_sha256'}
             or source['repository'] != 'https://github.com/zabaglione/jr200-web-emulator'
             or not isinstance(source['revision'], str)
             or re.fullmatch(r'[0-9a-f]{40}', source['revision']) is None
             or source['availability'] not in ('local_build_only', 'release')
             or (source['availability'] == 'local_build_only'
-                and source['release_asset'] is not None)
+                and (source['release_asset'] is not None
+                     or source['release_sha256'] is not None))
             or (source['availability'] == 'release'
-                and not isinstance(source['release_asset'], str))):
+                and (not isinstance(source['release_asset'], str)
+                     or not isinstance(source['release_sha256'], str)
+                     or HEX64.fullmatch(source['release_sha256']) is None))):
         raise RunnerError('Invalid emulator source lock')
     build = value['build']
     if (not isinstance(build, dict)
@@ -91,6 +95,21 @@ def validate_lock(value: Any) -> dict[str, Any]:
         names.add(item['path'])
     if names != {'jr200_codec.mjs', 'jr200_codec.wasm'}:
         raise RunnerError('Incomplete emulator module file list')
+    notice_files = value['notice_files']
+    expected_notices = {'LICENSE.txt', 'THIRD_PARTY_NOTICES.md', 'SBOM.spdx.json',
+                        'LICENSES/Emscripten-6.0.9.txt', 'LICENSES/VJR200.txt',
+                        'LICENSES/MAME_BSD-3-Clause.txt',
+                        'LICENSES/libcxxabi-6.0.9.txt'}
+    if (not isinstance(notice_files, list) or len(notice_files) != len(expected_notices)
+            or any(not isinstance(item, dict)
+                   or set(item) != {'path', 'size', 'sha256'}
+                   or item['path'] not in expected_notices
+                   or type(item['size']) is not int or item['size'] <= 0
+                   or not isinstance(item['sha256'], str)
+                   or HEX64.fullmatch(item['sha256']) is None
+                   for item in notice_files)
+            or {item['path'] for item in notice_files} != expected_notices):
+        raise RunnerError('Invalid emulator notice file list')
     hosts = value['hosts']
     if (not isinstance(hosts, list) or not hosts
             or any(not isinstance(item, dict)

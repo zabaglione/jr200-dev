@@ -154,14 +154,31 @@ jobs:
           --build-fingerprint "${{ matrix.build_fingerprint }}"
           --jrasm "$JRASM"
 
-      - name: Test target unless an exact successful receipt is reusable
+      - name: Fetch digest-pinned runner when available
+        id: runner-fetch
         if: steps.receipt-valid.outcome != 'success'
         run: >-
-          python3 tools/ci_pipeline.py test
+          python3 tools/runner_fetch.py
+          --output .ci-cache/fixed-runner
           --target "${{ matrix.id }}"
-          --platform "${{ matrix.platform }}"
-          --build-fingerprint "${{ matrix.build_fingerprint }}"
-          --test-fingerprint "${{ matrix.test_fingerprint }}"
+          --github-output "$GITHUB_OUTPUT"
+
+      - name: Test target unless an exact successful receipt is reusable
+        if: steps.receipt-valid.outcome != 'success'
+        env:
+          RUNNER_BUNDLE: ${{ steps.runner-fetch.outputs.bundle }}
+        run: |
+          if [ -n "$RUNNER_BUNDLE" ]; then
+            set -- --emulator-bundle "$RUNNER_BUNDLE"
+          else
+            set --
+          fi
+          python3 tools/ci_pipeline.py test \
+            --target "${{ matrix.id }}" \
+            --platform "${{ matrix.platform }}" \
+            --build-fingerprint "${{ matrix.build_fingerprint }}" \
+            --test-fingerprint "${{ matrix.test_fingerprint }}" \
+            "$@"
 
       - name: Create receipt only after target tests pass
         if: steps.receipt-valid.outcome != 'success'

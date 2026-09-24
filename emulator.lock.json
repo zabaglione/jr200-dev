@@ -1,12 +1,13 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "runner_contract_version": 1,
   "runner_version": "0.3.0",
   "source": {
     "repository": "https://github.com/zabaglione/jr200-web-emulator",
     "revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
     "availability": "local_build_only",
-    "release_asset": null
+    "release_asset": null,
+    "release_sha256": null
   },
   "build": {
     "emulator_version": "0.0.1",
@@ -25,6 +26,15 @@
       "size": 83629,
       "sha256": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20"
     }
+  ],
+  "notice_files": [
+    {"path": "LICENSE.txt", "size": 1755, "sha256": "8572fa6f2d35bbc6a33359ce203c5805df338508aef1e668b5fcdfb40c829361"},
+    {"path": "THIRD_PARTY_NOTICES.md", "size": 5114, "sha256": "c4ab6d2a74d9ba9066562112b2962d7af1bb0a3576fa9f71a759c50404fff185"},
+    {"path": "SBOM.spdx.json", "size": 8729, "sha256": "8052b70dd1a53f83e58814c5ace0efade0ef58711083da493cd5bd62ba024b31"},
+    {"path": "LICENSES/Emscripten-6.0.9.txt", "size": 5091, "sha256": "2fd38dc06e484cdd7a3f1e2f6577f5d53062052a2fd85131b56b89fbd673731c"},
+    {"path": "LICENSES/VJR200.txt", "size": 1445, "sha256": "2b3e484a798458bd8659338080893cd7ff7d3e093e2fc0e394ffe24c554f92e5"},
+    {"path": "LICENSES/MAME_BSD-3-Clause.txt", "size": 1481, "sha256": "a27554938d3dd6569931e5e18b93214a57f47bc1bb8b75fc32fdd18abe042a07"},
+    {"path": "LICENSES/libcxxabi-6.0.9.txt", "size": 16706, "sha256": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c"}
   ],
   "hosts": [
     {

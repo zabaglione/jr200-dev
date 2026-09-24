@@ -17,7 +17,8 @@ POLICY = ('ci/targets.json', '.github/workflows/**', 'tools/ci_plan.py',
           'tools/ci_pipeline.py', 'tests/**', 'rules/jr200.json',
           'mk/**', 'Makefile', 'toolchain.lock.json')
 TEST_POLICY = ('ci/runner.lock.json', 'emulator.lock.json',
-               'tools/emulator_runner.py', 'tools/jr200_wasm_runner.mjs',
+               'tools/emulator_runner.py', 'tools/runner_fetch.py',
+               'tools/jr200_wasm_runner.mjs',
                'tools/png_rgba.py')
 DOCS = ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
         'docs/**', 'sdk/README.md', '.github/ISSUE_TEMPLATE/**',

@@ -27,6 +27,7 @@ DEFAULT_RECEIPTS = ROOT / '.ci-cache/receipts'
 BUILD_COMMON = ('ci/targets.json', 'tools/ci_pipeline.py')
 TEST_COMMON = ('ci/runner.lock.json', 'ci/targets.json', 'emulator.lock.json',
                'tools/ci_pipeline.py', 'tools/ci_snapshot.py', 'tools/emulator_runner.py',
+               'tools/runner_fetch.py',
                'tools/jr200_wasm_runner.mjs', 'tools/png_rgba.py')
 
 
@@ -52,7 +53,7 @@ def validate_runner_lock(value: Any) -> dict[str, Any]:
                 'target_runner_version', 'cache_contract', 'emulator'}
     if not isinstance(value, dict) or set(value) != expected:
         raise PipelineError('Invalid runner lock fields')
-    if type(value['schema_version']) is not int or value['schema_version'] != 2:
+    if type(value['schema_version']) is not int or value['schema_version'] != 3:
         raise PipelineError('Unsupported runner lock schema')
     if (not isinstance(value['platform'], str)
             or not re.fullmatch(r'[a-z0-9][a-z0-9._-]+', value['platform'])):
@@ -66,11 +67,17 @@ def validate_runner_lock(value: Any) -> dict[str, Any]:
         raise PipelineError('Invalid runner lock values')
     emulator = value['emulator']
     if (not isinstance(emulator, dict)
-            or set(emulator) != {'lock', 'runtime_required', 'unavailable_reason'}
+            or set(emulator) != {'lock', 'runtime_required', 'unavailable_reason',
+                                 'runtime_policy'}
             or emulator['lock'] != 'emulator.lock.json'
             or type(emulator['runtime_required']) is not bool
             or not isinstance(emulator['unavailable_reason'], str)
-            or (emulator['runtime_required'] and emulator['unavailable_reason'])):
+            or (emulator['runtime_required'] and emulator['unavailable_reason'])
+            or not isinstance(emulator['runtime_policy'], dict)
+            or any(not isinstance(target, str)
+                   or re.fullmatch(r'[a-z][a-z0-9-]{0,31}', target) is None
+                   or policy != 'local_rom_only'
+                   for target, policy in emulator['runtime_policy'].items())):
         raise PipelineError('Invalid emulator runner lock')
     return value
 
@@ -470,11 +477,19 @@ def run_target_test(root: Path, registry_path: Path, target_id: str,
     emulator_evidence = 'not_run'
     emulator_profiles: list[str] = []
     unavailable_reason = runner_lock['emulator']['unavailable_reason']
-    if emulator_bundle is not None:
-        synthetic_profiles = [
-            item['profile'] for item in expectations['runtime']['profiles']
-            if item['mode'] == 'synthetic-injection'
-        ]
+    synthetic_profiles = [
+        item['profile'] for item in expectations['runtime']['profiles']
+        if item['mode'] == 'synthetic-injection'
+    ]
+    policy = runner_lock['emulator']['runtime_policy'].get(target_id)
+    if policy == 'local_rom_only':
+        if (synthetic_profiles or not any(
+                item['mode'] == 'rom-cassette'
+                for item in expectations['runtime']['profiles'])):
+            raise PipelineError('Local-ROM-only target has invalid runtime profiles')
+        emulator_status = 'local_rom_only'
+        unavailable_reason = 'requires_local_rom_font'
+    elif emulator_bundle is not None:
         if not synthetic_profiles:
             raise PipelineError('Target has no synthetic emulator profile')
         evidence = set()
@@ -593,7 +608,15 @@ def verify_receipt(root: Path, registry_path: Path, receipts: Path,
         item['profile'] for item in expectations['runtime']['profiles']
         if item['mode'] == 'synthetic-injection'
     ]
-    if runner_lock['emulator']['runtime_required']:
+    policy = runner_lock['emulator']['runtime_policy'].get(target_id)
+    if policy == 'local_rom_only':
+        valid_emulator = (not declared_synthetic
+                          and any(item['mode'] == 'rom-cassette'
+                                  for item in expectations['runtime']['profiles'])
+                          and emulator_fields == ('local_rom_only', 'not_run',
+                                                  'requires_local_rom_font')
+                          and receipt.get('emulator_profiles') == [])
+    elif runner_lock['emulator']['runtime_required']:
         valid_emulator = (emulator_fields[0] == 'passed'
                           and emulator_fields[1] in ('emulator',
                                                      'emulator_with_local_rom')
