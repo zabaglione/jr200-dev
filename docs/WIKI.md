@@ -53,6 +53,26 @@ python3 tools/emulator_runner.py run \
 runnerは既存fileを上書きせず、PNG画素hashと検証済みframebuffer hashが一致した後だけ
 出力先へ移動します。ROM cassette profileからの画像出力は拒否します。
 
+## 作品の画面と動画
+
+各作品の`media/gallery.json`が紹介画像と動画の正本です。画像はタイトル（`title`）、プレイ中（`play`）、
+最初の目標（`goal`）の3場面以上で、どれも`tests/expectations.json`のROMなし合成profileの
+framebuffer hashと一致しなければなりません（`tests/test_gallery.py`）。JR-100の画像や描き起こしの
+絵で代用しません。
+
+動画は同じprofileのreplayを固定bundleで1/30秒ごとに記録した映像と、同じ実行のPCMから作ります。
+後から演出や音を足さず、短縮する場合は倍速を`gallery.json`とcaptionに書きます。
+
+```sh
+export FFMPEG=/absolute/path/to/ffmpeg   # libvpx-vp9とlibopusを含む外部ツール
+python3 tools/capture_video.py --project games/lumen-cross \
+  --profile synthetic-first-clear --bundle /absolute/path/to/fixed/bundle \
+  --output games/lumen-cross/media/goal.webm
+```
+
+出力には映像フレームとPCMのSHA-256、秒数、倍速が付きます。WebMのbyte列はffmpegの版で変わり得るため、
+再現の照合はフレームとPCMのhashで行います。
+
 ## Wiki worktreeへの同期
 
 `WIKI_DIR` は、originが正規の `jr200-dev.wiki.git` であるcleanなGit worktree rootに限ります。

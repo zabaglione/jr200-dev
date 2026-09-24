@@ -25,7 +25,7 @@ DOCS = ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
 WIKI = ('tools/wiki/**', 'tools/web_export.py', 'games/catalog.json')
 INFRA = ('.gitignore', '.gitattributes', '.editorconfig')
 # Interactive local tools that neither build nor test targets.
-LOCAL_TOOLS = ('tools/game_play.py',)
+LOCAL_TOOLS = ('tools/game_play.py', 'tools/capture_video.py', 'tools/jr200_capture.mjs')
 
 
 def path_ok(value: str) -> bool:

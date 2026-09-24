@@ -28,5 +28,17 @@
       "sha256": "998e9902cbcaae4d05f9600f434185ab232216a8ba96dab40da97b64096800d7",
       "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48"
     }
-  ]
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-wave",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 27.9,
+    "frames": 838,
+    "frames_sha256": "f994b8a41151d4186b63a6e51f02657d7f8544af189a3aba10b26da4d29798b2",
+    "pcm_sha256": "84a83d77993cae60665ef7c414d23a75fe6917e0ca3b509606e8c86467dfd266",
+    "sha256": "c57a078f39abfcc4db0c491d7d41447d6141f16bc309c312cee1e08c46387bba",
+    "caption": "最初の寒波の12夜を越えるまで（音付き）"
+  }
 }

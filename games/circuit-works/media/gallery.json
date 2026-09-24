@@ -28,5 +28,17 @@
       "sha256": "c3acb416a0dc4330c47f39b77d57fa3338770b132f6d3ff94a574093b1ae6043",
       "framebuffer_sha256": "3ce121925747acd7ed1fbb2324bc69b79734f0cd3fd5a6cd369d6a347453b5d8"
     }
-  ]
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 6.4,
+    "frames": 192,
+    "frames_sha256": "5b3bc26408ddd89b8166f43d2ab2258dfeefacb0aeb5c790193ccd0ce026bc26",
+    "pcm_sha256": "359fd36cff576412ce346048f72693060aeb69f5d2ae1cf103234b18988e19d4",
+    "sha256": "ea0190895cf61da288b2457d29d45c2d9180043eef6cc0de09fd60cb775cf603",
+    "caption": "ステージ1の8行試験で全一致するまで（音付き）"
+  }
 }

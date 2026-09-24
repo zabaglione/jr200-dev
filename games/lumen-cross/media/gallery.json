@@ -28,5 +28,17 @@
       "sha256": "526cbfbd38cc0cdfd8a9530269af62c6fa91a4e7a8d5a5b1a67289371db68620",
       "framebuffer_sha256": "90121d01e1e67c4afff9469d1b5f0647bc6f6e6859851f3fab422e08b27e95a5"
     }
-  ]
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 5.9,
+    "frames": 176,
+    "frames_sha256": "d2a54b540f3734bd756181105671dc7b9bce5c582dd703b4994f395ea2a5df6f",
+    "pcm_sha256": "4aa1d0df6f4158844d84ede70e599b8d706de69f41514e3c33bc5e64d57d1a37",
+    "sha256": "54109c13f6951ef15564e6c31d77822905a5127e0324de31dd7982e118ca1092",
+    "caption": "ステージ1を開始してPAR 4回で全消灯するまで（音付き）"
+  }
 }

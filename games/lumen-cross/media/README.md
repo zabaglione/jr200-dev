@@ -10,4 +10,8 @@
 | `play.png` | `synthetic-start` | ステージ1開始直後。カーソルの十字に^の予告が付く |
 | `clear.png` | `synthetic-first-clear` | ステージ1をPAR 4回で全消灯し、PERFECT CIRCUITを表示 |
 
+`goal.webm`は同じ固定エミュレータで`synthetic-first-clear`のreplayを1/30秒ごとに記録した映像と、同じ実行の
+PCMから作った動画です（5.9秒、1.0倍速）。`tools/capture_video.py`と外部のffmpegで
+生成し、映像フレームとPCMのSHA-256を`gallery.json`に残します。
+
 これは固定エミュレータの証拠です。物理JR-200の表示、入力、音声は未確認です。
