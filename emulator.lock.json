@@ -4,7 +4,7 @@
   "runner_version": "0.3.0",
   "source": {
     "repository": "https://github.com/zabaglione/jr200-web-emulator",
-    "revision": "81e4174c550e20e166b0431b4235ba3b7650da76",
+    "revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
     "availability": "local_build_only",
     "release_asset": null
   },
@@ -12,30 +12,30 @@
     "emulator_version": "0.0.1",
     "emscripten_version": "6.0.9",
     "codec_api_version": 1,
-    "system_api_version": 6
+    "system_api_version": 9
   },
   "module_files": [
     {
       "path": "jr200_codec.mjs",
-      "size": 16813,
-      "sha256": "9b80046b09f058df7c9fddac4675a50be5a9ad0cb9256f5f37f0acb607eeb3d7"
+      "size": 17276,
+      "sha256": "0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c"
     },
     {
       "path": "jr200_codec.wasm",
-      "size": 82172,
-      "sha256": "c79dc6843861a2358e54c11b73541db20e5adb8ea9c616c648357fb12932c846"
+      "size": 83629,
+      "sha256": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20"
     }
   ],
   "hosts": [
     {
       "os": "macos",
       "arch": "arm64",
-      "status": "verified"
+      "status": "contract_only"
     },
     {
       "os": "linux",
       "arch": "x86_64",
-      "status": "contract_only"
+      "status": "verified"
     }
   ],
   "execution": {

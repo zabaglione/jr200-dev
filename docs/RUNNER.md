@@ -3,25 +3,26 @@
 ## 固定対象
 
 `emulator.lock.json` は `jr200-web-emulator` のcommit
-`81e4174c550e20e166b0431b4235ba3b7650da76`、Emscripten 6.0.9、
-codec API 1、system API 6を固定します。runnerは次の2ファイルを同じdirectoryから読み、
+`c4c0c30f98c5878480c31af8595b6307e66b8ef0`、Emscripten 6.0.9、
+codec API 1、system API 9を固定します。runnerは次の2ファイルを同じdirectoryから読み、
 sizeとSHA-256が一致しないbundleを起動しません。
 
 | ファイル | bytes | SHA-256 |
 | --- | ---: | --- |
-| `jr200_codec.mjs` | 16813 | `9b80046b09f058df7c9fddac4675a50be5a9ad0cb9256f5f37f0acb607eeb3d7` |
-| `jr200_codec.wasm` | 82172 | `c79dc6843861a2358e54c11b73541db20e5adb8ea9c616c648357fb12932c846` |
+| `jr200_codec.mjs` | 17276 | `0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c` |
+| `jr200_codec.wasm` | 83629 | `8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20` |
 
-このdigestは上記commitをクリーン展開し、Emscripten 6.0.9で作成した実ファイルから取得しました。
-macOS arm64ではNode.jsからABI起動と最小CJRの実行を確認済みです。
-Linux x86_64は契約試験だけで、同bundleの実行はまだ確認していません。
+このdigestは上記commitをクリーン展開し、Linux x86_64のEmscripten 6.0.9で
+`emcmake cmake -DCMAKE_BUILD_TYPE=Release`とbuildを実行して得た実ファイルの値です。
+system API 9は`jr200_system_set_joystick`を公開するため、adapter 0.3.0のactive-low `joystick`
+replay（playerは`0`または`1`、stateは`0x00`から`0xff`）をこの固定bundleで実行できます。
+ただしjoystick入力はBASIC ROMの走査routineを使うため、ROMなし合成profileでは確認できません。
 
-adapter 0.3.0はactive-lowの `joystick` replay eventを扱います。playerは`0`または`1`、
-stateは`0x00`から`0xff`です。このeventの実行には
-`jr200_system_set_joystick`を公開するsystem API 8 bundleが必要です。現在の固定lockはsystem API 6の
-clean commitを指しているため、既存profileには利用できますがjoystick replayには利用できません。
-system API 8側をclean commitとして固定できるまでは、API 8のローカルbundleと対応するローカルlockで
-ROM／FONT試験を行い、固定bundle受入と混同しません。
+前回の固定版（commit `81e4174c550e20e166b0431b4235ba3b7650da76`、system API 6）は、同じ手順の
+Linux buildでも以前macOS arm64で記録したdigestとバイト単位で一致しました。Emscriptenの出力が
+hostに依存しないことの実例ですが、新しい固定bundleのmacOS実行はまだ記録していないため、
+lockのmacOS行は`contract_only`です。Linux x86_64では2026-09-24に、全target（sample 6、ゲーム2）の
+全合成profileが新旧bundleの両方で合格しました。
 
 現在はbundleのRelease資産を公開していないため、取得状態は `local_build_only` です。
 `JR200_RUNNER_BUNDLE` または `--bundle` で既存のビルド済みdirectoryを明示します。

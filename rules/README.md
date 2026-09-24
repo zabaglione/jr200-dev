@@ -8,7 +8,7 @@
 | 区分 | 根拠 | このリポジトリでの扱い |
 | --- | --- | --- |
 | 一次資料 | Panasonic JR-200U Service Manual、Motorola M6800 Programming Reference Manual | CPU、標準メモリマップ、表示領域、割込みベクタの基本条件 |
-| 実装確認 | `jr200-web-emulator` commit `81e4174c550e20e166b0431b4235ba3b7650da76` | MN1271の詳細レジスタ、32 byteミラー、合成試験でのキー／音声挙動 |
+| 実装確認 | `jr200-web-emulator` commit `81e4174c550e20e166b0431b4235ba3b7650da76`（現固定版`c4c0c30`との差分はkey click音、tape monitor、memory設定、joystick APIの追加のみ） | MN1271の詳細レジスタ、32 byteミラー、合成試験でのキー／音声挙動 |
 | 暫定開発契約 | jrasmのCJR出力とBASICからの `USR` 呼出し | テンプレートのロード・起動・復帰手順。実機確認ではない |
 
 一次資料の参照先:

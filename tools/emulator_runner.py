@@ -75,7 +75,7 @@ def validate_lock(value: Any) -> dict[str, Any]:
             or build['emulator_version'] != '0.0.1'
             or build['emscripten_version'] != '6.0.9'
             or build['codec_api_version'] != 1
-            or build['system_api_version'] not in (6, 8)):
+            or build['system_api_version'] not in (6, 8, 9)):
         raise RunnerError('Invalid emulator build lock')
     module_files = value['module_files']
     if not isinstance(module_files, list) or len(module_files) != 2:
