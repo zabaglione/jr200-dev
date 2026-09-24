@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "genres": [
+    {"id": "puzzle", "page": "Genre-Puzzle", "title": "パズル",
+     "description": "盤面の規則を読み、少ない手数で目標の形を作る作品です。時間制限はなく、考える時間は進みません。"},
+    {"id": "tabletop", "page": "Genre-Tabletop", "title": "テーブル",
+     "description": "コンピューターと交互に手を指す、盤上ゲームや札の作品です。"},
+    {"id": "tactics", "page": "Genre-Tactics", "title": "タクティクス",
+     "description": "限られた資源や手順で、配置と順番を組み立てて課題を解く作品です。"},
+    {"id": "action", "page": "Genre-Action", "title": "アクション",
+     "description": "時間が流れ、キーを押すタイミングや押し続ける長さで結果が変わる作品です。"},
+    {"id": "exploration", "page": "Genre-Exploration", "title": "探索",
+     "description": "迷宮や地図を少しずつ明らかにしながら、目的の場所や品物を目指す作品です。"},
+    {"id": "management", "page": "Genre-Management", "title": "経営・運営",
+     "description": "日や季節の区切りごとに資源を配分し、長く続く変化を乗り切る作品です。"}
+  ]
+}

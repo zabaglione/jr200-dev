@@ -145,6 +145,22 @@ class SelectionTests(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 select(registry(), [path])
 
+    def test_repository_presentation_changes_build_nothing(self):
+        root = Path(__file__).resolve().parents[1]
+        registered = json.loads((root / 'ci/targets.json').read_text(encoding='utf-8'))
+        changed = ['tools/wiki/generate.py', 'tools/wiki/genres.json']
+        for game in sorted(path.parents[1].name for path in root.glob('games/*/media/gallery.json')):
+            changed += [f'games/{game}/README.md', f'games/{game}/media/gallery.json',
+                        f'games/{game}/media/goal.webm', f'games/{game}/media/README.md']
+        self.assertEqual(len(changed), 2 + 6 * 4)
+        plan = select(registered, changed)
+        self.assertEqual(plan['build_candidates'], [])
+        self.assertEqual(plan['test_candidates'], [])
+        self.assertEqual(plan['unclassified_paths'], [])
+        self.assertTrue(plan['wiki'])
+        self.assertEqual(select(registered, ['games/relic-dive/src/main.asm'])[
+            'build_candidates'], ['relic-dive'])
+
     def test_initial_contract(self):
         check(Path(__file__).resolve().parents[1])
 
@@ -153,7 +169,7 @@ class SelectionTests(unittest.TestCase):
             root = Path(directory)
             for name in ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
                          'docs/DEVELOPMENT.md', 'docs/CI.md', 'docs/JRASM.md',
-                         'docs/PROJECTS.md', 'docs/RELEASE_AUDIT.md', 'docs/RUNNER.md',
+                         'docs/PORTING.md', 'docs/PROJECTS.md', 'docs/RELEASE_AUDIT.md', 'docs/RUNNER.md',
                          'docs/WIKI.md', 'rules/README.md'):
                 path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text('x')
             source_root = Path(__file__).resolve().parents[1]
@@ -164,10 +180,10 @@ class SelectionTests(unittest.TestCase):
             shutil.copytree(source_root / 'samples', root / 'samples',
                             ignore=shutil.ignore_patterns('build'))
             (root / 'ci').mkdir(); (root / 'games').mkdir()
-            shutil.copytree(source_root / 'games/side-catch', root / 'games/side-catch',
-                            ignore=shutil.ignore_patterns('build'))
-            shutil.copytree(source_root / 'games/relic-dive', root / 'games/relic-dive',
-                            ignore=shutil.ignore_patterns('build'))
+            for game in sorted((source_root / 'games').iterdir()):
+                if game.is_dir():
+                    shutil.copytree(game, root / 'games' / game.name,
+                                    ignore=shutil.ignore_patterns('build'))
             shutil.copy2(source_root / 'ci/targets.json', root / 'ci/targets.json')
             shutil.copy2(source_root / 'ci/runner.lock.json', root / 'ci/runner.lock.json')
             shutil.copy2(source_root / 'emulator.lock.json', root / 'emulator.lock.json')

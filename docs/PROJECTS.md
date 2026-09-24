@@ -113,6 +113,33 @@ schema version 2の作品packageは、合成実行とlocal-ROM通常cassette実�
 README、metadata、license、build report、release manifest、内部checksumを含みます。dirty treeからも
 候補確認用packageは作れますが、manifestの `release_ready` はfalseとなり公開入力には使用できません。
 
+## ブラウザでの試遊
+
+`game-run`はheadlessの固定runnerで期待値を検査し、`game-play`は人がブラウザで遊ぶための
+ローカル配信です。後者は合否を判定しません。
+
+```sh
+# エミュレータ側で一度だけ作る固定版Web一式（jr200-web-emulatorのREADME参照）
+#   make wasm            -> build/site
+JRASM=/absolute/path/to/jrasm make game-build PROJECT=games/my-game
+make game-play PROJECT=games/my-game WEB_SITE=/absolute/path/to/jr200-web-emulator/build/site
+```
+
+`tools/game_play.py`は次だけを行います。
+
+- `build/build-report.json`の入力hashと現在のsource／SDK／素材、CJRのhashを照合し、古いCJRなら停止する。
+  自動buildはしない。
+- 指定したsiteに`stage_web.py`のUI fileと`LICENSES/`があり、`jr200_codec.mjs`／`.wasm`が
+  `emulator.lock.json`のsize／SHA-256と一致することを確認する。エミュレータはbuildしない。
+- 一時directoryへUI、選んだ1作品のCJRとライセンス、1件だけの`game-catalog.json`、開発版bannerを置き、
+  `127.0.0.1`（既定port 8765）で配信する。directory一覧は返さず、リポジトリや`local-data/`は配信しない。
+  `-dev`等の版はWebカタログの形式に合わせて`0.0.0`のpathへ置き、表示名に元の版を付ける。
+- `http://127.0.0.1:8765/?game=<id>`を開く。CJRはカセットへセットされるだけなので、利用者が
+  ROM／FONTをページで選び、`MLOAD`と作品の`A=USR(...)`を入力する。Ctrl-Cで停止し一時directoryを消す。
+
+ROM／FONTの保存はブラウザのoriginごとです。`PORT=`でportを変えると保存も別になります。
+音声はページ上の操作後に有効になります。
+
 ## 共通SDKとsample
 
 `sdk/` のmoduleはprojectへ複製せず、主sourceから相対includeし、使用fileを `inputs.sdk` に列挙します。

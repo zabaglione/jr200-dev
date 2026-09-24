@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。PCGで描いた石文字と遺跡の門を属性RAMで色分け",
+      "sha256": "901fe670316e7f753850c13a7d6e3a58553f55e3e26851e0082fc37897684f29",
+      "framebuffer_sha256": "f973f097a350401d0cd7d6508e41d095ba57026ead2ca7350830a6a6f6110a51"
+    },
+    {
+      "id": "play",
+      "file": "gameplay.png",
+      "profile": "synthetic-gameplay",
+      "role": "play",
+      "caption": "1階の開始直後に右へ1歩進み、1ターン待った場面",
+      "sha256": "4ecd49fcb11a121d059df26cc9bf4489c11426a84fbc93fc1193869a03d66430",
+      "framebuffer_sha256": "5d85b5a6a9c1987a90f76c3da42205a5c1630a6c523cc9c40c7358b3a68e4a1f"
+    },
+    {
+      "id": "combat",
+      "file": "combat.png",
+      "profile": "synthetic-combat",
+      "role": "goal",
+      "caption": "1階を進んで最初の敵に攻撃した場面",
+      "sha256": "ce866cc57f8721ff54ed1871db29a059f2968bcbaa26ce5d5ee002fe2cf74806",
+      "framebuffer_sha256": "0726f8ab86ec3851ce99949ec31231b86e7fc90c7129e0d052c9f12cff1e5334"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-combat",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 16.5,
+    "frames": 494,
+    "frames_sha256": "f4ae2e52d054c258b9081b37604b3d3e8dc608201f351db263eca1afe3f7e9e6",
+    "pcm_sha256": "8f82de4d286f895ec8197e749e703ac40a9193f2e8e8f06be5d43c1ae11ce6b9",
+    "sha256": "62fba88e0345b319e31b5c3c417dbb9fd88bc1ce6b6889fce2fd9a43a6170c6a",
+    "caption": "1階の開始から最初の敵への攻撃まで（音付き）。全階クリアではない"
+  }
+}

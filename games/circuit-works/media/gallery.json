@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "0a83f24e3d32643cb5fe7435d88ef412e03483faf4066dd9695723fed13532f3",
+      "framebuffer_sha256": "d08e50c8427156fcb683214db5283fdc64ea2d6eea0290f318473d24083310f9"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-testing",
+      "role": "play",
+      "caption": "ステージ2の試験中。信号が配線を流れ、真理値表に結果が並ぶ",
+      "sha256": "01d5c87f27b53d8418a9c39c444082c72b0c7c83f9670e053fe7312c54b340bd",
+      "framebuffer_sha256": "570c679bc9660ae18b2a9d2b36490561c8ac9606fadf62e47458e43f97e627dc"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "ステージ1で8行すべてが一致",
+      "sha256": "c3acb416a0dc4330c47f39b77d57fa3338770b132f6d3ff94a574093b1ae6043",
+      "framebuffer_sha256": "3ce121925747acd7ed1fbb2324bc69b79734f0cd3fd5a6cd369d6a347453b5d8"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 6.4,
+    "frames": 192,
+    "frames_sha256": "5b3bc26408ddd89b8166f43d2ab2258dfeefacb0aeb5c790193ccd0ce026bc26",
+    "pcm_sha256": "359fd36cff576412ce346048f72693060aeb69f5d2ae1cf103234b18988e19d4",
+    "sha256": "ea0190895cf61da288b2457d29d45c2d9180043eef6cc0de09fd60cb775cf603",
+    "caption": "ステージ1の8行試験で全一致するまで（音付き）"
+  }
+}

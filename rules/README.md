@@ -8,7 +8,7 @@
 | 区分 | 根拠 | このリポジトリでの扱い |
 | --- | --- | --- |
 | 一次資料 | Panasonic JR-200U Service Manual、Motorola M6800 Programming Reference Manual | CPU、標準メモリマップ、表示領域、割込みベクタの基本条件 |
-| 実装確認 | `jr200-web-emulator` commit `81e4174c550e20e166b0431b4235ba3b7650da76` | MN1271の詳細レジスタ、32 byteミラー、合成試験でのキー／音声挙動 |
+| 実装確認 | `jr200-web-emulator` commit `81e4174c550e20e166b0431b4235ba3b7650da76`（現固定版`c4c0c30`との差分はkey click音、tape monitor、memory設定、joystick APIの追加のみ） | MN1271の詳細レジスタ、32 byteミラー、合成試験でのキー／音声挙動 |
 | 暫定開発契約 | jrasmのCJR出力とBASICからの `USR` 呼出し | テンプレートのロード・起動・復帰手順。実機確認ではない |
 
 一次資料の参照先:
@@ -80,6 +80,11 @@ border色はCRTC領域へ書きます。
 | sound channel F | `$C819-$C81B` |
 | MN1271 mirror | `$C800-$C9FF`、下位5 bitで32 byte反復 |
 | border write | `$CA00-$CBFF`、下位3 bit |
+
+属性mode 0x40では、code 0x00-0x1Fが`$C000-$C0FF`、code 0x80-0x9Fが`$C400-$C4FF`のpatternを使い、
+mode 0x00は`$D000-$D7FF`の文字RAMを使います。mode 0x80／0xC0はcodeと属性の各3 bitで4分割の色を塗る
+semigraphicsです。これらは固定エミュレータの描画実装で確認した値です。Key-Onの状態bitはmask `$C81E`
+bit 0を立てた後の押下だけを記録し、読出しで解除されます。
 
 `sdk/screen.inc`、`sdk/input.inc`、`sdk/sound.inc`、`sdk/timing.inc` が、この表に対応する
 最小routineを提供します。作品側は利用moduleだけを `build.json` の `inputs.sdk` に宣言します。

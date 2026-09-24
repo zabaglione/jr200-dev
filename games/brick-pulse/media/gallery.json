@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "577fae31c5bf73579fd4b40bb18f3d081d790face8a7241afa217c9edc2f2b03",
+      "framebuffer_sha256": "522a33ee65f292454b706965810528c4f2499aa67a64bcd24a8216460db5517f"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモでアリーナ1を進行中",
+      "sha256": "497556f1b53b39b4e689cde76d08f06c9530d8641330017be813ec4bb60456ad",
+      "framebuffer_sha256": "45d0b1daebf873450fe89a1df5faff0c3cfe971f6b1d10742a97cbef213e72be"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "アリーナ1のブロックをすべて壊してクリア",
+      "sha256": "ffecf2da937f74a508433ac61e6aa18d1cba8bf165eda2d78d5a25a0d9c59b35",
+      "framebuffer_sha256": "1f07fb681485097bb2c933f400ac8268882fcecd45b623834601302e8b68848b"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 45.9,
+    "frames": 1377,
+    "frames_sha256": "1c03a755114349d46dcd1ec34b4349d07b43f6ed12d7c7466d133bda0c640cdd",
+    "pcm_sha256": "ba9615bd5b76a45672304c5d7f32508516128e9461d3b6767c093d71bc7b6670",
+    "sha256": "25b16aed3a557b6362fc4f1dfed24f1857e7b604ab5a6900ce54e9f0742cf873",
+    "caption": "自動デモでアリーナ1をクリアするまで（音付き）"
+  }
+}

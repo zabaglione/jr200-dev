@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "cbac7450733f2a37732472859db0178c322ea47b07df144cc4f5636ca7e500d6",
+      "framebuffer_sha256": "8bbd4fa5f7062d276557948480ce641662691dd2accde3ad962103b8710c1a88"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-opening",
+      "role": "play",
+      "caption": "6手目まで進めた盤面。黄色の◆が角",
+      "sha256": "8b4cdc6bca46bae29cc1e82f967cf85ea0a819e9f8e58e19d9bba5457e2d2e1d",
+      "framebuffer_sha256": "c0342064e57b062175899abe43a882cb375a86959357962fca46f345d2d0dca3"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-win",
+      "role": "goal",
+      "caption": "角を4つ取り39対25で勝利",
+      "sha256": "b7c49a88d71106c1c62923c85496cf1b9f912cae5dcc0184e0f4fd7915b8c018",
+      "framebuffer_sha256": "57c46fcf7976bd7e993db9d8725eef4e8e999c78ef58e9a5b344906fb8ebb0d4"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-win",
+    "fps": 30,
+    "speed": 3.0,
+    "seconds": 50.5,
+    "frames": 4548,
+    "frames_sha256": "55d5c8ab61aa7d7f371ea4613b494141a0eb543690d4eda2151f74cdbd49ddbb",
+    "pcm_sha256": "888a387d5a5ea59c3c53873e24493bc4599e13a8d384a31f31eec9edc4adf17e",
+    "sha256": "ec1da111b34539b6ff52be5e0678b603a6dfee5b12c2a14f9c8ffc2062e06bf7",
+    "caption": "30手の勝ち筋で角を4つ取り39対25で勝つまで（音付き、3倍速に短縮）"
+  }
+}
