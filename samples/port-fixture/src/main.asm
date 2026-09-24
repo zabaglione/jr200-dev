@@ -56,6 +56,7 @@ game_init_second:
         LDAA    8
         JMP     fx_cross
 
+game_raw_key:
 game_tick:
         RTS
 

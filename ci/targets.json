@@ -473,6 +473,54 @@
         "games/hearth-zero/game.json",
         "games/hearth-zero/media/**"
       ]
+    },
+    {
+      "id": "brick-pulse",
+      "kind": "game",
+      "project": "games/brick-pulse",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/brick-pulse/LICENSE",
+        "games/brick-pulse/Makefile",
+        "games/brick-pulse/THIRD_PARTY_NOTICES.md",
+        "games/brick-pulse/assets/**",
+        "games/brick-pulse/build.json",
+        "games/brick-pulse/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/keyscan.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sfx.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/brick-pulse/tests/**",
+        "tests/port_model.py",
+        "tests/test_brick_pulse.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/brick-pulse/README.md",
+        "games/brick-pulse/UPSTREAM.md",
+        "games/brick-pulse/game.json",
+        "games/brick-pulse/media/**"
+      ]
     }
   ]
 }

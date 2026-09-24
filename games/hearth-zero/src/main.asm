@@ -75,6 +75,7 @@ game_init:
         STAA    [HZ_WOOD]
         LDAA    12
         STAA    [HZ_HEAT]
+game_raw_key:
 game_tick:
         RTS
 

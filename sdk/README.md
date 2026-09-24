@@ -14,6 +14,7 @@
 | `timing.inc` | cycle基準のbusy wait | 実時間保証ではなく、Xを破壊 |
 | `session.inc` | USR入口でのstack・IRQ mask・PCG・画面・文字RAMの保存と復元、高速copy | ゲーム専用stackへ切替える唯一のmodule |
 | `keys.inc` | Key-On eventからW/A/S/D・RETURN・SPACE・ESC/CTRL+Cへの変換 | 押下1回=1 event。保持状態は返さない |
+| `keyscan.inc` | キーボードMCUのKTEST/KACK走査で「今押しているキー」を読む | 手順は固定エミュレータのMN1544実装に基づく。ROMなし実行では起動時にfont転送を読み捨てる |
 | `gfx.inc` | RAM影画面への文字・数値・2×2 tile描画と一括転送 | `JR_SHADOW`はpage境界。転送中はSを使用 |
 | `font.inc` / `font_data.inc` | 自作5×7字形を`$D100-$D2FF`へ設置 | メーカーFONTを使わない。終了時に元へ戻す |
 | `pcg.inc` | user pattern（code 0x00-0x1F／0x80-0x9F）の転送 | attribute mode 0x40で表示 |

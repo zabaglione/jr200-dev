@@ -17,7 +17,10 @@
 ;   GAME_STATUS_ROW / GAME_STATUS_ATTR, GAME_RENDER_FRAMES (frames one
 ;   jr_port_render is counted as; jr_port_animate waits the rest), game_sfx_table (.dw 4 phrases:
 ;   move, use, win, lose), and routines game_draw_title, game_draw_help,
-;   game_init, game_act (A = action), game_tick, game_draw (full screen).
+;   game_init, game_act (A = action), game_tick, game_draw (full screen),
+;   game_raw_key (B = raw code of a title-screen key that is not an action,
+;   A = 0 on entry; return A = an action to dispatch it, or A = 0; a plain
+;   RTS when unused).
 ; Game routines may clobber A, B and X; state lives in memory.
 ;
 ; jr_port_run      jump here after jr_session_enter and the game's setup
@@ -59,6 +62,14 @@ jr_port_idle:
         STAB    [JR_PORT_RAW]
         TSTA
         BNE     jr_port_dispatch
+        TSTB
+        BEQ     jr_port_tick
+        LDAA    [JR_PORT_MODE]
+        BNE     jr_port_tick
+        JSR     game_raw_key
+        TSTA
+        BNE     jr_port_dispatch
+jr_port_tick:
         LDAA    [JR_PORT_MODE]
         CMPA    JR_MODE_PLAY
         BNE     jr_port_idle

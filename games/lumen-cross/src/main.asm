@@ -97,6 +97,7 @@ lc_init_done:
         STAA    [LC_READY]
         RTS
 
+game_raw_key:
 game_tick:
         RTS
 

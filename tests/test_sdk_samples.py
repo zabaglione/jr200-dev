@@ -34,7 +34,7 @@ PROJECTS = {
          'sdk/port.inc', 'sdk/session.inc', 'sdk/sfx.inc', 'sdk/sound.inc'),
     ),
 }
-PORT_CONSUMERS = ['circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
+PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
 
 
 class SampleContractTests(unittest.TestCase):
@@ -123,6 +123,7 @@ class SdkImpactTests(unittest.TestCase):
         for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math', 'pcg',
                        'port', 'session', 'sfx'):
             cases[f'sdk/{module}.inc'] = PORT_CONSUMERS
+        cases['sdk/keyscan.inc'] = ['brick-pulse']
         for path, expected in cases.items():
             with self.subTest(path=path):
                 self.assert_builds(path, expected)

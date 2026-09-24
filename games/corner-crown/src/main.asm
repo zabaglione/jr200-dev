@@ -103,6 +103,7 @@ game_init:
         STAA    [CC_CURSOR]
         JMP     cc_totals
 
+game_raw_key:
 game_tick:
         RTS
 

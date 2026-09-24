@@ -6,7 +6,7 @@
 ;
 ; jr_session_enter
 ;   Call with JSR as the first action of the BASIC USR entry. Saves CC, the
-;   caller S, key IRQ mask, PCG banks 0/1, screen codes/attributes and
+;   caller S, key IRQ mask, key control port, PCG banks 0/1, screen codes/attributes and
 ;   character RAM $D000-$D7FF, masks IRQs, enables the Key-On status bit and
 ;   returns on the game's own stack. Clobbers A, B and X.
 ;
@@ -19,11 +19,13 @@
 ; jr_copy
 ;   Input: JR_RT_SRC, JR_RT_DST, JR_RT_COUNT (non-zero 16-bit count).
 ;   Copies bytes upward. IRQs must be masked because S walks the source.
-;   Clobbers A, B, X and JR_RT_COUNT. Restores S.
+;   Output: JR_RT_COUNT = end of the destination (DST + count); JR_RT_SRC
+;   and JR_RT_DST are unchanged. Clobbers A, B and X. Restores S.
 
 JR_RT_SAVE_CC:      .equ    JR_RT + 0
 JR_RT_SAVE_SP:      .equ    JR_RT + 1
 JR_RT_SAVE_MASK:    .equ    JR_RT + 3
+JR_RT_SAVE_KEYCTL:  .equ    JR_RT + 4
 JR_RT_RETURN:       .equ    JR_RT + 5
 JR_RT_SRC:          .equ    JR_RT + 7
 JR_RT_DST:          .equ    JR_RT + 9
@@ -64,6 +66,9 @@ jr_session_enter:
         LDX     0x0800
         STX     [JR_RT_COUNT]
         JSR     jr_copy
+        LDAA    [JR200_KEY_CONTROL]
+        ANDA    0xef
+        STAA    [JR_RT_SAVE_KEYCTL]
         LDAA    [JR200_KEY_IRQ_MASK]
         STAA    [JR_RT_SAVE_MASK]
         ORAA    1
@@ -92,7 +97,11 @@ jr_session_leave:
         LDX     0x0800
         STX     [JR_RT_COUNT]
         JSR     jr_copy
-        ; Discard a Key-On event left by the exit key before BASIC resumes.
+        ; Put the key control port back (twice, so the MCU sees no edge) and
+        ; discard a Key-On event left by the exit key before BASIC resumes.
+        LDAA    [JR_RT_SAVE_KEYCTL]
+        STAA    [JR200_KEY_CONTROL]
+        STAA    [JR200_KEY_CONTROL]
         LDAA    [JR200_KEY_IRQ_STATUS]
         LDAA    [JR_RT_SAVE_MASK]
         STAA    [JR200_KEY_IRQ_MASK]

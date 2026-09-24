@@ -925,7 +925,7 @@
    "priority": "P2",
    "issue": 25,
    "jr200_project": "games/brick-pulse",
-   "status": "planned"
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "star_lance",

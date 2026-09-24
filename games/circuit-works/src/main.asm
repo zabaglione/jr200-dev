@@ -150,6 +150,7 @@ cw_init_row:
         STAA    [CW_RUNNING]
         RTS
 
+game_raw_key:
 game_tick:
         RTS
 
