@@ -1,4 +1,5 @@
 # LUMEN CROSS
+<!-- CI acceptance: wiki-only scenario 5. -->
 
 選んだ場所と上下左右の明かりを反転し、5×5の盤をすべて消灯する全18面のパズルです。
 JR100devの`LUMEN CROSS 2.0.0`（`games/lumen_cross/rules.py`）を仕様として、JR-200向けに
