@@ -285,6 +285,53 @@
         "games/relic-dive/game.json",
         "games/relic-dive/media/**"
       ]
+    },
+    {
+      "id": "lumen-cross",
+      "kind": "game",
+      "project": "games/lumen-cross",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/lumen-cross/LICENSE",
+        "games/lumen-cross/Makefile",
+        "games/lumen-cross/THIRD_PARTY_NOTICES.md",
+        "games/lumen-cross/assets/**",
+        "games/lumen-cross/build.json",
+        "games/lumen-cross/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sfx.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/lumen-cross/tests/**",
+        "tests/port_model.py",
+        "tests/test_lumen_cross.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/lumen-cross/README.md",
+        "games/lumen-cross/UPSTREAM.md",
+        "games/lumen-cross/game.json",
+        "games/lumen-cross/media/**"
+      ]
     }
   ]
 }

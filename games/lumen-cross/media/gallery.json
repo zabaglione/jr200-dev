@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "29edab652c4a45f401d617c2fb07f025111a5e92d6e2da693f4dbad2c6e46d54",
+      "framebuffer_sha256": "2ce2715b46dcdb6c4c464887de21a99005f1fc449beb076cfc367a674c52cbc2"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-start",
+      "role": "play",
+      "caption": "ステージ1開始直後。カーソルの十字に^の予告が付く",
+      "sha256": "bb31d97d4e5bed67507cc3b6e8ce78dc2b44a367d4b6047e9ad3e6c0c7471b0b",
+      "framebuffer_sha256": "2906cf284a05a9083e2ec92c2ac8e83dbe160b8c56462cacd06867194f03dd46"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "ステージ1をPAR 4回で全消灯し、PERFECT CIRCUITを表示",
+      "sha256": "526cbfbd38cc0cdfd8a9530269af62c6fa91a4e7a8d5a5b1a67289371db68620",
+      "framebuffer_sha256": "90121d01e1e67c4afff9469d1b5f0647bc6f6e6859851f3fab422e08b27e95a5"
+    }
+  ]
+}

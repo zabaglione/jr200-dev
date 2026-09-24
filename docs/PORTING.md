@@ -51,11 +51,24 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
 | 8-bitの乗除算 | `sdk/math.inc` |
 | `rules.py`の`init`／`act`／`tick`／`draw` | 作品の`game_init`／`game_act`／`game_tick`／`game_draw` |
 
+第1弾の作品は、code `$1000-$2FFF`、影画面`$3000-$35FF`、保存領域`$3600-$45FF`、
+`JR_RT` `$4600`、状態`$4640-`、stack top `$4FFF`の同じ配置を使います。
 各作品は`JR_SHADOW`（page境界の1536 bytes）、`JR_SAVE`（4096 bytes）、`JR_RT`（64 bytes）、
 `GAME_STATE`〜`GAME_STATE_END`、専用stackを`build.json`のdata領域内に宣言します。
 USR入口で`jr_session_enter`がBASICの画面・PCG・文字RAM・key maskとSを保存し、
 ESC／CTRL+Cで`jr_session_leave`が戻します。演出（`jr_port_animate`）中に届いたキーは
-終了以外を捨て、次の手を誤って確定しません。上流はキーを1つ保持する方式なので、ここは意図した差分です。
+終了以外を捨て、次の手を誤って確定しません（上流作品READMEの「演出中に押したキーで結果を飛ばさない」に合わせる）。
+
+## 期待値の作り方
+
+作品の`tests/model.py`は上流`rules.py`の値の変化を8-bitで再現し、`tests/port_model.py`が
+`sdk/port.inc`の画面遷移（タイトル、説明、確認、次の面）を再現します。`tests/expectations.json`の
+RAM期待値はこのモデルの予測値で、`tests/test_<作品>.py`がreplayからモデルを再実行して一致を検査します。
+固定runnerは同じreplayをエミュレータで実行し、RAMが予測値と一致しなければ失敗します。
+画面hashだけは実出力から固定し、Wikiの画像と同じ由来にします。
+
+描画1回は約2.5 frame（約56,000 cycle）かかるため、各作品は`GAME_RENDER_FRAMES`を2とし、
+`jr_port_animate(n)`は描画後に`n-2` frameだけ待ちます。反転などの演出は上流より約2割遅くなります。
 
 ## 操作の対応
 

@@ -164,10 +164,10 @@ class SelectionTests(unittest.TestCase):
             shutil.copytree(source_root / 'samples', root / 'samples',
                             ignore=shutil.ignore_patterns('build'))
             (root / 'ci').mkdir(); (root / 'games').mkdir()
-            shutil.copytree(source_root / 'games/side-catch', root / 'games/side-catch',
-                            ignore=shutil.ignore_patterns('build'))
-            shutil.copytree(source_root / 'games/relic-dive', root / 'games/relic-dive',
-                            ignore=shutil.ignore_patterns('build'))
+            for game in sorted((source_root / 'games').iterdir()):
+                if game.is_dir():
+                    shutil.copytree(game, root / 'games' / game.name,
+                                    ignore=shutil.ignore_patterns('build'))
             shutil.copy2(source_root / 'ci/targets.json', root / 'ci/targets.json')
             shutil.copy2(source_root / 'ci/runner.lock.json', root / 'ci/runner.lock.json')
             shutil.copy2(source_root / 'emulator.lock.json', root / 'emulator.lock.json')

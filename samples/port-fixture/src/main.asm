@@ -16,6 +16,7 @@ GAME_RATE:          .equ    0
 GAME_SPACE_RESET:   .equ    1
 GAME_STATUS_ROW:    .equ    21
 GAME_STATUS_ATTR:   .equ    0x06
+GAME_RENDER_FRAMES: .equ    2
 
 FX_BOARD:           .equ    GAME_STATE
 FX_CURSOR:          .equ    GAME_STATE + 9

@@ -431,7 +431,7 @@
    "priority": "P1",
    "issue": 21,
    "jr200_project": "games/lumen-cross",
-   "status": "planned"
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "magnet_vault",

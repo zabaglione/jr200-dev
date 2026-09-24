@@ -14,7 +14,8 @@
 ; The game supplies:
 ;   GAME_LEVELS, GAME_RATE (frames per game_tick, 0 = none), GAME_SPACE_RESET,
 ;   GAME_STATE / GAME_STATE_END (cleared before each stage),
-;   GAME_STATUS_ROW / GAME_STATUS_ATTR, game_sfx_table (.dw 4 phrases:
+;   GAME_STATUS_ROW / GAME_STATUS_ATTR, GAME_RENDER_FRAMES (frames one
+;   jr_port_render is counted as; jr_port_animate waits the rest), game_sfx_table (.dw 4 phrases:
 ;   move, use, win, lose), and routines game_draw_title, game_draw_help,
 ;   game_init, game_act (A = action), game_tick, game_draw (full screen).
 ; Game routines may clobber A, B and X; state lives in memory.
@@ -24,7 +25,7 @@
 ; jr_port_lose     X = message or 0 for the default; mode 3, lose phrase
 ; jr_port_sound    A = phrase index 0-3
 ; jr_port_render   game_draw, status line, present
-; jr_port_animate  A = frames: render, then wait
+; jr_port_animate  A = frames: render, then wait A - GAME_RENDER_FRAMES frames
 ; jr_port_hold     A = frames: wait without rendering
 
 JR_PORT_MODE:       .equ    JR_RT + 32
@@ -199,6 +200,10 @@ jr_port_sound:
         JMP     jr_sfx_play
 
 jr_port_animate:
+        SUBA    GAME_RENDER_FRAMES
+        BCC     jr_port_animate_wait
+        CLRA
+jr_port_animate_wait:
         STAA    [JR_PORT_FRAMES]
         JSR     jr_port_render
         BRA     jr_port_wait

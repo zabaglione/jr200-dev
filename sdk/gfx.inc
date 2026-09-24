@@ -11,17 +11,20 @@
 ;   Input: A = code. Writes A and JR_RT_COLOR at the cursor, then advances.
 ;   Preserves A and B. Clobbers X.
 ; jr_gfx_text
-;   Input: X = zero-terminated string. Writes at the cursor with JR_RT_COLOR.
-;   Clobbers A and X. Preserves B.
+;   Input: X = zero-terminated string (at most 255 characters). Writes at the
+;   cursor with JR_RT_COLOR and advances it. S walks the string, so IRQs must
+;   be masked. Clobbers A, B and X.
 ; jr_gfx_dec2 / jr_gfx_dec3
 ;   Input: A = value (dec2 expects 0-99). Writes 2 or 3 digits at the cursor.
 ;   Clobbers A, B and X.
 ; jr_gfx_tile
 ;   Input: A = first of four consecutive codes (top-left, top-right,
 ;   bottom-left, bottom-right). Draws a 2x2 tile at the cursor with
-;   JR_RT_COLOR and advances the cursor by two columns. Clobbers A, B and X.
+;   JR_RT_COLOR and advances the cursor by two columns. The tile must not
+;   cross the right edge. Clobbers A and X. Preserves B.
 ; jr_gfx_fill
-;   Input: A = code, B = attribute for all 768 cells. Clobbers X.
+;   Input: A = code, B = attribute for all 768 cells. S walks the shadow,
+;   so IRQs must be masked. Clobbers A, B and X.
 ; jr_gfx_present
 ;   Copies the shadow to $C100-$C3FF and $C500-$C7FF. IRQs must be masked
 ;   (jr_session_enter does this) because S walks the shadow. Clobbers A and X.
@@ -74,16 +77,39 @@ jr_gfx_putc:
         RTS
 
 jr_gfx_text:
-        STX     [JR_RT_TEXT]
-jr_gfx_text_loop:
-        LDX     [JR_RT_TEXT]
-        LDAA    [X]
-        BEQ     jr_gfx_text_done
+        ; S walks the string (IRQs are masked by jr_session_enter).
+        STS     [JR_RT_PRESENT_SP]
+        TXS
+        LDX     [JR_RT_CURSOR]
+        CLRB
+jr_gfx_text_codes:
+        PULA
+        TSTA
+        BEQ     jr_gfx_text_attrs
+        STAA    [X]
         INX
+        INCB
+        BRA     jr_gfx_text_codes
+jr_gfx_text_attrs:
+        LDS     [JR_RT_PRESENT_SP]
         STX     [JR_RT_TEXT]
-        JSR     jr_gfx_putc
-        BRA     jr_gfx_text_loop
+        TSTB
+        BEQ     jr_gfx_text_done
+        LDAA    [JR_RT_CURSOR]
+        ADDA    3
+        STAA    [JR_RT_TMP]
+        LDAA    [JR_RT_CURSOR + 1]
+        STAA    [JR_RT_TMP + 1]
+        LDX     [JR_RT_TMP]
+        LDAA    [JR_RT_COLOR]
+jr_gfx_text_color:
+        STAA    [X]
+        INX
+        DECB
+        BNE     jr_gfx_text_color
 jr_gfx_text_done:
+        LDX     [JR_RT_TEXT]
+        STX     [JR_RT_CURSOR]
         RTS
 
 jr_gfx_dec3:
@@ -118,38 +144,63 @@ jr_gfx_dec2_put:
         JMP     jr_gfx_putc
 
 jr_gfx_tile:
-        STAA    [JR_RT_DIGIT]
-        JSR     jr_gfx_putc
-        INCA
-        JSR     jr_gfx_putc
         LDX     [JR_RT_CURSOR]
-        STX     [JR_RT_TEXT]
-        LDAB    [JR_RT_CURSOR + 1]
-        ADDB    30
-        STAB    [JR_RT_CURSOR + 1]
-        BCC     jr_gfx_tile_lower
-        INC     [JR_RT_CURSOR]
-jr_gfx_tile_lower:
+        STAA    [X]
         INCA
-        JSR     jr_gfx_putc
+        STAA    [X + 1]
         INCA
-        JSR     jr_gfx_putc
-        LDX     [JR_RT_TEXT]
+        STAA    [X + 32]
+        INCA
+        STAA    [X + 33]
+        LDAA    [JR_RT_CURSOR]
+        ADDA    3
+        STAA    [JR_RT_TMP]
+        LDAA    [JR_RT_CURSOR + 1]
+        STAA    [JR_RT_TMP + 1]
+        LDX     [JR_RT_TMP]
+        LDAA    [JR_RT_COLOR]
+        STAA    [X]
+        STAA    [X + 1]
+        STAA    [X + 32]
+        STAA    [X + 33]
+        LDX     [JR_RT_CURSOR]
+        INX
+        INX
         STX     [JR_RT_CURSOR]
         RTS
 
 jr_gfx_fill:
-        LDX     JR_SHADOW
+        ; S walks down the shadow (IRQs are masked by jr_session_enter).
+        STS     [JR_RT_PRESENT_SP]
+        STAB    [JR_RT_TMP]
+        LDS     JR_SHADOW_ATTRS - 1
+        LDAB    96
 jr_gfx_fill_codes:
-        STAA    [X]
-        INX
-        CPX     JR_SHADOW_ATTRS
+        PSHA
+        PSHA
+        PSHA
+        PSHA
+        PSHA
+        PSHA
+        PSHA
+        PSHA
+        DECB
         BNE     jr_gfx_fill_codes
+        LDAB    [JR_RT_TMP]
+        LDS     JR_SHADOW_ATTRS + 0x300 - 1
+        LDAA    96
 jr_gfx_fill_attrs:
-        STAB    [X]
-        INX
-        CPX     JR_SHADOW_ATTRS + 0x300
+        PSHB
+        PSHB
+        PSHB
+        PSHB
+        PSHB
+        PSHB
+        PSHB
+        PSHB
+        DECA
         BNE     jr_gfx_fill_attrs
+        LDS     [JR_RT_PRESENT_SP]
         RTS
 
 jr_gfx_present:

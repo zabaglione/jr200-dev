@@ -34,7 +34,7 @@ PROJECTS = {
          'sdk/port.inc', 'sdk/session.inc', 'sdk/sfx.inc', 'sdk/sound.inc'),
     ),
 }
-PORT_CONSUMERS = ['port-fixture-sample']
+PORT_CONSUMERS = ['lumen-cross', 'port-fixture-sample']
 
 
 class SampleContractTests(unittest.TestCase):
