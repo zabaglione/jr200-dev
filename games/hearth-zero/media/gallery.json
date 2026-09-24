@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "fff62800dbb99bd27695471410b5c13ae55f904ebe33f26a5afb3f007ae7903f",
+      "framebuffer_sha256": "fca6b63a8f6abfe75a66d5c7fd8c451f11600db33ebef9388b06ed4e7818e765"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-night",
+      "role": "play",
+      "caption": "1日目に壁を作った夜。雪が降り、3夜の予報が見える",
+      "sha256": "00d0b74b9e0848388ef23aff2d3b82724d3135fa6d458df30b9f66f504d8b7a5",
+      "framebuffer_sha256": "02c3beb2a38dd13d2db0b2f5d8551eb3ec0f8829e8f00a3b9246b1bec149c5d3"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-wave",
+      "role": "goal",
+      "caption": "最初の寒波の12夜を生き延びた",
+      "sha256": "998e9902cbcaae4d05f9600f434185ab232216a8ba96dab40da97b64096800d7",
+      "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48"
+    }
+  ]
+}

@@ -373,7 +373,7 @@
    "priority": "P1",
    "issue": 24,
    "jr200_project": "games/hearth-zero",
-   "status": "planned"
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "night_swarm",

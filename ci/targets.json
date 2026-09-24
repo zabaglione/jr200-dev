@@ -426,6 +426,53 @@
         "games/circuit-works/game.json",
         "games/circuit-works/media/**"
       ]
+    },
+    {
+      "id": "hearth-zero",
+      "kind": "game",
+      "project": "games/hearth-zero",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/hearth-zero/LICENSE",
+        "games/hearth-zero/Makefile",
+        "games/hearth-zero/THIRD_PARTY_NOTICES.md",
+        "games/hearth-zero/assets/**",
+        "games/hearth-zero/build.json",
+        "games/hearth-zero/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sfx.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/hearth-zero/tests/**",
+        "tests/port_model.py",
+        "tests/test_hearth_zero.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/hearth-zero/README.md",
+        "games/hearth-zero/UPSTREAM.md",
+        "games/hearth-zero/game.json",
+        "games/hearth-zero/media/**"
+      ]
     }
   ]
 }
