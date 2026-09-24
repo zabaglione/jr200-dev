@@ -40,16 +40,25 @@ TREE_URL = REPOSITORY_URL + '/tree/main/'
 UPSTREAM_URL = ('https://github.com/zabaglione/jr100dev/blob/'
                 '9a3921c4371d84c55fc468879dbed2f00fe42960/')
 GENRES = Path(__file__).resolve().with_name('genres.json')
+MAX_GALLERY_BYTES = 10_000_000
 
 
 class WikiError(ValueError):
     """Expected catalog, package, render, or local-sync failure."""
 
 
-def read_json(path: Path, description: str) -> Any:
+def read_json(path: Path, description: str, *, max_bytes: int | None = None) -> Any:
     try:
-        return json.loads(path.read_text(encoding='utf-8'))
-    except (OSError, json.JSONDecodeError) as exc:
+        if max_bytes is None:
+            source = path.read_text(encoding='utf-8')
+        else:
+            with path.open('rb') as stream:
+                data = stream.read(max_bytes + 1)
+            if len(data) > max_bytes:
+                raise WikiError(f'{description} exceeds the gallery size limit')
+            source = data.decode('utf-8')
+        return json.loads(source)
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise WikiError(f'Cannot read {description}: {path}: {exc}') from exc
 
 
@@ -485,8 +494,9 @@ def load_genres(path: Path = GENRES) -> list[dict[str, str]]:
     return genres
 
 
-def runtime_profiles(project: Path) -> dict[str, dict[str, Any]]:
-    value = read_json(project / 'tests/expectations.json', 'runtime expectations')
+def runtime_profiles(project: Path, *, max_bytes: int | None = None) -> dict[str, dict[str, Any]]:
+    value = read_json(project / 'tests/expectations.json', 'runtime expectations',
+                      max_bytes=max_bytes)
     try:
         return {item['profile']: item for item in value['runtime']['profiles']}
     except (TypeError, KeyError) as exc:
@@ -500,8 +510,8 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
         return None
     if path.is_symlink():
         raise WikiError(f'{project.name}: gallery manifest is a symlink')
-    value = read_json(path, 'gallery manifest')
-    profiles = runtime_profiles(project)
+    value = read_json(path, 'gallery manifest', max_bytes=MAX_GALLERY_BYTES)
+    profiles = runtime_profiles(project, max_bytes=MAX_GALLERY_BYTES)
     if (not isinstance(value, dict) or value.get('schema_version') != 1
             or not set(value) <= {'schema_version', 'scenes', 'video'}
             or not isinstance(value.get('scenes'), list) or not value['scenes']):
@@ -514,7 +524,11 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
         target = project / 'media' / file
         if not target.is_file() or target.is_symlink():
             raise WikiError(f'{project.name}: gallery file is missing: {file}')
-        return target.read_bytes()
+        with target.open('rb') as stream:
+            data = stream.read(MAX_GALLERY_BYTES + 1)
+        if len(data) > MAX_GALLERY_BYTES:
+            raise WikiError(f'{project.name}: gallery media exceeds the size limit')
+        return data
 
     def synthetic(profile: Any) -> dict[str, Any]:
         record = profiles.get(profile) if isinstance(profile, str) else None
