@@ -30,7 +30,7 @@
     {
       "os": "macos",
       "arch": "arm64",
-      "status": "contract_only"
+      "status": "verified"
     },
     {
       "os": "linux",

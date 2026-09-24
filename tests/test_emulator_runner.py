@@ -102,6 +102,13 @@ class LockTests(unittest.TestCase):
         report = verify_bundle(self.fixture.bundle, lock)
         self.assertEqual(len(report['files']), 2)
 
+    def test_current_lock_records_verified_macos_runtime(self):
+        lock = load_lock(ROOT / 'emulator.lock.json')
+        macos = next(item for item in lock['hosts']
+                     if item['os'] == 'macos' and item['arch'] == 'arm64')
+        self.assertEqual(macos['status'], 'verified')
+        self.assertEqual(lock['build']['system_api_version'], 9)
+
     def test_wrong_bundle_digest_is_rejected(self):
         (self.fixture.bundle / 'jr200_codec.wasm').write_bytes(b'changed')
         with self.assertRaisesRegex(RunnerError, 'does not match lock'):
