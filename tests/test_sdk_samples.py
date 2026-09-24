@@ -38,6 +38,14 @@ PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero',
 
 
 class SampleContractTests(unittest.TestCase):
+    def test_joystick_instructions_match_default_runner_api(self):
+        lock = json.loads((ROOT / 'emulator.lock.json').read_text(encoding='utf-8'))
+        readme = (ROOT / 'samples/joystick/README.md').read_text(encoding='utf-8')
+        self.assertIn(
+            f"system API {lock['build']['system_api_version']}", readme)
+        self.assertIn('上記コマンドは既定のlockを使って', readme)
+        self.assertNotIn('--lock /absolute/path/to/', readme)
+
     def test_samples_have_exact_recursive_sdk_dependencies(self):
         for target, (relative, expected_sdk) in PROJECTS.items():
             with self.subTest(target=target):

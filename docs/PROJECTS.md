@@ -146,9 +146,13 @@ ROM／FONTの保存はブラウザのoriginごとです。`PORT=`でportを変�
 ビルダーはincludeの実体がrepository内の `sdk/` に収まることと、宣言が過不足なく一致することを検査します。
 build reportでは共有入力を `@repo/sdk/...` としてhash化し、ローカル絶対pathは記録しません。
 
-`samples/screen`、`samples/input`、`samples/sound`、`samples/game-loop` が機能別の最小例です。
-各sampleは自身のdirectoryで `make build`／`make run` でき、使わないmoduleを依存へ含めません。
-`game-loop` のlocal ROM profileだけが通常 `MLOAD`、BASIC `USR`、BASIC復帰probeまで確認します。
+`samples/screen`、`samples/input`、`samples/joystick`、`samples/sound`、
+`samples/game-loop`、`samples/port-fixture` が機能別・移植用のsampleです。
+各sampleは自身のdirectoryで `make build` でき、使わないmoduleを依存へ含めません。
+`joystick`はROM／FONTを用いる通常`MLOAD` profileのみ対応するため、`make run`ではなく
+[専用手順](../samples/joystick/README.md)で`--rom`／`--font`を指定します。
+ほかのsampleは`make run`で既定の合成profileを実行できます。
+`game-loop` のlocal ROM profileは通常 `MLOAD`、BASIC `USR`、BASIC復帰probeまで確認します。
 物理JR-200での表示、keyboard、音声、時間は未確認です。
 
 ## 検証境界

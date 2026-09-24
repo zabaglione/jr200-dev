@@ -6,7 +6,7 @@ JR-200向けゲームの開発ルール、共通ルーチン、サンプル、�
 
 **現在は初版候補のローカル受入段階です。** 要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
 合成fixtureに加え、JR-200ルール、プロジェクト契約、最小CJRテンプレート、選択的CI、
-固定エミュレータrunner、画面／入力／ジョイスティック／音声／待機module、5つのsample、最初のゲーム
+固定エミュレータrunner、画面／入力／ジョイスティック／音声／待機module、6つのsample、最初のゲーム
 `SIDE CATCH`、JR-100からカラー移植したローグライク`RELIC DIVE`、固定package、
 Wiki preview／dry-run同期を整備しています。
 runnerはローカル固定bundleで実行確認済みですが、CIから取得するRelease資産は未公開です。
