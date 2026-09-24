@@ -20,9 +20,16 @@ replay（playerは`0`または`1`、stateは`0x00`から`0xff`）をこの固定
 
 前回の固定版（commit `81e4174c550e20e166b0431b4235ba3b7650da76`、system API 6）は、同じ手順の
 Linux buildでも以前macOS arm64で記録したdigestとバイト単位で一致しました。Emscriptenの出力が
-hostに依存しないことの実例ですが、新しい固定bundleのmacOS実行はまだ記録していないため、
-lockのmacOS行は`contract_only`です。Linux x86_64では2026-09-24に、全target（sample 6、ゲーム2）の
+hostに依存しないことの実例です。Linux x86_64では2026-09-24に、全target（sample 6、ゲーム2）の
 全合成profileが新旧bundleの両方で合格しました。
+
+2026-09-25、上記digestと一致する現行bundleをmacOS arm64で検査し、`minimal`の
+`synthetic-ci`（31 cycle）とローカルROM／FONTを使う`local-rom-mload`（15,000,003 cycle）が
+期待値に一致しました。`joystick-sample`の`local-rom-joystick`も通常MLOAD／USR経路で
+28,006,298 cycle後に合格し、1P／2Pのrawは`EA/D5`、pressedは`15/2A`でした。
+lockのmacOS行はこの固定bundleの**実行確認**を示す`verified`へ更新しました。
+Macでのクリーン再ビルド、全作品のMac実行、物理JR-200動作を示すものではありません。
+ROM／FONTのbytes・hash・ローカルpathは記録や配布へ含めていません。
 
 現在はbundleのRelease資産を公開していないため、取得状態は `local_build_only` です。
 `JR200_RUNNER_BUNDLE` または `--bundle` で既存のビルド済みdirectoryを明示します。
