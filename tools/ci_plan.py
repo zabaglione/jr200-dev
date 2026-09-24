@@ -24,6 +24,8 @@ DOCS = ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
         '.github/pull_request_template.md')
 WIKI = ('tools/wiki/**', 'games/catalog.json')
 INFRA = ('.gitignore', '.gitattributes', '.editorconfig')
+# Interactive local tools that neither build nor test targets.
+LOCAL_TOOLS = ('tools/game_play.py',)
 
 
 def path_ok(value: str) -> bool:
@@ -143,7 +145,7 @@ def select(registry: Any, changed: list[str], force: bool = False) -> dict[str, 
             docs = True
         elif matches(path, WIKI):
             docs = wiki = True
-        elif path in INFRA:
+        elif path in INFRA or path in LOCAL_TOOLS:
             pass
         else:
             unknown.append(path)

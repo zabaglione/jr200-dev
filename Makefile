@@ -1,5 +1,5 @@
 PYTHON ?= python3
-.PHONY: check test plan release-audit jrasm-doctor jrasm-check runner-doctor template-validate template-build template-run template-package new-project game-validate game-build game-run game-package game-clean wiki-check wiki-preview wiki-sync-dry-run wiki-sync-apply
+.PHONY: check test plan release-audit jrasm-doctor jrasm-check runner-doctor template-validate template-build template-run template-package new-project game-validate game-build game-run game-package game-clean game-play wiki-check wiki-preview wiki-sync-dry-run wiki-sync-apply
 check:
 	$(PYTHON) tools/check_repository.py
 	$(PYTHON) -m unittest discover -s tests -v
@@ -47,6 +47,10 @@ game-validate game-build game-package game-clean:
 game-run:
 	@test -n "$(PROJECT)" -a -n "$(RUNNER_BUNDLE)" || { echo "PROJECT and RUNNER_BUNDLE are required" >&2; exit 2; }
 	$(PYTHON) tools/emulator_runner.py run --project "$(PROJECT)" --bundle "$(RUNNER_BUNDLE)"
+
+game-play:
+	@test -n "$(PROJECT)" -a -n "$(WEB_SITE)" || { echo "PROJECT and WEB_SITE are required" >&2; exit 2; }
+	$(PYTHON) tools/game_play.py --project "$(PROJECT)" --web "$(WEB_SITE)" $(if $(PORT),--port "$(PORT)",)
 
 wiki-check:
 	$(PYTHON) tools/wiki/generate.py --include-candidates check
