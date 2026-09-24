@@ -16,8 +16,10 @@
 ;   MCU did not answer (A then keeps the previous result). Consumes the
 ;   Key-On events of the transfer. Clobbers B and X.
 
-JR_RT_SCAN_BASE:    .equ    JR_RT + 45
-JR_RT_SCAN_KEY:     .equ    JR_RT + 46
+; +44..45 belongs to session.inc's 16-bit copy stack pointer. A scan may be
+; followed by a PCG/font/present copy, so its persistent state lives at +50.
+JR_RT_SCAN_BASE:    .equ    JR_RT + 50
+JR_RT_SCAN_KEY:     .equ    JR_RT + 51
 JR200_KEY_TEST:     .equ    0x02
 JR200_KEY_ACK:      .equ    0x01
 JR_SCAN_WAIT:       .equ    40

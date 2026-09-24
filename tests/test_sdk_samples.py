@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 import json
 from pathlib import Path
+import re
 import sys
 import unittest
 
@@ -29,8 +30,9 @@ PROJECTS = {
     ),
     'port-fixture-sample': (
         'samples/port-fixture',
-        ('sdk/font.inc', 'sdk/font_data.inc', 'sdk/frame.inc', 'sdk/gfx.inc',
-         'sdk/jr200.inc', 'sdk/keys.inc', 'sdk/math.inc', 'sdk/pcg.inc',
+        ('sdk/effect.inc', 'sdk/font.inc', 'sdk/font_data.inc', 'sdk/frame.inc', 'sdk/gfx.inc',
+         'sdk/jr200.inc', 'sdk/keyrepeat.inc', 'sdk/keys.inc', 'sdk/keyscan.inc',
+         'sdk/math.inc', 'sdk/pcg.inc',
          'sdk/port.inc', 'sdk/session.inc', 'sdk/sfx.inc', 'sdk/sound.inc'),
     ),
 }
@@ -101,6 +103,73 @@ class SampleContractTests(unittest.TestCase):
              'player': 1, 'state': 0xd5},
         ])
 
+    def test_port_fixture_covers_key_hold_repeat_release_and_exit(self):
+        project = ROOT / 'samples/port-fixture'
+        expectations = json.loads(
+            (project / 'tests/expectations.json').read_text(encoding='utf-8'))
+        profiles = {item['profile']: item
+                    for item in expectations['runtime']['profiles']}
+        self.assertEqual(
+            profiles['synthetic-keyrepeat-tap']['expect']['memory']['scan'],
+            '0100010101')
+        self.assertEqual(
+            profiles['synthetic-keyrepeat']['expect']['memory']['scan'],
+            '010c011c01')
+        for name in ('synthetic-keyrepeat-tap', 'synthetic-keyrepeat'):
+            self.assertEqual(
+                profiles[name]['expect']['memory']['repeat-state'], '000000')
+        for name in ('synthetic-keyrepeat-exit',
+                     'synthetic-keyrepeat-ctrl-c-exit'):
+            exit_profile = profiles[name]
+            self.assertEqual(exit_profile['expect']['stop_reason'], 'breakpoint')
+            self.assertEqual(exit_profile['expect']['pc'], '0x7ff0')
+            self.assertEqual(exit_profile['expect']['memory']['key-mask'], '00')
+        effect = profiles['synthetic-nonblocking-effect']
+        self.assertEqual(effect['expect']['memory']['effect'], '011401012d')
+        self.assertEqual(effect['expect']['memory']['effect-state'], '0014')
+        effect_exit = profiles['synthetic-effect-exit']
+        self.assertEqual(effect_exit['expect']['stop_reason'], 'breakpoint')
+        self.assertEqual(effect_exit['expect']['memory']['effect-attr'], '00')
+        self.assertIn('JSR     jr_keyrepeat_poll',
+                      (project / 'src/main.asm').read_text(encoding='utf-8'))
+
+    def test_keyscan_state_is_disjoint_from_copy_and_repeat_state(self):
+        def offset(source, symbol):
+            match = re.search(
+                rf'^{symbol}:\s+\.equ\s+JR_RT \+ (\d+)\s*$',
+                source, re.MULTILINE)
+            self.assertIsNotNone(match, symbol)
+            return int(match.group(1))
+
+        scan = (ROOT / 'sdk/keyscan.inc').read_text(encoding='utf-8')
+        repeat = (ROOT / 'sdk/keyrepeat.inc').read_text(encoding='utf-8')
+        effect = (ROOT / 'sdk/effect.inc').read_text(encoding='utf-8')
+        session = (ROOT / 'sdk/session.inc').read_text(encoding='utf-8')
+        copy_sp = offset(session, 'JR_RT_COPY_SP')
+        scan_state = {offset(scan, symbol) for symbol in
+                      ('JR_RT_SCAN_BASE', 'JR_RT_SCAN_KEY')}
+        repeat_state = {offset(repeat, symbol) for symbol in
+                        ('JR_RT_REPEAT_PREV', 'JR_RT_REPEAT_COUNT',
+                         'JR_RT_REPEAT_CURRENT')}
+        effect_state = {offset(effect, symbol) for symbol in
+                        ('JR_RT_EFFECT_REMAIN', 'JR_RT_EFFECT_PHASE')}
+        self.assertFalse(scan_state & {copy_sp, copy_sp + 1})
+        self.assertFalse(scan_state & repeat_state)
+        self.assertFalse(effect_state & (scan_state | repeat_state |
+                                         {copy_sp, copy_sp + 1}))
+        self.assertTrue(all(0 <= item < 64 for item in
+                            scan_state | repeat_state | effect_state))
+        self.assertNotIn('jr_frame_wait', effect)
+        self.assertNotIn('jr_keys_poll', effect)
+        self.assertNotIn('jr_keyscan', effect)
+
+        fixture = (ROOT / 'samples/port-fixture/src/main.asm').read_text(
+            encoding='utf-8').split('fx_scan_run:\n', 1)[1].split('game_act:\n', 1)[0]
+        self.assertLess(fixture.index('JSR     jr_keyscan\n'),
+                        fixture.index('JSR     jr_pcg_load\n'))
+        self.assertLess(fixture.index('JSR     jr_pcg_load\n'),
+                        fixture.index('JSR     jr_keyrepeat_poll\n'))
+
 
 class SdkImpactTests(unittest.TestCase):
     @classmethod
@@ -131,7 +200,9 @@ class SdkImpactTests(unittest.TestCase):
         for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math', 'pcg',
                        'port', 'session', 'sfx'):
             cases[f'sdk/{module}.inc'] = PORT_CONSUMERS
-        cases['sdk/keyscan.inc'] = ['brick-pulse']
+        cases['sdk/keyscan.inc'] = ['brick-pulse', 'port-fixture-sample']
+        cases['sdk/keyrepeat.inc'] = ['port-fixture-sample']
+        cases['sdk/effect.inc'] = ['port-fixture-sample']
         for path, expected in cases.items():
             with self.subTest(path=path):
                 self.assert_builds(path, expected)

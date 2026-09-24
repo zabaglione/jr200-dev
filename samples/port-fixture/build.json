@@ -13,12 +13,15 @@
   "inputs": {
     "assembly": ["src/main.asm"],
     "sdk": [
+      "sdk/effect.inc",
       "sdk/font.inc",
       "sdk/font_data.inc",
       "sdk/frame.inc",
       "sdk/gfx.inc",
       "sdk/jr200.inc",
+      "sdk/keyrepeat.inc",
       "sdk/keys.inc",
+      "sdk/keyscan.inc",
       "sdk/math.inc",
       "sdk/pcg.inc",
       "sdk/port.inc",
