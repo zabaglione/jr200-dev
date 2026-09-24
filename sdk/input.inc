@@ -1,4 +1,5 @@
 ; SPDX-License-Identifier: BSD-3-Clause
+; CI acceptance: shared SDK scenario 3.
 ; Requires jr200.inc.
 ; These routines read the current key-data latch. They do not start the
 ; key + joystick ROM scan, acknowledge interrupts, change the IRQ mask, or
