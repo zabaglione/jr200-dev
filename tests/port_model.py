@@ -118,3 +118,15 @@ def check_expectations(case, expectations: dict, make_model, max_cycles: int = 2
                 if name in memory:
                     case.assertEqual(memory[name], predicted[name], name)
             case.assertEqual(port.exited, profile['expect']['stop_reason'] == 'breakpoint')
+
+
+def load_game_model(game: str):
+    """Import games/<game>/tests/model.py under a unique module name."""
+    import importlib.util
+    from pathlib import Path
+    path = Path(__file__).resolve().parents[1] / 'games' / game / 'tests/model.py'
+    name = 'model_' + game.replace('-', '_')
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module

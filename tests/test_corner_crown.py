@@ -8,9 +8,9 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / 'games/corner-crown'
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-sys.path.insert(0, str(PROJECT / 'tests'))
-import model as cc  # noqa: E402
-from port_model import PortModel, check_expectations  # noqa: E402
+from port_model import PortModel, check_expectations, load_game_model  # noqa: E402
+
+cc = load_game_model('corner-crown')
 
 
 def started():

@@ -9,9 +9,9 @@ ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / 'games/lumen-cross'
 sys.path.insert(0, str(ROOT / 'tools'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-sys.path.insert(0, str(PROJECT / 'tests'))
-import model as lc  # noqa: E402
-from port_model import PortModel  # noqa: E402
+from port_model import PortModel, load_game_model  # noqa: E402
+
+lc = load_game_model('lumen-cross')
 from emulator_runner import validate_expectations  # noqa: E402
 from game_project import validate_project  # noqa: E402
 
