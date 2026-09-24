@@ -74,3 +74,37 @@ git -C /absolute/path/to/jr200-dev.wiki diff --stat
 remote push用jobとゲームの初回公開は未実装です。公開packageと明示承認が揃った時点で、
 PR検査とは別workflow、最小書込み権限、直列実行を追加します。公開指定pageの生成には
 `--expected-commit "$GITHUB_SHA"` を必須とし、clean packageのsource commitが公開対象のmain commitの祖先であることを照合します。これにより、固定packageを作り直さずに説明文だけを更新できます。
+
+## Webエミュレータのカタログへのエクスポート
+
+`tools/web_export.py`は、`games/catalog.json`で`verified`かつ公開指定の1作品1版だけを、
+`jr200-web-emulator`のsiteへ取り込むためのstaging directoryにします。エミュレータのリポジトリを
+変更・pushせず、Release作成も行いません。
+
+```sh
+python3 tools/web_export.py \
+  --game side-catch --version 0.1.0 --approve side-catch@0.1.0 \
+  --site-catalog /absolute/path/to/jr200-web-emulator/web/game-catalog.json \
+  --site /absolute/path/to/current/site --expected-commit "$(git rev-parse HEAD)"
+# 差分を確認してから
+python3 tools/web_export.py ...同じ引数... --output /absolute/path/to/empty/staging
+```
+
+| 検査 | 内容 |
+| --- | --- |
+| 承認 | `--approve <id>@<version>`が選択と一致しない場合は拒否 |
+| 状態 | `status=verified`、`wiki.publish=true`、clean sourceのpackage、公開commitの祖先 |
+| package | `load_package`の全検査（hash、実行report、ライセンス、SHA256SUMS） |
+| CJR | package内CJRのSHA-256、1 MiB以下、entryがload block内、`A=USR($XXXX)`と一致 |
+| カタログ | エミュレータの`validateGameCatalog`と同じ規則。重複ID、不正path、他作品の変更を拒否 |
+| 不変性 | `--site`に同じ版のfileがあり内容が異なれば停止。同一なら`unchanged` |
+
+出力は`games/<id>/<version>/`のCJR、`LICENSE.txt`、MIT作品では`THIRD_PARTY_NOTICES.md`と
+`LICENSES/BSD-3-Clause.txt`、由来を記した`EXPORT.json`、更新後の`game-catalog.json`、
+`export-manifest.json`です。Webカタログは1 IDにつき推奨版1件だけを持ち、`?game=<id>`はその版を開きます。
+過去版のfileは同じpathに残して上書きしません。版指定リンクは現行の`game-launch.mjs`にないため、
+必要になった時点でエミュレータ側のschema拡張として別途合意します。
+
+エミュレータ側では、`scripts/stage_web.py`のallow-listに`games/`と上記manifestのfileを加え、
+SBOMとnoticeを更新する変更が必要です。これはエミュレータのリポジトリで行い、本リポジトリへ複製しません。
+取込み後にPages上のcatalogとCJRのURL到達性・SHA-256を確認してから、Wikiの「遊ぶ」を有効にします。

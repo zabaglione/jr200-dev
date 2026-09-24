@@ -22,7 +22,7 @@ TEST_POLICY = ('ci/runner.lock.json', 'emulator.lock.json',
 DOCS = ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
         'docs/**', 'sdk/README.md', '.github/ISSUE_TEMPLATE/**',
         '.github/pull_request_template.md')
-WIKI = ('tools/wiki/**', 'games/catalog.json')
+WIKI = ('tools/wiki/**', 'tools/web_export.py', 'games/catalog.json')
 INFRA = ('.gitignore', '.gitattributes', '.editorconfig')
 # Interactive local tools that neither build nor test targets.
 LOCAL_TOOLS = ('tools/game_play.py',)
