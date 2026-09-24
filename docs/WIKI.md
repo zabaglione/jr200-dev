@@ -12,9 +12,29 @@
 [Playページ](https://github.com/zabaglione/jr200-dev/wiki/Play)の表示と操作順をブラウザで確認しました。
 ゲームRelease配信、repositoryのpublic化、PagesへのゲームCJR追加は行っていません。
 
+## ページ構成
+
+| page | 内容 |
+| --- | --- |
+| `Home` | 入口、6ジャンルと公開件数、公開／候補版／開発中を分けた作品カード |
+| `_Sidebar` | 全ページ共通のナビゲーション |
+| `All-Games` | タイトル順の一覧 |
+| `Genre-Puzzle`ほか6ページ | `tools/wiki/genres.json`のジャンル説明と作品カード。公開作品がなければ「公開作品準備中」 |
+| `Game-<slug>` | パンくず、状態・版・ライセンス、遊ぶ、画面（全scene）、動画、READMEの各節、版と検証、ソース |
+| `Controls` | 共通の注意と、各READMEの「操作」節をそのまま並べた作品別の表 |
+| `Play` | ROM／FONTとCJRのセット、`MLOAD`／`USR`、うまく動かないとき |
+| `Presentation` | 全作品の画面と動画 |
+| `Quality-Review` | 検証方法と作品別の検証区分（ROMなし合成、所有ROM/FONT、物理JR-200） |
+| `Licenses` | 共通SDK、作品別ライセンス、移植元、エミュレータ |
+| `Games` | 旧URLの維持。全作品とジャンル別ページへ案内 |
+
+JR100 Wikiの構成を参考にしていますが、文章は複製せず、作品の正本（`game.json`、README、
+`media/gallery.json`）から生成します。作品ページ名は現行の`Game-<slug>`のままです。
+
 ## 入力と検査
 
-正本は `games/catalog.json`、各作品の `game.json`、README、`media/screenshot.png` です。
+正本は `games/catalog.json`、各作品の `game.json`、README、`media/screenshot.png`、
+`media/gallery.json`、`tools/wiki/genres.json` です。
 候補版を含める場合でも、generatorは次をすべて検査します。
 
 - catalogと作品metadataのID、version、status、publication、license
@@ -23,8 +43,28 @@
 - screenshotのPNG SHA-256、320×224 RGBA画素hash、合成profileのframebuffer hash
 - 公開指定時の `verified`、固定Release URL、clean sourceから作られたpackage
 
+- `gallery.json`の各画像のPNG SHA-256、320×224の画素hash、ROMなし合成profileの期待framebuffer hash、
+  動画のSHA-256とWebM形式。古い版の画像が残っていれば停止します
+- ジャンルが`genres.json`にあること。catalog外の作品は`draft`／`not-published`に限ります
+- 生成した全ページのリンク：Wiki内ページ、`media/`、リポジトリ内file（`blob/main`・`tree/main`の
+  対象が実在すること）、許可したURL（Webエミュレータ、固定revisionのjr100dev、固定Release）。
+  それ以外のURL、JR-100のプレイURL（`pyjr100emu`）、PRGへの言及、altのない画像、先頭がH1でない
+  ページを拒否します
+
 下書き、package欠落、hash不一致、不正path、構文上不正なHTTPS URLを拒否します。
 外部URLのHTTP到達性検査は、公開URLがまだ存在しない現在の段階では行いません。
+
+## 開発中の作品のpreview
+
+移植中の作品（catalog外の`draft`）は、ローカルpreviewだけに出せます。packageやROMは不要です。
+
+```sh
+make wiki-preview-dev   # build/wiki-preview-dev/
+```
+
+各作品にはREADMEの「目的と勝敗」「操作」「起動」「検証の範囲」「ライセンス」節と、
+`gallery.json`（3場面以上）が必要です。開発中の作品には「遊ぶ」リンクを出さず、
+`sync`に`--include-development`を渡すと停止します。
 
 ## 候補版preview
 
@@ -86,8 +126,8 @@ make wiki-sync-apply WIKI_DIR=/absolute/path/to/jr200-dev.wiki
 git -C /absolute/path/to/jr200-dev.wiki diff --stat
 ```
 
-`apply` はlocal worktreeだけを変更します。管理manifestに記録された `Home.md`、`Games.md`、
-`Play.md`、`Licenses.md`、`Game-<slug>.md`、`media/<slug>.png` だけを更新・削除し、手書きpageを保持します。
+`apply` はlocal worktreeだけを変更します。管理manifestに記録された上記のページと
+`media/<slug>*.png`／`media/<slug>*.webm` だけを更新・削除し、手書きpageを保持します。
 同名の未管理fileや、前回生成後に手編集されたfileには上書き・削除せず停止します。
 2回目のdry-runでadd／update／deleteが0ならcommitやpushは不要です。
 

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -15,6 +16,13 @@ from wiki.generate import (WikiError, apply_files, render_pages,
 
 
 ROOT = Path(__file__).resolve().parents[1]
+GENRE_PAGES = ['Genre-Action.md', 'Genre-Exploration.md', 'Genre-Management.md',
+               'Genre-Puzzle.md', 'Genre-Tabletop.md', 'Genre-Tactics.md']
+BASE_PAGES = ['All-Games.md', 'Controls.md', 'Games.md', 'Home.md', 'Licenses.md',
+              'Play.md', 'Presentation.md', 'Quality-Review.md', '_Sidebar.md', *GENRE_PAGES]
+DEVELOPMENT = {'brick-pulse': 'Genre-Action', 'circuit-works': 'Genre-Tactics',
+               'corner-crown': 'Genre-Tabletop', 'hearth-zero': 'Genre-Management',
+               'lumen-cross': 'Genre-Puzzle', 'relic-dive': 'Genre-Exploration'}
 
 
 def make_cjr(payload=b'\x01\x39', start=0x1000):
@@ -37,6 +45,8 @@ class WikiFixture:
                         ignore=shutil.ignore_patterns('build'))
         shutil.copytree(ROOT / 'sdk', self.root / 'sdk')
         shutil.copytree(ROOT / 'rules', self.root / 'rules')
+        shutil.copytree(ROOT / 'docs', self.root / 'docs')
+        (self.root / 'samples').mkdir()
         shutil.copy2(ROOT / 'LICENSE', self.root / 'LICENSE')
         self.metadata_path = self.root / 'games/side-catch/game.json'
         self.metadata = json.loads(self.metadata_path.read_text(encoding='utf-8'))
@@ -72,6 +82,13 @@ class WikiFixture:
 
     def close(self):
         self.temporary.cleanup()
+
+    def add_development_games(self):
+        for project in sorted(ROOT.glob('games/*/game.json')):
+            name = project.parent.name
+            if name != 'side-catch':
+                shutil.copytree(project.parent, self.root / 'games' / name,
+                                ignore=shutil.ignore_patterns('build', '__pycache__'))
 
     def report(self, profile, mode, evidence, framebuffer='0' * 64):
         cassette = 'memory_injection' if mode == 'synthetic-injection' else 'normal'
@@ -180,17 +197,16 @@ class WikiGenerationTests(unittest.TestCase):
 
     def test_candidate_requires_explicit_preview_and_includes_verified_image(self):
         public_files, public_games = render_pages(self.fixture.root, None, False)
-        self.assertEqual(sorted(public_files), ['Games.md', 'Home.md', 'Licenses.md', 'Play.md'])
+        self.assertEqual(sorted(public_files), sorted(BASE_PAGES))
         self.assertEqual(public_games, [])
         files, games = render_pages(self.fixture.root, None, True)
-        self.assertEqual(sorted(files), [
-            'Game-side-catch.md', 'Games.md', 'Home.md', 'Licenses.md',
-            'Play.md', 'media/side-catch.png'])
+        self.assertEqual(sorted(files), sorted(
+            BASE_PAGES + ['Game-side-catch.md', 'media/side-catch.png']))
         page = files['Game-side-catch.md'].decode('utf-8')
-        self.assertIn('local, unpublished candidate', page)
+        self.assertIn('非公開の候補版プレビュー', page)
         self.assertIn('media/side-catch.png', page)
-        self.assertIn('Physical display verification has not been run', page)
-        self.assertNotIn('[Play in the emulator]', page)
+        self.assertIn('物理JR-200での表示は未確認', page)
+        self.assertNotIn('?game=side-catch', page)
         self.assertIn('https://zabaglione.github.io/jr200-web-emulator/', page)
         self.assertIn('CJRは手動で選択', page)
         self.assertIn('MLOAD', files['Play.md'].decode('utf-8'))
@@ -198,6 +214,9 @@ class WikiGenerationTests(unittest.TestCase):
                         files['Play.md'].decode('utf-8').index('2. 「02 起動データ」'))
         self.assertIn('検証済みの公開ゲームはまだありません',
                       public_files['Home.md'].decode('utf-8'))
+        for name, content in public_files.items():
+            if name.startswith('Genre-'):
+                self.assertIn('公開作品準備中', content.decode('utf-8'))
         self.assertEqual(files['media/side-catch.png'],
                          (self.fixture.root / 'games/side-catch/media/screenshot.png').read_bytes())
         self.assertEqual([item['id'] for item in games], ['side-catch'])
@@ -238,16 +257,25 @@ class WikiGenerationTests(unittest.TestCase):
         readme.write_text('# SIDE CATCH\n\nUpdated guide only.\n', encoding='utf-8')
         self.fixture.metadata['title'] = 'SIDE CATCH UPDATED'
         self.fixture.metadata['summary'] = 'Updated catalog copy without a game rebuild.'
-        self.fixture.metadata['genre'] = 'arcade'
+        self.fixture.metadata['genre'] = 'puzzle'
         self.fixture.metadata_path.write_text(
             json.dumps(self.fixture.metadata) + '\n', encoding='utf-8')
-        self.fixture.catalog['games'][0]['genre'] = 'arcade'
+        self.fixture.catalog['games'][0]['genre'] = 'puzzle'
         self.fixture.write_catalog()
         files, _ = render_pages(self.fixture.root, None, True)
         page = files['Game-side-catch.md'].decode('utf-8')
         self.assertIn('# SIDE CATCH UPDATED', page)
         self.assertIn('Updated guide only.', page)
-        self.assertIn('## arcade', files['Games.md'].decode('utf-8'))
+        self.assertIn('[Home](Home) › [パズル](Genre-Puzzle) › SIDE CATCH UPDATED', page)
+        self.assertIn('Game-side-catch', files['Genre-Puzzle.md'].decode('utf-8'))
+        self.assertNotIn('Game-side-catch', files['Genre-Action.md'].decode('utf-8'))
+        self.fixture.metadata['genre'] = 'arcade'
+        self.fixture.metadata_path.write_text(
+            json.dumps(self.fixture.metadata) + '\n', encoding='utf-8')
+        self.fixture.catalog['games'][0]['genre'] = 'arcade'
+        self.fixture.write_catalog()
+        with self.assertRaisesRegex(WikiError, 'unknown genre'):
+            render_pages(self.fixture.root, None, True)
 
     def test_rejects_unsafe_archive_member(self):
         self.fixture.write_package('../escape')
@@ -288,7 +316,7 @@ class WikiGenerationTests(unittest.TestCase):
             render_pages(self.fixture.root, None, False)
         files, games = render_pages(
             self.fixture.root, None, False, expected_commit=current_commit)
-        self.assertIn('[Download the fixed package]',
+        self.assertIn('[固定パッケージをダウンロード]',
                       files['Game-side-catch.md'].decode('utf-8'))
         self.assertTrue(games[0]['publish'])
         self.assertIn('検証済みの公開ゲームを作品一覧から選べます',
@@ -376,10 +404,129 @@ class WikiGenerationTests(unittest.TestCase):
         (wiki / 'Home.md').write_bytes(files['Home.md'])
         plan = sync_plan(wiki, files)
         self.assertEqual(plan['unchanged'], ['Home.md'])
-        self.assertEqual(plan['add'], ['Games.md', 'Licenses.md', 'Play.md'])
+        self.assertEqual(plan['add'], sorted(set(BASE_PAGES) - {'Home.md'}))
         (wiki / 'Home.md').write_text('different\n', encoding='utf-8')
         with self.assertRaisesRegex(WikiError, 'unowned Wiki file'):
             sync_plan(wiki, files)
+
+
+class SevenGamePreviewTests(unittest.TestCase):
+    """The six-genre structure with one candidate and six development ports."""
+
+    def setUp(self):
+        self.fixture = WikiFixture()
+        self.fixture.add_development_games()
+
+    def tearDown(self):
+        self.fixture.close()
+
+    def render(self):
+        return render_pages(self.fixture.root, None, True, include_development=True)
+
+    def test_home_genres_all_games_and_pages_agree(self):
+        files, games = self.render()
+        self.assertEqual(sorted(item['id'] for item in games),
+                         sorted([*DEVELOPMENT, 'side-catch']))
+        self.assertEqual({item['id']: item['tier'] for item in games}['side-catch'],
+                         'candidate')
+        self.assertTrue(set(BASE_PAGES) <= set(files))
+        home = files['Home.md'].decode('utf-8')
+        all_games = files['All-Games.md'].decode('utf-8')
+        for game, genre in {**DEVELOPMENT, 'side-catch': 'Genre-Action'}.items():
+            page = files[f'Game-{game}.md'].decode('utf-8')
+            self.assertIn(f'](Game-{game})', home)
+            self.assertIn(f'](Game-{game})', all_games)
+            self.assertIn(f'](Game-{game})', files[genre + '.md'].decode('utf-8'))
+            for other in GENRE_PAGES:
+                if other != genre + '.md':
+                    self.assertNotIn(f'](Game-{game})', files[other].decode('utf-8'))
+            self.assertIn(f'[Home](Home) › [', page)
+            self.assertIn(f']({genre}) › ', page)
+            self.assertEqual(page.count('\n# '), 0)
+            self.assertIn(f'](Game-{game})', files['Controls.md'].decode('utf-8'))
+            self.assertIn(f'](Game-{game})', files['Quality-Review.md'].decode('utf-8'))
+        self.assertIn('| [アクション](Genre-Action) | 0 | 2 |', home)
+        self.assertIn('| [探索](Genre-Exploration) | 0 | 1 |', home)
+        self.assertIn('公開作品準備中', home)
+        self.assertNotIn('?game=', ''.join(value.decode('utf-8')
+                                           for name, value in files.items()
+                                           if name.endswith('.md')))
+
+    def test_development_pages_show_three_scenes_video_and_game_specific_controls(self):
+        files, _ = self.render()
+        for game in DEVELOPMENT:
+            gallery = json.loads((self.fixture.root / 'games' / game /
+                                  'media/gallery.json').read_text(encoding='utf-8'))
+            page = files[f'Game-{game}.md'].decode('utf-8')
+            images = re.findall(r'<img src="([^"]+)" alt="([^"]+)"', page)
+            self.assertGreaterEqual(len(images), 3)
+            for source, alt in images:
+                self.assertIn(source, files)
+                self.assertTrue(alt.strip())
+            video = f'media/{game}-goal.webm'
+            self.assertEqual(files[video], (self.fixture.root / 'games' / game / 'media' /
+                                            gallery['video']['file']).read_bytes())
+            self.assertIn(f']({video})', page)
+            self.assertIn('開発中の版のプレビュー', page)
+            self.assertIn('### 操作', page)
+            self.assertIn('| 物理JR-200 | 未実施 |', page)
+        relic = files['Game-relic-dive.md'].decode('utf-8')
+        self.assertIn('`S` | その場で1ターン待つ', relic)
+        self.assertIn('ジョイスティックは', relic)
+        self.assertIn('`A` / `D`（押し続ける）', files['Game-brick-pulse.md'].decode('utf-8'))
+
+    def test_rendering_is_deterministic_and_sync_reruns_without_changes(self):
+        first, _ = self.render()
+        second, _ = self.render()
+        self.assertEqual(first, second)
+        output = self.fixture.root / 'preview'
+        apply_files(output, first)
+        plan = sync_plan(output, second)
+        self.assertEqual(plan['add'] + plan['update'] + plan['delete'], [])
+        public, _ = render_pages(self.fixture.root, None, False)
+        plan = sync_plan(output, public)
+        self.assertIn('Game-relic-dive.md', plan['delete'])
+        self.assertIn('media/relic-dive-goal.webm', plan['delete'])
+
+    def test_development_preview_is_never_synchronized(self):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / 'tools/wiki/generate.py'), '--root',
+             str(self.fixture.root), '--include-development', 'sync', '--wiki',
+             str(self.fixture.root / 'wiki')], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn('cannot be synchronized', result.stderr)
+
+    def test_detects_stale_gallery_broken_links_and_missing_sections(self):
+        media = self.fixture.root / 'games/relic-dive/media'
+        original = (media / 'combat.png').read_bytes()
+        (media / 'combat.png').write_bytes((media / 'title.png').read_bytes())
+        with self.assertRaisesRegex(WikiError, 'gallery scene combat'):
+            self.render()
+        (media / 'combat.png').write_bytes(original)
+        video = media / 'goal.webm'
+        video.write_bytes(video.read_bytes() + b'\0')
+        with self.assertRaisesRegex(WikiError, 'video hash mismatch'):
+            self.render()
+        video.write_bytes(video.read_bytes()[:-1])
+        readme = self.fixture.root / 'games/relic-dive/README.md'
+        text = readme.read_text(encoding='utf-8')
+        readme.write_text(text + '\n[missing](MISSING.md)\n', encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'broken repository link'):
+            self.render()
+        readme.write_text(text + '\n[play](https://zabaglione.github.io/pyjr100emu/)\n',
+                          encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'JR-100 play URL'):
+            self.render()
+        readme.write_text(text.replace('## 操作', '## Keys'), encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'README lacks sections: 操作'):
+            self.render()
+        readme.write_text(text, encoding='utf-8')
+        metadata_path = self.fixture.root / 'games/relic-dive/game.json'
+        metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+        metadata['release']['status'] = 'candidate'
+        metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'outside the catalog'):
+            self.render()
 
 
 if __name__ == '__main__':

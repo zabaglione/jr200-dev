@@ -145,6 +145,22 @@ class SelectionTests(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 select(registry(), [path])
 
+    def test_repository_presentation_changes_build_nothing(self):
+        root = Path(__file__).resolve().parents[1]
+        registered = json.loads((root / 'ci/targets.json').read_text(encoding='utf-8'))
+        changed = ['tools/wiki/generate.py', 'tools/wiki/genres.json']
+        for game in sorted(path.parents[1].name for path in root.glob('games/*/media/gallery.json')):
+            changed += [f'games/{game}/README.md', f'games/{game}/media/gallery.json',
+                        f'games/{game}/media/goal.webm', f'games/{game}/media/README.md']
+        self.assertEqual(len(changed), 2 + 6 * 4)
+        plan = select(registered, changed)
+        self.assertEqual(plan['build_candidates'], [])
+        self.assertEqual(plan['test_candidates'], [])
+        self.assertEqual(plan['unclassified_paths'], [])
+        self.assertTrue(plan['wiki'])
+        self.assertEqual(select(registered, ['games/relic-dive/src/main.asm'])[
+            'build_candidates'], ['relic-dive'])
+
     def test_initial_contract(self):
         check(Path(__file__).resolve().parents[1])
 
