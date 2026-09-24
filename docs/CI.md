@@ -136,3 +136,5 @@ cache欠落・破損、失敗結果の再利用拒否、空matrixとgateを対�
 - [必須チェックとskip](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks)
 - [Dependency caching](https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching)
 - [Cache access and `cache-mode`](https://docs.github.com/en/actions/reference/workflows-and-actions/dependency-caching)
+
+<!-- CI acceptance probe: documentation-only change for issue 4. -->
