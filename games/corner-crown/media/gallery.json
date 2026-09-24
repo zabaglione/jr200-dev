@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "cbac7450733f2a37732472859db0178c322ea47b07df144cc4f5636ca7e500d6",
+      "framebuffer_sha256": "8bbd4fa5f7062d276557948480ce641662691dd2accde3ad962103b8710c1a88"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-opening",
+      "role": "play",
+      "caption": "6手目まで進めた盤面。黄色の◆が角",
+      "sha256": "8b4cdc6bca46bae29cc1e82f967cf85ea0a819e9f8e58e19d9bba5457e2d2e1d",
+      "framebuffer_sha256": "c0342064e57b062175899abe43a882cb375a86959357962fca46f345d2d0dca3"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-win",
+      "role": "goal",
+      "caption": "角を4つ取り39対25で勝利",
+      "sha256": "b7c49a88d71106c1c62923c85496cf1b9f912cae5dcc0184e0f4fd7915b8c018",
+      "framebuffer_sha256": "57c46fcf7976bd7e993db9d8725eef4e8e999c78ef58e9a5b344906fb8ebb0d4"
+    }
+  ]
+}

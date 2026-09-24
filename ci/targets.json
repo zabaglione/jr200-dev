@@ -332,6 +332,53 @@
         "games/lumen-cross/game.json",
         "games/lumen-cross/media/**"
       ]
+    },
+    {
+      "id": "corner-crown",
+      "kind": "game",
+      "project": "games/corner-crown",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/corner-crown/LICENSE",
+        "games/corner-crown/Makefile",
+        "games/corner-crown/THIRD_PARTY_NOTICES.md",
+        "games/corner-crown/assets/**",
+        "games/corner-crown/build.json",
+        "games/corner-crown/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sfx.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/corner-crown/tests/**",
+        "tests/port_model.py",
+        "tests/test_corner_crown.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/corner-crown/README.md",
+        "games/corner-crown/UPSTREAM.md",
+        "games/corner-crown/game.json",
+        "games/corner-crown/media/**"
+      ]
     }
   ]
 }

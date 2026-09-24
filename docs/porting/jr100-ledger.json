@@ -743,7 +743,7 @@
    "priority": "P1",
    "issue": 22,
    "jr200_project": "games/corner-crown",
-   "status": "planned"
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "stone_balance",

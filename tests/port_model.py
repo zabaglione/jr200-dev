@@ -98,3 +98,23 @@ class PortModel:
 
     def mode_bytes(self) -> str:
         return bytes((self.mode, self.level)).hex()
+
+
+def check_expectations(case, expectations: dict, make_model, max_cycles: int = 250_000_000):
+    """Assert every profile's model-owned memory equals the model's prediction."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+    from emulator_runner import validate_expectations
+    for profile in expectations['runtime']['profiles']:
+        with case.subTest(profile=profile['profile']):
+            runtime = validate_expectations(expectations, 0x1000, profile['profile'])
+            case.assertLessEqual(runtime['max_cycles'], max_cycles)
+            port = make_model().run(profile['replay'])
+            memory = profile['expect']['memory']
+            predicted = {'state': port.game.state_bytes(), 'mode': f'{port.mode:02x}',
+                         'level': f'{port.level:02x}'}
+            for name in ('state', 'mode', 'level'):
+                if name in memory:
+                    case.assertEqual(memory[name], predicted[name], name)
+            case.assertEqual(port.exited, profile['expect']['stop_reason'] == 'breakpoint')
