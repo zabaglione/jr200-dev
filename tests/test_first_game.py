@@ -31,6 +31,20 @@ def cjr(payload=b'\x01\x39', start=0x1000):
 
 
 class FirstGameTests(unittest.TestCase):
+    def test_package_instructions_cover_every_required_profile(self):
+        project = ROOT / 'games/side-catch'
+        readme = (project / 'README.md').read_text(encoding='utf-8')
+        expectations = json.loads(
+            (project / 'tests/expectations.json').read_text(encoding='utf-8'))
+        self.assertEqual(expectations['runtime']['default_profile'], 'synthetic-ci')
+        self.assertIn('make run', readme)
+        for item in expectations['runtime']['profiles']:
+            if item['profile'] != 'synthetic-ci':
+                self.assertIn(f"--profile {item['profile']}", readme)
+        self.assertIn('--rom', readme)
+        self.assertIn('--font', readme)
+        self.assertIn('make package', readme)
+
     def test_game_metadata_and_declared_dependencies_are_valid(self):
         spec = validate_project(
             ROOT / 'games/side-catch', ROOT / 'rules/jr200.json', ROOT)
