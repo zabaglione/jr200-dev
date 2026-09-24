@@ -182,6 +182,44 @@
       ]
     },
     {
+      "id": "port-fixture-sample",
+      "kind": "sample",
+      "project": "samples/port-fixture",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "samples/port-fixture/Makefile",
+        "samples/port-fixture/assets/**",
+        "samples/port-fixture/build.json",
+        "samples/port-fixture/src/**",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sfx.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "samples/port-fixture/tests/**"
+      ],
+      "doc_inputs": [
+        "samples/port-fixture/README.md",
+        "samples/port-fixture/game.json",
+        "samples/port-fixture/media/**"
+      ]
+    },
+    {
       "id": "side-catch",
       "kind": "game",
       "project": "games/side-catch",

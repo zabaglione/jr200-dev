@@ -81,6 +81,11 @@ border色はCRTC領域へ書きます。
 | MN1271 mirror | `$C800-$C9FF`、下位5 bitで32 byte反復 |
 | border write | `$CA00-$CBFF`、下位3 bit |
 
+属性mode 0x40では、code 0x00-0x1Fが`$C000-$C0FF`、code 0x80-0x9Fが`$C400-$C4FF`のpatternを使い、
+mode 0x00は`$D000-$D7FF`の文字RAMを使います。mode 0x80／0xC0はcodeと属性の各3 bitで4分割の色を塗る
+semigraphicsです。これらは固定エミュレータの描画実装で確認した値です。Key-Onの状態bitはmask `$C81E`
+bit 0を立てた後の押下だけを記録し、読出しで解除されます。
+
 `sdk/screen.inc`、`sdk/input.inc`、`sdk/sound.inc`、`sdk/timing.inc` が、この表に対応する
 最小routineを提供します。作品側は利用moduleだけを `build.json` の `inputs.sdk` に宣言します。
 これらは固定エミュレータで確認済みですが、物理JR-200のI/O測定結果ではありません。

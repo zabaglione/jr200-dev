@@ -38,6 +38,25 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
    画面hashだけで規則の正しさを合格にしない。
 5. 由来はMIT。作品directoryに上流`LICENSE`全文、`UPSTREAM.md`、組込みSDKのBSD noticeを置く。
 
+## JR100devの実行処理とSDKの対応
+
+| JR100devの`native/runtime.asm`等 | JR-200 SDK |
+| --- | --- |
+| タイトル／説明／面進行／CLEAR・LOSE・END、`CONFIRM_RESET` | `sdk/port.inc`（mode 0-5、確認は初期NO） |
+| `FRAMEBUFFER`と`PRESENT` | `sdk/gfx.inc`の影画面と`jr_gfx_present` |
+| ROM文字、`TEXT`、`NUMBER`、`digits` | `sdk/font.inc`の自作字形、`jr_gfx_text`、`jr_gfx_dec2`／`dec3` |
+| PCGの2×2 `tile` | `sdk/pcg.inc`と`jr_gfx_tile`（属性mode 0x40） |
+| VIA timerの`TICK`、`animate`、`hold` | `sdk/frame.inc`、`jr_port_animate`、`jr_port_hold` |
+| `sound(0-3)`とSFX表 | `sdk/sfx.inc`、`jr_port_sound`、作品の`game_sfx_table` |
+| 8-bitの乗除算 | `sdk/math.inc` |
+| `rules.py`の`init`／`act`／`tick`／`draw` | 作品の`game_init`／`game_act`／`game_tick`／`game_draw` |
+
+各作品は`JR_SHADOW`（page境界の1536 bytes）、`JR_SAVE`（4096 bytes）、`JR_RT`（64 bytes）、
+`GAME_STATE`〜`GAME_STATE_END`、専用stackを`build.json`のdata領域内に宣言します。
+USR入口で`jr_session_enter`がBASICの画面・PCG・文字RAM・key maskとSを保存し、
+ESC／CTRL+Cで`jr_session_leave`が戻します。演出（`jr_port_animate`）中に届いたキーは
+終了以外を捨て、次の手を誤って確定しません。上流はキーを1つ保持する方式なので、ここは意図した差分です。
+
 ## 操作の対応
 
 JR-200のキーは押下時のKey-On eventで読みます（`sdk/keys.inc`）。data latchは離上後も前の値を

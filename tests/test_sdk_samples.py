@@ -27,7 +27,14 @@ PROJECTS = {
         ('sdk/input.inc', 'sdk/jr200.inc', 'sdk/screen.inc',
          'sdk/sound.inc', 'sdk/timing.inc'),
     ),
+    'port-fixture-sample': (
+        'samples/port-fixture',
+        ('sdk/font.inc', 'sdk/font_data.inc', 'sdk/frame.inc', 'sdk/gfx.inc',
+         'sdk/jr200.inc', 'sdk/keys.inc', 'sdk/math.inc', 'sdk/pcg.inc',
+         'sdk/port.inc', 'sdk/session.inc', 'sdk/sfx.inc', 'sdk/sound.inc'),
+    ),
 }
+PORT_CONSUMERS = ['port-fixture-sample']
 
 
 class SampleContractTests(unittest.TestCase):
@@ -58,13 +65,17 @@ class SampleContractTests(unittest.TestCase):
 
     def test_sdk_does_not_take_over_stack_or_interrupt_contracts(self):
         forbidden = {'lds', 'cli', 'sei', 'swi', 'rti'}
+        # session.inc owns the stack/IRQ mask for a whole game session and
+        # gfx.inc borrows S (under that mask) to copy the shadow screen.
+        owners = {'sdk/session.inc': {'lds', 'sei'}, 'sdk/gfx.inc': {'lds'}}
         paths = sorted((ROOT / 'sdk').glob('*.inc'))
         paths += sorted((ROOT / 'samples').glob('*/src/*.asm'))
         for path in paths:
             instructions = {item for line in path.read_text(encoding='utf-8').splitlines()
                             if (item := operation(line)) is not None}
-            with self.subTest(path=path.relative_to(ROOT).as_posix()):
-                self.assertFalse(instructions & forbidden)
+            name = path.relative_to(ROOT).as_posix()
+            with self.subTest(path=name):
+                self.assertFalse(instructions & (forbidden - owners.get(name, set())))
 
     def test_joystick_sample_uses_rom_font_profile_and_both_ports(self):
         project = ROOT / 'samples/joystick'
@@ -97,17 +108,21 @@ class SdkImpactTests(unittest.TestCase):
 
     def test_shared_module_changes_rebuild_only_consumers(self):
         cases = {
-            'sdk/jr200.inc': [
+            'sdk/jr200.inc': sorted([
                 'game-loop-sample', 'input-sample', 'joystick-sample', 'relic-dive',
-                'screen-sample', 'side-catch', 'sound-sample'],
+                'screen-sample', 'side-catch', 'sound-sample', *PORT_CONSUMERS]),
             'sdk/joystick.inc': ['joystick-sample'],
             'sdk/screen.inc': [
                 'game-loop-sample', 'joystick-sample', 'screen-sample', 'side-catch'],
             'sdk/input.inc': ['game-loop-sample', 'input-sample', 'side-catch'],
-            'sdk/sound.inc': [
-                'game-loop-sample', 'relic-dive', 'side-catch', 'sound-sample'],
+            'sdk/sound.inc': sorted([
+                'game-loop-sample', 'relic-dive', 'side-catch', 'sound-sample',
+                *PORT_CONSUMERS]),
             'sdk/timing.inc': ['game-loop-sample', 'side-catch', 'sound-sample'],
         }
+        for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math', 'pcg',
+                       'port', 'session', 'sfx'):
+            cases[f'sdk/{module}.inc'] = PORT_CONSUMERS
         for path, expected in cases.items():
             with self.subTest(path=path):
                 self.assert_builds(path, expected)
