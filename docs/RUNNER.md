@@ -37,6 +37,21 @@ ROM／FONTのbytes・hash・ローカルpathは記録や配布へ含めていま
 `release_asset_not_published` として `emulator=not_run` に残します。Release資産と取得手段を
 別途承認して用意するまでは、remote CIのruntime受入条件を満たしたとは扱いません。
 
+取得adapter `tools/runner_fetch.py` は配布準備のみ実装済みです。固定URLとZIP全体のSHA-256、
+2つのmoduleと7つの権利表示ファイルそれぞれのsize／SHA-256を`emulator.lock.json`で固定します。
+ZIPはその9ファイルだけを許し、ROM／FONT、余計なファイル、重複path、symlink、暗号化entry、
+展開容量超過を拒否します。URLは当該リポジトリのGitHub Release、redirectは承認したHTTPS hostに
+限り、取得上限8 MiB・経過60秒超過の検知・read timeout 10秒です。認証tokenは渡さず、
+例外内のsigned URLもログへ出しません。
+破損ZIPや不一致時に既存directoryを置換せず、エミュレータのsource buildへfallbackもしません。
+現在のlockでは取得元・ZIP digestがnullなので、CIでadapterを呼んでもdownloadは起きません。
+承認済みRelease公開後にURLとdigestを固定し、Mac/Linuxのfresh clone試験とremote CI実測を
+行うまでは`runtime_required=false`を維持します。ROM専用の`joystick-sample`は
+`ci/runner.lock.json`で`local_rom_only`と明示し、CIではbundle取得対象から除外します。
+receiptも`emulator=local_rom_only`、evidence=`not_run`、reason=`requires_local_rom_font`
+を保存し、合成runtimeの成功には数えません。joystickの実測は利用者提供ROM/FONTによる
+別のMac/Linux受入記録で扱います。他のtargetが合成profileを失えば検査を失敗させます。
+
 ## 実行
 
 Node.js 20以降を使用します。runner自身はゲーム側のadapterであり、CPU、CJR、カセット処理は

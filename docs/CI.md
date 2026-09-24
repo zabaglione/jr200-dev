@@ -107,6 +107,13 @@ bundleが利用できる場合はdefaultだけでなく、対象が宣言した�
 現在のworkflowにはエミュレータsourceのcheckout/build stepも、取得失敗時のfallbackもありません。
 配布資産未公開の間はruntime未実施を明記し、構造試験成功をエミュレータ成功へ読み替えません。
 runner lockやadapterだけの変更はtest fingerprintを無効化し、build fingerprintを変えません。
+配布前の`runner_fetch.py`はRelease未設定ならnetworkへ接続せず、runtimeを`not_run`のままにします。
+固定Releaseを承認・公開した後は、ZIP全体とmodule／権利表示のhash検査に合格したbundleのみ
+target試験へ渡します。取得失敗や不一致はjob失敗であり、エミュレータ再buildへ進みません。
+ROM専用`joystick-sample`はrunner lockの明示的な`local_rom_only`方針で区別します。
+CIはこのtargetでbundle取得を省略し、receiptへ`emulator=local_rom_only`と
+evidence=`not_run`を残します。これは合成runtimeの成功ではありません。その他のtargetは
+`runtime_required=true`時に`not_run`を成功receiptとして再利用できません。
 
 2026-09-23の[private main CI](https://github.com/zabaglione/jr200-dev/actions/runs/35818266477)では、
 repository契約、全8 targetのbuild・構造試験、required gateが成功しました。

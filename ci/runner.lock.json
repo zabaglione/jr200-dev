@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "platform": "ubuntu-24.04-x86_64",
   "python_minimum": "3.10",
   "target_runner_version": 2,
@@ -7,6 +7,7 @@
   "emulator": {
     "lock": "emulator.lock.json",
     "runtime_required": false,
-    "unavailable_reason": "release_asset_not_published"
+    "unavailable_reason": "release_asset_not_published",
+    "runtime_policy": {"joystick-sample": "local_rom_only"}
   }
 }

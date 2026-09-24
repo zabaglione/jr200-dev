@@ -49,7 +49,7 @@ class PipelineFixture:
                          'rules/jr200.json',
                          'mk/game.mk', 'tools/game_project.py', 'tools/jrasm_tool.py',
                          'tools/ci_pipeline.py', 'tools/ci_snapshot.py',
-                         'tools/emulator_runner.py',
+                         'tools/emulator_runner.py', 'tools/runner_fetch.py',
                          'tools/jr200_wasm_runner.mjs', 'tools/png_rgba.py',
                          'tests/test_game_project.py'):
             source = SOURCE_ROOT / relative
@@ -232,6 +232,14 @@ class ReceiptTests(unittest.TestCase):
         self.assertEqual(before['build'], after['build'])
         self.assertNotEqual(before['test'], after['test'])
 
+    def test_runner_fetch_change_only_invalidates_tests(self):
+        before = self.fixture.fingerprints()
+        fetcher = self.fixture.root / 'tools/runner_fetch.py'
+        fetcher.write_text(fetcher.read_text() + '\n# test-only edit\n')
+        after = self.fixture.fingerprints()
+        self.assertEqual(before['build'], after['build'])
+        self.assertNotEqual(before['test'], after['test'])
+
     def test_emulator_bundle_runs_every_synthetic_profile(self):
         expectations_path = (
             self.fixture.root / 'templates/minimal/tests/expectations.json')
@@ -260,6 +268,34 @@ class ReceiptTests(unittest.TestCase):
         self.assertEqual(
             result['emulator_profiles'],
             ['synthetic-ci', 'synthetic-second'])
+
+    def test_explicit_local_rom_only_policy_is_not_a_runtime_pass(self):
+        expectations_path = self.fixture.root / 'templates/minimal/tests/expectations.json'
+        shutil.copy2(SOURCE_ROOT / 'samples/joystick/tests/expectations.json',
+                     expectations_path)
+        runner_path = self.fixture.root / 'ci/runner.lock.json'
+        runner = json.loads(runner_path.read_text())
+        runner['emulator']['runtime_policy'] = {'minimal': 'local_rom_only'}
+        runner['emulator']['runtime_required'] = True
+        runner['emulator']['unavailable_reason'] = ''
+        runner_path.write_text(json.dumps(runner))
+        fingerprints = self.fixture.fingerprints()
+        run_target_build(self.fixture.root, self.fixture.registry, 'minimal', PLATFORM,
+                         fingerprints['build'], str(self.fixture.fake_jrasm()))
+        with patch('ci_pipeline.run_emulator') as emulator:
+            result = run_target_test(
+                self.fixture.root, self.fixture.registry, 'minimal', PLATFORM,
+                fingerprints['build'], fingerprints['test'], self.fixture.root / 'bundle')
+        emulator.assert_not_called()
+        self.assertEqual(result['emulator'], 'local_rom_only')
+        self.assertEqual(result['emulator_evidence'], 'not_run')
+        self.assertEqual(result['emulator_profiles'], [])
+        write_receipt(self.fixture.root, self.fixture.registry, self.fixture.receipts,
+                      'minimal', PLATFORM, fingerprints['build'], fingerprints['test'])
+        verified = verify_receipt(
+            self.fixture.root, self.fixture.registry, self.fixture.receipts,
+            'minimal', PLATFORM, fingerprints['build'], fingerprints['test'])
+        self.assertEqual(verified['emulator'], 'local_rom_only')
 
     def test_corrupt_artifact_invalidates_cache_and_receipt(self):
         fingerprints, _ = self.complete()

@@ -32,6 +32,17 @@ def check(root: Path) -> None:
             and emulator['source']['availability'] != 'release'):
         raise ValueError('Required emulator runner has no release acquisition source')
     validate_target_contracts(root, targets)
+    policy = runner['emulator']['runtime_policy']
+    if not set(policy).issubset(targets):
+        raise ValueError('Runtime policy names an unknown target')
+    for target_id, target in targets.items():
+        expectations = json.loads((root / target['project'] / 'tests/expectations.json')
+                                  .read_text(encoding='utf-8'))
+        profiles = expectations['runtime']['profiles']
+        synthetic = any(item['mode'] == 'synthetic-injection' for item in profiles)
+        rom = any(item['mode'] == 'rom-cassette' for item in profiles)
+        if synthetic == (target_id in policy) or (not synthetic and not rom):
+            raise ValueError(f'Runtime policy does not match target profiles: {target_id}')
     registered_games = {name: target for name, target in targets.items()
                         if target['kind'] == 'game'}
     entries = catalog_entries(root)
