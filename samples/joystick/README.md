@@ -19,7 +19,6 @@ RETURNを押すとBASICへ戻ります。`jr_joystick_pressed` は反転後の�
 ```sh
 JRASM=/absolute/path/to/jrasm make build
 python3 ../../tools/emulator_runner.py \
-  --lock /absolute/path/to/system-api8-emulator.lock.json \
   run \
   --project . \
   --bundle /absolute/path/to/emulator/build/emscripten/web \
@@ -30,10 +29,10 @@ python3 ../../tools/emulator_runner.py \
 
 試験replayは1Pへ`$EA`（上・左・A）、2Pへ`$D5`（下・右・B）を与え、画面の
 `1P: U . L . A .   EA`、`2P: . D . R . B   D5`、raw値と押下bit`$15`／`$2A`を確認します。
-RETURN replayでBASIC復帰直前まで進めます。ジョイスティックreplayにはsystem API 8の
-エミュレータbundleが必要です。
-`--lock`には、そのbundleのsource状態・module size・SHA-256を固定したlockを指定します。
-リポジトリ既定のsystem API 6 lockをAPI 8 bundleへ流用してはいけません。
+RETURN replayでBASIC復帰直前まで進めます。ジョイスティックreplayには対応する
+エミュレータbundleが必要です。現行の`emulator.lock.json`はsystem API 9を固定しており、
+上記コマンドは既定のlockを使ってbundleのsize・SHA-256・APIを検査します。
+別のbundleを試す場合だけ、そのbundle専用のlockを`--lock`で明示してください。
 ROM／FONTは本projectへ含めません。物理ジョイスティックと実機の動作確認は別です。
 
 入力走査の呼出し方は、inufuto氏の
