@@ -345,7 +345,7 @@
    "priority": "P1",
    "issue": 23,
    "jr200_project": "games/circuit-works",
-   "status": "planned"
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "hearth_zero",
