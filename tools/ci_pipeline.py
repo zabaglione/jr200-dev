@@ -26,7 +26,7 @@ DEFAULT_RUNNER_LOCK = ROOT / 'ci/runner.lock.json'
 DEFAULT_RECEIPTS = ROOT / '.ci-cache/receipts'
 BUILD_COMMON = ('ci/targets.json', 'tools/ci_pipeline.py')
 TEST_COMMON = ('ci/runner.lock.json', 'ci/targets.json', 'emulator.lock.json',
-               'tools/ci_pipeline.py', 'tools/emulator_runner.py',
+               'tools/ci_pipeline.py', 'tools/ci_snapshot.py', 'tools/emulator_runner.py',
                'tools/jr200_wasm_runner.mjs', 'tools/png_rgba.py')
 
 
@@ -238,7 +238,8 @@ def merge_reasons(current: dict[str, Any], previous: dict[str, Any] | None,
 
 def make_plan(root: Path, registry_path: Path, platform_id: str,
               base: str | None, changed: list[str] | None,
-              full: bool = False) -> dict[str, Any]:
+              full: bool = False,
+              trusted: dict[str, dict[str, str]] | None = None) -> dict[str, Any]:
     root = root.resolve()
     registry_path = registry_path.resolve()
     raw, targets = load_registry(registry_path)
@@ -268,6 +269,17 @@ def make_plan(root: Path, registry_path: Path, platform_id: str,
     removed = sorted(name for name in old_names if name not in targets)
     reasons = merge_reasons(current, previous, set(targets))
     fingerprints = calculate_fingerprints(root, targets, platform_id)
+    if trusted is not None:
+        for name in targets:
+            old = trusted.get(name)
+            current_fingerprints = fingerprints[name]
+            if old is None or old.get('build') != current_fingerprints['build']:
+                build_names.add(name)
+                test_names.add(name)
+                reasons.setdefault(name, []).append('trusted build missing or changed')
+            elif old.get('test') != current_fingerprints['test']:
+                test_names.add(name)
+                reasons.setdefault(name, []).append('trusted test missing or changed')
     matrix = []
     for name in sorted(test_names):
         target = targets[name]
@@ -603,7 +615,8 @@ def verify_receipt(root: Path, registry_path: Path, receipts: Path,
     return receipt
 
 
-def gate(required: str, plan: str, targets: str, has_targets: str) -> None:
+def gate(required: str, plan: str, targets: str, has_targets: str,
+         snapshot: str = 'skipped', snapshot_required: bool = False) -> None:
     if required != 'success':
         raise PipelineError(f'Repository contracts result is {required}')
     if plan != 'success':
@@ -613,6 +626,10 @@ def gate(required: str, plan: str, targets: str, has_targets: str) -> None:
         raise PipelineError(f'Required target jobs result is {targets}')
     if not expected_targets and targets not in ('skipped', 'success'):
         raise PipelineError(f'Unexpected empty-matrix job result is {targets}')
+    if snapshot_required and snapshot != 'success':
+        raise PipelineError(f'Trusted snapshot job result is {snapshot}')
+    if not snapshot_required and snapshot != 'skipped':
+        raise PipelineError(f'Unexpected snapshot job result is {snapshot}')
 
 
 def add_target_arguments(command: argparse.ArgumentParser) -> None:
@@ -636,6 +653,7 @@ def parser() -> argparse.ArgumentParser:
     plan.add_argument('--output', type=Path)
     plan.add_argument('--github-output', type=Path)
     plan.add_argument('--summary', type=Path)
+    plan.add_argument('--trusted-state', type=Path)
     build = commands.add_parser('build')
     add_target_arguments(build)
     build.add_argument('--jrasm')
@@ -659,6 +677,8 @@ def parser() -> argparse.ArgumentParser:
     gate_command.add_argument('--plan-result', required=True)
     gate_command.add_argument('--targets-result', required=True)
     gate_command.add_argument('--has-targets', required=True)
+    gate_command.add_argument('--snapshot-result', default='skipped')
+    gate_command.add_argument('--snapshot-required', default='false')
     return value
 
 
@@ -669,8 +689,13 @@ def main(argv: list[str] | None = None) -> int:
             runner = validate_runner_lock(read_json(
                 args.root.resolve() / 'ci/runner.lock.json', 'runner lock'))
             platform_id = args.platform or runner['platform']
+            trusted = None
+            if args.trusted_state is not None:
+                from ci_snapshot import inspect_state
+                trusted = inspect_state(args.root.resolve(), args.registry.resolve(),
+                                        args.trusted_state.resolve(), platform_id)
             result = make_plan(args.root.resolve(), args.registry.resolve(), platform_id,
-                               args.base, args.changed, args.full)
+                               args.base, args.changed, args.full, trusted)
             encoded = json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + '\n'
             if args.output:
                 args.output.write_text(encoded, encoding='utf-8')
@@ -713,7 +738,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f'Verification receipt: valid ({args.target}, {receipt["test_fingerprint"]})')
         else:
             gate(args.required_result, args.plan_result,
-                 args.targets_result, args.has_targets)
+                 args.targets_result, args.has_targets,
+                 args.snapshot_result, args.snapshot_required == 'true')
             print('Required gate: OK')
     except (PipelineError, ProjectError, OSError, subprocess.SubprocessError) as exc:
         print(f'CI pipeline failed: {exc}', file=sys.stderr)

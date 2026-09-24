@@ -1,5 +1,4 @@
 ; SPDX-License-Identifier: MIT
-; CI acceptance probe: single-game build input for issue 4.
 ; LUMEN CROSS for JR-200: a port of jr100dev games/lumen_cross/rules.py 2.0.0.
 ; Rules, stage generation, the sixty-press limit and the PAR table follow the
 ; upstream source; display, input and sound use the JR-200 port SDK.

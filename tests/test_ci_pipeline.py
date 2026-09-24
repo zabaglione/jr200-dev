@@ -1,6 +1,9 @@
 # SPDX-License-Identifier: BSD-3-Clause
 import json
 import copy
+import hashlib
+import io
+import os
 from pathlib import Path
 import shutil
 import stat
@@ -9,11 +12,14 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 from ci_pipeline import (PipelineError, calculate_fingerprints, gate, make_plan,
                          run_target_build, run_target_test, verify_build_cache,
                          verify_receipt, write_receipt)
+from ci_snapshot import (assemble, entry_fingerprints, inspect_state, main as snapshot_main,
+                         latest_success, package_entry, restore, unpack_artifact)
 
 
 SOURCE_ROOT = Path(__file__).resolve().parents[1]
@@ -42,7 +48,8 @@ class PipelineFixture:
                          'emulator.lock.json', 'ci/targets.json', 'ci/runner.lock.json',
                          'rules/jr200.json',
                          'mk/game.mk', 'tools/game_project.py', 'tools/jrasm_tool.py',
-                         'tools/ci_pipeline.py', 'tools/emulator_runner.py',
+                         'tools/ci_pipeline.py', 'tools/ci_snapshot.py',
+                         'tools/emulator_runner.py',
                          'tools/jr200_wasm_runner.mjs', 'tools/png_rgba.py',
                          'tests/test_game_project.py'):
             source = SOURCE_ROOT / relative
@@ -291,6 +298,173 @@ class GateTests(unittest.TestCase):
             with self.subTest(values=values), self.assertRaises(PipelineError):
                 gate(*values)
 
+    def test_trusted_snapshot_is_required_only_for_main(self):
+        gate('success', 'success', 'skipped', 'false', 'success', True)
+        with self.assertRaisesRegex(PipelineError, 'Trusted snapshot'):
+            gate('success', 'success', 'skipped', 'false', 'cancelled', True)
+        with self.assertRaisesRegex(PipelineError, 'Unexpected snapshot'):
+            gate('success', 'success', 'skipped', 'false', 'success', False)
+
+
+class SnapshotTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture = PipelineFixture()
+        self.state = self.fixture.root / '.ci-cache/trusted-state'
+        self.entry = self.state / 'targets/minimal'
+
+    def tearDown(self):
+        self.fixture.close()
+
+    def complete(self):
+        fingerprints = self.fixture.fingerprints()
+        run_target_build(self.fixture.root, self.fixture.registry, 'minimal', PLATFORM,
+                         fingerprints['build'], str(self.fixture.fake_jrasm()))
+        run_target_test(self.fixture.root, self.fixture.registry, 'minimal', PLATFORM,
+                        fingerprints['build'], fingerprints['test'])
+        write_receipt(self.fixture.root, self.fixture.registry, self.fixture.receipts,
+                      'minimal', PLATFORM, fingerprints['build'], fingerprints['test'])
+        package_entry(self.fixture.root, self.fixture.registry, self.entry, 'minimal',
+                      PLATFORM, fingerprints['build'], fingerprints['test'])
+        (self.state / 'state.json').write_text(json.dumps({
+            'schema_version': 1, 'run_id': 1, 'head_sha': self.fixture.git('rev-parse', 'HEAD'),
+            'platform': PLATFORM,
+        }))
+        return fingerprints
+
+    def plan(self, changed):
+        trusted = inspect_state(self.fixture.root, self.fixture.registry,
+                                self.state, PLATFORM)
+        return make_plan(self.fixture.root, self.fixture.registry, PLATFORM,
+                         None, changed, trusted=trusted)
+
+    def test_docs_only_uses_verified_snapshot(self):
+        self.complete()
+        self.assertEqual(self.plan(['README.md'])['test_targets'], [])
+
+    def test_failed_or_cancelled_predecessor_cannot_hide_game_change(self):
+        self.complete()
+        source = self.fixture.root / 'templates/minimal/src/main.asm'
+        source.write_text(source.read_text() + '\n; unverified source\n')
+        plan = self.plan(['README.md'])
+        self.assertEqual(plan['build_targets'], ['minimal'])
+        self.assertEqual(plan['test_targets'], ['minimal'])
+
+    def test_test_only_keeps_verified_build_and_retests(self):
+        before = self.complete()
+        expectations = self.fixture.root / 'templates/minimal/tests/expectations.json'
+        value = json.loads(expectations.read_text())
+        value['notes'] += ' New test only.'
+        expectations.write_text(json.dumps(value, indent=2) + '\n')
+        plan = self.plan(['templates/minimal/tests/expectations.json'])
+        self.assertEqual(plan['build_targets'], [])
+        self.assertEqual(plan['test_targets'], ['minimal'])
+        self.assertEqual(before['build'], self.fixture.fingerprints()['build'])
+
+    def test_restore_reuses_build_but_not_stale_test_receipt(self):
+        before = self.complete()
+        expectations = self.fixture.root / 'templates/minimal/tests/expectations.json'
+        value = json.loads(expectations.read_text())
+        value['notes'] += ' Recheck.'
+        expectations.write_text(json.dumps(value, indent=2) + '\n')
+        current = self.fixture.fingerprints()
+        shutil.rmtree(self.fixture.root / 'templates/minimal/build')
+        shutil.rmtree(self.fixture.receipts)
+        restore(self.fixture.root, self.fixture.registry, self.state, 'minimal',
+                PLATFORM, current['build'], current['test'])
+        verify_build_cache(self.fixture.root, self.fixture.registry, 'minimal',
+                           PLATFORM, current['build'])
+        self.assertFalse((self.fixture.receipts / 'minimal/receipt.json').exists())
+        self.assertEqual(before['build'], current['build'])
+
+    def test_assemble_requires_every_current_target(self):
+        current = self.complete()
+        output = self.fixture.root / '.ci-cache/trusted-output'
+        with patch('ci_snapshot.artifact_for_run', return_value={'id': 5}), \
+                patch('ci_snapshot.unpack_artifact',
+                      side_effect=lambda repo, artifact, token, destination:
+                      shutil.copytree(self.entry, destination)):
+            assemble(self.fixture.root, self.fixture.registry, self.state, output,
+                     'owner/repo', 'token', 9, PLATFORM,
+                     '{"include":[{"id":"minimal"}]}')
+        self.assertEqual(inspect_state(self.fixture.root, self.fixture.registry,
+                                       output, PLATFORM)['minimal'], current)
+        (output / 'targets/minimal/artifact.cjr').unlink()
+        self.assertNotIn('minimal', inspect_state(self.fixture.root,
+                                                 self.fixture.registry, output, PLATFORM))
+
+    def test_missing_or_corrupt_snapshot_forces_recheck(self):
+        self.complete()
+        artifact = self.entry / 'artifact.cjr'
+        artifact.write_bytes(artifact.read_bytes() + b'bad')
+        self.assertIsNone(entry_fingerprints(self.entry, 'minimal', PLATFORM))
+        self.assertEqual(self.plan(['README.md'])['build_targets'], ['minimal'])
+        artifact.unlink()
+        self.assertEqual(self.plan(['README.md'])['test_targets'], ['minimal'])
+
+    def test_rejected_snapshot_manifest_cannot_restore_or_be_carried_forward(self):
+        current = self.complete()
+        (self.state / 'state.json').unlink()
+        shutil.rmtree(self.fixture.root / 'templates/minimal/build')
+        shutil.rmtree(self.fixture.receipts)
+        restore(self.fixture.root, self.fixture.registry, self.state, 'minimal',
+                PLATFORM, current['build'], current['test'])
+        self.assertFalse((self.fixture.root / 'templates/minimal/build/ci-build.json').exists())
+        self.assertEqual(self.plan(['README.md'])['build_targets'], ['minimal'])
+        with self.assertRaisesRegex(PipelineError, 'Previous trusted state'):
+            assemble(self.fixture.root, self.fixture.registry, self.state,
+                     self.fixture.root / '.ci-cache/output', 'owner/repo', 'token',
+                     9, PLATFORM, '{"include":[]}')
+
+    def test_failed_download_does_not_publish_partial_snapshot(self):
+        def fail_after_extract(root, repo, run_id, current_run, token, output):
+            output.mkdir()
+            (output / 'state.json').write_text('{}')
+            raise PipelineError('digest mismatch')
+
+        with patch.dict(os.environ, {'GITHUB_TOKEN': 'test-token'}), \
+                patch('ci_snapshot.download', side_effect=fail_after_extract):
+            result = snapshot_main(['download', '--root', str(self.fixture.root),
+                                    '--repo', 'owner/repo', '--output', str(self.state)])
+        self.assertEqual(result, 0)
+        self.assertFalse(self.state.exists())
+
+    def test_malformed_metadata_forces_recheck(self):
+        self.complete()
+        metadata_path = self.entry / 'ci-build.json'
+        metadata_path.write_text('[]')
+        self.assertIsNone(entry_fingerprints(self.entry, 'minimal', PLATFORM))
+        self.assertEqual(self.plan(['README.md'])['test_targets'], ['minimal'])
+        metadata_path.write_text(json.dumps({'artifact': {'path': ''},
+                                             'build_report': {}}))
+        self.assertIsNone(entry_fingerprints(self.entry, 'minimal', PLATFORM))
+
+    def test_rejects_non_main_or_failed_run_origin(self):
+        sha = self.fixture.git('rev-parse', 'HEAD')
+        runs = {'workflow_runs': [
+            {'id': 1, 'event': 'pull_request', 'head_branch': 'main',
+             'conclusion': 'success', 'head_sha': sha, 'path': '.github/workflows/ci.yml'},
+            {'id': 2, 'event': 'push', 'head_branch': 'main',
+             'conclusion': 'failure', 'head_sha': sha, 'path': '.github/workflows/ci.yml'},
+            {'id': 4, 'event': 'push', 'head_branch': 'main',
+             'conclusion': 'success', 'head_sha': sha, 'path': '.github/workflows/other.yml'},
+        ]}
+        with patch('ci_snapshot.api_json', return_value=runs):
+            self.assertIsNone(latest_success(self.fixture.root, 'owner/repo', 3, 'token'))
+
+    def test_rejects_unsafe_and_corrupt_zip(self):
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as archive:
+            archive.writestr('../unsafe', 'x')
+        payload = stream.getvalue()
+        metadata = {'id': 1, 'digest': 'sha256:' + hashlib.sha256(payload).hexdigest()}
+        with patch('ci_snapshot.api', return_value=(payload, {})):
+            with self.assertRaisesRegex(PipelineError, 'Unsafe'):
+                unpack_artifact('owner/repo', metadata, 'token', self.state)
+        metadata['digest'] = 'sha256:' + '0' * 64
+        with patch('ci_snapshot.api', return_value=(payload, {})):
+            with self.assertRaisesRegex(PipelineError, 'digest mismatch'):
+                unpack_artifact('owner/repo', metadata, 'token', self.state)
+
 
 class WorkflowTests(unittest.TestCase):
     def test_actions_are_pinned_and_privileged_trigger_is_absent(self):
@@ -307,8 +481,10 @@ class WorkflowTests(unittest.TestCase):
         workflow = (SOURCE_ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8')
         for text in ('fromJSON(needs.plan.outputs.matrix)', 'receipt-check',
                      "github.event_name == 'push'", "github.ref == 'refs/heads/main'",
-                     'if: always()', 'required-gate'):
+                     'if: always()', 'required-gate', 'cache-mode: read',
+                     'trusted-snapshot', 'tools/ci_snapshot.py download'):
             self.assertIn(text, workflow)
+        self.assertNotIn('echo "- Reason: ${{ matrix.reason }}"', workflow)
 
 
 if __name__ == '__main__':
