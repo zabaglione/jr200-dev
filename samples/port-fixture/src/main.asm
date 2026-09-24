@@ -26,6 +26,17 @@ FX_INDEX:           .equ    GAME_STATE + 12
 FX_POS:             .equ    GAME_STATE + 13
 FX_COL:             .equ    GAME_STATE + 14
 FX_ROW:             .equ    GAME_STATE + 15
+FX_SCAN_PRESS:      .equ    GAME_STATE + 16
+FX_SCAN_AGAIN:      .equ    GAME_STATE + 17
+FX_SCAN_RELEASE:    .equ    GAME_STATE + 18
+FX_SCAN_HELD:       .equ    GAME_STATE + 19
+FX_SCAN_STARTED:    .equ    GAME_STATE + 20
+FX_EFFECT_TRIGGER:  .equ    GAME_STATE + 21
+FX_EFFECT_TICKS:    .equ    GAME_STATE + 22
+FX_EFFECT_ACTION:   .equ    GAME_STATE + 23
+FX_EFFECT_DURING:   .equ    GAME_STATE + 24
+FX_EFFECT_LOOPS:    .equ    GAME_STATE + 25
+FX_EFFECT_ATTR:     .equ    JR200_SCREEN_ATTRIBUTES + 266
 
 FX_TEXT:            .equ    0x07
 FX_OFF:             .equ    0x41
@@ -57,8 +68,107 @@ game_init_second:
         JMP     fx_cross
 
 game_raw_key:
+        TBA
+        ORAA    0x20
+        CMPA    0x74
+        BEQ     fx_scan_run
+        CMPA    0x65
+        BEQ     fx_effect_run
+        CLRA
 game_tick:
         RTS
+
+; Hidden fixture path: T on the title starts the held-key scanner. The title
+; remains visible; counters in GAME_STATE distinguish press, repeat, hold and
+; release. ESC returns through the same BASIC restoration path as the game.
+fx_scan_run:
+        LDAA    1
+        STAA    [FX_SCAN_STARTED]
+        CLR     [FX_SCAN_PRESS]
+        CLR     [FX_SCAN_AGAIN]
+        CLR     [FX_SCAN_RELEASE]
+        CLR     [FX_SCAN_HELD]
+        JSR     jr_keyscan_init
+        JSR     jr_keyscan
+        ; Exercise scan -> copy -> scan. jr_pcg_load uses session's jr_copy,
+        ; whose stack scratch must never overwrite the scan's KTEST base.
+        LDX     fx_patterns
+        LDAA    0x80
+        LDAB    8
+        JSR     jr_pcg_load
+        JSR     jr_keyrepeat_init
+fx_scan_loop:
+        JSR     jr_frame_wait
+        JSR     jr_keyrepeat_poll
+        CMPA    0x1b
+        BEQ     fx_scan_exit
+        CMPA    0x03
+        BEQ     fx_scan_exit
+        CMPA    0x77
+        BNE     fx_scan_loop
+        CMPB    JR_REPEAT_RELEASE
+        BEQ     fx_scan_released
+        INC     [FX_SCAN_HELD]
+        CMPB    JR_REPEAT_PRESS
+        BNE     fx_scan_repeating
+        INC     [FX_SCAN_PRESS]
+        BRA     fx_scan_loop
+fx_scan_repeating:
+        CMPB    JR_REPEAT_AGAIN
+        BNE     fx_scan_loop
+        INC     [FX_SCAN_AGAIN]
+        BRA     fx_scan_loop
+fx_scan_released:
+        INC     [FX_SCAN_RELEASE]
+        BRA     fx_scan_loop
+fx_scan_exit:
+        JMP     jr_session_leave
+
+; E on the title runs a non-blocking visual effect fixture. W starts a
+; 20-step color cycle, D is accepted during the cycle, and every loop advances
+; both the ordinary tick counter and the effect by one step without a wait API.
+fx_effect_run:
+        CLR     [FX_EFFECT_TRIGGER]
+        CLR     [FX_EFFECT_TICKS]
+        CLR     [FX_EFFECT_ACTION]
+        CLR     [FX_EFFECT_DURING]
+        CLR     [FX_EFFECT_LOOPS]
+        JSR     jr_keyscan_init
+        JSR     jr_keyrepeat_init
+        JSR     jr_effect_init
+fx_effect_loop:
+        JSR     jr_frame_wait
+        INC     [FX_EFFECT_LOOPS]
+        JSR     jr_effect_tick
+        TSTB
+        BEQ     fx_effect_poll
+        INC     [FX_EFFECT_TICKS]
+        ANDA    7
+        ORAA    1
+        STAA    [FX_EFFECT_ATTR]
+fx_effect_poll:
+        JSR     jr_keyrepeat_poll
+        CMPA    0x1b
+        BEQ     fx_scan_exit
+        CMPA    0x03
+        BEQ     fx_scan_exit
+        CMPB    JR_REPEAT_PRESS
+        BNE     fx_effect_loop
+        ORAA    0x20
+        CMPA    0x77
+        BEQ     fx_effect_start
+        CMPA    0x64
+        BNE     fx_effect_loop
+        INC     [FX_EFFECT_ACTION]
+        TST     [JR_RT_EFFECT_REMAIN]
+        BEQ     fx_effect_loop
+        INC     [FX_EFFECT_DURING]
+        BRA     fx_effect_loop
+fx_effect_start:
+        INC     [FX_EFFECT_TRIGGER]
+        LDAA    20
+        JSR     jr_effect_start
+        BRA     fx_effect_loop
 
 game_act:
         CMPA    JR_KEY_CONFIRM
@@ -330,6 +440,9 @@ fx_patterns:
 
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
+        .include "../../../sdk/keyscan.inc"
+        .include "../../../sdk/keyrepeat.inc"
+        .include "../../../sdk/effect.inc"
         .include "../../../sdk/gfx.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"

@@ -47,6 +47,8 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
 | ROM文字、`TEXT`、`NUMBER`、`digits` | `sdk/font.inc`の自作字形、`jr_gfx_text`、`jr_gfx_dec2`／`dec3` |
 | PCGの2×2 `tile` | `sdk/pcg.inc`と`jr_gfx_tile`（属性mode 0x40） |
 | VIA timerの`TICK`、`animate`、`hold` | `sdk/frame.inc`、`jr_port_animate`、`jr_port_hold` |
+| 入力・tickと並行する演出 | `sdk/effect.inc`の`jr_effect_start`／`jr_effect_tick` |
+| 押し続け・離上・リピート | `sdk/keyscan.inc`と`sdk/keyrepeat.inc`（一定間隔のpoll） |
 | `sound(0-3)`とSFX表 | `sdk/sfx.inc`、`jr_port_sound`、作品の`game_sfx_table` |
 | 8-bitの乗除算 | `sdk/math.inc` |
 | `rules.py`の`init`／`act`／`tick`／`draw` | 作品の`game_init`／`game_act`／`game_tick`／`game_draw` |
@@ -58,6 +60,10 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
 USR入口で`jr_session_enter`がBASICの画面・PCG・文字RAM・key maskとSを保存し、
 ESC／CTRL+Cで`jr_session_leave`が戻します。演出（`jr_port_animate`）中に届いたキーは
 終了以外を捨て、次の手を誤って確定しません（上流作品READMEの「演出中に押したキーで結果を飛ばさない」に合わせる）。
+この演出待ちは同期処理で、効果音の進行と終了キーは処理しますが、通常入力やゲームtickを
+並行処理する非ブロッキング演出ではありません。並行演出には`sdk/effect.inc`の
+待機しないphase stepperを使い、作品のtick loopで入力・状態更新・描画を続けます。
+stepの間隔は呼出元が決めるため、固定60fpsを前提にしません。
 
 ## 期待値の作り方
 
@@ -81,6 +87,11 @@ RAM期待値はこのモデルの予測値で、`tests/test_<作品>.py`がrepla
 JR-200のキーは押下時のKey-On eventで読みます（`sdk/keys.inc`）。data latchは離上後も前の値を
 保持するため、ターン制作品は押下eventだけを使います。押し続けが必要な作品（BRICK PULSE）は
 `sdk/keyscan.inc`でキーボードMCUに今押しているキーを問い合わせ、上流の`held()`に当てます。
+押下・リピート・離上を区別する作品は`sdk/keyrepeat.inc`を併用します。`jr_keyscan_init`後に
+`jr_keyrepeat_init`し、一定周期で`jr_keyrepeat_poll`を呼びます。戻り値はAがraw key、
+Bがevent（0なし、1押下、2リピート、3離上）です。単一キー契約で、キーを切り替えたときは
+新しい押下だけを通知します。リピート遅延4回・周期2回はpoll回数であり、実時間や
+固定60fpsを保証しません。ターン制の`keys.inc`とは混ぜず、作品の入力契約を選びます。
 
 | JR100dev | JR-200版 |
 | --- | --- |

@@ -14,14 +14,16 @@
 | `timing.inc` | cycle基準のbusy wait | 実時間保証ではなく、Xを破壊 |
 | `session.inc` | USR入口でのstack・IRQ mask・PCG・画面・文字RAMの保存と復元、高速copy | ゲーム専用stackへ切替える唯一のmodule |
 | `keys.inc` | Key-On eventからW/A/S/D・RETURN・SPACE・ESC/CTRL+Cへの変換 | 押下1回=1 event。保持状態は返さない |
-| `keyscan.inc` | キーボードMCUのKTEST/KACK走査で「今押しているキー」を読む | 手順は固定エミュレータのMN1544実装に基づく。ROMなし実行では起動時にfont転送を読み捨てる |
+| `keyscan.inc` | キーボードMCUのKTEST/KACK走査で「今押しているキー」を読む | 手順は固定エミュレータのMN1544実装に基づく。状態は`JR_RT+50..51`でcopy用領域と分離。ROMなし実行では起動時にfont転送を読み捨てる |
+| `keyrepeat.inc` | `keyscan.inc`の現在キーから押下・保持リピート・離上eventを作る | `jr_keyscan_init`後に初期化し、一定周期でpoll。遅延4回・周期2回はpoll回数であり実時間ではない |
 | `gfx.inc` | RAM影画面への文字・数値・2×2 tile描画と一括転送 | `JR_SHADOW`はpage境界。転送中はSを使用 |
 | `font.inc` / `font_data.inc` | 自作5×7字形を`$D100-$D2FF`へ設置 | メーカーFONTを使わない。終了時に元へ戻す |
 | `pcg.inc` | user pattern（code 0x00-0x1F／0x80-0x9F）の転送 | attribute mode 0x40で表示 |
 | `frame.inc` | 約1/60秒のbusy-wait frame | 固定エミュレータのCPU clock基準 |
+| `effect.inc` | 待機しない演出step／phase管理 | 呼出元がtickごとに進め、表示・入力・音声を並行処理する。実時間保証なし |
 | `math.inc` | 8-bit乗除算、X+A | M6800命令のみ |
 | `sfx.inc` | channel Cのnon-blocking効果音列 | frameごとに進める |
-| `port.inc` | タイトル・説明・面進行・クリア/失敗・やり直し確認・演出待ちの共通loop | 作品側hookを呼ぶ |
+| `port.inc` | タイトル・説明・面進行・クリア/失敗・やり直し確認・演出待ちの共通loop | 作品側hookを呼ぶ。演出待ちは同期処理で、効果音と終了キーだけを継続する |
 
 `session.inc` と `gfx.inc` 以外の全routineは呼出元のSを初期化せず、`JSR`／`RTS` の範囲だけstackを使います。
 `session.inc` はゲーム全体のSとIRQ maskを預かり、終了時に元へ戻します。`gfx.inc` の転送と
