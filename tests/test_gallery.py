@@ -20,7 +20,7 @@ def galleries():
 class GalleryTests(unittest.TestCase):
     def test_new_ports_have_three_scenes_and_a_video(self):
         for game in ('lumen-cross', 'corner-crown', 'circuit-works', 'hearth-zero',
-                     'brick-pulse'):
+                     'brick-pulse', 'relic-dive'):
             path = ROOT / 'games' / game / 'media/gallery.json'
             with self.subTest(game=game):
                 gallery = json.loads(path.read_text(encoding='utf-8'))
