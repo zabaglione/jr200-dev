@@ -13,10 +13,11 @@ from typing import Any
 import zipfile
 
 from png_rgba import PngError, decode_rgba
-from wiki.generate import WikiError, catalog_entries, load_package
+from wiki.generate import WikiError, catalog_entries, load_gallery, load_package
 
 
 ROOT = Path(__file__).resolve().parents[1]
+MAX_CANDIDATE_BYTES = 10_000_000
 TEXT_LIMIT = 2_000_000
 CODE_SUFFIXES = {'.asm', '.inc', '.mjs', '.py'}
 SUPPORTED_LICENSES = {'BSD-3-Clause', 'MIT'}
@@ -114,7 +115,39 @@ def expected_spdx(root: Path, relative: str) -> str:
     return 'BSD-3-Clause'
 
 
+def gallery_video_paths(root: Path, paths: list[str],
+                        report: dict[str, Any]) -> set[str]:
+    """Identify gallery-matched videos without treating them as provenance proof."""
+    inventory = set(paths)
+    matched = set()
+    for manifest in sorted((root / 'games').glob('*/media/gallery.json')):
+        project = manifest.parent.parent
+        label = manifest.relative_to(root).as_posix()
+        if re.fullmatch(r'games/[a-z][a-z0-9-]{0,31}/media/gallery\.json', label) is None:
+            report['blocks'].append('unsafe gallery manifest path')
+            continue
+        if project.is_symlink() or manifest.parent.is_symlink():
+            report['blocks'].append(f'symlinked gallery directory: {label}')
+            continue
+        try:
+            gallery = load_gallery(project)
+        except WikiError:
+            report['blocks'].append(f'invalid gallery contract: {label}')
+            continue
+        video = gallery['video'] if gallery is not None else None
+        if video is None:
+            continue
+        relative = (project / 'media' / video['file']).relative_to(root).as_posix()
+        if relative not in inventory:
+            report['blocks'].append(f'gallery video outside candidate inventory: {relative}')
+            continue
+        matched.add(relative)
+    report['scope']['gallery_matched_videos'] = len(matched)
+    return matched
+
+
 def inspect_candidate_files(root: Path, paths: list[str], report: dict[str, Any]) -> None:
+    gallery_videos = gallery_video_paths(root, paths, report)
     for relative in paths:
         path = root / relative
         if path.is_symlink() or not path.is_file():
@@ -122,9 +155,21 @@ def inspect_candidate_files(root: Path, paths: list[str], report: dict[str, Any]
             continue
         if unsafe_candidate_path(relative):
             report['blocks'].append(f'forbidden candidate path: {relative}')
-        data = path.read_bytes()
-        if len(data) > 10_000_000:
+        with path.open('rb') as stream:
+            data = stream.read(MAX_CANDIDATE_BYTES + 1)
+        if len(data) > MAX_CANDIDATE_BYTES:
             report['blocks'].append(f'oversized candidate file: {relative}')
+            continue
+        if path.suffix.lower() == '.webm':
+            if relative not in gallery_videos:
+                report['blocks'].append(f'unreviewed binary candidate: {relative}')
+                continue
+            blocks, warnings = scan_text(relative, data.decode('latin-1'))
+            report['blocks'].extend(blocks)
+            report['warnings'].extend(warnings)
+            report['publication_gates'].append(
+                f'{relative}: gallery hash matches, but video content and origin '
+                'lack independent review')
             continue
         if path.suffix.lower() == '.png':
             try:

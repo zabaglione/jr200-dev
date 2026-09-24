@@ -73,3 +73,16 @@ publication gateです。「secretが存在しない」という無限定な保�
 
 この更新は2026-09-22の監査結果を遡って変更するものではない。上述のremote CIと
 fresh cloneの確認はsource buildまでであり、ゲームのruntimeや物理JR-200の証拠ではない。
+
+## 2026-09-25更新
+
+`SIDE CATCH 0.1.0`はcleanなsource commit `f59e3d6`から候補ZIPを生成し、別のfresh cloneで
+同じSHA-256へ再現した。合成2 profileと所有ROM／FONTを使う通常MLOAD・BASIC復帰profileを
+収録し、ZIPの`release_ready`はtrueになった。ただし状態は`candidate`／`not-published`のままで、
+固定runnerのRelease資産とremote runtimeは未提供、物理実機も未確認である。
+
+監査では、開発中作品のWebM 6件を`gallery.json`のfile名・SHA-256・ROMなしprofileと照合し、
+未知・破損・symlink・10MB超・既知形式のASCII秘密情報を検出した動画は引き続きblockする。一致した6件も動画の内容・生成由来を
+独立に実証したわけではないため、各fileを`publication_gates`に残す。固定packageを置いた
+ローカル監査では`blocks=[]`、`publication_ready=false`だった。WebMの確認と固定runner配布、
+作品の公開指定が済むまで、Release配信やpublic化を実行しない。
