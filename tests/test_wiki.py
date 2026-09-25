@@ -89,6 +89,11 @@ class WikiFixture:
             if name != 'side-catch':
                 shutil.copytree(project.parent, self.root / 'games' / name,
                                 ignore=shutil.ignore_patterns('build', '__pycache__'))
+                if name == 'relic-dive':
+                    metadata_path = self.root / 'games' / name / 'game.json'
+                    metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+                    metadata['release']['status'] = 'draft'
+                    metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
 
     def report(self, profile, mode, evidence, framebuffer='0' * 64):
         cassette = 'memory_injection' if mode == 'synthetic-injection' else 'normal'
@@ -220,6 +225,24 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertEqual(files['media/side-catch.png'],
                          (self.fixture.root / 'games/side-catch/media/screenshot.png').read_bytes())
         self.assertEqual([item['id'] for item in games], ['side-catch'])
+
+    def test_candidate_can_reuse_a_named_verified_capture(self):
+        project = self.fixture.root / 'games/side-catch'
+        shutil.copyfile(project / 'media/screenshot.png',
+                        project / 'media/gameplay.png')
+        self.fixture.catalog['games'][0]['wiki']['screenshot']['file'] = (
+            'media/gameplay.png')
+        self.fixture.write_catalog()
+        files, _ = render_pages(self.fixture.root, None, True)
+        self.assertEqual(files['media/side-catch.png'],
+                         (project / 'media/gameplay.png').read_bytes())
+
+    def test_candidate_rejects_unsafe_capture_path(self):
+        self.fixture.catalog['games'][0]['wiki']['screenshot']['file'] = (
+            'media/../screenshot.png')
+        self.fixture.write_catalog()
+        with self.assertRaisesRegex(WikiError, 'Invalid game catalog entry'):
+            render_pages(self.fixture.root, None, True)
 
     def test_rejects_outer_hash_mismatch(self):
         self.fixture.catalog['games'][0]['package']['sha256'] = 'f' * 64

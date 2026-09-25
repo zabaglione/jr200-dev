@@ -10,7 +10,7 @@
       "artifact_sha256": "6edb58a3edfb35ed50f3bbb95ad223516189d8f06d673badcb76adaf7e8b0af2",
       "package": {
         "file": "side-catch-0.1.0.zip",
-        "sha256": "764b3e2772790b249f93b8a72e63e3925afe46e1fe0405b8459e2b210d55b405",
+        "sha256": "6a741173cd5534e0f1e82c0d0e07d9561e74d0f306dacb677dfcbdf5bc8846c6",
         "release_url": null
       },
       "wiki": {
@@ -22,6 +22,30 @@
           "sha256": "2f887c8a15b6bbed56560e86675569381267de410d968837b20966103c566689",
           "framebuffer_sha256": "62f18ea1658dbbe8c53cf90b104b727134d3c2cec71a45ffc8fb53607c69b575",
           "profile": "synthetic-screenshot"
+        }
+      }
+    },
+    {
+      "id": "relic-dive",
+      "project": "games/relic-dive",
+      "status": "candidate",
+      "version": "0.1.0-dev",
+      "genre": "exploration",
+      "artifact_sha256": "e8023f50bc10812a1d77818f81c00cedf0984c4d5b86ed5c96b45d3034006d97",
+      "package": {
+        "file": "relic-dive-0.1.0-dev.zip",
+        "sha256": "8d806acb332ab6dc8afac35aeec48711ddcc53940dd3ec7cf3633ca64f0589b2",
+        "release_url": null
+      },
+      "wiki": {
+        "slug": "relic-dive",
+        "publish": false,
+        "play_url": null,
+        "screenshot": {
+          "file": "media/gameplay.png",
+          "sha256": "4ecd49fcb11a121d059df26cc9bf4489c11426a84fbc93fc1193869a03d66430",
+          "framebuffer_sha256": "5d85b5a6a9c1987a90f76c3da42205a5c1630a6c523cc9c40c7358b3a68e4a1f",
+          "profile": "synthetic-gameplay"
         }
       }
     }

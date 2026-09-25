@@ -86,3 +86,36 @@ fresh cloneの確認はsource buildまでであり、ゲームのruntimeや物�
 独立に実証したわけではないため、各fileを`publication_gates`に残す。固定packageを置いた
 ローカル監査では`blocks=[]`、`publication_ready=false`だった。WebMの確認と固定runner配布、
 作品の公開指定が済むまで、Release配信やpublic化を実行しない。
+
+## 2026-09-25追記: 初期2作品の候補再検証
+
+固定runner `runner-v0.3.0` の公開ZIPを新規Macクローンで取得し、source commit
+`de48784eacbaa7e7d21a4c76ebe2facc4a20d6ec`からSIDE CATCHとRELIC DIVEを
+再build、全profile実行、単体package化した。合成profileはSIDE CATCH 2件、
+RELIC DIVE 9件、所有ROM／FONTをローカル指定した通常MLOAD/USR profileは
+SIDE CATCH 1件、RELIC DIVE 2件で成功。
+両ZIPの`source.tree_state=clean`、`release_ready=true`を確認した。固定hashは
+`games/catalog.json`に記載し、候補Wikiのpackage／ライセンス／checksum照合も合格した。
+ROM、FONT、録音はZIPやGitへ含めない。両作品は`candidate`／`not-published`のままで、
+作品Release、PagesへのCJR配置、公開Wiki同期、物理JR-200試験は行っていない。
+
+`release_audit.py --strict`は、既存のテストfixtureと履歴内の個人パス形式をblockとして報告し、
+さらに6件のWebM由来と未公開候補をpublication gateに残す。そのため公開監査合格とは扱わない。
+Issue #14の階層遷移・敗北からの再挑戦もJR-200版での受入証拠が不足しており、
+候補ZIPの生成成功だけでIssue完了とはしない。
+
+## 2026-09-25再追記: RELIC DIVEの受入範囲拡張
+
+固定runnerの合成profileで、1階の階段到達時のviewport・画面コード・属性、
+`DESCEND`後の2階生成、HPが0になった敗北状態、タイトル経由の再挑戦を状態値で固定した。
+所有ROM／FONTを使う通常`MLOAD`→`A=USR($1000)`では、BASICの`POKE`で画面上・中・下に
+非ゼロ文字を置き、ESC終了の最終`RTS`直前に3領域の退避値と復元値が一致することを確認した。
+別profileでBASICに復帰した後の診断呼び出しも通過した。合成13件、所有ROM／FONT 3件は
+ローカルで成功した。これは実機での動作証拠ではなく、作品ReleaseやPages公開もまだ行っていない。
+新規Macクローンでsource commit `8905c77411d74e008086ed72c995f648139945ef`から
+両作品を再buildし、SIDE CATCHの合成2件・所有ROM／FONT 1件、RELIC DIVEの合成13件・
+所有ROM／FONT 3件を再実行した。clean source由来の候補ZIPはそれぞれ
+`6a741173cd5534e0f1e82c0d0e07d9561e74d0f306dacb677dfcbdf5bc8846c6`、
+`8d806acb332ab6dc8afac35aeec48711ddcc53940dd3ec7cf3633ca64f0589b2`で、
+`games/catalog.json`に固定した。ZIP内の`release_ready=true`は候補packageの検証結果であり、
+作品の公開許可や公開監査合格を意味しない。

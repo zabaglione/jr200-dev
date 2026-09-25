@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。PCGで描いた石文字と遺跡の門を属性RAMで色分け",
-      "sha256": "901fe670316e7f753850c13a7d6e3a58553f55e3e26851e0082fc37897684f29",
-      "framebuffer_sha256": "f973f097a350401d0cd7d6508e41d095ba57026ead2ca7350830a6a6f6110a51"
+      "sha256": "c745ebd09746b0b8f89972340c9df835c64b9640f4ea3449eed74b9177787d23",
+      "framebuffer_sha256": "3820bd73678d67160afd9a8d08b9a7430de40352b403667dd7ace9145425e17f"
     },
     {
       "id": "play",

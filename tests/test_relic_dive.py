@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
+import json
 import re
 from pathlib import Path
 import sys
@@ -14,6 +15,34 @@ PROJECT = ROOT / 'games/relic-dive'
 
 
 class RelicDiveContractTests(unittest.TestCase):
+    def test_acceptance_profiles_separate_normal_load_from_synthetic_play(self):
+        expectations = json.loads(
+            (PROJECT / 'tests/expectations.json').read_text(encoding='utf-8'))
+        profiles = {item['profile']: item for item in expectations['runtime']['profiles']}
+        for name in ('synthetic-title', 'synthetic-gameplay', 'synthetic-combat',
+                     'synthetic-menu', 'synthetic-menu-wait', 'synthetic-suspend',
+                     'synthetic-resume', 'synthetic-return', 'synthetic-audio',
+                     'synthetic-stairs-arrival', 'synthetic-floor-transition',
+                     'synthetic-defeat', 'synthetic-retry'):
+            self.assertEqual(profiles[name]['mode'], 'synthetic-injection')
+        for name in ('local-rom-scroll', 'local-rom-basic-return',
+                     'local-rom-screen-restore'):
+            self.assertEqual(profiles[name]['mode'], 'rom-cassette')
+            self.assertIn('mload\r', [event.get('text')
+                                      for event in profiles[name]['replay']])
+        returned = profiles['local-rom-basic-return']
+        self.assertEqual(returned['expect']['memory']['basic-return-proof'], 'a5')
+        self.assertEqual(returned['expect']['pc'], '0x4825')
+        restored = profiles['local-rom-screen-restore']
+        self.assertEqual(restored['expect']['pc'], '0x1214')
+        for sector, marker in (('top', '41'), ('middle', '42'), ('bottom', '43')):
+            self.assertEqual(restored['expect']['memory'][f'saved-{sector}'], marker)
+            self.assertEqual(restored['expect']['memory'][f'restored-{sector}'], marker)
+        self.assertEqual(profiles['synthetic-stairs-arrival']['expect']['memory']['view-y'], '00')
+        self.assertEqual(profiles['synthetic-floor-transition']['expect']['memory']['gen-floor'], '01')
+        self.assertEqual(profiles['synthetic-defeat']['expect']['memory']['state'][:2], '08')
+        self.assertEqual(profiles['synthetic-retry']['expect']['memory']['turns'], '0000')
+
     def test_project_contract_and_mit_license(self):
         spec = validate_project(PROJECT)
         self.assertEqual(spec.config['id'], 'relic-dive')
@@ -72,9 +101,12 @@ class RelicDiveContractTests(unittest.TestCase):
         self.assertIn('JR200_KEY_IRQ_STATUS', platform)
         self.assertIn('jr_sound_c_start', platform)
         self.assertIn('JR200_SCREEN_ATTRIBUTES', platform)
+        self.assertIn('SAVE_SCREEN_CODES', platform)
+        self.assertIn('JR200_SCREEN_CODES + 0x200', platform)
         self.assertNotIn('ADDA 0x91', platform)
         self.assertIn('JR200_SCREEN_CODES - FRAMEBUFFER', platform)
         self.assertIn('STRIKE_ATTR', platform)
+        self.assertIn('return_probe:', (PROJECT / 'src/main.asm').read_text(encoding='utf-8'))
         ui = (PROJECT / 'src/ui.asm').read_text(encoding='utf-8')
         self.assertIn('LDX JR200_PCG_BANK1', ui)
         generated = (PROJECT / 'src/generated.inc').read_text(encoding='utf-8')
