@@ -32,9 +32,10 @@ class RelicDiveContractTests(unittest.TestCase):
                                       for event in profiles[name]['replay']])
         returned = profiles['local-rom-basic-return']
         self.assertEqual(returned['expect']['memory']['basic-return-proof'], 'a5')
-        self.assertEqual(returned['expect']['pc'], '0x4825')
+        self.assertEqual(returned['expect']['pc'], '0x4a68')
         restored = profiles['local-rom-screen-restore']
-        self.assertEqual(restored['expect']['pc'], '0x1214')
+        self.assertEqual(restored['expect']['pc'], '0x1274')
+        self.assertEqual(profiles['local-rom-goal']['expect']['memory']['kills'], '01')
         for sector, marker in (('top', '41'), ('middle', '42'), ('bottom', '43')):
             self.assertEqual(restored['expect']['memory'][f'saved-{sector}'], marker)
             self.assertEqual(restored['expect']['memory'][f'restored-{sector}'], marker)
@@ -77,7 +78,7 @@ class RelicDiveContractTests(unittest.TestCase):
         }
         for name in (
                 'FRAMEBUFFER', 'STATE_BEGIN', 'STATE_END', 'SAVE_PCG',
-                'SAVE_ATTRIBUTES', 'FAST_BEGIN', 'FAST_END', 'ENEMY_START',
+                'SAVE_ATTRIBUTES', 'SAVE_FONT', 'FAST_BEGIN', 'FAST_END', 'ENEMY_START',
                 'STACK_TOP'):
             self.assertGreaterEqual(constants[name], 0x5000, name)
             self.assertLessEqual(constants[name], 0x7fff, name)
@@ -102,6 +103,8 @@ class RelicDiveContractTests(unittest.TestCase):
         self.assertIn('jr_sound_c_start', platform)
         self.assertIn('JR200_SCREEN_ATTRIBUTES', platform)
         self.assertIn('SAVE_SCREEN_CODES', platform)
+        self.assertIn('SAVE_FONT', platform)
+        self.assertIn('jr_font_data', platform)
         self.assertIn('JR200_SCREEN_CODES + 0x200', platform)
         self.assertNotIn('ADDA 0x91', platform)
         self.assertIn('JR200_SCREEN_CODES - FRAMEBUFFER', platform)

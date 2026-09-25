@@ -45,7 +45,7 @@ JR-200の移植版はキーボードだけで操作します。ジョイステ�
 
 1. CJRを通常の`MLOAD`で読み込みます。
 2. BASICから`A=USR($1000)`を実行します。
-3. 終了時はcaller stack、割り込み状態、Key-On mask、PCG bank 1、画面コード・属性を起動前に戻します。
+3. 終了時はcaller stack、割り込み状態、Key-On mask、PCG bank 1、画面コード・属性・フォントRAMを起動前に戻します。
 
 ## 開発
 
@@ -56,7 +56,7 @@ RUNNER_BUNDLE=/absolute/path/to/emulator/bundle make run
 
 利用権のあるROM／FONTでの通常`MLOAD`・起動・スクロール確認は`local-rom-scroll`、
 終了後のBASIC復帰と再呼び出しは`local-rom-basic-return`で行います。後者の診断用
-`A=USR($4820)`はゲームの起動命令ではありません。
+`A=USR($4A63)`はゲームの起動命令ではありません。
 `local-rom-screen-restore`はBASICの`POKE`で画面の上・中・下に既知の文字を置き、
 ESC終了の最終`RTS`直前に3領域の退避値と復元値が一致することを確認します。
 ROMとFONTはリポジトリへ追加しません。
@@ -72,11 +72,11 @@ python3 ../../tools/emulator_runner.py run --project . \
 | 区分 | 状態 |
 | --- | --- |
 | ROMなし合成実行（固定エミュレータ） | タイトル、1階の移動と待機、メニュー操作、SUSPEND／再開、戦闘、縦横スクロールと画面コード・属性、階段到達・2階への遷移、敗北・再挑戦、音（channel C）、ESCでの復帰と資源の復元を状態値で確認 |
-| 所有ROM/FONTでの通常`MLOAD`/`USR` | Macのローカル資産で読み込み、横スクロール操作、ESC終了後のBASICからの再呼び出し、画面上・中・下の非ゼロ文字、PCG・属性・Key-On mask復元を確認。ROM/FONTは保存・配布しない |
+| 所有ROM/FONTでの通常`MLOAD`/`USR` | Macのローカル資産でタイトル・開始・最初の敵1体の討伐を撮影。横スクロール操作、ESC終了後のBASICからの再呼び出し、画面上・中・下の非ゼロ文字、PCG・属性・フォントRAM・Key-On mask復元を確認。ROM/FONTは保存・配布しない |
 | 物理JR-200 | 未実施 |
 
-ROMなし合成実行ではメーカーFONTを読み込まないため、ギャラリーの画面にはHUDの文字が出ません。
-文字codeと属性は実行時のメモリ期待値で別に固定しています。
+ROMなし合成実行は補助的な回帰テストです。公開ギャラリーは通常`MLOAD`/`USR`の
+ROM/FONTありで撮影し、ゲーム内の自作字形だけを使ったことを検査しています。
 
 ## ライセンス
 

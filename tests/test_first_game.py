@@ -54,8 +54,8 @@ class FirstGameTests(unittest.TestCase):
         self.assertEqual(spec.metadata['verification'], {
             'emulator': 'passed', 'hardware': 'not_run'})
         self.assertEqual(spec.sdk_inputs, (
-            'sdk/input.inc', 'sdk/jr200.inc', 'sdk/screen.inc',
-            'sdk/sound.inc', 'sdk/timing.inc'))
+            'sdk/font.inc', 'sdk/font_data.inc', 'sdk/input.inc', 'sdk/jr200.inc',
+            'sdk/screen.inc', 'sdk/session.inc', 'sdk/sound.inc', 'sdk/timing.inc'))
 
     def test_game_source_and_docs_have_separate_ci_effects(self):
         registry = json.loads((ROOT / 'ci/targets.json').read_text(encoding='utf-8'))
@@ -108,11 +108,13 @@ class FirstGameTests(unittest.TestCase):
             artifact_hash = build['artifact']['sha256']
             reports = project / 'build/runtime-reports'
             reports.mkdir()
-            for profile, mode, evidence in (
-                    ('synthetic-ci', 'synthetic-injection', 'emulator'),
-                    ('synthetic-screenshot', 'synthetic-injection', 'emulator'),
-                    ('local-rom-basic-return', 'rom-cassette',
-                     'emulator_with_local_rom')):
+            profiles = json.loads((project / 'tests/expectations.json').read_text())[
+                'runtime']['profiles']
+            for item in profiles:
+                profile = item['profile']
+                mode = item['mode']
+                evidence = ('emulator' if mode == 'synthetic-injection'
+                            else 'emulator_with_local_rom')
                 value = {
                     'schema_version': 1,
                     'project': 'side-catch',
@@ -135,7 +137,7 @@ class FirstGameTests(unittest.TestCase):
                 project, str(executable), root / 'toolchain.lock.json',
                 root / 'rules/jr200.json', root)
             with zipfile.ZipFile(package) as archive:
-                prefix = 'side-catch-0.1.0/'
+                prefix = 'side-catch-0.1.2/'
                 manifest = json.loads(archive.read(prefix + 'RELEASE.json'))
                 self.assertEqual(manifest['artifact']['file'], 'side-catch.cjr')
                 self.assertEqual(manifest['artifact']['sha256'], artifact_hash)
@@ -148,6 +150,7 @@ class FirstGameTests(unittest.TestCase):
                 self.assertIn(prefix + 'VERIFICATION/synthetic-ci.json', names)
                 self.assertIn(prefix + 'VERIFICATION/synthetic-screenshot.json', names)
                 self.assertIn(prefix + 'VERIFICATION/local-rom-basic-return.json', names)
+                self.assertIn(prefix + 'VERIFICATION/local-rom-title.json', names)
                 self.assertEqual(
                     hashlib.sha256(archive.read(prefix + 'side-catch.cjr')).hexdigest(),
                     artifact_hash)

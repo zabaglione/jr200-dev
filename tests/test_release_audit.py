@@ -37,6 +37,16 @@ class ReleaseAuditTests(unittest.TestCase):
         ])
         self.assertNotIn(secret, '\n'.join(blocks))
 
+    def test_legacy_synthetic_path_exemption_is_exact(self):
+        fixture = '/Us' + 'ers/private/recording.webm'
+        self.assertEqual(scan_text('history:tests/test_release_audit.py', fixture),
+                         ([], []))
+        self.assertEqual(scan_text('history:tests/test_release_audit.py',
+                                   fixture + 'x')[0],
+                         ['personal absolute path in history:tests/test_release_audit.py'])
+        self.assertEqual(scan_text('history:other.py', fixture)[0],
+                         ['personal absolute path in history:other.py'])
+
     def test_placeholder_email_is_allowed_but_real_domain_warns(self):
         self.assertEqual(scan_text('test.py', 'test@example.invalid'), ([], []))
         real_email = 'person@' + 'company.test'

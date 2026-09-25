@@ -28,7 +28,7 @@
       "src/turns.asm",
       "src/ui.asm"
     ],
-    "sdk": ["sdk/jr200.inc", "sdk/sound.inc"],
+    "sdk": ["sdk/font_data.inc", "sdk/jr200.inc", "sdk/sound.inc"],
     "assets": []
   },
   "execution": {

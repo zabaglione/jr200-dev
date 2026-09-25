@@ -7,15 +7,21 @@
   "entry_address": "0x1000",
   "entry_symbol": "start",
   "regions": [
-    {"name": "program", "kind": "code", "start": "0x1000", "end": "0x13ff"},
-    {"name": "runtime", "kind": "data", "start": "0x1400", "end": "0x14ff"}
+    {"name": "program", "kind": "code", "start": "0x1000", "end": "0x1fff"},
+    {"name": "runtime", "kind": "data", "start": "0x2000", "end": "0x20ff"},
+    {"name": "session-save", "kind": "data", "start": "0x3000", "end": "0x3fff"},
+    {"name": "session-work", "kind": "data", "start": "0x4000", "end": "0x40ff"},
+    {"name": "session-stack", "kind": "data", "start": "0x4f00", "end": "0x4fff"}
   ],
   "inputs": {
     "assembly": ["src/glyphs.inc", "src/main.asm"],
     "sdk": [
+      "sdk/font.inc",
+      "sdk/font_data.inc",
       "sdk/input.inc",
       "sdk/jr200.inc",
       "sdk/screen.inc",
+      "sdk/session.inc",
       "sdk/sound.inc",
       "sdk/timing.inc"
     ],

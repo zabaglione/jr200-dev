@@ -21,11 +21,11 @@ start:
         .include "ui.asm"
         .include "assets.asm"
         .include "generated.inc"
+        .include "../../../sdk/font_data.inc"
 
 CODE_END:
 
 ; A BASIC-only probe: successful USR after EXIT_GAME proves caller control returned.
-        .org    0x4820
 return_probe:
         LDAA    0xA5
         STAA    [RETURN_PROOF]

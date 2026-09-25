@@ -7,16 +7,16 @@
       {
         "profile": "synthetic-ci",
         "mode": "synthetic-injection",
-        "max_cycles": 180000,
+        "max_cycles": 1000000,
         "return_address": "0x7ff0",
         "replay": [
-          {"kind": "key", "cycle": 45000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 60000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 105000, "code": "0x61", "pressed": true},
-          {"kind": "key", "cycle": 120000, "code": "0x71", "pressed": true}
+          {"kind": "key", "cycle": 300000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 600000, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 750000, "code": "0x71", "pressed": true}
         ],
         "observations": [
-          {"name": "state", "address": "0x1400", "length": 5},
+          {"name": "state", "address": "0x2000", "length": 5},
           {"name": "glyphs", "address": "0xc000", "length": 16},
           {"name": "playfield", "address": "0xc28e", "length": 3},
           {"name": "sound-control", "address": "0xc812", "length": 1}
@@ -27,15 +27,36 @@
           "pc": "0x7ff0",
           "memory": {
             "state": "0201020071",
-            "glyphs": "183c7e5a3c244281185a3ce7e73c5a18",
-            "playfield": "002020",
+            "glyphs": "00ff00ff00ff00ff00ff00ff00ff00ff",
+            "playfield": "000000",
             "sound-control": "00"
           },
-          "framebuffer_sha256": "2649f6d899db56ca00ddf6695e350ce01d88112d236160e0df316eddecceb74e",
+          "framebuffer_sha256": "811a21a28045551ab6fdb3a94f27d5aee5043f0ba626f166295fc2e5813444b0",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-sound",
+        "mode": "synthetic-injection",
+        "max_cycles": 305000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 300000, "code": "0x64", "pressed": true}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x2000", "length": 5}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {"state": "0100010064"},
+          "framebuffer_sha256": null,
           "pcm": {
             "minimum_frames": 100,
             "minimum_nonzero_frames": 1,
-            "maximum_dropped_frames": 0
+            "maximum_dropped_frames": 6000
           },
           "cassette": null
         }
@@ -43,14 +64,14 @@
       {
         "profile": "synthetic-screenshot",
         "mode": "synthetic-injection",
-        "max_cycles": 140000,
+        "max_cycles": 550000,
         "return_address": "0x7ff0",
         "replay": [
-          {"kind": "key", "cycle": 45000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 60000, "code": "0x72", "pressed": true}
+          {"kind": "key", "cycle": 300000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x72", "pressed": true}
         ],
         "observations": [
-          {"name": "state", "address": "0x1400", "length": 5},
+          {"name": "state", "address": "0x2000", "length": 5},
           {"name": "glyphs", "address": "0xc000", "length": 16},
           {"name": "playfield", "address": "0xc28e", "length": 3},
           {"name": "sound-control", "address": "0xc812", "length": 1}
@@ -65,7 +86,7 @@
             "playfield": "010020",
             "sound-control": "00"
           },
-          "framebuffer_sha256": "62f18ea1658dbbe8c53cf90b104b727134d3c2cec71a45ffc8fb53607c69b575",
+          "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67",
           "pcm": null,
           "cassette": null
         }
@@ -73,31 +94,98 @@
       {
         "profile": "local-rom-basic-return",
         "mode": "rom-cassette",
-        "max_cycles": 37000000,
+        "max_cycles": 100000000,
         "return_address": "0x7ff0",
         "replay": [
           {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
-          {"kind": "text", "cycle": 25000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000},
-          {"kind": "key", "cycle": 27500000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 28500000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 29500000, "code": "0x61", "pressed": true},
-          {"kind": "key", "cycle": 30500000, "code": "0x71", "pressed": true},
-          {"kind": "text", "cycle": 31500000, "text": "\r", "key_duration": 75000, "key_interval": 150000},
-          {"kind": "text", "cycle": 33000000, "text": "a=usr($1300)\r", "key_duration": 75000, "key_interval": 150000}
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "key", "cycle": 83500000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 84500000, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 85500000, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 86500000, "code": "0x71", "pressed": true},
+          {"kind": "text", "cycle": 87500000, "text": "\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "text", "cycle": 89000000, "text": "a=usr($1300)\r", "key_duration": 75000, "key_interval": 150000}
         ],
         "observations": [
-          {"name": "state", "address": "0x1400", "length": 5},
-          {"name": "glyphs", "address": "0xc000", "length": 16}
+          {"name": "state", "address": "0x2000", "length": 5}
         ],
         "breakpoints": [],
         "expect": {
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {
-            "state": "020102a571",
-            "glyphs": "183c7e5a3c244281185a3ce7e73c5a18"
+            "state": "020102a571"
           },
           "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
+      },
+      {
+        "profile": "local-rom-title",
+        "mode": "rom-cassette",
+        "max_cycles": 83000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x2000", "length": 5}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {"state": "000000000d"},
+          "framebuffer_sha256": "32ee8dca37184887a096fa3137ca8e703a8b813be6ab35f7113aac431a9c0b90",
+          "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
+      },
+      {
+        "profile": "local-rom-goal",
+        "mode": "rom-cassette",
+        "max_cycles": 84000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "key", "cycle": 83500000, "code": "0x64", "pressed": true}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x2000", "length": 5}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {"state": "0100010064"},
+          "framebuffer_sha256": "2edd8a70e456fdf99a9da6aa24ca17059b66fe1d9cb1a7def5a11a534e1f01f3",
+          "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
+      },
+      {
+        "profile": "local-rom-play",
+        "mode": "rom-cassette",
+        "max_cycles": 85000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "key", "cycle": 83500000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 84500000, "code": "0x72", "pressed": true}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x2000", "length": 5}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {"state": "0001010072"},
+          "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67",
           "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }

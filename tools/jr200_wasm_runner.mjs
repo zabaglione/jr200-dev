@@ -4,6 +4,8 @@ import {readFileSync, writeFileSync} from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {deflateSync} from 'node:zlib';
+import {verifyAuthoredScreen} from './authored_capture.mjs';
+import {applyReplayEvent, prepareReplaySystem} from './replay_system.mjs';
 
 const RUNNER_VERSION = '0.3.0';
 const CONTRACT_VERSION = 1;
@@ -24,13 +26,14 @@ function parseArgs(argv) {
   for (let index = 0; index < argv.length; index += 2) {
     const key = argv[index];
     const value = argv[index + 1];
-    if (!['--bundle', '--request', '--result', '--screenshot', '--system-api'].includes(key) ||
+    if (!['--bundle', '--request', '--result', '--screenshot', '--self-font-data',
+          '--system-api'].includes(key) ||
         value === undefined || value.length === 0 || result[key.slice(2)] !== undefined) {
       die('invalid command line');
     }
     result[key.slice(2)] = value;
   }
-  if (![4, 5].includes(Object.keys(result).length) ||
+  if (![4, 5, 6].includes(Object.keys(result).length) ||
       !result.bundle || !result.request || !result.result || !result['system-api']) {
     die('bundle, request, result, and system API are required');
   }
@@ -191,19 +194,6 @@ function registers(module) {
     [name, module._jr200_system_cpu_register(field)]));
 }
 
-function applyEvent(module, event) {
-  if (event.kind === 'nmi') {
-    module._jr200_system_pulse_nmi();
-  } else if (event.kind === 'joystick') {
-    if (typeof module._jr200_system_set_joystick !== 'function' ||
-        module._jr200_system_set_joystick(event.player, event.state) !== 1) {
-      die('joystick replay requires emulator system API 8', 5);
-    }
-  } else {
-    module._jr200_system_set_key(event.code, event.pressed ? 1 : 0);
-  }
-}
-
 function runReplay(module, request) {
   let elapsed = 0;
   for (const event of request.replay) {
@@ -214,7 +204,7 @@ function runReplay(module, request) {
       die('runner made no progress', 7);
     }
     if (module._jr200_system_debug_field(1) !== 0) break;
-    applyEvent(module, event);
+    applyReplayEvent(module, event);
   }
   if (elapsed < request.max_cycles && module._jr200_system_debug_field(1) === 0) {
     elapsed += module._jr200_system_run(request.max_cycles - elapsed);
@@ -240,67 +230,10 @@ if (module._jr200_codec_api_version() !== 1 ||
     module._jr200_system_api_version() !== expectedSystemApi) {
   die('emulator API version mismatch', 5);
 }
-module.HEAPU8.set(artifact, module._jr200_input_ptr());
-if (module._jr200_inspect(artifact.length, 0) !== 0) die('emulator rejected CJR input');
-
-module._jr200_system_clear();
-if (request.mode === 'synthetic-injection') {
-  if (Object.keys(request.assets).length !== 0) die('synthetic mode cannot use ROM assets');
-  if (request.return_address < 0x0808 || request.return_address > 0x7fff) {
-    die('synthetic return address cannot host a caller trampoline');
-  }
-  const trampolineAddress = request.return_address - 6;
-  const stackTop = trampolineAddress - 1;
-  if (segments.some(segment =>
-    segment.address <= request.return_address - 1 &&
-    segment.address + segment.bytes.length - 1 >= trampolineAddress)) {
-    die('synthetic caller trampoline overlaps an injected segment');
-  }
-  for (const segment of segments) {
-    for (let offset = 0; offset < segment.bytes.length; ++offset) {
-      module._jr200_system_poke(segment.address + offset, segment.bytes[offset]);
-    }
-  }
-  const trampoline = [0x8e, stackTop >> 8, stackTop & 0xff,
-    0xbd, request.entry_address >> 8, request.entry_address & 0xff];
-  trampoline.forEach((value, offset) =>
-    module._jr200_system_poke(trampolineAddress + offset, value));
-  module._jr200_system_poke(0xfffe, trampolineAddress >> 8);
-  module._jr200_system_poke(0xffff, trampolineAddress & 0xff);
-  module._jr200_system_cpu_reset();
-} else {
-  if (Object.keys(request.assets).sort().join() !== 'font_path,rom_path') {
-    die('ROM cassette mode requires ROM and font assets', 3);
-  }
-  let rom;
-  let font;
-  try {
-    rom = readFileSync(request.assets.rom_path);
-    font = readFileSync(request.assets.font_path);
-  } catch {
-    die('local ROM or font asset is missing', 3);
-  }
-  if (rom.length !== module._jr200_system_rom_capacity() ||
-      font.length !== module._jr200_system_font_capacity()) {
-    die('local ROM or font size is incompatible', 5);
-  }
-  module.HEAPU8.set(rom, module._jr200_system_rom_ptr());
-  module.HEAPU8.set(font, module._jr200_system_font_ptr());
-  if (module._jr200_system_boot(rom.length, font.length) !== 1) {
-    die('emulator rejected local ROM or font', 5);
-  }
-  module.HEAPU8.set(artifact, module._jr200_system_tape_input_ptr());
-  if (module._jr200_system_tape_mount(artifact.length) !== 0) {
-    die('emulator rejected cassette input');
-  }
-}
-
-const uniqueBreakpoints = new Set(request.breakpoints);
-if (request.mode === 'synthetic-injection') uniqueBreakpoints.add(request.return_address);
-for (const address of uniqueBreakpoints) {
-  if (module._jr200_system_debug_add_breakpoint(address) !== 1) {
-    die('breakpoint capacity exceeded');
-  }
+try {
+  prepareReplaySystem(module, request, artifact, segments);
+} catch (error) {
+  die(error.message, error.message.includes('ROM') ? 3 : 5);
 }
 const elapsed = runReplay(module, request);
 module._jr200_system_render();
@@ -323,10 +256,19 @@ for (let index = 0; index < framebufferPixels; ++index) {
   framebuffer[offset + 3] = (color >>> 24) & 0xff;
 }
 if (args.screenshot) {
-  if (request.mode !== 'synthetic-injection') {
-    die('screenshots are restricted to synthetic mode');
+  if (request.mode === 'rom-cassette') {
+    if (!args['self-font-data']) die('ROM screenshot requires authored font source');
+    try {
+      verifyAuthoredScreen(module, args['self-font-data']);
+    } catch (error) {
+      die(`ROM capture refused: ${error.message}`);
+    }
+  } else if (args['self-font-data']) {
+    die('authored font source is only for ROM screenshots');
   }
   writeFileSync(args.screenshot, encodePngRgba(320, 224, framebuffer), {flag: 'wx'});
+} else if (args['self-font-data']) {
+  die('authored font source requires screenshot output');
 }
 const pcmAvailable = module._jr200_system_field(4);
 const pcmCount = module._jr200_system_pcm_drain(

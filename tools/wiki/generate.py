@@ -145,7 +145,9 @@ def catalog_entries(root: Path) -> list[dict[str, Any]]:
                 or type(wiki['publish']) is not bool
                 or (wiki['play_url'] is not None
                     and (not wiki['publish']
-                         or wiki['play_url'] != f'{EMULATOR_URL}?game={identifier}'))
+                         or wiki['play_url'] not in (
+                             f'{EMULATOR_URL}?game={identifier}',
+                             f'{EMULATOR_URL}?game={identifier}&launch=1')))
                 or not isinstance(screenshot, dict)
                 or set(screenshot) != {'file', 'sha256', 'framebuffer_sha256',
                                        'profile'}
@@ -417,7 +419,8 @@ def load_package(root: Path, entry: dict[str, Any], packages: Path | None,
             or release.get('verification', {}).get('hardware') != 'not_run'
             or evidence != {'emulator', 'emulator_with_local_rom'}
             or len(reports) != len(profiles)
-            or screenshot_report.get('mode') != 'synthetic-injection'
+            or screenshot_report.get('mode') not in ('synthetic-injection',
+                                                    'rom-cassette')
             or screenshot_report.get('framebuffer_sha256')
             != entry['wiki']['screenshot']['framebuffer_sha256']
             or compatibility.get('sdk_contract')
@@ -514,10 +517,28 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
         raise WikiError(f'{project.name}: gallery manifest is a symlink')
     value = read_json(path, 'gallery manifest', max_bytes=MAX_GALLERY_BYTES)
     profiles = runtime_profiles(project, max_bytes=MAX_GALLERY_BYTES)
-    if (not isinstance(value, dict) or value.get('schema_version') != 1
-            or not set(value) <= {'schema_version', 'scenes', 'video'}
+    if (not isinstance(value, dict) or value.get('schema_version') not in (1, 2)
+            or not set(value) <= {'schema_version', 'capture', 'scenes', 'video'}
             or not isinstance(value.get('scenes'), list) or not value['scenes']):
         raise WikiError(f'{project.name}: invalid gallery manifest')
+    capture = value.get('capture')
+    if value['schema_version'] == 1:
+        if capture is not None:
+            raise WikiError(f'{project.name}: legacy gallery has unexpected capture data')
+        capture_mode = 'synthetic-injection'
+    else:
+        source = ROOT / 'sdk/font_data.inc'
+        if (not isinstance(capture, dict)
+                or set(capture) != {'mode', 'artifact_sha256', 'glyph_source',
+                                    'glyph_source_sha256'}
+                or capture['mode'] != 'rom-cassette'
+                or capture['glyph_source'] != 'sdk/font_data.inc'
+                or not source.is_file()
+                or sha256_file(source) != capture['glyph_source_sha256']
+                or not isinstance(capture['artifact_sha256'], str)
+                or HEX64.fullmatch(capture['artifact_sha256']) is None):
+            raise WikiError(f'{project.name}: invalid ROM capture provenance')
+        capture_mode = 'rom-cassette'
 
     def media(file: Any, suffix: str) -> bytes:
         match = MEDIA_NAME.fullmatch(file) if isinstance(file, str) else None
@@ -532,11 +553,11 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
             raise WikiError(f'{project.name}: gallery media exceeds the size limit')
         return data
 
-    def synthetic(profile: Any) -> dict[str, Any]:
+    def capture_profile(profile: Any) -> dict[str, Any]:
         record = profiles.get(profile) if isinstance(profile, str) else None
-        if record is None or record.get('mode') != 'synthetic-injection':
-            raise WikiError(f'{project.name}: gallery profile is not a ROM-less '
-                            f'synthetic profile: {profile!r}')
+        if record is None or record.get('mode') != capture_mode:
+            raise WikiError(f'{project.name}: gallery profile mode mismatch: '
+                            f'{profile!r}')
         return record
 
     scenes = []
@@ -559,27 +580,35 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
         if (hashlib.sha256(data).hexdigest() != scene['sha256']
                 or (width, height) != (320, 224)
                 or framebuffer != scene['framebuffer_sha256']
-                or synthetic(scene['profile'])['expect'].get('framebuffer_sha256')
+                or capture_profile(scene['profile'])['expect'].get('framebuffer_sha256')
                 != framebuffer):
             raise WikiError(f'{project.name}: gallery scene {scene["id"]} does not match '
-                            'its fixed synthetic framebuffer')
+                            'its fixed framebuffer')
         scenes.append({**scene, 'bytes': data})
     video = value.get('video')
     if video is not None:
         fields = {'file', 'profile', 'fps', 'speed', 'seconds', 'frames',
                   'frames_sha256', 'pcm_sha256', 'sha256', 'caption'}
+        if capture_mode == 'rom-cassette':
+            fields |= {'mode', 'artifact_sha256', 'start_cycle'}
         if (not isinstance(video, dict) or set(video) != fields
                 or not isinstance(video['caption'], str) or not video['caption'].strip()
                 or not all(isinstance(video[key], (int, float)) and video[key] > 0
                            for key in ('fps', 'speed', 'seconds', 'frames'))
                 or video['seconds'] > 60):
             raise WikiError(f'{project.name}: invalid gallery video')
-        synthetic(video['profile'])
+        profile = capture_profile(video['profile'])
+        if capture_mode == 'rom-cassette' and (
+                video['mode'] != capture_mode
+                or video['artifact_sha256'] != capture['artifact_sha256']
+                or not isinstance(video['start_cycle'], int)
+                or not 0 < video['start_cycle'] < profile['max_cycles']):
+            raise WikiError(f'{project.name}: invalid ROM video provenance')
         data = media(video['file'], 'webm')
         if data[:4] != b'\x1a\x45\xdf\xa3' or hashlib.sha256(data).hexdigest() != video['sha256']:
             raise WikiError(f'{project.name}: gallery video hash mismatch')
         video = {**video, 'bytes': data}
-    return {'scenes': scenes, 'video': video}
+    return {'scenes': scenes, 'video': video, 'capture': capture}
 
 
 def readme_parts(value: str) -> tuple[str, list[tuple[str, str]]]:
@@ -783,16 +812,30 @@ def render_game(entry: dict[str, Any], genre: dict[str, str]) -> str:
                           '作品IDによるワンクリックのセットは、この版の公開CJRとURLの到達性が'
                           '確認されるまで無効です。', ''])
         else:
-            lines.extend([f'[エミュレータにCJRをセット]({entry["wiki"]["play_url"]})',
-                          'ROM・フォントは利用者が用意し、セット後にMLOADと作品の実行コマンドを'
-                          '入力してください。[詳しい手順](Play)。', ''])
+            if entry['wiki']['play_url'].endswith('&launch=1'):
+                lines.extend([f'[遊ぶ（起動支援）]({entry["wiki"]["play_url"]})',
+                              '保存済みの対応ROM・フォントがあれば、通常MLOADと作品固有USRを'
+                              '自動入力します。初回は手元のROM・フォントを選択してください。'
+                              '未対応ROMや失敗時は手動実行できます。[詳しい手順](Play)。', ''])
+            else:
+                lines.extend([f'[エミュレータにCJRをセット]({entry["wiki"]["play_url"]})',
+                              'ROM・フォントは利用者が用意し、セット後にMLOADと作品の実行コマンドを'
+                              '入力してください。[詳しい手順](Play)。', ''])
     lines.extend(['## 画面', ''])
     for scene in entry['_scenes']:
         alt = html.escape(f'{title}: {scene["caption"]}', quote=True)
         lines.extend([f'<img src="{scene["path"]}" alt="{alt}" width="640">', '',
                       scene['caption'], ''])
-    lines.extend(['固定エミュレータのROMなし合成実行から取得した320×224の画面です。'
-                  '物理JR-200での表示は未確認です。', ''])
+    gallery = entry['_gallery']
+    rom_capture = (gallery is not None and gallery.get('capture') is not None
+                   and gallery['capture']['mode'] == 'rom-cassette')
+    if rom_capture:
+        lines.extend(['所有ROM/FONTをローカルで読み込み、通常MLOAD/USRで実行した'
+                      '固定エミュレータの320×224画面です。画面の文字は作品の自作字形です。'
+                      '物理JR-200での表示は未確認です。', ''])
+    else:
+        lines.extend(['固定エミュレータのROMなし合成実行から取得した320×224の画面です。'
+                      '物理JR-200での表示は未確認です。', ''])
     video = entry['_video']
     if video is not None:
         speed = '等速' if video['speed'] == 1 else f'{video["speed"]}倍速'
@@ -1000,10 +1043,10 @@ def render_pages(root: Path, packages: Path | None,
         controls.extend(['公開作品準備中', ''])
     files['Controls.md'] = '\n'.join(controls).encode('utf-8')
     presentation = ['# 映像と音', '', '[Home](Home) › 映像と音', '',
-                    '各作品の画面と動画は、固定版の[JR-200 Web Emulator](' + EMULATOR_URL + ')を'
-                    'ROMなしで動かし、決まったキー入力を再生して記録したものです。音は作品が実際に'
-                    '鳴らしたPCMです。速度を変えた動画は倍率を記載します。メーカーFONTを使わない'
-                    'ため、標準文字を使う作品では文字が表示されない画面があります。物理JR-200の'
+                    '各作品の画面と動画は、固定版の[JR-200 Web Emulator](' + EMULATOR_URL + ')で'
+                    '決まった操作を再生して記録したものです。撮影時に所有ROM/FONTを使用したかは'
+                    '作品ページに記載しています。ROM/FONTそのものは配布しません。音は作品が実際に'
+                    '鳴らしたPCMです。速度を変えた動画は倍率を記載します。物理JR-200の'
                     '表示と音は確認していません。', '']
     for entry in selected:
         presentation.extend([f'## [{entry["_metadata"]["title"]}](Game-{entry["wiki"]["slug"]})',

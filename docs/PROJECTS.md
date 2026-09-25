@@ -96,6 +96,38 @@ make game-clean PROJECT=games/my-game
 これらは指定プロジェクトだけを操作し、全ゲームへ再帰しません。`validate` はPythonと
 プロジェクト内ファイルだけで実行でき、ROM、FONT、jrasmを要求しません。
 
+## 所有ROM/FONTを使うローカル受入
+
+固定runnerを一度だけ取得・検証し、通常の開発反復では次の1コマンドを使います。
+指定作品のCJRを固定jrasmでビルドし、`tests/expectations.json`にある
+`rom-cassette`のタイトル・プレイprofile（なければ先頭2件）を、所有ROM/FONTで
+通常`MLOAD`／`USR`経由で実行します。入力replay、画面hash、メモリ・カセット状態は
+既存runnerが検査します。ROM/FONTのバイト列とpathはreport・packageへ入れません。
+
+```sh
+JRASM=/absolute/path/to/jrasm make game-accept-local \
+  PROJECT=games/side-catch RUNNER_BUNDLE=/absolute/path/to/fixed/bundle \
+  ROM=/absolute/local/path/to/JR200.rom FONT=/absolute/local/path/to/FONT.bin
+```
+
+`CAPTURE=1 SELF_FONT=sdk/font_data.inc`を加えると、画面hashに一致した
+ROM/FONTありのPNGを`games/<id>/build/local-accept/run-*/`へ新規保存します。
+既存画像は上書きしません。自作字形sourceがない場合は撮影せず、画面hashの検査だけを行います。
+
+公開候補の前には`MODE=full`を指定します。宣言済みの合成・ROM全profileを実行し、
+既存packageがなければ候補ZIPを作成して内部`SHA256SUMS`、CJR・期待値hash、
+release manifestとprofile一覧を照合します。既存ZIPは上書きしません。
+既存候補を検査する場合は`PACKAGE=/absolute/path/to/candidate.zip`を渡します。
+ZIP内の`release_ready`はclean sourceの場合だけ真になり、ローカル受入の成功は
+公開許可・Pages到達性・実機動作を意味しません。固定runnerは現時点でsystem API 9で、
+現行Webアプリのsystem API 10との共用には固定bundleと契約の更新が必要です。
+Web UIの`?game=<id>&launch=1`やブラウザ固有挙動は、このrunner受入とは別に
+ローカルのWebブラウザ試験で確認します。
+
+`--mode quick --profile local-rom-title --profile local-rom-play`のようにCLIで
+対象profileを明示することもできます。合成profileだけを指定することはできません。
+このコマンドはネットワーク取得、GitHub操作、Wiki同期、Webエミュレータの再ビルドを行いません。
+
 `build` はCJR header/block/checksum、load範囲、entry symbol、実依存を検査し、
 `build/build-report.json` を生成します。`package` はCJR、README、game metadata、
 build report、`SHA256SUMS` とmetadataに対応するライセンス全文を固定時刻のZIPに収めます。

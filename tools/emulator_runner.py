@@ -464,7 +464,8 @@ def validate_result(value: Any, request: dict[str, Any], runtime: dict[str, Any]
 def run(project: Path, bundle: Path, node: str, runner: Path, lock_path: Path,
         artifact: Path | None = None, profile: str | None = None,
         rom: Path | None = None, font: Path | None = None,
-        screenshot: Path | None = None) -> dict[str, Any]:
+        screenshot: Path | None = None,
+        self_font: Path | None = None) -> dict[str, Any]:
     lock = load_lock(lock_path)
     bundle_report = verify_bundle(bundle, lock)
     actual_node = node_version(node, lock['execution']['node_minimum'])
@@ -484,14 +485,19 @@ def run(project: Path, bundle: Path, node: str, runner: Path, lock_path: Path,
         if screenshot.is_symlink():
             raise RunnerError('Refusing a screenshot symlink')
         screenshot_target = screenshot.resolve()
-        if (request['mode'] != 'synthetic-injection'
-                or screenshot_target.suffix.lower() != '.png'):
-            raise RunnerError('PNG screenshots are restricted to synthetic mode')
+        if screenshot_target.suffix.lower() != '.png':
+            raise RunnerError('Screenshot output must be a PNG file')
         if screenshot_target.exists() or screenshot_target.is_symlink():
             raise RunnerError(f'Refusing to overwrite screenshot: {screenshot_target}')
         if (not screenshot_target.parent.is_dir()
                 or screenshot_target.parent.is_symlink()):
             raise RunnerError('Screenshot parent must be an existing real directory')
+        if request['mode'] == 'rom-cassette' and self_font is None:
+            raise RunnerError('ROM screenshot requires an authored self-font source')
+    if self_font is not None and (screenshot_target is None
+                                  or request['mode'] != 'rom-cassette'
+                                  or not self_font.is_file()):
+        raise RunnerError('Authored self-font requires a ROM screenshot and source file')
     with tempfile.TemporaryDirectory(prefix='jr200-runner-') as temporary:
         temporary_path = Path(temporary)
         request_path = temporary_path / 'request.json'
@@ -503,6 +509,8 @@ def run(project: Path, bundle: Path, node: str, runner: Path, lock_path: Path,
                    '--system-api', str(lock['build']['system_api_version'])]
         if screenshot_target is not None:
             command.extend(('--screenshot', str(screenshot_path)))
+        if self_font is not None:
+            command.extend(('--self-font-data', str(self_font.resolve())))
         try:
             completed = subprocess.run(
                 command,
@@ -580,6 +588,7 @@ def parser() -> argparse.ArgumentParser:
     run_command.add_argument('--rom', type=Path)
     run_command.add_argument('--font', type=Path)
     run_command.add_argument('--screenshot', type=Path)
+    run_command.add_argument('--self-font', type=Path)
     return value
 
 
@@ -612,7 +621,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             report = run(args.project, selected_bundle(args.bundle), args.node,
                          args.runner, args.lock, args.artifact, args.profile,
-                         args.rom, args.font, args.screenshot)
+                         args.rom, args.font, args.screenshot, args.self_font)
             result = report['result']
             print(f'Emulator runtime: passed ({result["mode"]}, '
                   f'{result["elapsed_cycles"]} cycles)')

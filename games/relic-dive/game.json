@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "relic-dive",
   "title": "RELIC DIVE",
-  "version": "0.1.0-dev",
+  "version": "0.1.1-dev",
   "summary": "Descend a generated dungeon turn by turn and recover the relic on the deepest floor.",
   "genre": "exploration",
   "license": "MIT",

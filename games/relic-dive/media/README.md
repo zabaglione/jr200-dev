@@ -1,17 +1,18 @@
 # Media
 
-固定エミュレータのROMなし合成profileから取得した320×224の画面と動画です。
-メーカーROM／FONTは読み込んでいないため、標準文字の字形（HUDやメッセージ）は画像に出ません。
-HUD文字codeと属性は実行時のメモリ期待値で別に固定しています。`gallery.json`が各画像のPNG SHA-256と
-framebuffer SHA-256、元のprofileを固定します。
+所有ROM/FONTで通常`MLOAD`→`A=USR($1000)`を実行し、固定エミュレータから取得した
+320×224の画面と動画です。メーカーFONTの字形は公開素材に使わず、ゲームが`$D100-$D2FF`へ
+設置するSDK自作字形との一致、および表示中の標準文字codeを撮影ツールが検査します。
+ROM/FONT本体、ローカルpath、起動前のBASIC画面と音は公開素材へ含めません。
+`gallery.json`はCJR・字形源・replay profile・PNG/framebuffer・動画フレーム/PCMのhashを固定します。
 
 | file | profile | PNG SHA-256 | framebuffer SHA-256 |
 | --- | --- | --- | --- |
-| `title.png` | `synthetic-title` | `c745ebd09746b0b8f89972340c9df835c64b9640f4ea3449eed74b9177787d23` | `3820bd73678d67160afd9a8d08b9a7430de40352b403667dd7ace9145425e17f` |
-| `gameplay.png` | `synthetic-gameplay` | `4ecd49fcb11a121d059df26cc9bf4489c11426a84fbc93fc1193869a03d66430` | `5d85b5a6a9c1987a90f76c3da42205a5c1630a6c523cc9c40c7358b3a68e4a1f` |
-| `combat.png` | `synthetic-combat` | `ce866cc57f8721ff54ed1871db29a059f2968bcbaa26ce5d5ee002fe2cf74806` | `0726f8ab86ec3851ce99949ec31231b86e7fc90c7129e0d052c9f12cff1e5334` |
+| `title.png` | `local-rom-title` | `36759249943e1e595d67bdd056760f555d13e8053159be07a9fb04f72e423445` | `edca690437f01b6ef1008b21636da555aed0def489bd7a2e6b688bd985041e9a` |
+| `gameplay.png` | `local-rom-play` | `75949665e4d8b06363dc19c051529eaca8922acf223e2d9b5c25af34c9cf30c0` | `f3987b74b8ca7a1c52ca1fba8f00d55afe6c7b6d7e645be93b9487e7cc3aba21` |
+| `combat.png` | `local-rom-goal` | `49f67eaba69a9fe7a39d9f1983a1943e0126b970af127d33c028f74e89d2362b` | `1c320916764ba9f1e0fa19818be4aa8b638d3fbf27e65eb7bfff1b08c1280c2a` |
 
-`goal.webm`は`synthetic-combat`のreplayを固定エミュレータで記録した映像と音（16.5秒、等速）です。
-最初の戦闘までで、全階クリアの映像ではありません。
+`goal.webm`は`local-rom-goal`のreplayを固定エミュレータで記録した映像と実ゲームPCM
+（15.6秒、等速）です。最初の敵1体を倒すまでで、全階クリアの映像ではありません。
 
 これは固定エミュレータの証拠です。物理JR-200表示、実機入力、実機音声は未確認です。

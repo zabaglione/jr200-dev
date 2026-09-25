@@ -26,6 +26,7 @@ WEB_ID = re.compile(r'[a-z][a-z0-9]*(?:-[a-z0-9]+)*')
 WEB_VERSION = re.compile(r'\d+\.\d+\.\d+')
 WEB_HASH = re.compile(r'[0-9a-f]{64}')
 WEB_RUN = re.compile(r'A=USR\(\$[0-9A-F]{4}\)')
+WEB_TITLE_MARKER = re.compile(r'[A-Z0-9 ]{6,32}')
 MAX_CJR_BYTES = 1024 * 1024
 WEB_RUNNER_VERSION = (0, 3, 0)
 
@@ -41,7 +42,8 @@ def validate_web_catalog(value: Any) -> dict[str, dict[str, Any]]:
     games: dict[str, dict[str, Any]] = {}
     for game in value['games']:
         fields = {'id', 'title', 'version', 'path', 'sha256', 'runCommand'}
-        if (not isinstance(game, dict) or set(game) != fields
+        if (not isinstance(game, dict) or not fields.issubset(game)
+                or not set(game).issubset(fields | {'titleMarker'})
                 or not isinstance(game['id'], str) or len(game['id']) > 64
                 or WEB_ID.fullmatch(game['id']) is None
                 or not isinstance(game['title'], str) or not game['title'].strip()
@@ -53,6 +55,9 @@ def validate_web_catalog(value: Any) -> dict[str, dict[str, Any]]:
                 or WEB_HASH.fullmatch(game['sha256']) is None
                 or not isinstance(game['runCommand'], str)
                 or WEB_RUN.fullmatch(game['runCommand']) is None
+                or ('titleMarker' in game and
+                    (not isinstance(game['titleMarker'], str) or
+                     WEB_TITLE_MARKER.fullmatch(game['titleMarker']) is None))
                 or game['id'] in games):
             raise ExportError(f'Invalid web catalog entry: {game!r:.120}')
         games[game['id']] = game
@@ -111,7 +116,8 @@ def plan_export(root: Path, identifier: str, version: str, approval: str,
                 site_catalog: Path, site: Path | None = None,
                 packages: Path | None = None,
                 expected_commit: str | None = None,
-                preview: bool = False) -> dict[str, Any]:
+                preview: bool = False,
+                title_marker: str | None = None) -> dict[str, Any]:
     if expected_commit is None:
         raise ExportError('An expected source commit is required')
     entry = select_entry(root, identifier, version, approval, preview)
@@ -155,6 +161,10 @@ def plan_export(root: Path, identifier: str, version: str, approval: str,
     web_entry = {'id': identifier, 'title': title[:80],
                  'version': web_version, 'path': base + f'{identifier}.cjr',
                  'sha256': entry['artifact_sha256'], 'runCommand': run_command}
+    if title_marker is not None:
+        if WEB_TITLE_MARKER.fullmatch(title_marker) is None:
+            raise ExportError('Title marker must be 6-32 uppercase ASCII letters, digits or spaces')
+        web_entry['titleMarker'] = title_marker
     files = {base + f'{identifier}.cjr': cjr, base + 'LICENSE.txt': members['LICENSE']}
     for key in ('THIRD_PARTY_NOTICES.md', 'LICENSES/BSD-3-Clause.txt'):
         if key in members:
@@ -173,6 +183,8 @@ def plan_export(root: Path, identifier: str, version: str, approval: str,
               'minimum_runner_version': entry['_metadata']['release']['minimum_runner_version'],
               'package_sha256': entry['package']['sha256'],
               'hardware': 'not_run'}
+    if title_marker is not None:
+        notice['title_marker'] = title_marker
     files[base + 'EXPORT.json'] = (json.dumps(notice, indent=2) + '\n').encode()
     actions = {}
     for path, payload in files.items():
@@ -241,11 +253,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--output', type=Path)
     parser.add_argument('--preview-candidate', action='store_true',
                         help='local-only candidate staging; never eligible for publication')
+    parser.add_argument('--title-marker',
+                        help='observed in-game ASCII title marker for opt-in launch=1; '
+                             'requires owned ROM/FONT browser validation')
     args = parser.parse_args(argv)
     try:
         plan = plan_export(ROOT, args.game, args.version, args.approve, args.site_catalog,
                            args.site, args.packages, args.expected_commit,
-                           args.preview_candidate)
+                           args.preview_candidate, args.title_marker)
         print(f'catalog {plan["catalog_action"]}: {plan["entry"]["id"]} '
               f'{plan["entry"]["version"]}')
         for path, action in sorted(plan['actions'].items()):

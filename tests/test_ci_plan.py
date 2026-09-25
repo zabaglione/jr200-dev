@@ -152,7 +152,7 @@ class SelectionTests(unittest.TestCase):
         for game in sorted(path.parents[1].name for path in root.glob('games/*/media/gallery.json')):
             changed += [f'games/{game}/README.md', f'games/{game}/media/gallery.json',
                         f'games/{game}/media/goal.webm', f'games/{game}/media/README.md']
-        self.assertEqual(len(changed), 2 + 6 * 4)
+        self.assertEqual(len(changed), 2 + 7 * 4)
         plan = select(registered, changed)
         self.assertEqual(plan['build_candidates'], [])
         self.assertEqual(plan['test_candidates'], [])

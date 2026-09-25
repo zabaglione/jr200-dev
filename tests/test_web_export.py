@@ -88,6 +88,20 @@ class WebExportTests(unittest.TestCase):
             with self.subTest(approval=approval), self.assertRaises(web_export.ExportError):
                 self.plan(approval=approval)
 
+    def test_title_marker_is_versioned_in_catalog_and_notice(self):
+        self.publish()
+        plan = web_export.plan_export(
+            self.root, 'side-catch', '0.1.0', 'side-catch@0.1.0',
+            self.site_catalog, expected_commit=self.commit,
+            title_marker='SIDE CATCH')
+        self.assertEqual(plan['entry']['titleMarker'], 'SIDE CATCH')
+        self.assertEqual(plan['notice']['title_marker'], 'SIDE CATCH')
+        with self.assertRaisesRegex(web_export.ExportError, 'Title marker'):
+            web_export.plan_export(
+                self.root, 'side-catch', '0.1.0', 'side-catch@0.1.0',
+                self.site_catalog, expected_commit=self.commit,
+                title_marker='bad\nmarker')
+
     def test_rejects_candidate_and_unpublished_versions(self):
         with self.assertRaisesRegex(web_export.ExportError, 'only verified'):
             self.plan()

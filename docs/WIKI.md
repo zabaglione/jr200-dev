@@ -4,7 +4,7 @@
 
 `tools/wiki/generate.py` は、固定済みの作品packageを検査してWiki用fileを生成します。
 このtool自身はclone、commit、push、Release作成、repositoryのvisibility変更を行いません。
-現在の `SIDE CATCH 0.1.0` は `candidate`／`not-published` であり、公開対象ではありません。
+現在の作品は `candidate`／`not-published` であり、公開対象ではありません。
 
 2026-09-23、利用者のWiki作成依頼に従い、privateのままGitHubで初回`Home`を作成し、
 `jr200-dev.wiki.git`をcloneできることを確認しました。初回Wiki commitはGitHub noreplyです。
@@ -33,18 +33,19 @@ JR100 Wikiの構成を参考にしていますが、文章は複製せず、作�
 
 ## 入力と検査
 
-正本は `games/catalog.json`、各作品の `game.json`、README、`media/screenshot.png`、
+正本は `games/catalog.json`、各作品の `game.json`、README、catalogで指定した代表画像、
 `media/gallery.json`、`tools/wiki/genres.json` です。
 候補版を含める場合でも、generatorは次をすべて検査します。
 
 - catalogと作品metadataのID、version、status、publication、license
 - 固定ZIPのSHA-256、安全なmember path、内部 `SHA256SUMS`
 - CJRのSHA-256と、合成／local-ROMのprofile別実行report
-- screenshotのPNG SHA-256、320×224 RGBA画素hash、合成profileのframebuffer hash
+- 代表画像のPNG SHA-256、320×224 RGBA画素hash、対応profileのframebuffer hash
 - 公開指定時の `verified`、固定Release URL、clean sourceから作られたpackage
 
-- `gallery.json`の各画像のPNG SHA-256、320×224の画素hash、ROMなし合成profileの期待framebuffer hash、
-  動画のSHA-256とWebM形式。古い版の画像が残っていれば停止します
+- `gallery.json`の各画像のPNG SHA-256、320×224の画素hash、対応profileの期待framebuffer hash、
+  動画のSHA-256とWebM形式。ROM撮影の場合はCJRと自作字形sourceのhashも固定します。
+  古い版の画像が残っていれば停止します
 - ジャンルが`genres.json`にあること。catalog外の作品は`draft`／`not-published`に限ります
 - 生成した全ページのリンク：Wiki内ページ、`media/`、リポジトリ内file（`blob/main`・`tree/main`の
   対象が実在すること）、許可したURL（Webエミュレータ、固定revisionのjr100dev、固定Release）。
@@ -79,35 +80,48 @@ make wiki-preview
 出力はGit対象外の `build/wiki-preview/` です。候補版banner、手動CJR読込み案内、
 エミュレータと実機の検証境界を含みます。候補版にはPagesへの一般リンクだけを置き、
 ゲームIDのセット用リンクは公開CJRの存在と動作を確認するまで生成しません。
+公開版の`play_url`には、手動起動用の`?game=<id>`に加え、起動支援用の
+`?game=<id>&launch=1`を許可します。後者を選んだ作品ページだけ
+「遊ぶ（起動支援）」と表示します。現在は公開作品の`play_url`がなく、
+実際のWikiにはどちらの作品リンクも出していません。
 
-画面例を再取得する場合は、既存PNGを退避したうえでROMなしprofileだけを使用します。
+画面例を再取得する場合は、既存PNGを退避したうえで所有ROM/FONTの通常MLOAD/USR profileを
+優先します。自作字形sourceを必ず指定し、撮影toolの検査を通します。
 
 ```sh
 python3 tools/emulator_runner.py run \
   --project games/side-catch \
   --bundle /absolute/path/to/fixed/emulator/bundle \
-  --profile synthetic-screenshot \
-  --screenshot games/side-catch/media/screenshot.png
+  --profile local-rom-title \
+  --rom /absolute/local/path/to/JR200.rom \
+  --font /absolute/local/path/to/FONT.bin \
+  --self-font sdk/font_data.inc \
+  --screenshot games/side-catch/build/new-title.png
 ```
 
 runnerは既存fileを上書きせず、PNG画素hashと検証済みframebuffer hashが一致した後だけ
-出力先へ移動します。ROM cassette profileからの画像出力は拒否します。
+出力先へ移動します。ROM cassette profileの撮影では、字形RAMと全画面セルを検査し、
+メーカー字形が画面に使われる場合は拒否します。ROM/FONTはGitへ追加しません。
 
 ## 作品の画面と動画
 
 各作品の`media/gallery.json`が紹介画像と動画の正本です。画像はタイトル（`title`）、プレイ中（`play`）、
-最初の目標（`goal`）の3場面以上で、どれも`tests/expectations.json`のROMなし合成profileの
+最初の目標（`goal`）の3場面以上で、どれも`tests/expectations.json`の対応profileの
 framebuffer hashと一致しなければなりません（`tests/test_gallery.py`）。JR-100の画像や描き起こしの
 絵で代用しません。
 
 動画は同じprofileのreplayを固定bundleで1/30秒ごとに記録した映像と、同じ実行のPCMから作ります。
 後から演出や音を足さず、短縮する場合は倍速を`gallery.json`とcaptionに書きます。
+ROM/FONTあり撮影では、自作字形が有効になり、起動前のBASIC画面が消えたcycleから切り出します。
 
 ```sh
 export FFMPEG=/absolute/path/to/ffmpeg   # libvpx-vp9とlibopusを含む外部ツール
-python3 tools/capture_video.py --project games/lumen-cross \
-  --profile synthetic-first-clear --bundle /absolute/path/to/fixed/bundle \
-  --output games/lumen-cross/media/goal.webm
+python3 tools/capture_video.py --project games/relic-dive \
+  --profile local-rom-goal --bundle /absolute/path/to/fixed/bundle \
+  --rom /absolute/local/path/to/JR200.rom \
+  --font /absolute/local/path/to/FONT.bin \
+  --self-font sdk/font_data.inc --start-cycle 163500000 \
+  --output games/relic-dive/build/new-goal.webm
 ```
 
 出力には映像フレームとPCMのSHA-256、秒数、倍速が付きます。WebMのbyte列はffmpegの版で変わり得るため、
@@ -158,6 +172,11 @@ python3 tools/web_export.py \
 # 差分を確認してから
 python3 tools/web_export.py ...同じ引数... --output /absolute/path/to/empty/staging
 ```
+
+所有ROM/FONTで実際のタイトル画面を確認し、固定版CJRの起動支援を有効にする場合は
+`--title-marker 'SIDE CATCH'`のようにその画面に表示される6〜32文字の英大文字・数字・空白を指定します。
+catalogの`titleMarker`と`EXPORT.json`の`title_marker`に同じ値を記録し、Web側の取り込み時にも
+一致を検査します。省略した版は`?game=id&launch=1`でもマウントのみです。
 
 | 検査 | 内容 |
 | --- | --- |

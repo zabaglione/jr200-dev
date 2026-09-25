@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "side-catch",
   "title": "SIDE CATCH",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Catch the adjacent target, restart on the opposite side, and return safely to BASIC.",
   "genre": "action",
   "license": "BSD-3-Clause",
