@@ -3,6 +3,7 @@
 import itertools
 import json
 from pathlib import Path
+import re
 import sys
 import unittest
 
@@ -16,6 +17,13 @@ OPS = [lambda a, b: a and b, lambda a, b: a or b, lambda a, b: a != b]
 
 
 class CircuitWorksRuleTests(unittest.TestCase):
+    def test_assembly_targets_match_independent_model(self):
+        source = (PROJECT / 'src/main.asm').read_text()
+        table = source.split('cw_targets:', 1)[1].split('cw_kind_attr:', 1)[0]
+        values = [int(value) for row in re.findall(r'\.db\s+([0-9, ]+)', table)
+                  for value in row.split(',')]
+        self.assertEqual(values, cw.TARGETS)
+
     def test_all_27_chains_match_an_independent_boolean_evaluation(self):
         for p, q, r in itertools.product(range(3), repeat=3):
             for a, b, c in itertools.product((0, 1), repeat=3):
@@ -54,6 +62,11 @@ class CircuitWorksRuleTests(unittest.TestCase):
 
 
 class CircuitWorksExpectationTests(unittest.TestCase):
+    def test_help_describes_graceful_exit(self):
+        source = (PROJECT / 'src/main.asm').read_text()
+        self.assertIn('SPACE RESTART / CTRL+C EXIT', source)
+        self.assertNotIn('ESC TO BASIC', source)
+
     def test_memory_expectations_are_model_predictions(self):
         expectations = json.loads((PROJECT / 'tests/expectations.json').read_text())
         check_expectations(self, expectations,
@@ -65,6 +78,9 @@ class CircuitWorksExpectationTests(unittest.TestCase):
         final = profiles['synthetic-all-stages']['memory']
         self.assertEqual((final['mode'], final['level']), ('04', f'{cw.LEVELS - 1:02x}'))
         self.assertEqual(profiles['synthetic-partial']['memory']['matched'], '3035')
+        self.assertEqual(profiles['local-rom-first-clear']['memory']['state'],
+                         profiles['synthetic-first-clear']['memory']['state'])
+        self.assertEqual(profiles['local-rom-first-clear']['memory']['mode'], '02')
 
 
 if __name__ == '__main__':
