@@ -16,7 +16,8 @@ sizeとSHA-256が一致しないbundleを起動しません。
 `emcmake cmake -DCMAKE_BUILD_TYPE=Release`とbuildを実行して得た実ファイルの値です。
 system API 9は`jr200_system_set_joystick`を公開するため、adapter 0.3.0のactive-low `joystick`
 replay（playerは`0`または`1`、stateは`0x00`から`0xff`）をこの固定bundleで実行できます。
-ただしjoystick入力はBASIC ROMの走査routineを使うため、ROMなし合成profileでは確認できません。
+`joystick-sample`の通常MLOAD/USR試験はBASIC ROMの走査routineを使うため、
+ROMなし合成profileでは確認できません。公開bundleのjoystick ABI自体は後述の合成試験で別に確認します。
 
 前回の固定版（commit `81e4174c550e20e166b0431b4235ba3b7650da76`、system API 6）は、同じ手順の
 Linux buildでも以前macOS arm64で記録したdigestとバイト単位で一致しました。Emscriptenの出力が
