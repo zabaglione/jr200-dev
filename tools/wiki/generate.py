@@ -509,7 +509,7 @@ def runtime_profiles(project: Path, *, max_bytes: int | None = None) -> dict[str
 
 
 def load_gallery(project: Path) -> dict[str, Any] | None:
-    """Verified scenes and video tied to fixed ROM-less synthetic profiles."""
+    """Verified scenes and video tied to fixed runtime profiles."""
     path = project / 'media/gallery.json'
     if not path.exists():
         return None
@@ -517,7 +517,7 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
         raise WikiError(f'{project.name}: gallery manifest is a symlink')
     value = read_json(path, 'gallery manifest', max_bytes=MAX_GALLERY_BYTES)
     profiles = runtime_profiles(project, max_bytes=MAX_GALLERY_BYTES)
-    if (not isinstance(value, dict) or value.get('schema_version') not in (1, 2)
+    if (not isinstance(value, dict) or value.get('schema_version') not in (1, 2, 3)
             or not set(value) <= {'schema_version', 'capture', 'scenes', 'video'}
             or not isinstance(value.get('scenes'), list) or not value['scenes']):
         raise WikiError(f'{project.name}: invalid gallery manifest')
@@ -608,6 +608,36 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
         if data[:4] != b'\x1a\x45\xdf\xa3' or hashlib.sha256(data).hexdigest() != video['sha256']:
             raise WikiError(f'{project.name}: gallery video hash mismatch')
         video = {**video, 'bytes': data}
+    if value['schema_version'] == 3:
+        expectations_hash = sha256_file(project / 'tests/expectations.json')
+        framebuffers = {scene['profile']: scene['framebuffer_sha256'] for scene in scenes}
+        if video is not None and video['profile'] not in framebuffers:
+            raise WikiError(f'{project.name}: video lacks a captured scene receipt')
+        for profile, framebuffer in framebuffers.items():
+            receipt_path = project / 'media/receipts' / f'{profile}.json'
+            if receipt_path.is_symlink():
+                raise WikiError(f'{project.name}: symlinked ROM gallery receipt')
+            receipt = read_json(receipt_path, 'ROM gallery receipt',
+                                max_bytes=MAX_GALLERY_BYTES)
+            result = receipt.get('result') if isinstance(receipt, dict) else None
+            verification = receipt.get('verification') if isinstance(receipt, dict) else None
+            if (not isinstance(result, dict) or not isinstance(verification, dict)
+                    or receipt.get('schema_version') != 1
+                    or receipt.get('project') != project.name
+                    or receipt.get('profile') != profile
+                    or receipt.get('mode') != 'rom-cassette'
+                    or receipt.get('artifact_sha256') != capture['artifact_sha256']
+                    or receipt.get('expectations_sha256') != expectations_hash
+                    or result.get('status') != 'passed'
+                    or result.get('profile') != profile
+                    or result.get('mode') != 'rom-cassette'
+                    or result.get('evidence') != 'emulator_with_local_rom'
+                    or result.get('artifact_sha256') != capture['artifact_sha256']
+                    or result.get('framebuffer_sha256') != framebuffer
+                    or verification.get('emulator') != 'passed'
+                    or verification.get('cassette_path') != 'normal'
+                    or verification.get('rom') != 'provided_locally'):
+                raise WikiError(f'{project.name}: ROM gallery receipt mismatch: {profile}')
     return {'scenes': scenes, 'video': video, 'capture': capture}
 
 
@@ -760,7 +790,11 @@ def verification_rows(entry: dict[str, Any]) -> list[str]:
     local = sum(1 for item in profiles.values() if item.get('mode') == 'rom-cassette')
     package = entry['_package']
     if package is None:
-        rom = ('profile定義あり、実行記録なし' if local else 'profileなし')
+        gallery = entry.get('_gallery')
+        if gallery is not None and gallery.get('capture') is not None:
+            rom = 'ギャラリー撮影記録あり（3画面・動画）、固定パッケージ未作成'
+        else:
+            rom = ('profile定義あり、実行記録なし' if local else 'profileなし')
     else:
         rom = '固定パッケージに実行記録あり'
     return [f'| ROMなし合成実行（固定エミュレータ） | {synthetic} profileの期待値 |',
@@ -831,8 +865,9 @@ def render_game(entry: dict[str, Any], genre: dict[str, str]) -> str:
                    and gallery['capture']['mode'] == 'rom-cassette')
     if rom_capture:
         lines.extend(['所有ROM/FONTをローカルで読み込み、通常MLOAD/USRで実行した'
-                      '固定エミュレータの320×224画面です。画面の文字は作品の自作字形です。'
-                      '物理JR-200での表示は未確認です。', ''])
+                      '固定エミュレータの320×224画面を加工せず記録しました。'
+                      'メーカーFONTの字形が映る場合がありますが、ROM/FONTファイル自体は'
+                      '配布していません。物理JR-200での表示は未確認です。', ''])
     else:
         lines.extend(['固定エミュレータのROMなし合成実行から取得した320×224の画面です。'
                       '物理JR-200での表示は未確認です。', ''])

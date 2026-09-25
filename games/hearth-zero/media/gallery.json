@@ -1,44 +1,53 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "scenes": [
     {
       "id": "title",
       "file": "title.png",
-      "profile": "synthetic-title",
+      "profile": "local-rom-gallery-title",
       "role": "title",
-      "caption": "タイトル画面",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、タイトル画面（画面全体・無加工）",
       "sha256": "fff62800dbb99bd27695471410b5c13ae55f904ebe33f26a5afb3f007ae7903f",
       "framebuffer_sha256": "fca6b63a8f6abfe75a66d5c7fd8c451f11600db33ebef9388b06ed4e7818e765"
     },
     {
       "id": "play",
       "file": "play.png",
-      "profile": "synthetic-night",
+      "profile": "local-rom-gallery-play",
       "role": "play",
-      "caption": "1日目に壁を作った夜。雪が降り、3夜の予報が見える",
-      "sha256": "00d0b74b9e0848388ef23aff2d3b82724d3135fa6d458df30b9f66f504d8b7a5",
-      "framebuffer_sha256": "02c3beb2a38dd13d2db0b2f5d8551eb3ec0f8829e8f00a3b9246b1bec149c5d3"
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、1日目に壁を作った夜。雪が降り、3夜の予報が見える（画面全体・無加工）",
+      "sha256": "b0439d6fa306bd1ba3f58917834e2e7bca2382f16ad163dbd1908cc7e168470d",
+      "framebuffer_sha256": "76949a071500fe6869b58c128b0b96380526f59926753570e8d602bdbe023208"
     },
     {
       "id": "clear",
       "file": "clear.png",
-      "profile": "synthetic-first-wave",
+      "profile": "local-rom-gallery-goal",
       "role": "goal",
-      "caption": "最初の寒波の12夜を生き延びた",
-      "sha256": "998e9902cbcaae4d05f9600f434185ab232216a8ba96dab40da97b64096800d7",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、最初の寒波の12夜を生き延びた（画面全体・無加工）",
+      "sha256": "b88df4118d9cbf93aa7d321302d29cf0de40ce5cf43eea577ac17d9b5a63a98f",
       "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48"
     }
   ],
   "video": {
     "file": "goal.webm",
-    "profile": "synthetic-first-wave",
+    "profile": "local-rom-gallery-goal",
     "fps": 30,
-    "speed": 1.0,
-    "seconds": 27.9,
-    "frames": 838,
-    "frames_sha256": "f994b8a41151d4186b63a6e51f02657d7f8544af189a3aba10b26da4d29798b2",
-    "pcm_sha256": "84a83d77993cae60665ef7c414d23a75fe6917e0ca3b509606e8c86467dfd266",
-    "sha256": "c57a078f39abfcc4db0c491d7d41447d6141f16bc309c312cee1e08c46387bba",
-    "caption": "最初の寒波の12夜を越えるまで（音付き）"
+    "speed": 1,
+    "seconds": 28.1,
+    "frames": 842,
+    "frames_sha256": "da03c2ebf8654ba08b58dfeaa79fd16a33a38fa07c3649c53c809fdfcc2914b8",
+    "pcm_sha256": "255206836a1f037cd711c01630628eee5f3e95f582af9c0cf37717d2251159c5",
+    "sha256": "a6f46d240e1030d4d182579a9d8a0f775dd94a9ff47ef63b2bf98bc76f66a3c9",
+    "caption": "所有ROM/FONTで通常MLOAD/USR後、最初の寒波の12夜を越えるまで（音付き）（画面全体・無加工）",
+    "mode": "rom-cassette",
+    "artifact_sha256": "79395367d52bf7750281250a58bdc71cd141475e75576979df9d73ea3792cdab",
+    "start_cycle": 83500000
+  },
+  "capture": {
+    "mode": "rom-cassette",
+    "artifact_sha256": "79395367d52bf7750281250a58bdc71cd141475e75576979df9d73ea3792cdab",
+    "glyph_source": "sdk/font_data.inc",
+    "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }
 }

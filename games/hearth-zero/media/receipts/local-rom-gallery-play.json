@@ -1,0 +1,73 @@
+{
+  "artifact_sha256": "79395367d52bf7750281250a58bdc71cd141475e75576979df9d73ea3792cdab",
+  "expectations_sha256": "ca96cdf2c0dae2883ed3536509708f73610e3788b595cb8bf03b5ba7ff92fb13",
+  "mode": "rom-cassette",
+  "profile": "local-rom-gallery-play",
+  "project": "hearth-zero",
+  "result": {
+    "artifact_sha256": "79395367d52bf7750281250a58bdc71cd141475e75576979df9d73ea3792cdab",
+    "cassette": {
+      "mode": 1,
+      "read_started": false,
+      "remote": false,
+      "state": 6
+    },
+    "elapsed_cycles": 85820000,
+    "evidence": "emulator_with_local_rom",
+    "framebuffer_sha256": "76949a071500fe6869b58c128b0b96380526f59926753570e8d602bdbe023208",
+    "hardware": "not_run",
+    "memory": {},
+    "mode": "rom-cassette",
+    "pcm": {
+      "dropped_high": 0,
+      "dropped_low": 2821786,
+      "frames": 4096,
+      "nonzero_frames": 0,
+      "peak": 0,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47"
+    },
+    "profile": "local-rom-gallery-play",
+    "registers": {
+      "a": 0,
+      "b": 9,
+      "cc": 208,
+      "pc": 7000,
+      "sp": 20467,
+      "waiting": 0,
+      "x": 12818
+    },
+    "runner_contract_version": 1,
+    "runner_version": "0.3.0",
+    "schema_version": 1,
+    "status": "passed",
+    "stop": {
+      "address": 0,
+      "reason": "cycle-limit"
+    }
+  },
+  "runner": {
+    "contract_version": 1,
+    "module_files": [
+      {
+        "path": "jr200_codec.mjs",
+        "sha256": "0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c",
+        "size": 17276
+      },
+      {
+        "path": "jr200_codec.wasm",
+        "sha256": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20",
+        "size": 83629
+      }
+    ],
+    "node_version": "24.3.0",
+    "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
+    "version": "0.3.0"
+  },
+  "schema_version": 1,
+  "verification": {
+    "cassette_path": "normal",
+    "emulator": "passed",
+    "hardware": "not_run",
+    "rom": "provided_locally"
+  }
+}

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 // Record game-only frames and PCM from a tested replay with the locked WASM bundle.
-// ROM-backed clips require authored glyphs and omit boot/MLOAD/BASIC frames.
+// ROM-backed clips verify installed game glyphs and omit boot/MLOAD/BASIC frames.
+// Rendered frames are otherwise unchanged, including any ROM/FONT glyphs.
 import {createHash} from 'node:crypto';
 import {closeSync, openSync, readFileSync, writeFileSync, writeSync} from 'node:fs';
 import path from 'node:path';
@@ -85,7 +86,7 @@ function captureFrame() {
     try {
       verifyAuthoredScreen(module, args['self-font-data']);
     } catch (error) {
-      die(`ROM capture refused: ${error.message}`);
+      die(`ROM capture refused at cycle ${elapsed}, frame ${frames}: ${error.message}`);
     }
   }
   module._jr200_system_render();

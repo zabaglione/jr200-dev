@@ -27,7 +27,7 @@ DEFAULT_NODE_RUNNER = ROOT / 'tools/jr200_wasm_runner.mjs'
 VERSION = re.compile(r'(\d+)\.(\d+)\.(\d+)')
 HEX64 = re.compile(r'[0-9a-f]{64}')
 SAFE_NAME = re.compile(r'[a-z][a-z0-9_-]{0,31}')
-MAX_CYCLES = 250_000_000
+MAX_CYCLES = 300_000_000
 
 
 class RunnerError(ValueError):
@@ -317,6 +317,35 @@ def validate_runtime_profile(runtime: Any) -> dict[str, Any]:
     }
 
 
+def expand_replay_profile(item: Any, by_name: dict[str, Any]) -> Any:
+    """Expand one bounded ROM replay that reuses a fixed synthetic replay."""
+    if not isinstance(item, dict) or 'replay_from' not in item:
+        return item
+    if (set(item) != {'profile', 'mode', 'max_cycles', 'return_address', 'replay',
+                     'observations', 'breakpoints', 'expect', 'replay_from',
+                     'replay_offset'}
+            or item['mode'] != 'rom-cassette'
+            or not isinstance(item['replay_from'], str)
+            or type(item['replay_offset']) is not int
+            or not 0 < item['replay_offset'] < MAX_CYCLES):
+        raise RunnerError('Invalid replay reference')
+    source = by_name.get(item['replay_from'])
+    if (not isinstance(source, dict) or source.get('mode') != 'synthetic-injection'
+            or 'replay_from' in source or not isinstance(source.get('replay'), list)):
+        raise RunnerError('Replay reference must name a synthetic source profile')
+    if (not isinstance(item.get('replay'), list)
+            or any(not isinstance(event, dict)
+                   or type(event.get('cycle')) is not int
+                   for event in source['replay'])):
+        raise RunnerError('Invalid referenced replay')
+    expanded = {key: value for key, value in item.items()
+                if key not in ('replay_from', 'replay_offset')}
+    expanded['replay'] = [*item['replay'],
+                          *(dict(event, cycle=event['cycle'] + item['replay_offset'])
+                            for event in source['replay'])]
+    return expanded
+
+
 def validate_expectations(value: Any, entry: int,
                           profile: str | None = None) -> dict[str, Any]:
     if (not isinstance(value, dict)
@@ -333,9 +362,16 @@ def validate_expectations(value: Any, entry: int,
             or not isinstance(runtime['profiles'], list)
             or not runtime['profiles']):
         raise RunnerError('Invalid runtime profile collection')
+    raw_profiles: dict[str, dict[str, Any]] = {}
+    for item in runtime['profiles']:
+        if not isinstance(item, dict) or not isinstance(item.get('profile'), str):
+            raise RunnerError('Invalid runtime profile collection')
+        if item['profile'] in raw_profiles:
+            raise RunnerError(f'Duplicate runtime profile: {item["profile"]}')
+        raw_profiles[item['profile']] = item
     profiles: dict[str, dict[str, Any]] = {}
     for item in runtime['profiles']:
-        checked = validate_runtime_profile(item)
+        checked = validate_runtime_profile(expand_replay_profile(item, raw_profiles))
         if checked['profile'] in profiles:
             raise RunnerError(f'Duplicate runtime profile: {checked["profile"]}')
         profiles[checked['profile']] = checked

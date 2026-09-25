@@ -98,9 +98,13 @@ make game-run PROJECT=games/my-game RUNNER_BUNDLE="$RUNNER_BUNDLE"
 peakとdrop数を記録し、sample側で最低frame数・最低非0数・最大drop数を検査できます。
 replayの `text` eventはASCII文字列を明示したpress／release列へ展開し、cycle、key duration、intervalを
 固定します。`joystick` eventは0始まりのplayer番号とactive-low stateを保持します。
+ROM/FONTギャラリー用profileは`replay_from`で同一作品の合成profileに記録済みの入力列を参照し、
+`replay_offset`だけ時刻をずらしてMLOAD/USR後に再生できます。参照先は合成profileに限定し、
+展開後もcycle上限と入力契約を検査します。これは撮影用入力の重複を避けるためで、
+ROM/FONTありの実行そのものを合成実行に置き換えません。
 WASM runnerへ渡すrequestには展開後のkey eventとjoystick eventだけを含めます。
 wall-clock timeoutは30秒、emulated cycle上限は
-1回につき100,000,000です。requestとresultはversion 1のJSON契約で、runnerは次の終了codeを使います。
+1回につき300,000,000です。requestとresultはversion 1のJSON契約で、runnerは次の終了codeを使います。
 
 | code | 意味 |
 | ---: | --- |
@@ -122,7 +126,8 @@ canonical RGBA bytesに対して計算します。hostのendianには依存し�
 `--screenshot <new.png>` を指定すると、検証済みcanonical RGBA framebufferを
 決定的PNGとして保存できます。既存fileの上書きやreportのframebuffer hashと一致しない画像を
 拒否します。ROM cassette profileではさらに`--self-font sdk/font_data.inc`が必須で、
-自作字形と全画面セルを照合してメーカー字形が描画される画像を拒否します。
+ゲームが設置した自作字形と指定sourceの一致を検査します。メーカーFONTの字形は
+画面に映ることがありますが、画像は無加工で記録します。
 これはWiki用画面例の由来を固定する機能で、物理displayの証拠ではありません。
 
 ## 証拠の区分

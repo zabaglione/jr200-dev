@@ -219,6 +219,9 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertIn('非公開の候補版プレビュー', page)
         self.assertIn('media/side-catch-title.png', page)
         self.assertIn('通常MLOAD/USRで実行', page)
+        self.assertIn('画面を加工せず記録', page)
+        self.assertIn('メーカーFONTの字形が映る場合があります', page)
+        self.assertNotIn('画面の文字は作品の自作字形', page)
         self.assertNotIn('ROMなし合成実行から取得した', page)
         self.assertIn('物理JR-200での表示は未確認', page)
         presentation = files['Presentation.md'].decode('utf-8')
@@ -492,6 +495,12 @@ class SevenGamePreviewTests(unittest.TestCase):
         self.assertIn('| [アクション](Genre-Action) | 0 | 2 |', home)
         self.assertIn('| [探索](Genre-Exploration) | 0 | 1 |', home)
         self.assertIn('公開作品準備中', home)
+        quality = files['Quality-Review.md'].decode('utf-8')
+        for game in DEVELOPMENT:
+            if game != 'relic-dive':
+                row = next(line for line in quality.splitlines()
+                           if f'](Game-{game})' in line)
+                self.assertIn('ギャラリー撮影記録あり', row)
         self.assertNotIn('?game=', ''.join(value.decode('utf-8')
                                            for name, value in files.items()
                                            if name.endswith('.md')))
@@ -570,6 +579,25 @@ class SevenGamePreviewTests(unittest.TestCase):
         metadata['release']['status'] = 'candidate'
         metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
         with self.assertRaisesRegex(WikiError, 'outside the catalog'):
+            self.render()
+
+    def test_draft_rom_gallery_requires_matching_saved_runner_receipts(self):
+        media = self.fixture.root / 'games/lumen-cross/media'
+        manifest_path = media / 'gallery.json'
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        manifest['capture']['artifact_sha256'] = '0' * 64
+        manifest['video']['artifact_sha256'] = '0' * 64
+        manifest_path.write_text(json.dumps(manifest), encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'ROM gallery receipt mismatch'):
+            self.render()
+        manifest_path.write_text(json.dumps(json.loads(
+            (ROOT / 'games/lumen-cross/media/gallery.json').read_text(encoding='utf-8'))),
+            encoding='utf-8')
+        receipt_path = media / 'receipts/local-rom-gallery-goal.json'
+        receipt = json.loads(receipt_path.read_text(encoding='utf-8'))
+        receipt['expectations_sha256'] = '0' * 64
+        receipt_path.write_text(json.dumps(receipt), encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'ROM gallery receipt mismatch'):
             self.render()
 
 
