@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "hearth-zero",
   "title": "HEARTH ZERO",
-  "version": "0.1.0-dev",
+  "version": "0.1.0",
   "summary": "Gather wood and food, feed the fire and build walls to survive three cold waves of twelve nights.",
   "genre": "management",
   "license": "MIT",
@@ -25,11 +25,11 @@
     "hardware": "not_run"
   },
   "release": {
-    "status": "draft",
+    "status": "verified",
     "sdk_contract": 1,
     "runner_contract": 1,
     "minimum_runner_version": "0.3.0",
     "wav": "not-required",
-    "publication": "not-published"
+    "publication": "published"
   }
 }

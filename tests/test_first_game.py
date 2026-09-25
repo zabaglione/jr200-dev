@@ -49,8 +49,8 @@ class FirstGameTests(unittest.TestCase):
         spec = validate_project(
             ROOT / 'games/side-catch', ROOT / 'rules/jr200.json', ROOT)
         self.assertEqual(spec.metadata['schema_version'], 2)
-        self.assertEqual(spec.metadata['release']['status'], 'candidate')
-        self.assertEqual(spec.metadata['release']['publication'], 'not-published')
+        self.assertEqual(spec.metadata['release']['status'], 'verified')
+        self.assertEqual(spec.metadata['release']['publication'], 'published')
         self.assertEqual(spec.metadata['verification'], {
             'emulator': 'passed', 'hardware': 'not_run'})
         self.assertEqual(spec.sdk_inputs, (

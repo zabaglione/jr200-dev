@@ -51,6 +51,8 @@ class WikiFixture:
         self.metadata_path = self.root / 'games/side-catch/game.json'
         self.metadata = json.loads(self.metadata_path.read_text(encoding='utf-8'))
         self.metadata['version'] = '0.1.0'  # independent fake package fixture
+        self.metadata['release']['status'] = 'candidate'
+        self.metadata['release']['publication'] = 'not-published'
         self.metadata_path.write_text(json.dumps(self.metadata) + '\n', encoding='utf-8')
         self.artifact = make_cjr()
         self.artifact_sha256 = hashlib.sha256(self.artifact).hexdigest()
@@ -93,11 +95,11 @@ class WikiFixture:
             if name != 'side-catch':
                 shutil.copytree(project.parent, self.root / 'games' / name,
                                 ignore=shutil.ignore_patterns('build', '__pycache__'))
-                if name == 'relic-dive':
-                    metadata_path = self.root / 'games' / name / 'game.json'
-                    metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
-                    metadata['release']['status'] = 'draft'
-                    metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
+                metadata_path = self.root / 'games' / name / 'game.json'
+                metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+                metadata['release']['status'] = 'draft'
+                metadata['release']['publication'] = 'not-published'
+                metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
 
     def report(self, profile, mode, evidence, framebuffer='0' * 64):
         cassette = 'memory_injection' if mode == 'synthetic-injection' else 'normal'

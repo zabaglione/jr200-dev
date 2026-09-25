@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "relic-dive",
   "title": "RELIC DIVE",
-  "version": "0.1.1-dev",
+  "version": "0.1.1",
   "summary": "Descend a generated dungeon turn by turn and recover the relic on the deepest floor.",
   "genre": "exploration",
   "license": "MIT",
@@ -25,11 +25,11 @@
     "hardware": "not_run"
   },
   "release": {
-    "status": "candidate",
+    "status": "verified",
     "sdk_contract": 1,
     "runner_contract": 1,
     "minimum_runner_version": "0.3.0",
     "wav": "not-required",
-    "publication": "not-published"
+    "publication": "published"
   }
 }
