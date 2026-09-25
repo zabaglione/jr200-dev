@@ -86,7 +86,9 @@ JRASM="/absolute/path/to/jrasm/build/src/jrasm/jrasm" make jrasm-check
 Wikiの7作品ページと媒体は公開済みです。固定CJRを配信した
 [Webエミュレータ](https://zabaglione.github.io/jr200-web-emulator/)では、所有ROM/FONTを
 利用するChromeで7作品の「遊ぶ」リンクから通常MLOAD/USR起動を確認しました。
-公開版のWiki自動remote pushは未対応です。今回のRelease/Wiki匿名アクセスは確認済みですが、
+公開版Wikiの承認付き自動remote同期は実行・再実行済みです。BRICK PULSEの推奨版は
+[0.1.1](https://github.com/zabaglione/jr200-dev/releases/tag/brick-pulse-0.1.1)へ更新し、
+旧0.1.0の固定URLを保持しています。今回のRelease/Wiki匿名アクセスは確認済みですが、
 コードのpushだけで新しい作品を一般公開しません。
 
 ```sh
