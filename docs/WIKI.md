@@ -151,10 +151,27 @@ git -C /absolute/path/to/jr200-dev.wiki diff --stat
 同名の未管理fileや、前回生成後に手編集されたfileには上書き・削除せず停止します。
 2回目のdry-runでadd／update／deleteが0ならcommitやpushは不要です。
 
-remote push用jobは未実装です。今回の初回7作品は、Pagesの到達性を確認してから
-別Git worktreeで生成差分だけを手動同期しました。将来の自動化では
-PR検査とは別workflow、最小書込み権限、直列実行を追加します。公開指定pageの生成には
-`--expected-commit "$GITHUB_SHA"` を必須とし、clean packageのsource commitが公開対象のmain commitの祖先であることを照合します。これにより、固定packageを作り直さずに説明文だけを更新できます。
+初回7作品は、Pagesの到達性を確認してから別Git worktreeで生成差分だけを手動同期しました。
+追加の安全確認として、`tools/wiki/public_check.py`は公開Web catalog、全公開CJR、
+Release ZIPをHTTP取得して固定版・hashを照合します。`--packages-dir build/wiki-packages`
+を付けると照合済みZIPだけをローカルの無視対象dirへ置きます。
+`--after-wiki-push`は生成した全Wikiページ・媒体と公開Wikiの生ファイルをbyte比較します。
+公開側の反映遅延があれば失敗し、再試行できます。実機互換性の検査ではありません。
+
+`.github/workflows/wiki-sync.yml`のPR経路は読み取り専用で、公開資格情報を受け取りません。
+remote経路はmain上の`workflow_dispatch`だけです。`source_sha`に現在のmainの完全SHA、
+`approved_games`に公開対象の`id@version`全件をID順でカンマ区切り、`confirmation`に
+`publish-wiki`を指定します。事前にWeb配信とReleaseの公開hashが一致しない場合、
+Wikiを変更しません。remote同期には`wiki-publish`環境へ`WIKI_PUSH_TOKEN`を設定し、
+その環境に必要な承認者を設定してください。トークンはWikiへの書込みに必要な最小の
+権限・有効期間とし、PR jobには渡しません。jobは直列、Wikiの既存revisionを再確認して
+非強制pushします。差分0ならcommit/pushしません。新しいCJR/Release/Pagesをこのworkflowは
+配信しません。`workflow_dispatch`自体も、作品・版・公開先の事前承認を代替しません。
+
+公開指定pageの生成には`--expected-commit "$GITHUB_SHA"`を必須とし、clean packageの
+source commitが公開対象main commitの祖先であることを照合します。説明文だけの更新で
+固定packageを作り直す必要はありません。初回7作品の公開Wikiと現行生成結果には、
+BRICK PULSEのSafari追加受入記述の差分があります。同期前にこの差分を確認します。
 
 ## Webエミュレータのカタログへのエクスポート
 

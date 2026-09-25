@@ -1,0 +1,125 @@
+name: Wiki validation and approved sync
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact current main commit to publish
+        required: true
+        type: string
+      approved_games:
+        description: Sorted comma-separated list of every public id@version
+        required: true
+        type: string
+      confirmation:
+        description: Type publish-wiki to permit the remote Wiki push
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: jr200-wiki-sync
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check repository and generated Wiki without publishing
+        run: make check
+      - name: Verify public assets and obtain only fixed packages
+        env:
+          APPROVED_GAMES: ${{ inputs.approved_games }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = workflow_dispatch ]; then
+            python3 tools/wiki/public_check.py --packages-dir build/wiki-packages --approved-games "$APPROVED_GAMES"
+          else
+            python3 tools/wiki/public_check.py --packages-dir build/wiki-packages
+          fi
+      - name: Validate generated pages from exact packages
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: >-
+          python3 tools/wiki/generate.py
+          --packages build/wiki-packages
+          --expected-commit "$SOURCE_SHA"
+          check
+
+  publish:
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main' &&
+      inputs.confirmation == 'publish-wiki'
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: wiki-publish
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify requested and current main revision
+        env:
+          REQUESTED_SHA: ${{ inputs.source_sha }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          test "$REQUESTED_SHA" = "$SOURCE_SHA"
+          test "$(git ls-remote https://github.com/${{ github.repository }}.git refs/heads/main | cut -f1)" = "$SOURCE_SHA"
+      - name: Verify public CJR, release packages and generated pages
+        env:
+          APPROVED_GAMES: ${{ inputs.approved_games }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python3 tools/wiki/public_check.py --packages-dir build/wiki-packages --approved-games "$APPROVED_GAMES"
+          python3 tools/wiki/generate.py --packages build/wiki-packages --expected-commit "$SOURCE_SHA" check
+      - name: Synchronize only generated Wiki files
+        env:
+          WIKI_PUSH_TOKEN: ${{ secrets.WIKI_PUSH_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+          APPROVED_GAMES: ${{ inputs.approved_games }}
+        run: |
+          set -euo pipefail
+          test -n "$WIKI_PUSH_TOKEN"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$WIKI_PUSH_TOKEN" | base64 -w0)"
+          git clone --quiet https://github.com/zabaglione/jr200-dev.wiki.git build/wiki-remote
+          BEFORE_SHA="$(git -C build/wiki-remote rev-parse HEAD)"
+          python3 tools/wiki/generate.py --packages build/wiki-packages --expected-commit "$SOURCE_SHA" sync --wiki build/wiki-remote
+          python3 tools/wiki/generate.py --packages build/wiki-packages --expected-commit "$SOURCE_SHA" sync --wiki build/wiki-remote --apply
+          if [ -n "$(git -C build/wiki-remote status --porcelain=v1)" ]; then
+            git -C build/wiki-remote add -A
+            git -C build/wiki-remote -c user.name=Zabaglione -c user.email=3518103+zabaglione@users.noreply.github.com commit -m "Sync generated game Wiki from $SOURCE_SHA"
+            test "$(git -C build/wiki-remote ls-remote origin refs/heads/master | cut -f1)" = "$BEFORE_SHA"
+            git -C build/wiki-remote push origin HEAD:master
+          fi
+          AFTER_SHA="$(git -C build/wiki-remote rev-parse HEAD)"
+          {
+            echo "Source: $SOURCE_SHA"
+            echo "Games: $APPROVED_GAMES"
+            echo "Wiki before: $BEFORE_SHA"
+            echo "Wiki after: $AFTER_SHA"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify public Wiki after push
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if python3 tools/wiki/public_check.py --packages-dir build/wiki-packages --after-wiki-push; then
+              exit 0
+            fi
+            sleep 10
+          done
+          exit 1
