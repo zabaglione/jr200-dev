@@ -149,13 +149,13 @@
       "id": "brick-pulse",
       "project": "games/brick-pulse",
       "status": "verified",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "genre": "action",
-      "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+      "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
       "package": {
-        "file": "brick-pulse-0.1.0.zip",
-        "sha256": "ce71145f81bcd5b94c1901ebab4170c5e87f5e7a65ca8315fe06a1efbaeb3ca8",
-        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/brick-pulse-0.1.0.zip"
+        "file": "brick-pulse-0.1.1.zip",
+        "sha256": "a4284ded58b10e446ec3dfe8326592c9cccd275592f6ae13ac73c0cac8c5804f",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/brick-pulse-0.1.1/brick-pulse-0.1.1.zip"
       },
       "wiki": {
         "slug": "brick-pulse",

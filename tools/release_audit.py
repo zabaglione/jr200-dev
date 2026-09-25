@@ -38,7 +38,7 @@ REVIEWED_GALLERY_VIDEOS = {
     'games/hearth-zero/media/goal.webm':
         'a6f46d240e1030d4d182579a9d8a0f775dd94a9ff47ef63b2bf98bc76f66a3c9',
     'games/brick-pulse/media/goal.webm':
-        '9937082b6e6906ed89aee22336449119eb689406ba1d3e1e8603318ff42430a5',
+        'f288f5c24b133b403b01640c628725a122f8694e19c517b05d29dfa5d6e0ccf8',
 }
 FORBIDDEN_SUFFIXES = {'.bin', '.cas', '.cjr', '.key', '.p12', '.pem', '.pfx',
                       '.rom', '.tap', '.wav', '.zip'}
