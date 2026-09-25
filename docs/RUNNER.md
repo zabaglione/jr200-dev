@@ -31,22 +31,25 @@ lockのmacOS行はこの固定bundleの**実行確認**を示す`verified`へ更
 Macでのクリーン再ビルド、全作品のMac実行、物理JR-200動作を示すものではありません。
 ROM／FONTのbytes・hash・ローカルpathは記録や配布へ含めていません。
 
-現在はbundleのRelease資産を公開していないため、取得状態は `local_build_only` です。
-`JR200_RUNNER_BUNDLE` または `--bundle` で既存のビルド済みdirectoryを明示します。
-ゲームCIはエミュレータsourceをclone／buildするfallbackを持たず、bundle未提供を
-`release_asset_not_published` として `emulator=not_run` に残します。Release資産と取得手段を
-別途承認して用意するまでは、remote CIのruntime受入条件を満たしたとは扱いません。
+固定bundleをエミュレータ側の
+[runner-v0.3.0 Release](https://github.com/zabaglione/jr200-web-emulator/releases/tag/runner-v0.3.0)
+で公開しました。ZIPの匿名取得は142,300 bytes、SHA-256
+`860f99be69037a78c6dea557cd28994b83ba7fe05709d512d8e86cb44b6c77b0`と一致しました。
+module生成元commitは上記の`c4c0c30...`、配布手順のRelease tag対象commitは`df031a53...`で
+別です。ゲームCIはエミュレータsourceをclone／buildするfallbackを持ちません。
+fresh cloneのMac/Linux実行とremote CIのruntime受入は別途確認中で、未確認の結果を
+合格として扱いません。
 
-取得adapter `tools/runner_fetch.py` は配布準備のみ実装済みです。固定URLとZIP全体のSHA-256、
+取得adapter `tools/runner_fetch.py` は固定URLとZIP全体のSHA-256、
 2つのmoduleと7つの権利表示ファイルそれぞれのsize／SHA-256を`emulator.lock.json`で固定します。
 ZIPはその9ファイルだけを許し、ROM／FONT、余計なファイル、重複path、symlink、暗号化entry、
 展開容量超過を拒否します。URLは当該リポジトリのGitHub Release、redirectは承認したHTTPS hostに
 限り、取得上限8 MiB・経過60秒超過の検知・read timeout 10秒です。認証tokenは渡さず、
 例外内のsigned URLもログへ出しません。
 破損ZIPや不一致時に既存directoryを置換せず、エミュレータのsource buildへfallbackもしません。
-現在のlockでは取得元・ZIP digestがnullなので、CIでadapterを呼んでもdownloadは起きません。
-承認済みRelease公開後にURLとdigestを固定し、Mac/Linuxのfresh clone試験とremote CI実測を
-行うまでは`runtime_required=false`を維持します。ROM専用の`joystick-sample`は
+現在のlockは公開ReleaseのURLとdigestを固定し、CIでadapterを呼ぶと検証済みZIPを取得します。
+Mac/Linuxのfresh clone試験とremote CI実測を終えるまでは`runtime_required=false`を維持します。
+ROM専用の`joystick-sample`は
 `ci/runner.lock.json`で`local_rom_only`と明示し、CIではbundle取得対象から除外します。
 receiptも`emulator=local_rom_only`、evidence=`not_run`、reason=`requires_local_rom_font`
 を保存し、合成runtimeの成功には数えません。joystickの実測は利用者提供ROM/FONTによる

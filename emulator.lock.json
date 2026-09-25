@@ -5,9 +5,9 @@
   "source": {
     "repository": "https://github.com/zabaglione/jr200-web-emulator",
     "revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
-    "availability": "local_build_only",
-    "release_asset": null,
-    "release_sha256": null
+    "availability": "release",
+    "release_asset": "https://github.com/zabaglione/jr200-web-emulator/releases/download/runner-v0.3.0/jr200-runner-v0.3.0.zip",
+    "release_sha256": "860f99be69037a78c6dea557cd28994b83ba7fe05709d512d8e86cb44b6c77b0"
   },
   "build": {
     "emulator_version": "0.0.1",

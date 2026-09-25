@@ -219,8 +219,11 @@ class ReceiptTests(unittest.TestCase):
         self.assertEqual(checked, receipt)
         self.assertEqual(checked['emulator'], 'not_run')
         self.assertEqual(checked['emulator_evidence'], 'not_run')
+        expected_reason = json.loads(
+            (self.fixture.root / 'ci/runner.lock.json').read_text(encoding='utf-8')
+        )['emulator']['unavailable_reason']
         self.assertEqual(checked['emulator_unavailable_reason'],
-                         'release_asset_not_published')
+                         expected_reason)
 
     def test_runner_lock_changes_only_test_fingerprint(self):
         before = self.fixture.fingerprints()
