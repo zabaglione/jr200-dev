@@ -10,7 +10,7 @@
       "artifact_sha256": "6edb58a3edfb35ed50f3bbb95ad223516189d8f06d673badcb76adaf7e8b0af2",
       "package": {
         "file": "side-catch-0.1.0.zip",
-        "sha256": "87e5b3b0af1c9bd4cfb88eadf6a8b965d78f249af7e755055e97efdc34107839",
+        "sha256": "aa4bee34b82a05847667cc2e2cac0a454f0a83beeb93532dc7ebf7a0c57ae10d",
         "release_url": null
       },
       "wiki": {
@@ -34,7 +34,7 @@
       "artifact_sha256": "e8023f50bc10812a1d77818f81c00cedf0984c4d5b86ed5c96b45d3034006d97",
       "package": {
         "file": "relic-dive-0.1.0-dev.zip",
-        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "sha256": "705088f2b5d98f9df10f1300f6298f63d9a10938ab54b0b70ee09c961b40e9bf",
         "release_url": null
       },
       "wiki": {
