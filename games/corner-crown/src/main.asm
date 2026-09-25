@@ -750,7 +750,7 @@ cc_help_5:
 cc_help_6:
         .db     "THE RIVAL FAVORS BIG CAPTURES", 0
 cc_help_7:
-        .db     "SPACE RESTART / ESC TO BASIC", 0
+        .db     "SPACE RESTART / CTRL+C EXIT", 0
 cc_help_back:
         .db     "ANY KEY : TITLE", 0
 
