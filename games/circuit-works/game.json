@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "circuit-works",
   "title": "CIRCUIT WORKS",
-  "version": "0.1.0-dev",
+  "version": "0.1.0",
   "summary": "Set three chained AND/OR/XOR gates so all eight inputs match the wanted output across 22 puzzles.",
   "genre": "tactics",
   "license": "MIT",
@@ -25,11 +25,11 @@
     "hardware": "not_run"
   },
   "release": {
-    "status": "draft",
+    "status": "verified",
     "sdk_contract": 1,
     "runner_contract": 1,
     "minimum_runner_version": "0.3.0",
     "wav": "not-required",
-    "publication": "not-published"
+    "publication": "published"
   }
 }
