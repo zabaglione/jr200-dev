@@ -75,6 +75,7 @@ BP_PAIRS:           .equ    0x46c8
 BP_AUTO_LEVEL:      .equ    0x46c9
 BP_COPY:            .equ    0x46ca
 BP_DEMO:            .equ    0x46cc
+BP_WAIT_FRAMES:     .equ    0x46cd
 BP_RESULTS:         .equ    0x5000
 BP_FIXTURE_STRIDE:  .equ    52
 BP_AUTO_STRIDE:     .equ    54
@@ -721,10 +722,10 @@ bp_impact_blink:
         LDAB    BP_ATTR_HIT
         JSR     bp_cell_write
         LDAA    4
-        JSR     jr_port_hold
+        JSR     bp_hold_input
         JSR     jr_gfx_present
         LDAA    4
-        JSR     jr_port_hold
+        JSR     bp_hold_input
         DEC     [BP_EFN]
         BNE     bp_impact_blink
         RTS
@@ -764,11 +765,35 @@ bp_vanish_frame:
         STAA    [X + 32]
         STAA    [X + 33]
         LDAA    2
-        JSR     jr_port_hold
+        JSR     bp_hold_input
         INC     [BP_EFN]
         LDAA    [BP_EFN]
         CMPA    4
         BNE     bp_vanish_frame
+        RTS
+
+; Keep brief A/D taps while a brick effect pauses the main game loop.
+; jr_port_hold polls the MCU but discards non-exit key events.
+bp_hold_input:
+        STAA    [BP_WAIT_FRAMES]
+bp_hold_input_frame:
+        JSR     jr_frame_wait
+        JSR     jr_sfx_tick
+        JSR     jr_keys_poll
+        CMPA    JR_KEY_EXIT
+        BNE     bp_hold_input_direction
+        JMP     jr_session_leave
+bp_hold_input_direction:
+        CMPA    JR_KEY_LEFT
+        BEQ     bp_hold_input_move
+        CMPA    JR_KEY_RIGHT
+        BNE     bp_hold_input_next
+bp_hold_input_move:
+        JSR     game_act
+        JSR     jr_port_render
+bp_hold_input_next:
+        DEC     [BP_WAIT_FRAMES]
+        BNE     bp_hold_input_frame
         RTS
 
 ; ---------------------------------------------------------------- drawing

@@ -19,6 +19,8 @@ ROOT = None
 PAGES = 'https://zabaglione.github.io/jr200-web-emulator/'
 PAGES_MODE = False
 ASSET_CACHE = {}
+CANDIDATE_BYTES = None
+CJR_PATH = ''
 
 
 class Site(http.server.SimpleHTTPRequestHandler):
@@ -35,14 +37,23 @@ class Site(http.server.SimpleHTTPRequestHandler):
             return
         if PAGES_MODE:
             name = path.lstrip('/') or 'index.html'
-            if name not in ASSET_CACHE:
-                try:
-                    with urlopen(PAGES + name, timeout=30) as response:
-                        ASSET_CACHE[name] = response.read(2 * 1024 * 1024)
-                except HTTPError as exc:
-                    self.send_error(exc.code)
-                    return
-            payload = ASSET_CACHE[name]
+            if CANDIDATE_BYTES is not None and name == CJR_PATH:
+                payload = CANDIDATE_BYTES
+            else:
+                if name not in ASSET_CACHE:
+                    try:
+                        with urlopen(PAGES + name, timeout=30) as response:
+                            ASSET_CACHE[name] = response.read(2 * 1024 * 1024)
+                    except HTTPError as exc:
+                        self.send_error(exc.code)
+                        return
+                payload = ASSET_CACHE[name]
+                if CANDIDATE_BYTES is not None and name == 'game-catalog.json':
+                    catalog = json.loads(payload)
+                    entry = next(game for game in catalog['games']
+                                 if game['id'] == 'brick-pulse')
+                    entry['sha256'] = hashlib.sha256(CANDIDATE_BYTES).hexdigest()
+                    payload = json.dumps(catalog).encode()
         else:
             target = ROOT / 'build/site' / (path.lstrip('/') or 'index.html')
             if not target.is_file():
@@ -148,14 +159,16 @@ def wait_latency(driver, count, key_name, timeout=2):
 
 
 def main():
-    global ROOT, PAGES_MODE
+    global ROOT, PAGES_MODE, CANDIDATE_BYTES, CJR_PATH
     p = argparse.ArgumentParser()
     p.add_argument('--webdriver', required=True)
     p.add_argument('--emulator', type=Path, required=True)
     p.add_argument('--pages', action='store_true')
+    p.add_argument('--candidate-cjr', type=Path)
     p.add_argument('--rom', type=Path, required=True)
     p.add_argument('--font', type=Path, required=True)
     a = p.parse_args()
+    assert not a.candidate_cjr or a.pages, 'Candidate requires --pages proxy'
     ROOT = a.emulator.resolve()
     PAGES_MODE = a.pages
     sys.path.insert(0, str(ROOT / 'tests'))
@@ -163,6 +176,11 @@ def main():
     assert a.rom.stat().st_size == 16384 and a.font.stat().st_size == 2048
     catalog = json.loads((ROOT / 'web/game-catalog.json').read_text())
     selected = next(x for x in catalog['games'] if x['id'] == 'brick-pulse')
+    CJR_PATH = selected['path']
+    if a.candidate_cjr:
+        assert a.candidate_cjr.is_file() and not a.candidate_cjr.is_symlink()
+        CANDIDATE_BYTES = a.candidate_cjr.read_bytes()
+        assert 0 < len(CANDIDATE_BYTES) < 1024 * 1024
     if PAGES_MODE:
         with urlopen(PAGES + 'game-catalog.json', timeout=30) as response:
             assert json.load(response) == catalog
@@ -237,7 +255,8 @@ def main():
         retry = wait(driver, lambda s: s['mode'] == 1 and s['level'] == 11)
         driver.call('POST', '/actions', {'actions': [{'type':'key','id':'keyboard',
              'actions':[{'type':'keyDown','value':'a'}]}]})
-        before_blur = wait(driver, lambda s: s['paddle'] < retry['paddle'])
+        before_blur = wait(driver, lambda s: s['held'] == 3 and
+                           0 < s['paddle'] < retry['paddle'])
         assert before_blur['paddle'] > 0, before_blur
         original_handle = driver.call('GET', '/window')
         new_tab = driver.call('POST', '/window/new', {'type':'tab'})
@@ -253,6 +272,9 @@ def main():
         assert blur_stopped['paddle'] == blur_released['paddle']
         driver.call('DELETE', '/actions')
         print(json.dumps({'browser':driver.capabilities.get('browserVersion'),
+          'cjr_sha256':hashlib.sha256(CANDIDATE_BYTES).hexdigest()
+            if CANDIDATE_BYTES is not None else selected['sha256'],
+          'source':'candidate' if CANDIDATE_BYTES is not None else 'published',
           'stage':initial['level']+1,'run_samples':len(samples),
           'run_ms_p95':sorted(samples)[int(len(samples)*.95)],
           'run_ms_max':max(samples),'run_ms_mean':statistics.mean(samples),

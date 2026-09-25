@@ -105,6 +105,16 @@ class BrickPulseRuleTests(unittest.TestCase):
                                  '--check'], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_brick_effect_wait_handles_direction_events(self):
+        source = (PROJECT / 'src/main.asm').read_text(encoding='utf-8')
+        effects = source[source.index('bp_impact:'):source.index('; ---------------------------------------------------------------- drawing')]
+        self.assertNotIn('JSR     jr_port_hold', effects)
+        self.assertEqual(effects.count('JSR     bp_hold_input'), 3)
+        wait = effects[effects.index('bp_hold_input:'):]
+        for call in ('JSR     jr_keys_poll', 'JSR     game_act',
+                     'JSR     jr_port_render'):
+            self.assertIn(call, wait)
+
 
 class BrickPulseExpectationTests(unittest.TestCase):
     @classmethod
