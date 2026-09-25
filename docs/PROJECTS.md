@@ -144,6 +144,9 @@ bundleのversion、source commit、file digestを照合し、
 schema version 2の作品packageは、合成実行とlocal-ROM通常cassette実行の両report、固定CJR、
 README、metadata、license、build report、release manifest、内部checksumを含みます。dirty treeからも
 候補確認用packageは作れますが、manifestの `release_ready` はfalseとなり公開入力には使用できません。
+`source.snapshot_sha256` の紹介・試験ファイルはGit追跡済みと無視されない新規ファイルに限定し、
+`__pycache__` などGit無視対象のローカル生成物を含めません。公開済みの固定ZIPを現行HEADから
+再生成して上書きせず、再現試験ではZIP内の `source.commit` にあるcommitを使用します。
 
 ## ブラウザでの試遊
 

@@ -166,3 +166,19 @@ Wikiの22ページ・35媒体は公開raw URLから全57 fileを取得し、同�
 Releaseの7 ZIPは公開URLから取得し、catalog固定SHA-256と全件一致した。
 Webエミュレータの公開Pagesでは、所有ROM/FONTをローカル選択して7作品の通常MLOAD/USRと
 開始入力を確認済み。ROM/FONTファイル本体と物理JR-200の動作は公開・検証対象外である。
+
+## 2026-09-26追記: 公開ZIPのfresh clone再現とスナップショット差異
+
+所有ROM/FONTをローカル指定し、公開ZIP内の`source.commit`からMacでfresh cloneを作成した。
+初回6作品の固定commit `25c50409af8e8f4909c9dbb9bb64cdb71bb3c4ae`では全profileを再実行し、
+各候補ZIPのSHA-256が公開Releaseと完全一致した。BRICK PULSE 0.1.1の固定commit
+`42a0f00010036c247d130766b5fb8747acb20238`でも全17 profile（所有ROM/FONT 5件を含む）と
+`release_ready=true`まで再現したが、ZIP全体のSHA-256は一致しなかった。
+
+BRICK PULSEのZIP同士を全memberで比較すると、CJR・検証report・README・ライセンス等のbyteは一致し、
+差異は`RELEASE.json`の`source.snapshot_sha256`と、それを記載する`SHA256SUMS`だけだった。
+旧生成器がGit無視対象の`tests/__pycache__/*.pyc`までソース・スナップショット計算に含めたことが原因で、
+当時のローカルbytecode 2件のhashを加えると公開値と一致した。`.pyc`本体は公開ZIPへ含まれていない。
+以後の生成器ではGit追跡済みと無視されない新規fileだけを計算対象にし、無視対象のbytecodeが
+ハッシュへ影響しない回帰試験を追加した。公開済みZIP・CJR・カタログの固定hashは変更も上書きもせず、
+過去版のスナップショット値と新方式の値は区別する。これは実機JR-200の検証ではない。

@@ -750,28 +750,48 @@ def git_source_state(root: Path) -> tuple[str, str]:
     return commit, ('dirty' if status else 'clean')
 
 
-def release_manifest(spec: ProjectSpec, report: dict[str, Any],
-                     runtime_reports: list[tuple[str, bytes, dict[str, Any]]]) -> dict[str, Any]:
-    commit, tree_state = git_source_state(spec.repository_root)
+def snapshot_presentation_paths(spec: ProjectSpec) -> set[str]:
+    """Include tracked or visible new files, never ignored local byproducts."""
+    prefix = spec.project.relative_to(spec.repository_root).as_posix()
+    try:
+        output = subprocess.check_output(
+            ['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z',
+             '--', f'{prefix}/tests', f'{prefix}/media'],
+            cwd=spec.repository_root, stderr=subprocess.PIPE)
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise ProjectError('Cannot list release snapshot source files') from exc
+    paths = set()
+    for entry in output.split(b'\0'):
+        if not entry:
+            continue
+        relative = Path(entry.decode('utf-8')).relative_to(prefix)
+        path = spec.project / relative
+        if path.is_symlink() or not path.is_file():
+            raise ProjectError(f'Release source is missing or symlinked: {path}')
+        paths.add(relative.as_posix())
+    return paths
+
+
+def source_snapshot_digest(spec: ProjectSpec, report: dict[str, Any]) -> str:
     snapshot_paths = {
         'Makefile', 'README.md', 'build.json', 'game.json',
         'assets/manifest.json',
     }
-    for directory in ('tests', 'media'):
-        for path in (spec.project / directory).rglob('*'):
-            if path.is_symlink():
-                raise ProjectError(f'Release source contains a symlink: {path}')
-            if path.is_file():
-                snapshot_paths.add(path.relative_to(spec.project).as_posix())
+    snapshot_paths.update(snapshot_presentation_paths(spec))
     snapshot = []
     for relative in sorted(snapshot_paths):
-        path = spec.project / relative
-        snapshot.append((relative, sha256_file(path)))
+        snapshot.append((relative, sha256_file(spec.project / relative)))
     for item in report['inputs']:
         snapshot.append((item['path'], item['sha256']))
-    snapshot = sorted(set(snapshot))
-    snapshot_digest = hashlib.sha256(json.dumps(
-        snapshot, ensure_ascii=True, separators=(',', ':')).encode('ascii')).hexdigest()
+    return hashlib.sha256(json.dumps(
+        sorted(set(snapshot)), ensure_ascii=True,
+        separators=(',', ':')).encode('ascii')).hexdigest()
+
+
+def release_manifest(spec: ProjectSpec, report: dict[str, Any],
+                     runtime_reports: list[tuple[str, bytes, dict[str, Any]]]) -> dict[str, Any]:
+    commit, tree_state = git_source_state(spec.repository_root)
+    snapshot_digest = source_snapshot_digest(spec, report)
     runtime_entries = []
     runner_versions = set()
     emulator_revisions = set()

@@ -3,14 +3,17 @@ import json
 from pathlib import Path
 import shutil
 import stat
+import subprocess
 import sys
 import tempfile
 import unittest
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from game_project import (ProjectError, build_project, clean_project, create_project,
-                          package_project, parse_cjr, validate_project)
+from game_project import (ProjectError, ProjectSpec, build_project, clean_project,
+                          create_project, package_project, parse_cjr,
+                          snapshot_presentation_paths, source_snapshot_digest,
+                          validate_project)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,6 +79,30 @@ class ContractTests(unittest.TestCase):
 
     def tearDown(self):
         self.fixture.close()
+
+    def test_release_snapshot_excludes_ignored_python_cache(self):
+        root = self.fixture.root
+        project = self.fixture.project
+        (root / '.gitignore').write_text('__pycache__/\n', encoding='utf-8')
+        (project / 'tests').mkdir(exist_ok=True)
+        (project / 'tests/model.py').write_text('VALUE = 1\n', encoding='utf-8')
+        subprocess.check_call(['git', 'init'], cwd=root,
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.check_call(['git', 'add', 'project/tests/model.py'], cwd=root)
+        (project / 'tests/new.txt').write_text('new source\n', encoding='utf-8')
+        cache = project / 'tests/__pycache__'
+        cache.mkdir()
+        (cache / 'model.pyc').write_bytes(b'ignored local bytecode')
+        spec = ProjectSpec(project, root, {}, {}, {}, (), (), (), ())
+        paths = snapshot_presentation_paths(spec)
+        self.assertIn('tests/model.py', paths)
+        self.assertIn('tests/new.txt', paths)
+        self.assertNotIn('tests/__pycache__/model.pyc', paths)
+        original = source_snapshot_digest(spec, {'inputs': []})
+        (cache / 'model.pyc').write_bytes(b'different ignored bytecode')
+        self.assertEqual(source_snapshot_digest(spec, {'inputs': []}), original)
+        (project / 'tests/model.py').write_text('VALUE = 2\n', encoding='utf-8')
+        self.assertNotEqual(source_snapshot_digest(spec, {'inputs': []}), original)
 
     def test_minimal_template_is_structurally_valid_without_rom_or_tool(self):
         spec = validate_project(self.fixture.project)
