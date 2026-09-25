@@ -58,13 +58,15 @@ Webエミュレータの`Escape`キーはJR-200の`BREAK`（NMI）です。ゲ�
 ## 開発
 
 `tests/expectations.json`のRAM期待値は`tests/model.py`が計算した値です。`synthetic-all-waves`は
-3つの寒波を12夜ずつ越え、`synthetic-lose-heat`と`synthetic-lose-food`は2種類の敗北を再現します。
+3つの寒波を12夜ずつ越え、`synthetic-day-w*-d*`の36個のreplay-prefixでは各日終了時の
+食料・薪・暖かさ・断熱・日数を実CJRと照合します。`synthetic-lose-heat`と
+`synthetic-lose-food`は2種類の敗北を再現します。
 
 ## 検証の範囲
 
 | 区分 | 状態 |
 | --- | --- |
-| ROMなし合成実行（固定エミュレータ） | タイトル、説明、予報、夜の演出、拒否の通知、寒さと飢えの敗北と再挑戦、選択の循環、やり直し確認、3つの寒波、BASIC復帰を確認 |
+| ROMなし合成実行（固定エミュレータ） | タイトル、説明、予報、夜の演出、拒否の通知、寒さと飢えの敗北と再挑戦、選択の循環、やり直し確認、3つの寒波と各日資源、BASIC復帰を確認 |
 | 所有ROM/FONTでの通常`MLOAD`/`USR` | 固定runnerで3寒波×12夜の生存と、寒さによる敗北・再挑戦を確認。ローカルWebで初日行動と敗北・再挑戦・`CTRL+SHIFT+C`でのBASIC復帰を確認し、終了前後のPCG・画面コード・属性・フォントの比較対象各256バイトは一致 |
 | 物理JR-200 | 未実施 |
 

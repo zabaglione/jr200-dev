@@ -113,6 +113,24 @@ class HearthZeroRuleTests(unittest.TestCase):
 
 
 class HearthZeroExpectationTests(unittest.TestCase):
+    def test_all_36_cjr_day_checkpoints_match_model(self):
+        expectations = json.loads((PROJECT / 'tests/expectations.json').read_text())
+        profiles = [p for p in expectations['runtime']['profiles']
+                    if p['profile'].startswith('synthetic-day-')]
+        self.assertEqual(len(profiles), hz.LEVELS * hz.DAYS)
+        self.assertEqual({p['profile'] for p in profiles},
+                         {f'synthetic-day-w{wave}-d{day:02d}'
+                          for wave in range(1, hz.LEVELS + 1)
+                          for day in range(1, hz.DAYS + 1)})
+        for profile in profiles:
+            with self.subTest(profile=profile['profile']):
+                port = PortModel(hz.HearthZero(), hz.LEVELS).run(profile['replay'])
+                memory = profile['expect']['memory']
+                self.assertEqual(memory['resources'], port.game.state_bytes()[:8])
+                self.assertEqual(memory['day'], f'{port.game.day:02x}')
+                self.assertEqual(memory['mode'], f'{port.mode:02x}')
+                self.assertEqual(memory['level'], f'{port.level:02x}')
+
     def test_help_describes_graceful_exit(self):
         source = (PROJECT / 'src/main.asm').read_text()
         self.assertIn('SPACE RESTART / CTRL+C EXIT', source)
