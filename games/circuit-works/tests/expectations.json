@@ -2617,6 +2617,38 @@
           "pcm": null,
           "cassette": null
         }
+      },
+      {
+        "profile": "local-rom-first-clear",
+        "mode": "rom-cassette",
+        "max_cycles": 94000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000},
+          {"kind": "key", "cycle": 84000000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 84100000, "code": "0x0d", "pressed": false},
+          {"kind": "key", "cycle": 84700000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 84800000, "code": "0x0d", "pressed": false}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 27},
+          {"name": "mode", "address": "0x4620", "length": 1},
+          {"name": "level", "address": "0x4621", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0000000000000000000001000000000000000100ffff0102080801",
+            "mode": "02",
+            "level": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
       }
     ]
   }

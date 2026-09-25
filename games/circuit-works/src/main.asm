@@ -694,7 +694,7 @@ cw_help_5:
 cw_help_6:
         .db     "MATCH EVERY OUTPUT TO WIN.", 0
 cw_help_7:
-        .db     "SPACE RESTART / ESC TO BASIC", 0
+        .db     "SPACE RESTART / CTRL+C EXIT", 0
 cw_help_back:
         .db     "ANY KEY : TITLE", 0
 
