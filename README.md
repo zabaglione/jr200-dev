@@ -79,15 +79,15 @@ JRASM="/absolute/path/to/jrasm/build/src/jrasm/jrasm" make jrasm-check
 
 ## ゲームの公開
 
-[games/catalog.json](games/catalog.json) は公開候補の登録場所です。現在は `SIDE CATCH 0.1.0` を
-候補版として登録し、固定CJR／package／画面hashを保持しています。`RELIC DIVE` はcatalog未登録の
-開発版で、公開操作は行っていません。
+[games/catalog.json](games/catalog.json) は作品ごとの固定版と公開指定の正本です。
+初回7作品は検証済みで、clean-source packageをprivate
+[Release](https://github.com/zabaglione/jr200-dev/releases/tag/games-2026-09-25)に登録しました。
 作品ごとにソース、テスト、紹介文、素材のライセンスを保持します。
-Wikiの基本案内4ページは非公開リポジトリへpush済みです。作品ページはローカル生成と
-Git worktreeへのdry-run／applyまで対応し、公開版の自動remote pushは未対応です。
-公開Webエミュレータは固定カタログからのワンクリック読込みに対応しましたが、
-現在のカタログは空で、作品ごとの「遊ぶ」リンクはまだありません。
-コードのpushだけで作品を一般公開しません。
+Wikiの7作品ページと媒体は非公開Wikiへ同期済みです。固定CJRを配信した
+[Webエミュレータ](https://zabaglione.github.io/jr200-web-emulator/)では、所有ROM/FONTを
+利用するChromeで7作品の「遊ぶ」リンクから通常MLOAD/USR起動を確認しました。
+公開版のWiki自動remote pushは未対応です。開発リポジトリはまだprivateで、
+public化後のRelease/Wiki匿名アクセスは未確認です。コードのpushだけで新しい作品を一般公開しません。
 
 ```sh
 make wiki-check
