@@ -57,7 +57,9 @@ JR100 Wikiの構成を参考にしていますが、文章は複製せず、作�
   ページを拒否します
 
 下書き、package欠落、hash不一致、不正path、構文上不正なHTTPS URLを拒否します。
-外部URLのHTTP到達性検査は、公開URLがまだ存在しない現在の段階では行いません。
+generator自体は外部URLのHTTP到達性を検査しません。初回7作品については、
+公開Pagesのcatalog・CJRをHTTP取得してhashを照合し、所有ROM/FONTで起動した後に
+private Wikiの「遊ぶ」リンクを有効化しました。
 
 ## 開発中の作品のpreview
 
@@ -86,8 +88,7 @@ make wiki-preview
 ゲームIDのセット用リンクは公開CJRの存在と動作を確認するまで生成しません。
 公開版の`play_url`には、手動起動用の`?game=<id>`に加え、起動支援用の
 `?game=<id>&launch=1`を許可します。後者を選んだ作品ページだけ
-「遊ぶ（起動支援）」と表示します。現在は公開作品の`play_url`がなく、
-実際のWikiにはどちらの作品リンクも出していません。
+「遊ぶ（起動支援）」と表示します。固定済み7作品のページには、この起動支援リンクを掲載済みです。
 
 画面例を再取得する場合は、既存PNGを退避したうえで所有ROM/FONTの通常MLOAD/USR profileを
 優先します。ゲームが設置する自作字形sourceを指定して一致を検査します。
@@ -202,6 +203,6 @@ catalogの`titleMarker`と`EXPORT.json`の`title_marker`に同じ値を記録し
 過去版のfileは同じpathに残して上書きしません。版指定リンクは現行の`game-launch.mjs`にないため、
 必要になった時点でエミュレータ側のschema拡張として別途合意します。
 
-エミュレータ側では、`scripts/stage_web.py`のallow-listに`games/`と上記manifestのfileを加え、
-SBOMとnoticeを更新する変更が必要です。これはエミュレータのリポジトリで行い、本リポジトリへ複製しません。
-取込み後にPages上のcatalogとCJRのURL到達性・SHA-256を確認してから、Wikiの「遊ぶ」を有効にします。
+初回7作品については、エミュレータ側の`scripts/stage_web.py`のallow-list、SBOM、noticeを
+更新して固定CJRを配信済みです。Pages上のcatalogとCJRの到達性・SHA-256および通常起動を
+確認してから、private Wikiの「遊ぶ」を有効にしました。次版でも同じ順序を守ります。
