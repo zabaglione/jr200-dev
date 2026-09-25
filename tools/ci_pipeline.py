@@ -27,7 +27,7 @@ DEFAULT_RECEIPTS = ROOT / '.ci-cache/receipts'
 BUILD_COMMON = ('ci/targets.json', 'tools/ci_pipeline.py')
 TEST_COMMON = ('ci/runner.lock.json', 'ci/targets.json', 'emulator.lock.json',
                'tools/ci_pipeline.py', 'tools/ci_snapshot.py', 'tools/emulator_runner.py',
-               'tools/runner_fetch.py',
+               'tools/runner_fetch.py', 'tools/runner_joystick_smoke.mjs',
                'tools/jr200_wasm_runner.mjs', 'tools/png_rgba.py')
 
 

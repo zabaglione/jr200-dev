@@ -163,6 +163,14 @@ jobs:
           --target "${{ matrix.id }}"
           --github-output "$GITHUB_OUTPUT"
 
+      - name: Verify packaged joystick ABI with synthetic assets
+        if: matrix.id == 'minimal' && steps.receipt-valid.outcome != 'success'
+        env:
+          RUNNER_BUNDLE: ${{ steps.runner-fetch.outputs.bundle }}
+        run: |
+          test -n "$RUNNER_BUNDLE"
+          node tools/runner_joystick_smoke.mjs "$RUNNER_BUNDLE/jr200_codec.mjs"
+
       - name: Test target unless an exact successful receipt is reusable
         if: steps.receipt-valid.outcome != 'success'
         env:
@@ -217,6 +225,14 @@ jobs:
           BUILD_OUTCOME: ${{ steps.build-valid.outcome }}
           RECEIPT_OUTCOME: ${{ steps.receipt-valid.outcome }}
         run: |
+          receipt=".ci-cache/receipts/$TARGET_ID/receipt.json"
+          if [ -f "$receipt" ]; then
+            emulator=$(jq -r '.emulator' "$receipt")
+            hardware=$(jq -r '.hardware' "$receipt")
+          else
+            emulator=not_recorded
+            hardware=not_recorded
+          fi
           {
             printf '## Target %s\n' "$TARGET_ID"
             echo
@@ -224,8 +240,8 @@ jobs:
             printf '%s\n' "- Source/build input changed: $BUILD_REQUIRED"
             printf '%s\n' "- Build artifact validation: $BUILD_OUTCOME"
             printf '%s\n' "- Full receipt validation: $RECEIPT_OUTCOME"
-            echo "- Emulator verification: not_run"
-            echo "- Hardware verification: not_run"
+            printf '%s\n' "- Emulator verification: $emulator"
+            printf '%s\n' "- Hardware verification: $hardware"
           } >> "$GITHUB_STEP_SUMMARY"
 
   trusted-snapshot:

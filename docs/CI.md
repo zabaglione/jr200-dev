@@ -112,7 +112,9 @@ runner lockやadapterだけの変更はtest fingerprintを無効化し、build f
 現行lockでは、ZIP全体とmodule／権利表示のhash検査に合格したbundleのみ
 target試験へ渡します。取得失敗や不一致はjob失敗であり、エミュレータ再buildへ進みません。
 ROM専用`joystick-sample`はrunner lockの明示的な`local_rom_only`方針で区別します。
-CIはこのtargetでbundle取得を省略し、receiptへ`emulator=local_rom_only`と
+CIはこのtargetでbundle取得を省略します。別の`minimal` jobでは公開ZIPのsystem API 9と
+合成ROM/FONTによる1P/2Pのjoystick KACK走査を検査し、通常MLOAD試験と混同しません。
+`joystick-sample`のreceiptへは`emulator=local_rom_only`と
 evidence=`not_run`を残します。これは合成runtimeの成功ではありません。その他のtargetは
 `runtime_required=true`時に`not_run`を成功receiptとして再利用できません。
 

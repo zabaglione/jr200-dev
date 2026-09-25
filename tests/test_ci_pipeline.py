@@ -50,6 +50,7 @@ class PipelineFixture:
                          'mk/game.mk', 'tools/game_project.py', 'tools/jrasm_tool.py',
                          'tools/ci_pipeline.py', 'tools/ci_snapshot.py',
                          'tools/emulator_runner.py', 'tools/runner_fetch.py',
+                         'tools/runner_joystick_smoke.mjs',
                          'tools/jr200_wasm_runner.mjs', 'tools/png_rgba.py',
                          'tests/test_game_project.py'):
             source = SOURCE_ROOT / relative

@@ -56,6 +56,9 @@ Mac新規クローンとLinux CIでの配布受入後、`runtime_required=true`�
 取得不能・不一致・合成runtime未実施はジョブ失敗とし、`not_run` receiptを受け入れません。
 ROM専用の`joystick-sample`は
 `ci/runner.lock.json`で`local_rom_only`と明示し、CIではbundle取得対象から除外します。
+別の`minimal` Linux jobでは、公開ZIP取得後に`tools/runner_joystick_smoke.mjs`を使い、
+合成ROM/FONTでsystem API 9と1P/2PのKACK走査`EA/D5`を検査します。これは公開moduleの
+joystick ABI試験であり、JR BASICを通る`joystick-sample`の通常MLOAD/USR試験ではありません。
 receiptも`emulator=local_rom_only`、evidence=`not_run`、reason=`requires_local_rom_font`
 を保存し、合成runtimeの成功には数えません。joystickの実測は利用者提供ROM/FONTによる
 別のMac/Linux受入記録で扱います。他のtargetが合成profileを失えば検査を失敗させます。
