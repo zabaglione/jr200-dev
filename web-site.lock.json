@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository": "https://github.com/zabaglione/jr200-web-emulator",
+    "revision": "df031a53bf1c253441d2d470c7684fea331a4680"
+  },
+  "files": {
+    "LICENSE.txt": "8572fa6f2d35bbc6a33359ce203c5805df338508aef1e668b5fcdfb40c829361",
+    "LICENSES/Emscripten-6.0.9.txt": "2fd38dc06e484cdd7a3f1e2f6577f5d53062052a2fd85131b56b89fbd673731c",
+    "LICENSES/MAME_BSD-3-Clause.txt": "a27554938d3dd6569931e5e18b93214a57f47bc1bb8b75fc32fdd18abe042a07",
+    "LICENSES/VJR200.txt": "2b3e484a798458bd8659338080893cd7ff7d3e093e2fc0e394ffe24c554f92e5",
+    "LICENSES/libcxxabi-6.0.9.txt": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c",
+    "SBOM.spdx.json": "8052b70dd1a53f83e58814c5ace0efade0ef58711083da493cd5bd62ba024b31",
+    "THIRD_PARTY_NOTICES.md": "c4ab6d2a74d9ba9066562112b2962d7af1bb0a3576fa9f71a759c50404fff185",
+    "app.mjs": "e710b662a522315a9bae3a943400abedb26d1fbe4565a49ae28528e0efaa85e4",
+    "audio.mjs": "294718e60539764546fa20afc599dd8690c2ddb0ff0f1ef44dec0d7da8f92ebf",
+    "backend.json": "d71e6d7d1bf44f12322d1e56d7abbcd92014dd2a9500d48958804018d29ab41b",
+    "codec.mjs": "848bdd15396034d38b03493a56193189778a085a02746a6628c7be550f03bd24",
+    "game-catalog.json": "ed6e3b6d1ccd4608cd90efe11a0653631d4fc9cdac0bd9251dd4ccd7eed48410",
+    "game-launch.mjs": "25e723aeda50ba737b5bd748a5ef3ce5381cb878b672430136ef587280cfdfdc",
+    "index.html": "5f55c4b569982409ebfcf9bb88e919c851568048d92a0295c95c74c0bfdb39d4",
+    "jr200_codec.mjs": "0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c",
+    "jr200_codec.wasm": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20",
+    "keyboard.mjs": "4b32316850e9e51817af6312ae3eb5fd21d5ad6c6ca5fa4eb9ece8197db38df8",
+    "style.css": "995078034f4ced2615e39525915ed03c31b3937bf2f17830a5d60e1648294d31"
+  }
+}

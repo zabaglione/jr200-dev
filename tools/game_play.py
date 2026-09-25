@@ -28,6 +28,7 @@ from game_project import ProjectError, ROOT, validate_project  # noqa: E402
 from jrasm_tool import sha256_file  # noqa: E402
 
 DEFAULT_LOCK = ROOT / 'emulator.lock.json'
+DEFAULT_SITE_LOCK = ROOT / 'web-site.lock.json'
 DEFAULT_PORT = 8765
 LOOPBACK = '127.0.0.1'
 # The staged site layout of jr200-web-emulator scripts/stage_web.py.
@@ -35,6 +36,8 @@ WEB_FILES = ('app.mjs', 'audio.mjs', 'codec.mjs', 'keyboard.mjs', 'game-launch.m
              'index.html', 'style.css', 'LICENSE.txt', 'THIRD_PARTY_NOTICES.md',
              'SBOM.spdx.json', 'backend.json')
 WEB_DIRECTORIES = ('LICENSES',)
+WEB_LICENSE_FILES = ('Emscripten-6.0.9.txt', 'MAME_BSD-3-Clause.txt',
+                     'VJR200.txt', 'libcxxabi-6.0.9.txt')
 STRICT_VERSION = re.compile(r'\d+\.\d+\.\d+')
 BANNER = ('<div class="jr200-dev-banner" role="status">DEVELOPMENT BUILD - {title} '
           '{version} - local loopback only, not a published game</div>')
@@ -60,27 +63,68 @@ def build_is_current(spec: Any) -> dict[str, Any]:
     current += [{'path': '@repo/' + relative,
                  'sha256': sha256_file(spec.repository_root / relative)}
                 for relative in spec.sdk_inputs]
+    configuration = {name: sha256_file(spec.project / name)
+                     for name in ('build.json', 'game.json')}
     if (report.get('inputs') != current
+            or report.get('configuration') != configuration
             or report.get('artifact', {}).get('sha256') != sha256_file(spec.output)):
         raise PlayError('The built CJR is older than its sources. Rebuild with '
                         'make game-build before playing.')
     return report
 
 
-def verify_web(web: Path, lock: dict[str, Any]) -> dict[str, str]:
-    """Check the staged emulator site: allow-listed UI files plus locked codec."""
+def load_site_lock(path: Path, codec_lock: dict[str, Any]) -> dict[str, Any]:
+    """Pin the entire browser UI and its legal files, not only the WASM runner."""
+    try:
+        value = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise PlayError(f'Cannot read web-site.lock.json: {exc}') from exc
+    expected = (set(WEB_FILES) | {'game-catalog.json'}
+                | {item['path'] for item in codec_lock['module_files']}
+                | {f'LICENSES/{name}' for name in WEB_LICENSE_FILES})
+    files = value.get('files') if isinstance(value, dict) else None
+    source = value.get('source') if isinstance(value, dict) else None
+    if (not isinstance(value, dict) or set(value) != {'schema_version', 'source', 'files'}
+            or value['schema_version'] != 1 or not isinstance(source, dict)
+            or set(source) != {'repository', 'revision'}
+            or source['repository'] != codec_lock['source']['repository']
+            or not isinstance(source['revision'], str)
+            or re.fullmatch(r'[0-9a-f]{40}', source['revision']) is None
+            or not isinstance(files, dict) or set(files) != expected
+            or any(not isinstance(digest, str)
+                   or re.fullmatch(r'[0-9a-f]{64}', digest) is None
+                   for digest in files.values())
+            or any(files[item['path']] != item['sha256']
+                   for item in codec_lock['module_files'])):
+        raise PlayError('Invalid or incompatible web-site.lock.json')
+    return value
+
+
+def verify_web(web: Path, lock: dict[str, Any], site_lock_path: Path) -> dict[str, str]:
+    """Check the complete fixed browser build before copying an allow-list."""
+    if web.is_symlink():
+        raise PlayError('Refusing a symlinked emulator site')
+    site_lock = load_site_lock(site_lock_path, lock)
     web = web.resolve()
     if not (web / 'index.html').is_file():
         raise PlayError(f'Not a staged emulator site (index.html missing): {web}')
+    expected_root = ({name for name in site_lock['files'] if '/' not in name}
+                     | set(WEB_DIRECTORIES))
+    actual_root = {entry.name for entry in web.iterdir()}
+    if actual_root != expected_root:
+        raise PlayError('Staged emulator site has missing or unexpected root entries: '
+                        f'missing={sorted(expected_root - actual_root)}, '
+                        f'unexpected={sorted(actual_root - expected_root)}')
+    licenses = web / 'LICENSES'
+    if (not licenses.is_dir() or licenses.is_symlink()
+            or {entry.name for entry in licenses.iterdir()} != set(WEB_LICENSE_FILES)):
+        raise PlayError('Staged emulator site has missing or unexpected LICENSES entries')
     digests = {}
-    for name in WEB_FILES:
+    for name, digest in site_lock['files'].items():
         path = web / name
-        if not path.is_file() or path.is_symlink():
-            raise PlayError(f'Staged emulator site is missing {name}')
-        digests[name] = sha256_file(path)
-    for directory in WEB_DIRECTORIES:
-        if not (web / directory).is_dir() or (web / directory).is_symlink():
-            raise PlayError(f'Staged emulator site is missing {directory}/')
+        if not path.is_file() or path.is_symlink() or sha256_file(path) != digest:
+            raise PlayError(f'Staged emulator site does not match web-site.lock.json: {name}')
+        digests[name] = digest
     try:
         backend = json.loads((web / 'backend.json').read_text(encoding='utf-8'))
     except (OSError, json.JSONDecodeError) as exc:
@@ -104,15 +148,41 @@ def license_file(spec: Any) -> Path:
     return spec.project / 'LICENSE'
 
 
+def copy_scoped_file(source: Path, target: Path, root: Path) -> None:
+    """Never follow a game-controlled link into private files while staging."""
+    if (not source.is_file() or source.is_symlink()
+            or not source.resolve().is_relative_to(root.resolve())):
+        raise PlayError(f'Refusing an absent or linked staging source: {source}')
+    shutil.copy2(source, target)
+
+
+def copy_game_legal(spec: Any, game_dir: Path) -> None:
+    legal_root = (spec.repository_root if spec.metadata['license'] == 'BSD-3-Clause'
+                  else spec.project)
+    copy_scoped_file(license_file(spec), game_dir / 'LICENSE.txt', legal_root)
+    notice = spec.project / 'THIRD_PARTY_NOTICES.md'
+    if notice.is_file() or notice.is_symlink() or (
+            spec.metadata['license'] != 'BSD-3-Clause' and spec.sdk_inputs):
+        copy_scoped_file(notice, game_dir / 'THIRD_PARTY_NOTICES.md', spec.project)
+    if spec.metadata['license'] != 'BSD-3-Clause' and spec.sdk_inputs:
+        licenses = game_dir / 'LICENSES'
+        licenses.mkdir()
+        copy_scoped_file(spec.repository_root / 'LICENSE',
+                         licenses / 'BSD-3-Clause.txt', spec.repository_root)
+
+
 def stage(project: Path, web: Path, destination: Path,
-          lock_path: Path = DEFAULT_LOCK) -> dict[str, Any]:
+          lock_path: Path = DEFAULT_LOCK,
+          site_lock_path: Path = DEFAULT_SITE_LOCK) -> dict[str, Any]:
     try:
         spec = validate_project(project.resolve())
         lock = load_lock(lock_path)
     except (ProjectError, RunnerError) as exc:
         raise PlayError(str(exc)) from exc
     build_is_current(spec)
-    web_digests = verify_web(web, lock)
+    web_digests = verify_web(web, lock, site_lock_path)
+    if destination.is_symlink() or (destination.exists() and not destination.is_dir()):
+        raise PlayError(f'Refusing a non-directory or symlinked staging path: {destination}')
     if destination.exists() and any(destination.iterdir()):
         raise PlayError(f'Staging directory is not empty: {destination}')
     destination.mkdir(parents=True, exist_ok=True)
@@ -130,11 +200,8 @@ def stage(project: Path, web: Path, destination: Path,
     game_dir = destination / 'games' / identifier / catalog_version
     game_dir.mkdir(parents=True)
     cjr = game_dir / f'{identifier}.cjr'
-    shutil.copy2(spec.output, cjr)
-    shutil.copy2(license_file(spec), game_dir / 'LICENSE.txt')
-    notices = spec.project / 'THIRD_PARTY_NOTICES.md'
-    if notices.is_file():
-        shutil.copy2(notices, game_dir / 'THIRD_PARTY_NOTICES.md')
+    copy_scoped_file(spec.output, cjr, spec.project)
+    copy_game_legal(spec, game_dir)
     title = metadata['title'] if catalog_version == version else f'{metadata["title"]} [{version}]'
     entry = {'id': identifier, 'title': title[:80], 'version': catalog_version,
              'path': f'games/{identifier}/{catalog_version}/{identifier}.cjr',
@@ -152,7 +219,9 @@ def stage(project: Path, web: Path, destination: Path,
     (destination / 'dev-banner.css').write_text(BANNER_CSS, encoding='utf-8')
     return {'id': identifier, 'version': version, 'catalog_version': catalog_version,
             'cjr_sha256': entry['sha256'], 'run_command': entry['runCommand'],
-            'emulator_revision': lock['source']['revision'], 'web': web_digests}
+            'emulator_revision': lock['source']['revision'],
+            'web_ui_revision': load_site_lock(site_lock_path, lock)['source']['revision'],
+            'web': web_digests}
 
 
 def _escape(value: str) -> str:
@@ -219,8 +288,10 @@ def main(argv: list[str] | None = None) -> int:
                   f'{report["run_command"]}. Press Ctrl-C to stop.')
             if not args.no_browser:
                 try:
-                    webbrowser.open(url)
-                except webbrowser.Error:
+                    opened = webbrowser.open(url)
+                    if not opened:
+                        print('Could not open a browser; open the URL manually.')
+                except (webbrowser.Error, OSError):
                     print('Could not open a browser; open the URL manually.')
             try:
                 server.serve_forever()

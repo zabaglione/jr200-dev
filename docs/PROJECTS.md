@@ -127,18 +127,29 @@ make game-play PROJECT=games/my-game WEB_SITE=/absolute/path/to/jr200-web-emulat
 
 `tools/game_play.py`は次だけを行います。
 
-- `build/build-report.json`の入力hashと現在のsource／SDK／素材、CJRのhashを照合し、古いCJRなら停止する。
+- `build/build-report.json`の入力hashと現在のsource／SDK／素材、`build.json`、`game.json`、CJRのhashを照合し、古いCJRなら停止する。
   自動buildはしない。
-- 指定したsiteに`stage_web.py`のUI fileと`LICENSES/`があり、`jr200_codec.mjs`／`.wasm`が
-  `emulator.lock.json`のsize／SHA-256と一致することを確認する。エミュレータはbuildしない。
+- 指定したsiteのHTML、CSS、UI JS、WASM、ライセンスを`web-site.lock.json`の全file hashと
+  allow-listで検証する。固定元は`jr200-web-emulator`の`df031a53bf1c253441d2d470c7684fea331a4680`。
+  codecはさらに`emulator.lock.json`のsize／SHA-256とも照合する。固定版と異なるsiteは拒否し、
+  ゲームを変更してもエミュレータはbuildしない。
 - 一時directoryへUI、選んだ1作品のCJRとライセンス、1件だけの`game-catalog.json`、開発版bannerを置き、
   `127.0.0.1`（既定port 8765）で配信する。directory一覧は返さず、リポジトリや`local-data/`は配信しない。
   `-dev`等の版はWebカタログの形式に合わせて`0.0.0`のpathへ置き、表示名に元の版を付ける。
+  作品CJR・法的文書のシンボリックリンクは拒否する。MIT作品がSDKを使う場合は、そのSDKの
+  BSD-3-Clause本文も作品側`LICENSES/`へ入れる。
 - `http://127.0.0.1:8765/?game=<id>`を開く。CJRはカセットへセットされるだけなので、利用者が
   ROM／FONTをページで選び、`MLOAD`と作品の`A=USR(...)`を入力する。Ctrl-Cで停止し一時directoryを消す。
 
 ROM／FONTの保存はブラウザのoriginごとです。`PORT=`でportを変えると保存も別になります。
 音声はページ上の操作後に有効になります。
+
+両作品に共通のブラウザ確認は`tests/browser_game_play.cjs`で行えます。Playwright/Chromiumを
+ローカルで用意し、`game-play`を`--no-browser`で起動してから、所有するROM/FONTの絶対path、
+1作品だけのcatalogに記載されたCJR SHA-256、loopback URLを引数に渡します。スクリプトは
+自動セット、取得CJRのhash、通常`MLOAD`と`A=USR($1000)`、外部request 0件を検査します。
+ROM/FONTはブラウザのfile inputだけで選択し、保存設定は有効にしません。画面の遊べる状態は
+`--screenshot /private/tmp/xxx.png`で取得して目視確認します。この確認は実機試験ではありません。
 
 ## 共通SDKとsample
 

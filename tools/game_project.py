@@ -653,6 +653,10 @@ def build_project(project: Path, jrasm: str | None = None,
             ],
         },
         'inputs': inputs,
+        'configuration': {
+            'build.json': sha256_file(spec.project / 'build.json'),
+            'game.json': sha256_file(spec.project / 'game.json'),
+        },
         'toolchain': {
             'name': 'jrasm',
             'version': lock['version'],
