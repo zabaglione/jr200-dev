@@ -162,16 +162,17 @@ Release ZIPをHTTP取得して固定版・hashを照合します。`--packages-d
 remote経路はmain上の`workflow_dispatch`だけです。`source_sha`に現在のmainの完全SHA、
 `approved_games`に公開対象の`id@version`全件をID順でカンマ区切り、`confirmation`に
 `publish-wiki`を指定します。事前にWeb配信とReleaseの公開hashが一致しない場合、
-Wikiを変更しません。remote同期には`wiki-publish`環境へ`WIKI_PUSH_TOKEN`を設定し、
-その環境に必要な承認者を設定してください。トークンはWikiへの書込みに必要な最小の
-権限・有効期間とし、PR jobには渡しません。jobは直列、Wikiの既存revisionを再確認して
+Wikiを変更しません。remote同期は公開jobだけに`contents: write`を付けた短命の
+GitHub標準トークンを使い、追加の長期トークンは不要です。`wiki-publish`環境に
+承認者は現在未設定です。必要ならGitHubの環境設定で追加してください。
+PR jobには書込み権限を渡しません。jobは直列、Wikiの既存revisionを再確認して
 非強制pushします。差分0ならcommit/pushしません。新しいCJR/Release/Pagesをこのworkflowは
 配信しません。`workflow_dispatch`自体も、作品・版・公開先の事前承認を代替しません。
 
 公開指定pageの生成には`--expected-commit "$GITHUB_SHA"`を必須とし、clean packageの
 source commitが公開対象main commitの祖先であることを照合します。説明文だけの更新で
-固定packageを作り直す必要はありません。初回7作品の公開Wikiと現行生成結果には、
-BRICK PULSEのSafari追加受入記述の差分があります。同期前にこの差分を確認します。
+固定packageを作り直す必要はありません。公開Wikiの更新差分は毎回dry-runで確認し、
+管理対象外のファイルを変更しません。
 
 ## Webエミュレータのカタログへのエクスポート
 

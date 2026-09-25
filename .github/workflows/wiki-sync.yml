@@ -61,6 +61,8 @@ jobs:
       github.ref == 'refs/heads/main' &&
       inputs.confirmation == 'publish-wiki'
     needs: validate
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment: wiki-publish
@@ -87,7 +89,7 @@ jobs:
           python3 tools/wiki/generate.py --packages build/wiki-packages --expected-commit "$SOURCE_SHA" check
       - name: Synchronize only generated Wiki files
         env:
-          WIKI_PUSH_TOKEN: ${{ secrets.WIKI_PUSH_TOKEN }}
+          WIKI_PUSH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
           APPROVED_GAMES: ${{ inputs.approved_games }}
         run: |
