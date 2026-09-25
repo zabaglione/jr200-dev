@@ -4,19 +4,20 @@ JR-200向けゲームの開発ルール、共通ルーチン、サンプル、�
 エミュレータ本体は [jr200-web-emulator](https://github.com/zabaglione/jr200-web-emulator) で管理します。
 アセンブラは既存の [jrasm](https://github.com/ypsitau/jrasm) を外部ツールとして利用し、独自版を開発・同梱しません。
 
-**現在は7作品の配信・Wiki公開を検証中です。** 要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
+**7作品の初版配信とWiki公開を確認しました。** 要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
 合成fixtureに加え、JR-200ルール、プロジェクト契約、最小CJRテンプレート、選択的CI、
 固定エミュレータrunner、画面／入力／ジョイスティック／音声／待機module、6つのsample、最初のゲーム
 `SIDE CATCH`、JR-100からカラー移植したローグライク`RELIC DIVE`、固定package、
 Wiki preview／dry-run同期を整備しています。
 runnerは固定Release資産として公開済みで、ZIPの匿名取得とdigestを確認しています。
 Mac arm64新規クローンとLinux CIでROMなし合成実行を確認し、合成runtimeをCI必須条件にしました。
-7作品のclean-source ZIPを固定ハッシュ付きでprivateリポジトリの
+7作品のclean-source ZIPを固定ハッシュ付きで公開
 [Release](https://github.com/zabaglione/jr200-dev/releases/tag/games-2026-09-25)へ登録しました。
-Wikiの7作品ページとワンクリック実行リンクはprivate Wikiに同期済みです。
+公開[Wiki](https://github.com/zabaglione/jr200-dev/wiki/All-Games)には7作品ページとワンクリック実行リンクを同期済みです。
 [公開Webエミュレータ](https://zabaglione.github.io/jr200-web-emulator/)では7作品の
 固定CJRを配信し、所有ROM/FONTを使うブラウザで起動と開始入力を確認しました。
-この開発リポジトリはまだprivateで、ReleaseやWikiのリンクは一般公開されていません。
+開発リポジトリ、Releaseの7 ZIP、Wikiの22ページ・35媒体は匿名取得を確認しました。
+物理JR-200での動作とChrome以外の全ブラウザ受入は未確認です。
 構造検査やCJR生成の成功は、エミュレータや実機の動作確認を示しません。
 
 ## 開発方針
@@ -51,9 +52,8 @@ python3 tools/ci_plan.py --changed README.md
 ```
 
 これは対象選択の計画表示です。ビルドやテストの実行、成功キャッシュによる検証省略は行いません。
-`templates/minimal`、`samples/` の5 target、`SIDE CATCH`、`RELIC DIVE` を登録し、共有SDK変更が
-利用targetだけへ波及することを検査します。catalog登録ゲームは候補版1件、公開版0件で、
-`RELIC DIVE` は移植検証中の開発版です。
+`templates/minimal`、`samples/`、7作品をCI対象へ登録し、共有SDK変更が
+利用targetだけへ波及することを検査します。catalogの7作品は固定済みの公開版です。
 
 最小テンプレートはROMやFONTなしで構造検査できます。CJR生成には固定jrasmを指定します。
 
@@ -80,14 +80,14 @@ JRASM="/absolute/path/to/jrasm/build/src/jrasm/jrasm" make jrasm-check
 ## ゲームの公開
 
 [games/catalog.json](games/catalog.json) は作品ごとの固定版と公開指定の正本です。
-初回7作品は検証済みで、clean-source packageをprivate
+初回7作品は検証済みで、clean-source packageを公開
 [Release](https://github.com/zabaglione/jr200-dev/releases/tag/games-2026-09-25)に登録しました。
 作品ごとにソース、テスト、紹介文、素材のライセンスを保持します。
-Wikiの7作品ページと媒体は非公開Wikiへ同期済みです。固定CJRを配信した
+Wikiの7作品ページと媒体は公開済みです。固定CJRを配信した
 [Webエミュレータ](https://zabaglione.github.io/jr200-web-emulator/)では、所有ROM/FONTを
 利用するChromeで7作品の「遊ぶ」リンクから通常MLOAD/USR起動を確認しました。
-公開版のWiki自動remote pushは未対応です。開発リポジトリはまだprivateで、
-public化後のRelease/Wiki匿名アクセスは未確認です。コードのpushだけで新しい作品を一般公開しません。
+公開版のWiki自動remote pushは未対応です。今回のRelease/Wiki匿名アクセスは確認済みですが、
+コードのpushだけで新しい作品を一般公開しません。
 
 ```sh
 make wiki-check

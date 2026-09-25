@@ -4,9 +4,9 @@
 
 `tools/wiki/generate.py` は、固定済みの作品packageを検査してWiki用fileを生成します。
 このtool自身はclone、commit、push、Release作成、repositoryのvisibility変更を行いません。
-7作品は `verified`／公開指定の固定版となり、private Releaseにclean-source ZIPを登録しました。
-Pagesの配信・所有ROM/FONTによる実起動を確認後、private Wikiに7作品ページと媒体を同期しました。
-開発リポジトリのpublic化と、Release/Wikiへの匿名アクセスは未実施です。
+7作品は `verified`／公開指定の固定版となり、公開Releaseにclean-source ZIPを登録しました。
+Pagesの配信・所有ROM/FONTによる実起動を確認後、Wikiに7作品ページと媒体を同期しました。
+開発リポジトリのpublic化後、Releaseの7 ZIPとWikiの22ページ・35媒体を匿名取得して固定値と照合しました。
 
 2026-09-23、利用者のWiki作成依頼に従い、privateのままGitHubで初回`Home`を作成し、
 `jr200-dev.wiki.git`をcloneできることを確認しました。初回Wiki commitはGitHub noreplyです。
@@ -59,7 +59,7 @@ JR100 Wikiの構成を参考にしていますが、文章は複製せず、作�
 下書き、package欠落、hash不一致、不正path、構文上不正なHTTPS URLを拒否します。
 generator自体は外部URLのHTTP到達性を検査しません。初回7作品については、
 公開Pagesのcatalog・CJRをHTTP取得してhashを照合し、所有ROM/FONTで起動した後に
-private Wikiの「遊ぶ」リンクを有効化しました。
+当時privateだったWikiの「遊ぶ」リンクを有効化しました。
 
 ## 開発中の作品のpreview
 
@@ -205,4 +205,4 @@ catalogの`titleMarker`と`EXPORT.json`の`title_marker`に同じ値を記録し
 
 初回7作品については、エミュレータ側の`scripts/stage_web.py`のallow-list、SBOM、noticeを
 更新して固定CJRを配信済みです。Pages上のcatalogとCJRの到達性・SHA-256および通常起動を
-確認してから、private Wikiの「遊ぶ」を有効にしました。次版でも同じ順序を守ります。
+確認してから、当時privateだったWikiの「遊ぶ」を有効にしました。次版でも同じ順序を守ります。
