@@ -5,12 +5,12 @@
       "id": "side-catch",
       "project": "games/side-catch",
       "status": "candidate",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "genre": "action",
-      "artifact_sha256": "6edb58a3edfb35ed50f3bbb95ad223516189d8f06d673badcb76adaf7e8b0af2",
+      "artifact_sha256": "7eb0361f4597a5ba723d2eab4032228dda2a9c399f0770ea00c54975dbc124e6",
       "package": {
-        "file": "side-catch-0.1.0.zip",
-        "sha256": "6a741173cd5534e0f1e82c0d0e07d9561e74d0f306dacb677dfcbdf5bc8846c6",
+        "file": "side-catch-0.1.1.zip",
+        "sha256": "31abad9ea77c82df4cfc09bf0a23e67eb3628e403bd7e12b603d5e5c539817dc",
         "release_url": null
       },
       "wiki": {
@@ -19,9 +19,9 @@
         "play_url": null,
         "screenshot": {
           "file": "media/screenshot.png",
-          "sha256": "2f887c8a15b6bbed56560e86675569381267de410d968837b20966103c566689",
-          "framebuffer_sha256": "62f18ea1658dbbe8c53cf90b104b727134d3c2cec71a45ffc8fb53607c69b575",
-          "profile": "synthetic-screenshot"
+          "sha256": "ec7a67c4dbc82cca66e8108512f7acd52b9ed58014d438d19641eb44f128fde5",
+          "framebuffer_sha256": "78f6a4eea89b95a32005de19bc737049a0bb9272a4a09cda1de1a0d3f9386454",
+          "profile": "local-rom-title"
         }
       }
     },
@@ -29,12 +29,12 @@
       "id": "relic-dive",
       "project": "games/relic-dive",
       "status": "candidate",
-      "version": "0.1.0-dev",
+      "version": "0.1.1-dev",
       "genre": "exploration",
-      "artifact_sha256": "e8023f50bc10812a1d77818f81c00cedf0984c4d5b86ed5c96b45d3034006d97",
+      "artifact_sha256": "16261dd1350a6b3b8b4ec76f4253039daa56f29bbe90f4ebe93b80449364c399",
       "package": {
-        "file": "relic-dive-0.1.0-dev.zip",
-        "sha256": "8d806acb332ab6dc8afac35aeec48711ddcc53940dd3ec7cf3633ca64f0589b2",
+        "file": "relic-dive-0.1.1-dev.zip",
+        "sha256": "5758503d25cbe0142a1b6df3ede14a8dda23c3763d8401727f7d474480adde0d",
         "release_url": null
       },
       "wiki": {
@@ -43,9 +43,9 @@
         "play_url": null,
         "screenshot": {
           "file": "media/gameplay.png",
-          "sha256": "4ecd49fcb11a121d059df26cc9bf4489c11426a84fbc93fc1193869a03d66430",
-          "framebuffer_sha256": "5d85b5a6a9c1987a90f76c3da42205a5c1630a6c523cc9c40c7358b3a68e4a1f",
-          "profile": "synthetic-gameplay"
+          "sha256": "75949665e4d8b06363dc19c051529eaca8922acf223e2d9b5c25af34c9cf30c0",
+          "framebuffer_sha256": "f3987b74b8ca7a1c52ca1fba8f00d55afe6c7b6d7e645be93b9487e7cc3aba21",
+          "profile": "local-rom-play"
         }
       }
     }

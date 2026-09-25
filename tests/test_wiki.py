@@ -50,6 +50,8 @@ class WikiFixture:
         shutil.copy2(ROOT / 'LICENSE', self.root / 'LICENSE')
         self.metadata_path = self.root / 'games/side-catch/game.json'
         self.metadata = json.loads(self.metadata_path.read_text(encoding='utf-8'))
+        self.metadata['version'] = '0.1.0'  # independent fake package fixture
+        self.metadata_path.write_text(json.dumps(self.metadata) + '\n', encoding='utf-8')
         self.artifact = make_cjr()
         self.artifact_sha256 = hashlib.sha256(self.artifact).hexdigest()
         self.expectations_sha256 = hashlib.sha256(
@@ -57,24 +59,26 @@ class WikiFixture:
         ).hexdigest()
         screenshot = self.root / 'games/side-catch/media/screenshot.png'
         self.screenshot_sha256 = hashlib.sha256(screenshot.read_bytes()).hexdigest()
-        self.framebuffer_sha256 = (
-            '62f18ea1658dbbe8c53cf90b104b727134d3c2cec71a45ffc8fb53607c69b575')
+        self.framebuffer_sha256 = json.loads((ROOT / 'games/catalog.json').read_text())[
+            'games'][0]['wiki']['screenshot']['framebuffer_sha256']
+        self.version = self.metadata['version']
+        self.screenshot_profile = 'local-rom-title'
         self.package = (self.root / 'games/side-catch/build/package/'
-                        'side-catch-0.1.0.zip')
+                        f'side-catch-{self.version}.zip')
         self.catalog = {
             'schema_version': 2,
             'games': [{
                 'id': 'side-catch', 'project': 'games/side-catch',
-                'status': 'candidate', 'version': '0.1.0', 'genre': 'action',
+                'status': 'candidate', 'version': self.version, 'genre': 'action',
                 'artifact_sha256': self.artifact_sha256,
-                'package': {'file': 'side-catch-0.1.0.zip', 'sha256': '0' * 64,
+                'package': {'file': f'side-catch-{self.version}.zip', 'sha256': '0' * 64,
                             'release_url': None},
                 'wiki': {'slug': 'side-catch', 'publish': False, 'play_url': None,
                          'screenshot': {
                              'file': 'media/screenshot.png',
                              'sha256': self.screenshot_sha256,
                              'framebuffer_sha256': self.framebuffer_sha256,
-                             'profile': 'synthetic-screenshot',
+                             'profile': self.screenshot_profile,
                          }},
             }],
         }
@@ -112,15 +116,17 @@ class WikiFixture:
         }
 
     def write_package(self, extra_name=None, ready=False, source_commit=None):
+        project = self.root / 'games/side-catch'
+        profiles = json.loads((project / 'tests/expectations.json').read_text())[
+            'runtime']['profiles']
         reports = [
-            self.report('synthetic-ci', 'synthetic-injection', 'emulator'),
-            self.report('synthetic-screenshot', 'synthetic-injection', 'emulator',
-                        self.framebuffer_sha256),
-            self.report('local-rom-basic-return', 'rom-cassette',
-                        'emulator_with_local_rom'),
+            self.report(item['profile'], item['mode'],
+                        'emulator' if item['mode'] == 'synthetic-injection'
+                        else 'emulator_with_local_rom',
+                        item['expect']['framebuffer_sha256'] or '0' * 64)
+            for item in profiles
         ]
         release_profiles = []
-        project = self.root / 'games/side-catch'
         license_id = self.metadata['license']
         entries = {
             'LICENSE': (project / 'LICENSE' if license_id != 'BSD-3-Clause'
@@ -143,7 +149,7 @@ class WikiFixture:
                 'report_sha256': hashlib.sha256(payload).hexdigest(),
             })
         release = {
-            'schema_version': 1, 'project': 'side-catch', 'version': '0.1.0',
+            'schema_version': 1, 'project': 'side-catch', 'version': self.version,
             'status': self.metadata['release']['status'],
             'artifact': {'file': 'side-catch.cjr',
                          'sha256': self.artifact_sha256,
@@ -180,7 +186,7 @@ class WikiFixture:
         if extra_name is not None:
             entries[extra_name] = b'unsafe'
         self.package.parent.mkdir(parents=True, exist_ok=True)
-        prefix = 'side-catch-0.1.0/'
+        prefix = f'side-catch-{self.version}/'
         with zipfile.ZipFile(self.package, 'w', zipfile.ZIP_DEFLATED) as archive:
             for name, payload in sorted(entries.items()):
                 archive.writestr(prefix + name, payload)
@@ -206,11 +212,18 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertEqual(public_games, [])
         files, games = render_pages(self.fixture.root, None, True)
         self.assertEqual(sorted(files), sorted(
-            BASE_PAGES + ['Game-side-catch.md', 'media/side-catch.png']))
+            BASE_PAGES + ['Game-side-catch.md', 'media/side-catch.png',
+                          'media/side-catch-title.png', 'media/side-catch-goal.png',
+                          'media/side-catch-play.png', 'media/side-catch-goal.webm']))
         page = files['Game-side-catch.md'].decode('utf-8')
         self.assertIn('非公開の候補版プレビュー', page)
-        self.assertIn('media/side-catch.png', page)
+        self.assertIn('media/side-catch-title.png', page)
+        self.assertIn('通常MLOAD/USRで実行', page)
+        self.assertNotIn('ROMなし合成実行から取得した', page)
         self.assertIn('物理JR-200での表示は未確認', page)
+        presentation = files['Presentation.md'].decode('utf-8')
+        self.assertIn('撮影時に所有ROM/FONTを使用したかは作品ページに記載', presentation)
+        self.assertNotIn('ROMなしで動かし', presentation)
         self.assertNotIn('?game=side-catch', page)
         self.assertIn('https://zabaglione.github.io/jr200-web-emulator/', page)
         self.assertIn('CJRは手動で選択', page)
@@ -351,6 +364,14 @@ class WikiGenerationTests(unittest.TestCase):
             self.fixture.root, None, False, expected_commit=current_commit)
         self.assertIn(item['wiki']['play_url'],
                       linked_files['Game-side-catch.md'].decode('utf-8'))
+        item['wiki']['play_url'] += '&launch=1'
+        self.fixture.write_catalog()
+        launched_files, _ = render_pages(
+            self.fixture.root, None, False, expected_commit=current_commit)
+        self.assertIn('[遊ぶ（起動支援）]',
+                      launched_files['Game-side-catch.md'].decode('utf-8'))
+        self.assertIn('通常MLOADと作品固有USR',
+                      launched_files['Game-side-catch.md'].decode('utf-8'))
         item['wiki']['play_url'] = (
             'https://example.test/?game=side-catch')
         self.fixture.write_catalog()

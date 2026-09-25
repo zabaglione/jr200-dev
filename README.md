@@ -61,6 +61,8 @@ JRASM="/absolute/path/to/jrasm" make template-package
 ```
 
 新規ゲームの作成とゲーム単体の操作方法は [ゲームプロジェクト契約](docs/PROJECTS.md) を参照してください。
+所有ROM/FONTでの通常MLOAD・画面・入力を素早く確認するには、
+同文書の `make game-accept-local` を利用できます。公開前には全profileと候補ZIPを検査します。
 共有moduleと機能別sampleは [SDK README](sdk/README.md) を参照してください。
 
 jrasmは本リポジトリへ同梱しません。固定commitから外部にビルドし、`JRASM`で指定して検査します。

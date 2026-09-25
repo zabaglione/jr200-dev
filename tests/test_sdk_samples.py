@@ -200,6 +200,9 @@ class SdkImpactTests(unittest.TestCase):
         for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math', 'pcg',
                        'port', 'session', 'sfx'):
             cases[f'sdk/{module}.inc'] = PORT_CONSUMERS
+        cases['sdk/font.inc'] = [*PORT_CONSUMERS, 'side-catch']
+        cases['sdk/font_data.inc'] = [*PORT_CONSUMERS, 'relic-dive', 'side-catch']
+        cases['sdk/session.inc'] = [*PORT_CONSUMERS, 'side-catch']
         cases['sdk/keyscan.inc'] = ['brick-pulse', 'port-fixture-sample']
         cases['sdk/keyrepeat.inc'] = ['port-fixture-sample']
         cases['sdk/effect.inc'] = ['port-fixture-sample']

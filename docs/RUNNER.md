@@ -119,10 +119,11 @@ adapterは非0終了、timeout、result欠落、artifact hash不一致、期待�
 
 framebuffer hashはcoreの32-bit ARGB値をbrowser表示と同じ順序へ変換した、320×224の
 canonical RGBA bytesに対して計算します。hostのendianには依存しません。
-`--screenshot <new.png>` を指定すると、合成profileの検証済みcanonical RGBA framebufferだけを
-決定的PNGとして保存できます。既存fileの上書き、ROM cassette profileからのcapture、
-reportのframebuffer hashと一致しない画像を拒否します。これはWiki用画面例の由来を固定する機能で、
-物理displayの証拠ではありません。
+`--screenshot <new.png>` を指定すると、検証済みcanonical RGBA framebufferを
+決定的PNGとして保存できます。既存fileの上書きやreportのframebuffer hashと一致しない画像を
+拒否します。ROM cassette profileではさらに`--self-font sdk/font_data.inc`が必須で、
+自作字形と全画面セルを照合してメーカー字形が描画される画像を拒否します。
+これはWiki用画面例の由来を固定する機能で、物理displayの証拠ではありません。
 
 ## 証拠の区分
 

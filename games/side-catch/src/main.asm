@@ -2,13 +2,17 @@
         .filename.jr "SIDE-CATCH"
         .include "../../../sdk/jr200.inc"
 
-GAME_STATUS:            .equ    0x1400
-GAME_ROUND:             .equ    0x1401
-GAME_WINS:              .equ    0x1402
-GAME_RETURN_PROOF:      .equ    0x1403
-GAME_LAST_KEY:          .equ    0x1404
-GAME_TEXT_SOURCE:       .equ    0x1406
-GAME_TEXT_DESTINATION:  .equ    0x1408
+JR_SAVE:                .equ    0x3000
+JR_RT:                  .equ    0x4000
+JR_STACK_TOP:           .equ    0x4fff
+
+GAME_STATUS:            .equ    0x2000
+GAME_ROUND:             .equ    0x2001
+GAME_WINS:              .equ    0x2002
+GAME_RETURN_PROOF:      .equ    0x2003
+GAME_LAST_KEY:          .equ    0x2004
+GAME_TEXT_SOURCE:       .equ    0x2006
+GAME_TEXT_DESTINATION:  .equ    0x2008
 
 GAME_CELL_LEFT:         .equ    0xc28e
 GAME_CELL_CENTER:       .equ    0xc28f
@@ -19,6 +23,8 @@ GAME_RESULT_CELL:       .equ    0xc344
 
         .org    0x1000
 start:
+        JSR     jr_session_enter
+        JSR     jr_font_install
         CLRA
         STAA    [GAME_STATUS]
         STAA    [GAME_ROUND]
@@ -70,16 +76,14 @@ game_won_input:
         BRA     game_loop
 
 game_quit:
-        JSR     jr_sound_all_stop
         LDAA    2
         STAA    [GAME_STATUS]
-        RTS
+        JMP     jr_session_leave
 
 game_error:
-        JSR     jr_sound_all_stop
         LDAA    0xff
         STAA    [GAME_STATUS]
-        RTS
+        JMP     jr_session_leave
 
 game_setup_round:
         JSR     jr_screen_clear
@@ -184,3 +188,7 @@ return_probe:
         LDAA    0xa5
         STAA    [GAME_RETURN_PROOF]
         RTS
+
+        .include "../../../sdk/session.inc"
+        .include "../../../sdk/font.inc"
+        .include "../../../sdk/font_data.inc"

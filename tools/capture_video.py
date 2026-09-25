@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: BSD-3-Clause
-"""Make a gallery video (WebM: VP9 + Opus) from one synthetic runtime profile.
+"""Make a gallery video (WebM: VP9 + Opus) from a tested runtime profile.
 
 Frames and sound are the fixed emulator's own output for the profile's replay;
 nothing is drawn or dubbed afterwards. An optional speed-up keeps long first
@@ -20,7 +20,8 @@ import sys
 import tempfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from emulator_runner import DEFAULT_LOCK, RunnerError, load_lock, request_for_project, verify_bundle  # noqa: E402
+from emulator_runner import (DEFAULT_LOCK, DEFAULT_NODE_RUNNER, RunnerError,
+                             load_lock, request_for_project, run, verify_bundle)  # noqa: E402
 from game_project import validate_project  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,27 +29,40 @@ CAPTURE = ROOT / 'tools/jr200_capture.mjs'
 
 
 def capture(project: Path, profile: str, bundle: Path, output: Path, fps: int = 30,
-            speed: float = 1.0, lock_path: Path = DEFAULT_LOCK) -> dict:
+            speed: float = 1.0, lock_path: Path = DEFAULT_LOCK,
+            rom: Path | None = None, font: Path | None = None,
+            self_font: Path | None = None, start_cycle: int = 0) -> dict:
     lock = load_lock(lock_path)
     verify_bundle(bundle, lock)
     spec = validate_project(project.resolve())
-    request, runtime = request_for_project(spec.project, spec.output, profile, None, None)
-    if runtime['mode'] != 'synthetic-injection':
-        raise RunnerError('Videos are made from ROM-less synthetic profiles only')
+    request, runtime = request_for_project(spec.project, spec.output, profile, rom, font)
+    if runtime['mode'] == 'rom-cassette':
+        if (self_font is None or not self_font.is_file() or start_cycle <= 0
+                or start_cycle >= request['max_cycles']):
+            raise RunnerError('ROM video requires authored font and a game-only start cycle')
+    elif self_font is not None or start_cycle != 0:
+        raise RunnerError('Synthetic video does not use ROM capture settings')
+    if not 1 <= fps <= 60 or not 1.0 <= speed <= 4.0:
+        raise RunnerError('Invalid frame rate or speed')
     ffmpeg = os.environ.get('FFMPEG') or shutil.which('ffmpeg')
     if not ffmpeg:
         raise RunnerError('Set FFMPEG to an ffmpeg with libvpx-vp9 and libopus')
     if output.exists():
         raise RunnerError(f'Refusing to overwrite {output}')
+    run(spec.project, bundle, 'node', DEFAULT_NODE_RUNNER, lock_path,
+        profile=profile, rom=rom, font=font)
     with tempfile.TemporaryDirectory(prefix='jr200-video-') as temporary:
         work = Path(temporary)
         (work / 'request.json').write_text(json.dumps(request))
-        subprocess.run(['node', str(CAPTURE), '--bundle', str(bundle.resolve()),
-                        '--request', str(work / 'request.json'),
-                        '--frames', str(work / 'frames.rgba'), '--pcm', str(work / 'audio.pcm'),
-                        '--summary', str(work / 'summary.json'),
-                        '--system-api', str(lock['build']['system_api_version']),
-                        '--fps', str(fps)], check=True)
+        command = ['node', str(CAPTURE), '--bundle', str(bundle.resolve()),
+                   '--request', str(work / 'request.json'),
+                   '--frames', str(work / 'frames.rgba'), '--pcm', str(work / 'audio.pcm'),
+                   '--summary', str(work / 'summary.json'),
+                   '--system-api', str(lock['build']['system_api_version']),
+                   '--fps', str(fps), '--start-cycle', str(start_cycle)]
+        if self_font is not None:
+            command.extend(('--self-font-data', str(self_font.resolve())))
+        subprocess.run(command, check=True)
         summary = json.loads((work / 'summary.json').read_text())
         filters_v = ['scale=640:448:flags=neighbor']
         filters_a = []
@@ -68,7 +82,9 @@ def capture(project: Path, profile: str, bundle: Path, output: Path, fps: int = 
         command += ['-shortest', '-map_metadata', '-1', str(output)]
         subprocess.run(command, check=True)
     duration = summary['frames'] / fps / speed
-    return {'file': output.name, 'profile': profile, 'fps': fps, 'speed': speed,
+    return {'file': output.name, 'profile': profile, 'mode': runtime['mode'],
+            'artifact_sha256': request['artifact']['sha256'],
+            'start_cycle': start_cycle, 'fps': fps, 'speed': speed,
             'seconds': round(duration, 1), 'frames': summary['frames'],
             'frames_sha256': summary['frames_sha256'], 'pcm_sha256': summary['pcm_sha256'],
             'sha256': hashlib.sha256(output.read_bytes()).hexdigest()}
@@ -82,10 +98,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fps', type=int, default=30)
     parser.add_argument('--speed', type=float, default=1.0)
+    parser.add_argument('--rom', type=Path)
+    parser.add_argument('--font', type=Path)
+    parser.add_argument('--self-font', type=Path)
+    parser.add_argument('--start-cycle', type=int, default=0)
     args = parser.parse_args(argv)
     try:
         print(json.dumps(capture(args.project, args.profile, args.bundle, args.output,
-                                 args.fps, args.speed), indent=2))
+                                 args.fps, args.speed, rom=args.rom, font=args.font,
+                                 self_font=args.self_font,
+                                 start_cycle=args.start_cycle), indent=2))
     except (RunnerError, subprocess.CalledProcessError, OSError) as exc:
         print(f'Video capture failed: {exc}', file=sys.stderr)
         return 2

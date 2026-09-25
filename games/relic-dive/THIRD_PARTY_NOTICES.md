@@ -4,6 +4,7 @@
 
 The built CJR incorporates code from these jr200-dev SDK modules:
 
+- `sdk/font_data.inc`
 - `sdk/jr200.inc`
 - `sdk/sound.inc`
 

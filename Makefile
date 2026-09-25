@@ -1,5 +1,5 @@
 PYTHON ?= python3
-.PHONY: check test plan release-audit jrasm-doctor jrasm-check runner-doctor template-validate template-build template-run template-package new-project game-validate game-build game-run game-package game-clean game-play wiki-check wiki-preview wiki-preview-dev wiki-sync-dry-run wiki-sync-apply
+.PHONY: check test plan release-audit jrasm-doctor jrasm-check runner-doctor template-validate template-build template-run template-package new-project game-validate game-build game-run game-package game-clean game-play game-accept-local wiki-check wiki-preview wiki-preview-dev wiki-sync-dry-run wiki-sync-apply
 check:
 	$(PYTHON) tools/check_repository.py
 	$(PYTHON) -m unittest discover -s tests -v
@@ -51,6 +51,10 @@ game-run:
 game-play:
 	@test -n "$(PROJECT)" -a -n "$(WEB_SITE)" || { echo "PROJECT and WEB_SITE are required" >&2; exit 2; }
 	$(PYTHON) tools/game_play.py --project "$(PROJECT)" --web "$(WEB_SITE)" $(if $(PORT),--port "$(PORT)",)
+
+game-accept-local:
+	@test -n "$(PROJECT)" -a -n "$(RUNNER_BUNDLE)" -a -n "$(ROM)" -a -n "$(FONT)" || { echo "PROJECT, RUNNER_BUNDLE, ROM and FONT are required" >&2; exit 2; }
+	@$(PYTHON) tools/local_accept.py --project "$(PROJECT)" --bundle "$(RUNNER_BUNDLE)" --rom "$(ROM)" --font "$(FONT)" --mode "$(or $(MODE),quick)" $(if $(JRASM),--jrasm "$(JRASM)",) $(if $(filter 1,$(CAPTURE)),--capture,) $(if $(SELF_FONT),--self-font "$(SELF_FONT)",) $(if $(PACKAGE),--package "$(PACKAGE)",)
 
 wiki-check:
 	$(PYTHON) tools/wiki/generate.py --include-candidates check

@@ -1,44 +1,53 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "capture": {
+    "mode": "rom-cassette",
+    "artifact_sha256": "16261dd1350a6b3b8b4ec76f4253039daa56f29bbe90f4ebe93b80449364c399",
+    "glyph_source": "sdk/font_data.inc",
+    "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
+  },
   "scenes": [
     {
       "id": "title",
       "file": "title.png",
-      "profile": "synthetic-title",
+      "profile": "local-rom-title",
       "role": "title",
-      "caption": "タイトル画面。PCGで描いた石文字と遺跡の門を属性RAMで色分け",
-      "sha256": "c745ebd09746b0b8f89972340c9df835c64b9640f4ea3449eed74b9177787d23",
-      "framebuffer_sha256": "3820bd73678d67160afd9a8d08b9a7430de40352b403667dd7ace9145425e17f"
+      "caption": "所有ROM/FONTでMLOAD/USRしたタイトルと難易度選択。文字はゲーム内の自作字形",
+      "sha256": "36759249943e1e595d67bdd056760f555d13e8053159be07a9fb04f72e423445",
+      "framebuffer_sha256": "edca690437f01b6ef1008b21636da555aed0def489bd7a2e6b688bd985041e9a"
     },
     {
       "id": "play",
       "file": "gameplay.png",
-      "profile": "synthetic-gameplay",
+      "profile": "local-rom-play",
       "role": "play",
-      "caption": "1階の開始直後に右へ1歩進み、1ターン待った場面",
-      "sha256": "4ecd49fcb11a121d059df26cc9bf4489c11426a84fbc93fc1193869a03d66430",
-      "framebuffer_sha256": "5d85b5a6a9c1987a90f76c3da42205a5c1630a6c523cc9c40c7358b3a68e4a1f"
+      "caption": "1階開始直後。緑の主人公と紫の敵を形と色で識別できる",
+      "sha256": "75949665e4d8b06363dc19c051529eaca8922acf223e2d9b5c25af34c9cf30c0",
+      "framebuffer_sha256": "f3987b74b8ca7a1c52ca1fba8f00d55afe6c7b6d7e645be93b9487e7cc3aba21"
     },
     {
       "id": "combat",
       "file": "combat.png",
-      "profile": "synthetic-combat",
+      "profile": "local-rom-goal",
       "role": "goal",
-      "caption": "1階を進んで最初の敵に攻撃した場面",
-      "sha256": "ce866cc57f8721ff54ed1871db29a059f2968bcbaa26ce5d5ee002fe2cf74806",
-      "framebuffer_sha256": "0726f8ab86ec3851ce99949ec31231b86e7fc90c7129e0d052c9f12cff1e5334"
+      "caption": "序盤に最初の敵を倒した直後。全階クリアの画面ではない",
+      "sha256": "49f67eaba69a9fe7a39d9f1983a1943e0126b970af127d33c028f74e89d2362b",
+      "framebuffer_sha256": "1c320916764ba9f1e0fa19818be4aa8b638d3fbf27e65eb7bfff1b08c1280c2a"
     }
   ],
   "video": {
     "file": "goal.webm",
-    "profile": "synthetic-combat",
+    "profile": "local-rom-goal",
+    "mode": "rom-cassette",
+    "artifact_sha256": "16261dd1350a6b3b8b4ec76f4253039daa56f29bbe90f4ebe93b80449364c399",
+    "start_cycle": 163500000,
     "fps": 30,
     "speed": 1.0,
-    "seconds": 16.5,
-    "frames": 494,
-    "frames_sha256": "f4ae2e52d054c258b9081b37604b3d3e8dc608201f351db263eca1afe3f7e9e6",
-    "pcm_sha256": "8f82de4d286f895ec8197e749e703ac40a9193f2e8e8f06be5d43c1ae11ce6b9",
-    "sha256": "62fba88e0345b319e31b5c3c417dbb9fd88bc1ce6b6889fce2fd9a43a6170c6a",
-    "caption": "1階の開始から最初の敵への攻撃まで（音付き）。全階クリアではない"
+    "seconds": 15.6,
+    "frames": 467,
+    "frames_sha256": "5e94bb7eeab79e2157fd7b704f652101e559998616d6c7e4aa4b1d5c274eae6f",
+    "pcm_sha256": "a4b87313bad8fb09bc747c3922e69bb96a30cc75784d868ceffd37ec904e24bd",
+    "sha256": "5cb2930519bad2efb482fb0e028935129623f8ca47b09dfb729b361c2f577232",
+    "caption": "通常MLOAD/USR後の序盤の移動と最初の戦闘（実ゲームPCM付き、全階クリアではない）"
   }
 }
