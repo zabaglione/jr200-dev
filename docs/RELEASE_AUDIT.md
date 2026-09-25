@@ -153,3 +153,16 @@ Pagesの正式Emscriptenビルド・公開URL、private Wikiのremote同期、�
 remote `master`のcommit `7a1f8fd406ade3d0ff90430a7179db1eff80daff`を確認した。
 再生成dry-runのadd/update/deleteはすべて0。開発リポジトリ自体はprivateのままで、
 ReleaseとWikiの匿名到達性はpublic化後に確認が必要。物理JR-200の動作も未確認である。
+
+## 2026-09-25追記: public化後の到達性
+
+利用者の明示依頼により`zabaglione/jr200-dev`をpublicに変更した。変更前にremote全24ブランチと
+tagを取得し、現行ツリー・Git履歴・固定packageを再監査した。`release_audit.py --strict`は
+履歴609 text blob、7 packageで`blocks=[]`、`publication_gates=[]`、`make check`は257件成功。
+非noreplyの旧著者metadata 1種類はwarningとして残し、履歴は書き換えていない。
+
+認証なしのHTTPでリポジトリ、Wiki一覧・作品ページ、Releaseページが200となった。
+Wikiの22ページ・35媒体は公開raw URLから全57 fileを取得し、同期済みworktreeとbyte一致した。
+Releaseの7 ZIPは公開URLから取得し、catalog固定SHA-256と全件一致した。
+Webエミュレータの公開Pagesでは、所有ROM/FONTをローカル選択して7作品の通常MLOAD/USRと
+開始入力を確認済み。ROM/FONTファイル本体と物理JR-200の動作は公開・検証対象外である。
