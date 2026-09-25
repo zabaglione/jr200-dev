@@ -154,7 +154,7 @@
       "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
       "package": {
         "file": "brick-pulse-0.1.1.zip",
-        "sha256": "599cb495f022659a174e2577c50a87c5e549ea080bcd8a2dcf6dd5c8355fbdcc",
+        "sha256": "327c6ce5017b68a2d10c4cd821a6c1a0019097c22ffb448c8421b74d4d406a7e",
         "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/brick-pulse-0.1.1/brick-pulse-0.1.1.zip"
       },
       "wiki": {
