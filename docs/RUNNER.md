@@ -16,7 +16,8 @@ sizeとSHA-256が一致しないbundleを起動しません。
 `emcmake cmake -DCMAKE_BUILD_TYPE=Release`とbuildを実行して得た実ファイルの値です。
 system API 9は`jr200_system_set_joystick`を公開するため、adapter 0.3.0のactive-low `joystick`
 replay（playerは`0`または`1`、stateは`0x00`から`0xff`）をこの固定bundleで実行できます。
-ただしjoystick入力はBASIC ROMの走査routineを使うため、ROMなし合成profileでは確認できません。
+`joystick-sample`の通常MLOAD/USR試験はBASIC ROMの走査routineを使うため、
+ROMなし合成profileでは確認できません。公開bundleのjoystick ABI自体は後述の合成試験で別に確認します。
 
 前回の固定版（commit `81e4174c550e20e166b0431b4235ba3b7650da76`、system API 6）は、同じ手順の
 Linux buildでも以前macOS arm64で記録したdigestとバイト単位で一致しました。Emscriptenの出力が
@@ -31,23 +32,34 @@ lockのmacOS行はこの固定bundleの**実行確認**を示す`verified`へ更
 Macでのクリーン再ビルド、全作品のMac実行、物理JR-200動作を示すものではありません。
 ROM／FONTのbytes・hash・ローカルpathは記録や配布へ含めていません。
 
-現在はbundleのRelease資産を公開していないため、取得状態は `local_build_only` です。
-`JR200_RUNNER_BUNDLE` または `--bundle` で既存のビルド済みdirectoryを明示します。
-ゲームCIはエミュレータsourceをclone／buildするfallbackを持たず、bundle未提供を
-`release_asset_not_published` として `emulator=not_run` に残します。Release資産と取得手段を
-別途承認して用意するまでは、remote CIのruntime受入条件を満たしたとは扱いません。
+固定bundleをエミュレータ側の
+[runner-v0.3.0 Release](https://github.com/zabaglione/jr200-web-emulator/releases/tag/runner-v0.3.0)
+で公開しました。ZIPの匿名取得は142,300 bytes、SHA-256
+`860f99be69037a78c6dea557cd28994b83ba7fe05709d512d8e86cb44b6c77b0`と一致しました。
+module生成元commitは上記の`c4c0c30...`、配布手順のRelease tag対象commitは`df031a53...`で
+別です。ゲームCIはエミュレータsourceをclone／buildするfallbackを持ちません。
+Mac arm64の新規クローンではこのURLから取得し、固定jrasmで作成した`minimal` CJRを
+`synthetic-ci`で31 cycle実行しました。同じcloneで画面・入力・音声・game loop・port fixtureの
+追加19合成profileも合格し、表示、入力、PCM、終了経路を確認しました。Linux x86_64の
+[PR CI run 36075596458](https://github.com/zabaglione/jr200-dev/actions/runs/36075596458)
+は同じ公開ZIPを取得し、`minimal`を含む13 targetの合成runtimeが`emulator=passed`、
+ROM専用`joystick-sample`は`local_rom_only`で全ジョブ成功でした。いずれも実機動作の証拠ではありません。
 
-取得adapter `tools/runner_fetch.py` は配布準備のみ実装済みです。固定URLとZIP全体のSHA-256、
+取得adapter `tools/runner_fetch.py` は固定URLとZIP全体のSHA-256、
 2つのmoduleと7つの権利表示ファイルそれぞれのsize／SHA-256を`emulator.lock.json`で固定します。
 ZIPはその9ファイルだけを許し、ROM／FONT、余計なファイル、重複path、symlink、暗号化entry、
 展開容量超過を拒否します。URLは当該リポジトリのGitHub Release、redirectは承認したHTTPS hostに
 限り、取得上限8 MiB・経過60秒超過の検知・read timeout 10秒です。認証tokenは渡さず、
 例外内のsigned URLもログへ出しません。
 破損ZIPや不一致時に既存directoryを置換せず、エミュレータのsource buildへfallbackもしません。
-現在のlockでは取得元・ZIP digestがnullなので、CIでadapterを呼んでもdownloadは起きません。
-承認済みRelease公開後にURLとdigestを固定し、Mac/Linuxのfresh clone試験とremote CI実測を
-行うまでは`runtime_required=false`を維持します。ROM専用の`joystick-sample`は
+現在のlockは公開ReleaseのURLとdigestを固定し、CIでadapterを呼ぶと検証済みZIPを取得します。
+Mac新規クローンとLinux CIでの配布受入後、`runtime_required=true`に設定しました。
+取得不能・不一致・合成runtime未実施はジョブ失敗とし、`not_run` receiptを受け入れません。
+ROM専用の`joystick-sample`は
 `ci/runner.lock.json`で`local_rom_only`と明示し、CIではbundle取得対象から除外します。
+別の`minimal` Linux jobでは、公開ZIP取得後に`tools/runner_joystick_smoke.mjs`を使い、
+合成ROM/FONTでsystem API 9と1P/2PのKACK走査`EA/D5`を検査します。これは公開moduleの
+joystick ABI試験であり、JR BASICを通る`joystick-sample`の通常MLOAD/USR試験ではありません。
 receiptも`emulator=local_rom_only`、evidence=`not_run`、reason=`requires_local_rom_font`
 を保存し、合成runtimeの成功には数えません。joystickの実測は利用者提供ROM/FONTによる
 別のMac/Linux受入記録で扱います。他のtargetが合成profileを失えば検査を失敗させます。

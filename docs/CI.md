@@ -12,10 +12,11 @@ GitHub Actions artifactへ保存し、次のrunで全targetのfingerprintと内�
 正確なsource dependencyとして登録します。これによりmodule変更は、そのfileを使用するtargetだけを選択します。
 
 固定WASM runnerのversion、source commit、module digest、request／result、timeout契約を実装し、
-Macのローカルbundleで `minimal` のROMなしruntimeを確認しています。現在はCIから取得できる
-Release資産が未公開のため、remote jobはエミュレータをbuildせず
-`emulator=not_run`、`emulator_unavailable_reason=release_asset_not_published` をreceiptへ残します。
-bundle配布後は `runtime_required=true` に切り替え、未提供や不一致をjob失敗にします。
+Macのローカルbundleで `minimal` のROMなしruntimeを確認しています。固定Release資産は公開済みで、
+ZIPの匿名取得とdigestを確認しました。Mac arm64の新規クローンでは公開ZIPから`minimal`を31 cycle実行、
+Linuxの[PR CI run 36075596458](https://github.com/zabaglione/jr200-dev/actions/runs/36075596458)では
+13 targetの全合成runtimeが`emulator=passed`、ROM専用1 targetは`local_rom_only`でした。
+配布受入後、`runtime_required=true`に切り替え、未提供や不一致をjob失敗にします。
 ROMありBASIC/cassette試験はゲーム別のreplayを実測してから接続します。hardwareは常に別証拠です。
 
 このworkflowはローカルで構文・planner・cache破損・gateを試験していますが、未pushの変更について
@@ -105,13 +106,15 @@ fork PRが生成したコード・成果物を権限付き `pull_request_target`
 bundleが利用できる場合はdefaultだけでなく、対象が宣言した全synthetic profileを実行し、
 全件合格したprofile一覧を成功receiptへ記録します。local-ROM profileはローカル資産が必要な別gateです。
 現在のworkflowにはエミュレータsourceのcheckout/build stepも、取得失敗時のfallbackもありません。
-配布資産未公開の間はruntime未実施を明記し、構造試験成功をエミュレータ成功へ読み替えません。
+配布資産でのruntime未実施は明記し、構造試験成功をエミュレータ成功へ読み替えません。
 runner lockやadapterだけの変更はtest fingerprintを無効化し、build fingerprintを変えません。
-配布前の`runner_fetch.py`はRelease未設定ならnetworkへ接続せず、runtimeを`not_run`のままにします。
-固定Releaseを承認・公開した後は、ZIP全体とmodule／権利表示のhash検査に合格したbundleのみ
+`runner_fetch.py`はRelease未設定ならnetworkへ接続せず、runtimeを`not_run`のままにします。
+現行lockでは、ZIP全体とmodule／権利表示のhash検査に合格したbundleのみ
 target試験へ渡します。取得失敗や不一致はjob失敗であり、エミュレータ再buildへ進みません。
 ROM専用`joystick-sample`はrunner lockの明示的な`local_rom_only`方針で区別します。
-CIはこのtargetでbundle取得を省略し、receiptへ`emulator=local_rom_only`と
+CIはこのtargetでbundle取得を省略します。別の`minimal` jobでは公開ZIPのsystem API 9と
+合成ROM/FONTによる1P/2Pのjoystick KACK走査を検査し、通常MLOAD試験と混同しません。
+`joystick-sample`のreceiptへは`emulator=local_rom_only`と
 evidence=`not_run`を残します。これは合成runtimeの成功ではありません。その他のtargetは
 `runtime_required=true`時に`not_run`を成功receiptとして再利用できません。
 

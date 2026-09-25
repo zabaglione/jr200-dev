@@ -114,6 +114,37 @@ class LockTests(unittest.TestCase):
         with self.assertRaisesRegex(RunnerError, 'does not match lock'):
             verify_bundle(self.fixture.bundle, load_lock(self.fixture.lock))
 
+    def test_incompatible_system_api_is_rejected(self):
+        lock = json.loads(self.fixture.lock.read_text(encoding='utf-8'))
+        lock['build']['system_api_version'] = 10
+        self.fixture.lock.write_text(json.dumps(lock), encoding='utf-8')
+        with self.assertRaisesRegex(RunnerError, 'Invalid emulator build lock'):
+            load_lock(self.fixture.lock)
+
+    def test_runtime_timeout_is_reported(self):
+        lock = json.loads(self.fixture.lock.read_text(encoding='utf-8'))
+        lock['execution']['timeout_seconds'] = 1
+        self.fixture.lock.write_text(json.dumps(lock), encoding='utf-8')
+        self.fixture.node.write_text(
+            '#!/usr/bin/env python3\n'
+            'import sys, time\n'
+            'if sys.argv[1:] == ["--version"]:\n'
+            '    print("v20.11.1")\n'
+            'else:\n'
+            '    time.sleep(3)\n', encoding='utf-8')
+        with self.assertRaisesRegex(RunnerError, 'wall-clock timeout'):
+            run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
+                ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)
+
+    def test_runtime_expectation_mismatch_is_reported(self):
+        path = self.fixture.project / 'tests/expectations.json'
+        expectations = json.loads(path.read_text(encoding='utf-8'))
+        expectations['runtime']['profiles'][0]['expect']['framebuffer_sha256'] = 'f' * 64
+        path.write_text(json.dumps(expectations), encoding='utf-8')
+        with self.assertRaisesRegex(RunnerError, 'framebuffer expectation failed'):
+            run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
+                ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)
+
     def test_synthetic_contract_runs_and_writes_bounded_report(self):
         report = run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
                      ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)

@@ -50,12 +50,18 @@ class PipelineFixture:
                          'mk/game.mk', 'tools/game_project.py', 'tools/jrasm_tool.py',
                          'tools/ci_pipeline.py', 'tools/ci_snapshot.py',
                          'tools/emulator_runner.py', 'tools/runner_fetch.py',
+                         'tools/runner_joystick_smoke.mjs',
                          'tools/jr200_wasm_runner.mjs', 'tools/png_rgba.py',
                          'tests/test_game_project.py'):
             source = SOURCE_ROOT / relative
             destination = self.root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
+        runner_path = self.root / 'ci/runner.lock.json'
+        runner = json.loads(runner_path.read_text(encoding='utf-8'))
+        runner['emulator']['runtime_required'] = False
+        runner['emulator']['unavailable_reason'] = 'test_fixture_no_emulator'
+        runner_path.write_text(json.dumps(runner, indent=2) + '\n', encoding='utf-8')
         registry = json.loads((self.root / 'ci/targets.json').read_text())
         registry['targets'] = [
             item for item in registry['targets'] if item['id'] == 'minimal'
@@ -219,8 +225,11 @@ class ReceiptTests(unittest.TestCase):
         self.assertEqual(checked, receipt)
         self.assertEqual(checked['emulator'], 'not_run')
         self.assertEqual(checked['emulator_evidence'], 'not_run')
+        expected_reason = json.loads(
+            (self.fixture.root / 'ci/runner.lock.json').read_text(encoding='utf-8')
+        )['emulator']['unavailable_reason']
         self.assertEqual(checked['emulator_unavailable_reason'],
-                         'release_asset_not_published')
+                         expected_reason)
 
     def test_runner_lock_changes_only_test_fingerprint(self):
         before = self.fixture.fingerprints()
@@ -231,6 +240,20 @@ class ReceiptTests(unittest.TestCase):
         after = self.fixture.fingerprints()
         self.assertEqual(before['build'], after['build'])
         self.assertNotEqual(before['test'], after['test'])
+
+    def test_required_runtime_rejects_missing_bundle(self):
+        fingerprints = self.fixture.fingerprints()
+        run_target_build(self.fixture.root, self.fixture.registry, 'minimal', PLATFORM,
+                         fingerprints['build'], str(self.fixture.fake_jrasm()))
+        runner_path = self.fixture.root / 'ci/runner.lock.json'
+        runner = json.loads(runner_path.read_text(encoding='utf-8'))
+        runner['emulator']['runtime_required'] = True
+        runner['emulator']['unavailable_reason'] = ''
+        runner_path.write_text(json.dumps(runner, indent=2) + '\n', encoding='utf-8')
+        required = self.fixture.fingerprints()
+        with self.assertRaisesRegex(PipelineError, 'Required emulator bundle'):
+            run_target_test(self.fixture.root, self.fixture.registry, 'minimal', PLATFORM,
+                            required['build'], required['test'])
 
     def test_runner_fetch_change_only_invalidates_tests(self):
         before = self.fixture.fingerprints()
