@@ -4,13 +4,15 @@
 
 `tools/wiki/generate.py` は、固定済みの作品packageを検査してWiki用fileを生成します。
 このtool自身はclone、commit、push、Release作成、repositoryのvisibility変更を行いません。
-現在の作品は `candidate`／`not-published` であり、公開対象ではありません。
+7作品は `verified`／公開指定の固定版となり、private Releaseにclean-source ZIPを登録しました。
+Pagesの配信・所有ROM/FONTによる実起動を確認後、private Wikiに7作品ページと媒体を同期しました。
+開発リポジトリのpublic化と、Release/Wikiへの匿名アクセスは未実施です。
 
 2026-09-23、利用者のWiki作成依頼に従い、privateのままGitHubで初回`Home`を作成し、
 `jr200-dev.wiki.git`をcloneできることを確認しました。初回Wiki commitはGitHub noreplyです。
 生成した`Home`、`Games`、`Play`、`Licenses`の4ページをprivate Wikiの`master`へpushし、
 [Playページ](https://github.com/zabaglione/jr200-dev/wiki/Play)の表示と操作順をブラウザで確認しました。
-ゲームRelease配信、repositoryのpublic化、PagesへのゲームCJR追加は行っていません。
+この2026-09-23の時点では、ゲームRelease配信、repositoryのpublic化、PagesへのゲームCJR追加は行っていませんでした。
 
 ## ページ構成
 
@@ -148,7 +150,8 @@ git -C /absolute/path/to/jr200-dev.wiki diff --stat
 同名の未管理fileや、前回生成後に手編集されたfileには上書き・削除せず停止します。
 2回目のdry-runでadd／update／deleteが0ならcommitやpushは不要です。
 
-remote push用jobとゲームの初回公開は未実装です。公開packageと明示承認が揃った時点で、
+remote push用jobは未実装です。今回の初回7作品は、Pagesの到達性を確認してから
+別Git worktreeで生成差分だけを手動同期しました。将来の自動化では
 PR検査とは別workflow、最小書込み権限、直列実行を追加します。公開指定pageの生成には
 `--expected-commit "$GITHUB_SHA"` を必須とし、clean packageのsource commitが公開対象のmain commitの祖先であることを照合します。これにより、固定packageを作り直さずに説明文だけを更新できます。
 
@@ -162,16 +165,17 @@ PR検査とは別workflow、最小書込み権限、直列実行を追加しま�
 承認を証明するものではありません。公開先への配置には、作品・版・配信先の別の明示指定と
 公開前監査が必要です。`--expected-commit`を必須として固定packageのclean source祖先を検査します。
 
-現在のSIDE CATCHとRELIC DIVEは未公開候補なので、公開用exportでは拒否します。両作品を
+現在の7作品は検証済みの固定版なので公開用exportの対象です。未公開候補を
 ローカルで確認するときだけ`--preview-candidate`を追加します。これはmanifestに
 `mode=preview`と記録し、公開側の取込み対象にはできません。非semverの開発版は
 ローカルWebカタログ上で`0.0.0`を使い、元の版をタイトルとmanifestに残します。
 
 ```sh
 python3 tools/web_export.py \
-  --game side-catch --version 0.1.0 --approve side-catch@0.1.0 \
+  --game side-catch --version 0.1.2 --approve side-catch@0.1.2 \
   --site-catalog /absolute/path/to/jr200-web-emulator/web/game-catalog.json \
-  --site /absolute/path/to/current/site --expected-commit "$(git rev-parse HEAD)"
+  --site /absolute/path/to/current/site --packages /absolute/path/to/fixed/packages \
+  --expected-commit "$(git rev-parse HEAD)" --title-marker 'SIDE CATCH'
 # 差分を確認してから
 python3 tools/web_export.py ...同じ引数... --output /absolute/path/to/empty/staging
 ```

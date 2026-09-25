@@ -4,15 +4,19 @@ JR-200向けゲームの開発ルール、共通ルーチン、サンプル、�
 エミュレータ本体は [jr200-web-emulator](https://github.com/zabaglione/jr200-web-emulator) で管理します。
 アセンブラは既存の [jrasm](https://github.com/ypsitau/jrasm) を外部ツールとして利用し、独自版を開発・同梱しません。
 
-**現在は初版候補のローカル受入段階です。** 要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
+**現在は7作品の配信・Wiki公開を検証中です。** 要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
 合成fixtureに加え、JR-200ルール、プロジェクト契約、最小CJRテンプレート、選択的CI、
 固定エミュレータrunner、画面／入力／ジョイスティック／音声／待機module、6つのsample、最初のゲーム
 `SIDE CATCH`、JR-100からカラー移植したローグライク`RELIC DIVE`、固定package、
 Wiki preview／dry-run同期を整備しています。
 runnerは固定Release資産として公開済みで、ZIPの匿名取得とdigestを確認しています。
 Mac arm64新規クローンとLinux CIでROMなし合成実行を確認し、合成runtimeをCI必須条件にしました。
-ゲームのReleaseは未公開です。GitHub Wikiには非公開リポジトリ内の案内4ページを配置済みですが、
-作品の配布ページやワンクリック実行リンクはまだ掲載していません。
+7作品のclean-source ZIPを固定ハッシュ付きでprivateリポジトリの
+[Release](https://github.com/zabaglione/jr200-dev/releases/tag/games-2026-09-25)へ登録しました。
+Wikiの7作品ページとワンクリック実行リンクはprivate Wikiに同期済みです。
+[公開Webエミュレータ](https://zabaglione.github.io/jr200-web-emulator/)では7作品の
+固定CJRを配信し、所有ROM/FONTを使うブラウザで起動と開始入力を確認しました。
+この開発リポジトリはまだprivateで、ReleaseやWikiのリンクは一般公開されていません。
 構造検査やCJR生成の成功は、エミュレータや実機の動作確認を示しません。
 
 ## 開発方針
