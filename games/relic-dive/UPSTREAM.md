@@ -33,6 +33,8 @@
 - 文字codeはJR-200 ASCII、PCGはbank 1 (`0xC400`)、属性は`0xC500`から使用
 - Key-On eventによるキーボード入力とJR-200 sound channel Cへ変更
 - JR-200属性RAMで配色を追加。ゲーム規則、乱数、マップ、敵、アイテムは変更しない
+- BASICへ戻る際にPCG・属性に加え、JR-200の画面コード768バイトも退避・復元
+- 通常MLOAD試験だけで使うBASIC復帰probeを$4820に追加。通常のゲーム起動点は$1000のまま
 
 `generated.inc` は上流build済みassemblyの圧縮文字列とタイトルデータ部分だけを抽出しています。
 上流のメーカーROM、FONT、商用テープ、録音は取り込んでいません。

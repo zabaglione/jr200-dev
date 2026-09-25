@@ -149,7 +149,9 @@ def catalog_entries(root: Path) -> list[dict[str, Any]]:
                 or not isinstance(screenshot, dict)
                 or set(screenshot) != {'file', 'sha256', 'framebuffer_sha256',
                                        'profile'}
-                or screenshot['file'] != 'media/screenshot.png'
+                or not isinstance(screenshot['file'], str)
+                or re.fullmatch(r'media/[a-z][a-z0-9-]{0,31}\.png',
+                                screenshot['file']) is None
                 or not isinstance(screenshot['sha256'], str)
                 or HEX64.fullmatch(screenshot['sha256']) is None
                 or not isinstance(screenshot['framebuffer_sha256'], str)

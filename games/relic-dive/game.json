@@ -25,7 +25,7 @@
     "hardware": "not_run"
   },
   "release": {
-    "status": "draft",
+    "status": "candidate",
     "sdk_contract": 1,
     "runner_contract": 1,
     "minimum_runner_version": "0.3.0",

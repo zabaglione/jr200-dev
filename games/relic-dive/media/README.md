@@ -7,7 +7,7 @@ framebuffer SHA-256、元のprofileを固定します。
 
 | file | profile | PNG SHA-256 | framebuffer SHA-256 |
 | --- | --- | --- | --- |
-| `title.png` | `synthetic-title` | `901fe670316e7f753850c13a7d6e3a58553f55e3e26851e0082fc37897684f29` | `f973f097a350401d0cd7d6508e41d095ba57026ead2ca7350830a6a6f6110a51` |
+| `title.png` | `synthetic-title` | `c745ebd09746b0b8f89972340c9df835c64b9640f4ea3449eed74b9177787d23` | `3820bd73678d67160afd9a8d08b9a7430de40352b403667dd7ace9145425e17f` |
 | `gameplay.png` | `synthetic-gameplay` | `4ecd49fcb11a121d059df26cc9bf4489c11426a84fbc93fc1193869a03d66430` | `5d85b5a6a9c1987a90f76c3da42205a5c1630a6c523cc9c40c7358b3a68e4a1f` |
 | `combat.png` | `synthetic-combat` | `ce866cc57f8721ff54ed1871db29a059f2968bcbaa26ce5d5ee002fe2cf74806` | `0726f8ab86ec3851ce99949ec31231b86e7fc90c7129e0d052c9f12cff1e5334` |
 
