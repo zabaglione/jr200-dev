@@ -70,7 +70,7 @@ Pythonモデル）が計算した値で、固定runnerはエミュレータ上�
 | 区分 | 状態 |
 | --- | --- |
 | ROMなし合成実行（固定エミュレータ） | 34件のルールfixture、自動操縦での12面クリア、自動デモ、無入力での3球喪失と再挑戦、短押し・押し続け・離上、BASIC復帰を確認 |
-| 所有ROM/FONTでの通常`MLOAD`/`USR` | 固定runnerで12面の自己試験、1面の自動デモ、3球喪失・再挑戦、左右の保持・離上を確認。ローカルChromiumの100%速度で起動・単発操作・`CTRL+SHIFT+C`でのBASIC復帰を確認し、終了前後のPCG・画面コード・属性・フォントの比較対象各256バイトは一致。ローカルChrome 153／Firefox 155／Playwright WebKit 26.6では100%速度の第1面で短押し・保持・離上・タブフォーカス喪失を確認し、最初の移動までそれぞれ70／77／55ms。native Safari 26.6.2では公開0.1.0の第12面で180ms短押しの未応答を発見。修正版0.1.1のCJRを通常MLOAD/USRから3回試験し、15件の押下すべて応答、最大34ms。方法と数値は[追加受入記録](https://github.com/zabaglione/jr200-dev/blob/59232efb4c809ce2e9335d5c8e0774890c4ed085/docs/BRICK_PULSE_SAFARI_ACCEPTANCE.md)を参照。公開版の選択はWebカタログの版表示で確認 |
+| 所有ROM/FONTでの通常`MLOAD`/`USR` | 固定runnerで12面の自己試験、1面の自動デモ、3球喪失・再挑戦、左右の保持・離上を確認。ローカルChromiumの100%速度で起動・単発操作・`CTRL+SHIFT+C`でのBASIC復帰を確認し、終了前後のPCG・画面コード・属性・フォントの比較対象各256バイトは一致。ローカルChrome 153／Firefox 155／Playwright WebKit 26.6では100%速度の第1面で短押し・保持・離上・タブフォーカス喪失を確認し、最初の移動までそれぞれ70／77／55ms。native Safari 26.6.2では公開0.1.0の第12面で180ms短押しの未応答を発見。修正版0.1.1のCJRを通常MLOAD/USRから3回試験し、15件の押下すべて応答、最大34ms。方法と数値は[追加受入記録](https://github.com/zabaglione/jr200-dev/blob/main/docs/BRICK_PULSE_SAFARI_ACCEPTANCE.md)を参照。公開版の選択はWebカタログの版表示で確認 |
 | 物理JR-200 | 未実施（キーボードMCUの走査手順は固定エミュレータの実装に基づく） |
 
 ## ライセンス
