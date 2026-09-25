@@ -1,18 +1,18 @@
 {
-  "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+  "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
   "expectations_sha256": "0c0c922ea79d1c3ba0a38e86a56436111699f1c3849e4b93eb76816a90f83711",
   "mode": "rom-cassette",
   "profile": "local-rom-hold-left-release",
   "project": "brick-pulse",
   "result": {
-    "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+    "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
     "cassette": {
       "mode": 1,
       "read_started": false,
       "remote": false,
       "state": 6
     },
-    "elapsed_cycles": 92000002,
+    "elapsed_cycles": 92000001,
     "evidence": "emulator_with_local_rom",
     "framebuffer_sha256": "6bcdbfcca0d3a5ff37e45abaf3aaccd73e797f51fbab4076eda4743432f5e4a8",
     "hardware": "not_run",
@@ -32,10 +32,10 @@
     "profile": "local-rom-hold-left-release",
     "registers": {
       "a": 32,
-      "b": 14,
+      "b": 12,
       "cc": 208,
-      "pc": 8513,
-      "sp": 12393,
+      "pc": 8548,
+      "sp": 12381,
       "waiting": 0,
       "x": 18000
     },
@@ -62,7 +62,7 @@
         "size": 83629
       }
     ],
-    "node_version": "24.3.0",
+    "node_version": "26.9.0",
     "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
     "version": "0.3.0"
   },

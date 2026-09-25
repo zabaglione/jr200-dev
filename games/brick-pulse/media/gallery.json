@@ -2,7 +2,7 @@
   "schema_version": 3,
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+    "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   },
@@ -39,15 +39,15 @@
     "file": "goal.webm",
     "profile": "local-rom-demo-clear",
     "mode": "rom-cassette",
-    "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+    "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
     "start_cycle": 83500000,
     "fps": 30,
     "speed": 1.0,
     "seconds": 45.4,
     "frames": 1361,
-    "frames_sha256": "31c2b8fa634fd941002dad60b65959a2201f35e748730e198dc2131e8e2ece68",
-    "pcm_sha256": "9be18b1d7b92d18702d157190bebbf4767f86bb90bdce574ddcfd5c2724f0c87",
-    "sha256": "9937082b6e6906ed89aee22336449119eb689406ba1d3e1e8603318ff42430a5",
+    "frames_sha256": "f70b15e49f84730649557d0af7b10325bfcd0716de3f874fb14837de53dc9da0",
+    "pcm_sha256": "315568d9e91c1d284b8b68ff7eaeda44ab796c515d0478f7bdf4e5bc8f67266c",
+    "sha256": "f288f5c24b133b403b01640c628725a122f8694e19c517b05d29dfa5d6e0ccf8",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、Pで第1面を自動デモクリアするまで（等速、実ゲームPCM、無加工）"
   }
 }

@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "brick-pulse",
   "title": "BRICK PULSE",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Twelve brick arenas with armored bricks, drones, bombs and W/S/G pickups; three balls per arena.",
   "genre": "action",
   "license": "MIT",
