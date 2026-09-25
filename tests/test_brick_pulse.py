@@ -140,6 +140,18 @@ class BrickPulseExpectationTests(unittest.TestCase):
         for profile in self.profiles.values():
             self.assertLessEqual(profile['max_cycles'], 250_000_000)
 
+    def test_local_rom_replays_match_synthetic_outcomes(self):
+        for name in ('lose-retry', 'hold-left-release', 'self-test', 'demo-clear'):
+            with self.subTest(profile=name):
+                expected = self.profiles[f'synthetic-{name}']['expect']['memory']
+                local = self.profiles[f'local-rom-{name}']['expect']['memory']
+                self.assertEqual(local, expected)
+
+    def test_help_describes_graceful_exit(self):
+        source = (PROJECT / 'src/main.asm').read_text(encoding='utf-8')
+        self.assertIn('CTRL+C : BACK TO BASIC', source)
+        self.assertNotIn('ESC / CTRL+C', source)
+
 
 if __name__ == '__main__':
     unittest.main()
