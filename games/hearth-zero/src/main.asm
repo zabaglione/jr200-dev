@@ -684,7 +684,7 @@ hz_help_5:
 hz_help_6:
         .db     "READ COLD, SURVIVE 12 NIGHTS.", 0
 hz_help_7:
-        .db     "SPACE RESTART / ESC TO BASIC", 0
+        .db     "SPACE RESTART / CTRL+C EXIT", 0
 hz_help_back:
         .db     "ANY KEY : TITLE", 0
 

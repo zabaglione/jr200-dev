@@ -2,6 +2,7 @@
 """HEARTH ZERO: resource rules, three cold waves and model-derived expectations."""
 import json
 from pathlib import Path
+import re
 import sys
 import unittest
 
@@ -27,6 +28,13 @@ def work(game, job):
 
 
 class HearthZeroRuleTests(unittest.TestCase):
+    def test_assembly_weather_table_matches_model(self):
+        source = (PROJECT / 'src/main.asm').read_text()
+        table = source.split('hz_weather_table:', 1)[1].split('hz_flight_kinds:', 1)[0]
+        values = [int(value) for row in re.findall(r'\.db\s+([0-9, ]+)', table)
+                  for value in row.split(',')]
+        self.assertEqual(values, hz.WEATHER)
+
     def test_start_and_weather_table(self):
         game, _ = started()
         self.assertEqual((game.food, game.wood, game.heat), (10, 8, 12))
@@ -42,6 +50,30 @@ class HearthZeroRuleTests(unittest.TestCase):
                 for job in plan:
                     work(game, job)
                 self.assertEqual((port.mode, game.day), (2, hz.DAYS))
+
+    def test_every_day_resource_transition_matches_independent_arithmetic(self):
+        for level in range(hz.LEVELS):
+            game, port = started(level)
+            food, wood, heat, wall = 10, 8, 12, 0
+            for day, job in enumerate(hz.survive(level)):
+                with self.subTest(wave=level + 1, day=day + 1):
+                    if job == hz.WOOD:
+                        wood = min(wood + 7, 30)
+                    elif job == hz.FOOD:
+                        food = min(food + 7, 30)
+                    elif job == hz.FIRE:
+                        wood -= 3
+                        heat = min(heat + 9, 24)
+                    else:
+                        wood -= 4
+                        wall += 1
+                    food -= 2
+                    heat -= hz.WEATHER[level * hz.DAYS + day] - wall
+                    work(game, job)
+                    self.assertEqual((game.food, game.wood, game.heat,
+                                      game.insulation, game.day),
+                                     (food, wood, heat, wall, day + 1))
+                    self.assertEqual(port.mode, 2 if day == hz.DAYS - 1 else 1)
 
     def test_caps_and_costs(self):
         game, _ = started()
@@ -81,6 +113,11 @@ class HearthZeroRuleTests(unittest.TestCase):
 
 
 class HearthZeroExpectationTests(unittest.TestCase):
+    def test_help_describes_graceful_exit(self):
+        source = (PROJECT / 'src/main.asm').read_text()
+        self.assertIn('SPACE RESTART / CTRL+C EXIT', source)
+        self.assertNotIn('ESC TO BASIC', source)
+
     def test_memory_expectations_are_model_predictions(self):
         expectations = json.loads((PROJECT / 'tests/expectations.json').read_text())
         check_expectations(self, expectations,
@@ -97,6 +134,11 @@ class HearthZeroExpectationTests(unittest.TestCase):
                          hz.NO_FOOD)
         self.assertEqual(bytes.fromhex(profiles['synthetic-start']['forecast']).decode(),
                          '4   5   6')
+        for synthetic, local in [('synthetic-all-waves', 'local-rom-all-waves'),
+                                 ('synthetic-lose-retry', 'local-rom-lose-retry')]:
+            self.assertEqual(profiles[synthetic]['state'], profiles[local]['state'])
+            self.assertEqual(profiles[synthetic]['mode'], profiles[local]['mode'])
+            self.assertEqual(profiles[synthetic]['level'], profiles[local]['level'])
 
 
 if __name__ == '__main__':
