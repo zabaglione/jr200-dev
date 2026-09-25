@@ -21,15 +21,27 @@ class RelicDiveContractTests(unittest.TestCase):
         profiles = {item['profile']: item for item in expectations['runtime']['profiles']}
         for name in ('synthetic-title', 'synthetic-gameplay', 'synthetic-combat',
                      'synthetic-menu', 'synthetic-menu-wait', 'synthetic-suspend',
-                     'synthetic-resume', 'synthetic-return', 'synthetic-audio'):
+                     'synthetic-resume', 'synthetic-return', 'synthetic-audio',
+                     'synthetic-stairs-arrival', 'synthetic-floor-transition',
+                     'synthetic-defeat', 'synthetic-retry'):
             self.assertEqual(profiles[name]['mode'], 'synthetic-injection')
-        for name in ('local-rom-scroll', 'local-rom-basic-return'):
+        for name in ('local-rom-scroll', 'local-rom-basic-return',
+                     'local-rom-screen-restore'):
             self.assertEqual(profiles[name]['mode'], 'rom-cassette')
             self.assertIn('mload\r', [event.get('text')
                                       for event in profiles[name]['replay']])
         returned = profiles['local-rom-basic-return']
         self.assertEqual(returned['expect']['memory']['basic-return-proof'], 'a5')
         self.assertEqual(returned['expect']['pc'], '0x4825')
+        restored = profiles['local-rom-screen-restore']
+        self.assertEqual(restored['expect']['pc'], '0x1214')
+        for sector, marker in (('top', '41'), ('middle', '42'), ('bottom', '43')):
+            self.assertEqual(restored['expect']['memory'][f'saved-{sector}'], marker)
+            self.assertEqual(restored['expect']['memory'][f'restored-{sector}'], marker)
+        self.assertEqual(profiles['synthetic-stairs-arrival']['expect']['memory']['view-y'], '00')
+        self.assertEqual(profiles['synthetic-floor-transition']['expect']['memory']['gen-floor'], '01')
+        self.assertEqual(profiles['synthetic-defeat']['expect']['memory']['state'][:2], '08')
+        self.assertEqual(profiles['synthetic-retry']['expect']['memory']['turns'], '0000')
 
     def test_project_contract_and_mit_license(self):
         spec = validate_project(PROJECT)

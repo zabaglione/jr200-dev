@@ -196,6 +196,7 @@ EXIT_GAME:
     LDS [SAVE_SP]
     LDAA [SAVE_CC]
     TAP
+EXIT_RESTORE_READY:
     RTS
 
 ; Set the 16-bit Z flag from A:B, keeping N,V,C,H from the high operation.
