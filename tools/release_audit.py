@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -21,6 +22,24 @@ MAX_CANDIDATE_BYTES = 10_000_000
 TEXT_LIMIT = 2_000_000
 CODE_SUFFIXES = {'.asm', '.inc', '.mjs', '.py'}
 SUPPORTED_LICENSES = {'BSD-3-Clause', 'MIT'}
+# Exact gallery files reviewed for the seven-game publication. Adding a new
+# video or changing its bytes requires a new content/provenance review.
+REVIEWED_GALLERY_VIDEOS = {
+    'games/side-catch/media/goal.webm':
+        'd8156bef75e4e55d064a66642c1799d17b2143034145ff7f650a5fa879680889',
+    'games/relic-dive/media/goal.webm':
+        '5cb2930519bad2efb482fb0e028935129623f8ca47b09dfb729b361c2f577232',
+    'games/lumen-cross/media/goal.webm':
+        'e3ce1c7d3104bfab628984bc1110b01dc45168d259dbf6ea78ba0f5b723cbb13',
+    'games/corner-crown/media/goal.webm':
+        '58d69d6d4c4a70489246b313f88190061584d649960ae3abfc8c27d9fb614f32',
+    'games/circuit-works/media/goal.webm':
+        '74608f22e6a260433f1314af25aad883aca0b64e8573cfd3cdb10f811d609223',
+    'games/hearth-zero/media/goal.webm':
+        'a6f46d240e1030d4d182579a9d8a0f775dd94a9ff47ef63b2bf98bc76f66a3c9',
+    'games/brick-pulse/media/goal.webm':
+        '9937082b6e6906ed89aee22336449119eb689406ba1d3e1e8603318ff42430a5',
+}
 FORBIDDEN_SUFFIXES = {'.bin', '.cas', '.cjr', '.key', '.p12', '.pem', '.pfx',
                       '.rom', '.tap', '.wav', '.zip'}
 SECRET_PATTERNS = (
@@ -176,9 +195,10 @@ def inspect_candidate_files(root: Path, paths: list[str], report: dict[str, Any]
             blocks, warnings = scan_text(relative, data.decode('latin-1'))
             report['blocks'].extend(blocks)
             report['warnings'].extend(warnings)
-            report['publication_gates'].append(
-                f'{relative}: gallery hash matches, but video content and origin '
-                'lack independent review')
+            if REVIEWED_GALLERY_VIDEOS.get(relative) != hashlib.sha256(data).hexdigest():
+                report['publication_gates'].append(
+                    f'{relative}: gallery hash matches, but video content and origin '
+                    'lack independent review')
             continue
         if path.suffix.lower() == '.png':
             try:

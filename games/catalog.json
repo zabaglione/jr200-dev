@@ -4,19 +4,19 @@
     {
       "id": "side-catch",
       "project": "games/side-catch",
-      "status": "candidate",
+      "status": "verified",
       "version": "0.1.2",
       "genre": "action",
       "artifact_sha256": "571e25aa5c7b76f00f3c827d0edbd11db4d3571b81b9fbc370412979a9f2c916",
       "package": {
         "file": "side-catch-0.1.2.zip",
-        "sha256": "fe19122cdba87987cd3c01890db28133898ed54f5e228d9afd4662a33f590639",
-        "release_url": null
+        "sha256": "795ab19ad04abff98c7a069c860178274f1a3b6647e3fd6df8cd0b19e90b6d9c",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/side-catch-0.1.2.zip"
       },
       "wiki": {
         "slug": "side-catch",
-        "publish": false,
-        "play_url": null,
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=side-catch&launch=1",
         "screenshot": {
           "file": "media/screenshot.png",
           "sha256": "cf14815a66016e64a485f265bd8fd87c2c1ddae257d83ace35027a7c5d73580e",
@@ -28,24 +28,144 @@
     {
       "id": "relic-dive",
       "project": "games/relic-dive",
-      "status": "candidate",
-      "version": "0.1.1-dev",
+      "status": "verified",
+      "version": "0.1.1",
       "genre": "exploration",
       "artifact_sha256": "16261dd1350a6b3b8b4ec76f4253039daa56f29bbe90f4ebe93b80449364c399",
       "package": {
-        "file": "relic-dive-0.1.1-dev.zip",
-        "sha256": "6574b5f19d049dfd24078442b9da053f0b132e92ec562ecd1dfba5716d14367a",
-        "release_url": null
+        "file": "relic-dive-0.1.1.zip",
+        "sha256": "45c04f06b116ca9866a4513a249521a6d05d14fbe0442beb30a44e9bdcf43c6f",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/relic-dive-0.1.1.zip"
       },
       "wiki": {
         "slug": "relic-dive",
-        "publish": false,
-        "play_url": null,
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=relic-dive&launch=1",
         "screenshot": {
           "file": "media/gameplay.png",
           "sha256": "75949665e4d8b06363dc19c051529eaca8922acf223e2d9b5c25af34c9cf30c0",
           "framebuffer_sha256": "f3987b74b8ca7a1c52ca1fba8f00d55afe6c7b6d7e645be93b9487e7cc3aba21",
           "profile": "local-rom-play"
+        }
+      }
+    },
+    {
+      "id": "lumen-cross",
+      "project": "games/lumen-cross",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "20331241139e3f64813234baea0dc5870c430269957929041ccb501d67e59f1c",
+      "package": {
+        "file": "lumen-cross-0.1.0.zip",
+        "sha256": "8bc380c1772cddd3fd9e00a13917b4957f98a4e43a84ab3e0f8585b8fd1e3c52",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/lumen-cross-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "lumen-cross",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=lumen-cross&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "bb91709a9ffed6f00e92da0bd247b4f1fcc4477940e76a7b512d488dbb13a2ff",
+          "framebuffer_sha256": "2906cf284a05a9083e2ec92c2ac8e83dbe160b8c56462cacd06867194f03dd46",
+          "profile": "local-rom-gallery-play"
+        }
+      }
+    },
+    {
+      "id": "corner-crown",
+      "project": "games/corner-crown",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "33b3d153974fc652d151431adb2f4eae72fa604b89471005a34d138c32180ead",
+      "package": {
+        "file": "corner-crown-0.1.0.zip",
+        "sha256": "7054c34084a44cedd69eec47eca1ad423e9b9fd0a26ff8472ec7782ec36ef565",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/corner-crown-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "corner-crown",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=corner-crown&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "f4212b459304079479a84b4c02037bf3949a408d9b2bc10ffac55dac7d93039b",
+          "framebuffer_sha256": "c0342064e57b062175899abe43a882cb375a86959357962fca46f345d2d0dca3",
+          "profile": "local-rom-gallery-play"
+        }
+      }
+    },
+    {
+      "id": "circuit-works",
+      "project": "games/circuit-works",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tactics",
+      "artifact_sha256": "6c51881031bf87f4bfc22ea3576e0256d56defe6beb95fd2bdbb8d49726cada9",
+      "package": {
+        "file": "circuit-works-0.1.0.zip",
+        "sha256": "5da600f016ba9b3fdec7aa894af2402a3185c903a49a28fe18a4efafc63e5f11",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/circuit-works-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "circuit-works",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=circuit-works&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "f6dd26bec00f3cd4accbd4122fa8fb5502b8bb8388e238729a9c2e621367b269",
+          "framebuffer_sha256": "570c679bc9660ae18b2a9d2b36490561c8ac9606fadf62e47458e43f97e627dc",
+          "profile": "local-rom-gallery-play"
+        }
+      }
+    },
+    {
+      "id": "hearth-zero",
+      "project": "games/hearth-zero",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "management",
+      "artifact_sha256": "79395367d52bf7750281250a58bdc71cd141475e75576979df9d73ea3792cdab",
+      "package": {
+        "file": "hearth-zero-0.1.0.zip",
+        "sha256": "56fcc37ec948f2cc6bc6e1b6277ec30e56f7b3523a2b8f132f05f046f879ca94",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/hearth-zero-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "hearth-zero",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=hearth-zero&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "b0439d6fa306bd1ba3f58917834e2e7bca2382f16ad163dbd1908cc7e168470d",
+          "framebuffer_sha256": "76949a071500fe6869b58c128b0b96380526f59926753570e8d602bdbe023208",
+          "profile": "local-rom-gallery-play"
+        }
+      }
+    },
+    {
+      "id": "brick-pulse",
+      "project": "games/brick-pulse",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+      "package": {
+        "file": "brick-pulse-0.1.0.zip",
+        "sha256": "ce71145f81bcd5b94c1901ebab4170c5e87f5e7a65ca8315fe06a1efbaeb3ca8",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/brick-pulse-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "brick-pulse",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=brick-pulse&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "4228069bd3075afb2cf2d7196c7498b1244f0989e5e48b875fac8be291a55cbb",
+          "framebuffer_sha256": "6bcdbfcca0d3a5ff37e45abaf3aaccd73e797f51fbab4076eda4743432f5e4a8",
+          "profile": "local-rom-hold-left-release"
         }
       }
     }

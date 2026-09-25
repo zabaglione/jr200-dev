@@ -6,10 +6,11 @@ import shutil
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from release_audit import (expected_spdx, inspect_candidate_files, scan_text,
-                           unsafe_candidate_path)
+from release_audit import (REVIEWED_GALLERY_VIDEOS, expected_spdx,
+                           inspect_candidate_files, scan_text, unsafe_candidate_path)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,10 +86,18 @@ class GalleryVideoAuditTests(unittest.TestCase):
         inspect_candidate_files(self.root, list(paths or (VIDEO,)), report)
         return report
 
-    def test_matching_gallery_video_remains_a_publication_gate(self):
+    def test_exact_reviewed_gallery_video_passes_publication_gate(self):
         report = self.inspect()
         self.assertEqual(report['blocks'], [])
         self.assertEqual(report['scope']['gallery_matched_videos'], 1)
+        self.assertEqual(report['publication_gates'], [])
+        self.assertEqual(REVIEWED_GALLERY_VIDEOS[VIDEO],
+                         hashlib.sha256(self.video.read_bytes()).hexdigest())
+
+    def test_gallery_without_exact_review_remains_a_publication_gate(self):
+        with patch.dict(REVIEWED_GALLERY_VIDEOS, {}, clear=True):
+            report = self.inspect()
+        self.assertEqual(report['blocks'], [])
         self.assertEqual(len(report['publication_gates']), 1)
         self.assertIn('lack independent review', report['publication_gates'][0])
 
