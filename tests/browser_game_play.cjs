@@ -19,6 +19,7 @@ function argumentsOf(argv) {
   assert.equal(url.hostname, '127.0.0.1');
   assert.equal(url.protocol, 'http:');
   assert.match(values.sha256, /^[0-9a-f]{64}$/);
+  assert.ok(!values['cpu-speed'] || ['100', '1000'].includes(values['cpu-speed']));
   return { ...values, origin: url.origin };
 }
 
@@ -99,6 +100,12 @@ async function main() {
     }
     await quickType(page, `${entry.runCommand}\n`);
     await page.waitForTimeout(3000);
+    if (args['cpu-speed'] === '100') {
+      await page.locator('#cpu-speed').evaluate(element => {
+        element.value = '100';
+        element.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+    }
     if (args['play-key']) {
       await page.locator('#screen').click();
       await page.keyboard.press(args['play-key']);
@@ -144,6 +151,7 @@ async function main() {
       cassette: 'normal MLOAD', run_command: entry.runCommand,
       external_requests: external.length, play_key: args['play-key'] || null,
       play_sequence: args['play-sequence'] || null,
+      cpu_speed: args['cpu-speed'] || '1000',
       restore_diff: restoreDiff, save_diff: saveDiff,
       screenshot: args.screenshot || null }));
   } finally {

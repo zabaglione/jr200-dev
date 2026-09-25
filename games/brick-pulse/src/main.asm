@@ -1354,7 +1354,7 @@ bp_help_5:
 bp_help_6:
         .db     "CLEAR BRICKS AND DRONE TO WIN", 0
 bp_help_7:
-        .db     "ESC / CTRL+C : BACK TO BASIC", 0
+        .db     "CTRL+C : BACK TO BASIC", 0
 bp_help_back:
         .db     "ANY KEY : TITLE", 0
 
