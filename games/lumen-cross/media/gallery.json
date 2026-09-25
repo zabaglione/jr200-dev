@@ -1,44 +1,53 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "scenes": [
     {
       "id": "title",
       "file": "title.png",
-      "profile": "synthetic-title",
+      "profile": "local-rom-gallery-title",
       "role": "title",
-      "caption": "タイトル画面",
-      "sha256": "29edab652c4a45f401d617c2fb07f025111a5e92d6e2da693f4dbad2c6e46d54",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、タイトル画面（画面全体・無加工）",
+      "sha256": "28d389087305d185bada3d1d89a82a1a1c406386ac7a10e421e8ea407d2b8423",
       "framebuffer_sha256": "2ce2715b46dcdb6c4c464887de21a99005f1fc449beb076cfc367a674c52cbc2"
     },
     {
       "id": "play",
       "file": "play.png",
-      "profile": "synthetic-start",
+      "profile": "local-rom-gallery-play",
       "role": "play",
-      "caption": "ステージ1開始直後。カーソルの十字に^の予告が付く",
-      "sha256": "bb31d97d4e5bed67507cc3b6e8ce78dc2b44a367d4b6047e9ad3e6c0c7471b0b",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1開始直後。カーソルの十字に^の予告が付く（画面全体・無加工）",
+      "sha256": "bb91709a9ffed6f00e92da0bd247b4f1fcc4477940e76a7b512d488dbb13a2ff",
       "framebuffer_sha256": "2906cf284a05a9083e2ec92c2ac8e83dbe160b8c56462cacd06867194f03dd46"
     },
     {
       "id": "clear",
       "file": "clear.png",
-      "profile": "synthetic-first-clear",
+      "profile": "local-rom-gallery-goal",
       "role": "goal",
-      "caption": "ステージ1をPAR 4回で全消灯し、PERFECT CIRCUITを表示",
-      "sha256": "526cbfbd38cc0cdfd8a9530269af62c6fa91a4e7a8d5a5b1a67289371db68620",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1をPAR 4回で全消灯し、PERFECT CIRCUITを表示（画面全体・無加工）",
+      "sha256": "cf4e2c14f23e4b876de7696d5aabe75b09bda78ea6b7a9aa621ca17fa50449c5",
       "framebuffer_sha256": "90121d01e1e67c4afff9469d1b5f0647bc6f6e6859851f3fab422e08b27e95a5"
     }
   ],
   "video": {
     "file": "goal.webm",
-    "profile": "synthetic-first-clear",
+    "profile": "local-rom-gallery-goal",
     "fps": 30,
-    "speed": 1.0,
-    "seconds": 5.9,
-    "frames": 176,
-    "frames_sha256": "d2a54b540f3734bd756181105671dc7b9bce5c582dd703b4994f395ea2a5df6f",
-    "pcm_sha256": "4aa1d0df6f4158844d84ede70e599b8d706de69f41514e3c33bc5e64d57d1a37",
-    "sha256": "54109c13f6951ef15564e6c31d77822905a5127e0324de31dd7982e118ca1092",
-    "caption": "ステージ1を開始してPAR 4回で全消灯するまで（音付き）"
+    "speed": 1,
+    "seconds": 6,
+    "frames": 181,
+    "frames_sha256": "92779e930ec4bd30240e24cda7710fee070259ae3342bae8ee7140d6fe5c6b12",
+    "pcm_sha256": "bbf6052913d93508bf9bf4abba426b5f036d7f0c773038548f69af220ba8f1b2",
+    "sha256": "e3ce1c7d3104bfab628984bc1110b01dc45168d259dbf6ea78ba0f5b723cbb13",
+    "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1を開始してPAR 4回で全消灯するまで（音付き）（画面全体・無加工）",
+    "mode": "rom-cassette",
+    "artifact_sha256": "20331241139e3f64813234baea0dc5870c430269957929041ccb501d67e59f1c",
+    "start_cycle": 83500000
+  },
+  "capture": {
+    "mode": "rom-cassette",
+    "artifact_sha256": "20331241139e3f64813234baea0dc5870c430269957929041ccb501d67e59f1c",
+    "glyph_source": "sdk/font_data.inc",
+    "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }
 }

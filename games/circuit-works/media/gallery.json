@@ -1,44 +1,53 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "scenes": [
     {
       "id": "title",
       "file": "title.png",
-      "profile": "synthetic-title",
+      "profile": "local-rom-gallery-title",
       "role": "title",
-      "caption": "タイトル画面",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、タイトル画面（画面全体・無加工）",
       "sha256": "0a83f24e3d32643cb5fe7435d88ef412e03483faf4066dd9695723fed13532f3",
       "framebuffer_sha256": "d08e50c8427156fcb683214db5283fdc64ea2d6eea0290f318473d24083310f9"
     },
     {
       "id": "play",
       "file": "play.png",
-      "profile": "synthetic-testing",
+      "profile": "local-rom-gallery-play",
       "role": "play",
-      "caption": "ステージ2の試験中。信号が配線を流れ、真理値表に結果が並ぶ",
-      "sha256": "01d5c87f27b53d8418a9c39c444082c72b0c7c83f9670e053fe7312c54b340bd",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ2の試験中。信号が配線を流れ、真理値表に結果が並ぶ（画面全体・無加工）",
+      "sha256": "f6dd26bec00f3cd4accbd4122fa8fb5502b8bb8388e238729a9c2e621367b269",
       "framebuffer_sha256": "570c679bc9660ae18b2a9d2b36490561c8ac9606fadf62e47458e43f97e627dc"
     },
     {
       "id": "clear",
       "file": "clear.png",
-      "profile": "synthetic-first-clear",
+      "profile": "local-rom-gallery-goal",
       "role": "goal",
-      "caption": "ステージ1で8行すべてが一致",
-      "sha256": "c3acb416a0dc4330c47f39b77d57fa3338770b132f6d3ff94a574093b1ae6043",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1で8行すべてが一致（画面全体・無加工）",
+      "sha256": "3e467c9a3e18f14c6be5a3611c293064ba3d5db965f8a30d8a1e36f410debb5e",
       "framebuffer_sha256": "3ce121925747acd7ed1fbb2324bc69b79734f0cd3fd5a6cd369d6a347453b5d8"
     }
   ],
   "video": {
     "file": "goal.webm",
-    "profile": "synthetic-first-clear",
+    "profile": "local-rom-gallery-goal",
     "fps": 30,
-    "speed": 1.0,
-    "seconds": 6.4,
-    "frames": 192,
-    "frames_sha256": "5b3bc26408ddd89b8166f43d2ab2258dfeefacb0aeb5c790193ccd0ce026bc26",
-    "pcm_sha256": "359fd36cff576412ce346048f72693060aeb69f5d2ae1cf103234b18988e19d4",
-    "sha256": "ea0190895cf61da288b2457d29d45c2d9180043eef6cc0de09fd60cb775cf603",
-    "caption": "ステージ1の8行試験で全一致するまで（音付き）"
+    "speed": 1,
+    "seconds": 6.5,
+    "frames": 196,
+    "frames_sha256": "50cbf74e587862955c59ac5964d791ec9ca3c532c0d239aa29191805bf5aab28",
+    "pcm_sha256": "e7207e75656283a376ac8316d7923580190d02203e6e51ccc5fe9d6550560bc1",
+    "sha256": "74608f22e6a260433f1314af25aad883aca0b64e8573cfd3cdb10f811d609223",
+    "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1の8行試験で全一致するまで（音付き）（画面全体・無加工）",
+    "mode": "rom-cassette",
+    "artifact_sha256": "6c51881031bf87f4bfc22ea3576e0256d56defe6beb95fd2bdbb8d49726cada9",
+    "start_cycle": 83500000
+  },
+  "capture": {
+    "mode": "rom-cassette",
+    "artifact_sha256": "6c51881031bf87f4bfc22ea3576e0256d56defe6beb95fd2bdbb8d49726cada9",
+    "glyph_source": "sdk/font_data.inc",
+    "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }
 }

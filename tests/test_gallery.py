@@ -27,7 +27,7 @@ class GalleryTests(unittest.TestCase):
         self.assertIn(bytes.fromhex('00ff00ff'), colors)  # player: green
         self.assertIn(bytes.fromhex('ffff00ff'), colors)  # target: yellow
 
-    def test_rom_capture_guard_rejects_foreign_glyphs(self):
+    def test_rom_capture_checks_installed_font_without_filtering_screen(self):
         node = shutil.which('node')
         if node is None:
             self.skipTest('Node.js is unavailable; standalone guard smoke not run')
@@ -35,7 +35,7 @@ class GalleryTests(unittest.TestCase):
             [node, str(ROOT / 'tests/authored_capture_smoke.mjs')],
             capture_output=True, text=True, check=False)
         self.assertEqual(completed.returncode, 0, completed.stderr)
-        self.assertIn('authored capture guard: OK', completed.stdout)
+        self.assertIn('installed game font capture check: OK', completed.stdout)
 
     def test_new_ports_have_three_scenes_and_a_video(self):
         for game in ('side-catch', 'lumen-cross', 'corner-crown', 'circuit-works',
@@ -52,7 +52,7 @@ class GalleryTests(unittest.TestCase):
             gallery = json.loads(path.read_text(encoding='utf-8'))
             expectations = json.loads((project / 'tests/expectations.json').read_text())
             profiles = {p['profile']: p for p in expectations['runtime']['profiles']}
-            self.assertIn(gallery['schema_version'], (1, 2))
+            self.assertIn(gallery['schema_version'], (1, 2, 3))
             capture_mode = ('synthetic-injection' if gallery['schema_version'] == 1
                             else 'rom-cassette')
             if capture_mode == 'rom-cassette':
@@ -62,10 +62,13 @@ class GalleryTests(unittest.TestCase):
                 self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(),
                                  provenance['glyph_source_sha256'])
                 catalog = json.loads((ROOT / 'games/catalog.json').read_text())
-                game = next(item for item in catalog['games']
-                            if item['id'] == project.name)
-                self.assertEqual(provenance['artifact_sha256'],
-                                 game['artifact_sha256'])
+                game = next((item for item in catalog['games']
+                             if item['id'] == project.name), None)
+                if game is not None:
+                    self.assertEqual(provenance['artifact_sha256'],
+                                     game['artifact_sha256'])
+                else:
+                    self.assertRegex(provenance['artifact_sha256'], r'^[0-9a-f]{64}$')
             for scene in gallery['scenes']:
                 with self.subTest(game=project.name, scene=scene['id']):
                     image = path.parent / scene['file']

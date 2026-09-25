@@ -152,12 +152,15 @@ def accept(project: Path, bundle: Path, rom: Path, font: Path,
         local = item['mode'] == 'rom-cassette'
         image = (capture_dir / (item['profile'] + '.png') if capture_dir and local
                  and item['expect']['framebuffer_sha256'] else None)
-        report = run(spec.project, bundle, os.environ.get('NODE', 'node'),
-                     Path(__file__).resolve().parent / 'jr200_wasm_runner.mjs',
-                     Path(__file__).resolve().parents[1] / 'emulator.lock.json',
-                     profile=item['profile'], rom=rom if local else None,
-                     font=font if local else None, screenshot=image,
-                     self_font=self_font if image else None)
+        try:
+            report = run(spec.project, bundle, os.environ.get('NODE', 'node'),
+                         Path(__file__).resolve().parent / 'jr200_wasm_runner.mjs',
+                         Path(__file__).resolve().parents[1] / 'emulator.lock.json',
+                         profile=item['profile'], rom=rom if local else None,
+                         font=font if local else None, screenshot=image,
+                         self_font=self_font if image else None)
+        except RunnerError as exc:
+            raise AcceptanceError(f'{item["profile"]}: {exc}') from exc
         results.append({'profile': item['profile'], 'mode': item['mode'],
                         'framebuffer_sha256': report['result']['framebuffer_sha256'],
                         'cassette_path': report['verification']['cassette_path'],

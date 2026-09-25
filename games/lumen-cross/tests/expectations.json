@@ -8413,6 +8413,118 @@
         }
       },
       {
+        "profile": "local-rom-gallery-title",
+        "mode": "rom-cassette",
+        "max_cycles": 83500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "text",
+            "cycle": 4000000,
+            "text": "mload\r",
+            "key_duration": 150000,
+            "key_interval": 300000
+          },
+          {
+            "kind": "text",
+            "cycle": 80000000,
+            "text": "a=usr($1000)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          }
+        ],
+        "observations": [],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {},
+          "framebuffer_sha256": "2ce2715b46dcdb6c4c464887de21a99005f1fc449beb076cfc367a674c52cbc2",
+          "pcm": null,
+          "cassette": {
+            "state": 6,
+            "mode": 1,
+            "remote": false
+          }
+        }
+      },
+      {
+        "profile": "local-rom-gallery-play",
+        "mode": "rom-cassette",
+        "max_cycles": 84900000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "text",
+            "cycle": 4000000,
+            "text": "mload\r",
+            "key_duration": 150000,
+            "key_interval": 300000
+          },
+          {
+            "kind": "text",
+            "cycle": 80000000,
+            "text": "a=usr($1000)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          }
+        ],
+        "observations": [],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {},
+          "framebuffer_sha256": "2906cf284a05a9083e2ec92c2ac8e83dbe160b8c56462cacd06867194f03dd46",
+          "pcm": null,
+          "cassette": {
+            "state": 6,
+            "mode": 1,
+            "remote": false
+          }
+        },
+        "replay_from": "synthetic-start",
+        "replay_offset": 83700000
+      },
+      {
+        "profile": "local-rom-gallery-goal",
+        "mode": "rom-cassette",
+        "max_cycles": 91500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "text",
+            "cycle": 4000000,
+            "text": "mload\r",
+            "key_duration": 150000,
+            "key_interval": 300000
+          },
+          {
+            "kind": "text",
+            "cycle": 80000000,
+            "text": "a=usr($1000)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          }
+        ],
+        "observations": [],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {},
+          "framebuffer_sha256": "90121d01e1e67c4afff9469d1b5f0647bc6f6e6859851f3fab422e08b27e95a5",
+          "pcm": null,
+          "cassette": {
+            "state": 6,
+            "mode": 1,
+            "remote": false
+          }
+        },
+        "replay_from": "synthetic-first-clear",
+        "replay_offset": 83700000
+      },
+      {
         "profile": "local-rom-first-stage",
         "mode": "rom-cassette",
         "max_cycles": 90000000,

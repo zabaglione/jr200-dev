@@ -1,17 +1,23 @@
 # Media
 
-固定エミュレータのROMなし合成profileから`--screenshot`で取得した320×224の画面です。
-文字はSDKの自作字形、絵は作品の自作PCGで描いているため、メーカーROM／FONTは使っていません。
-`gallery.json`が各画像のPNG SHA-256とframebuffer SHA-256、元のprofileを固定します。
+3枚のPNGと`goal.webm`は、所有ROM/FONTをローカルで読み込み、通常の`MLOAD`と
+`A=USR($1000)`を経た固定エミュレータの実出力です。320×224の画面は切り抜き・
+塗りつぶしをせず、動画はその画面と同じ実行のPCMから等速で作りました。
+`gallery.json`には元CJR、自作ASCII字形source、replay、画像・framebuffer・
+動画フレーム・PCMのSHA-256を固定しています。
+`receipts/`には3場面の固定エミュレータ実行reportを保存し、CJR・期待値・画面hashを照合します。
+ROM/FONTの実体やローカルpathは含めません。
 
 | file | profile | 場面 |
 | --- | --- | --- |
-| `title.png` | `synthetic-title` | タイトル画面 |
-| `play.png` | `synthetic-demo-play` | 自動デモでアリーナ1を進行中 |
-| `clear.png` | `synthetic-demo-clear` | アリーナ1のブロックをすべて壊してクリア |
+| `title.png` | `local-rom-title` | 起動後のタイトル |
+| `play.png` | `local-rom-hold-left-release` | 第1面のプレイ中 |
+| `clear.png` | `local-rom-demo-clear` | 第1面の自動デモクリア |
 
-`goal.webm`は同じ固定エミュレータで`synthetic-demo-clear`のreplayを1/30秒ごとに記録した映像と、同じ実行の
-PCMから作った動画です（45.9秒、1.0倍速）。`tools/capture_video.py`と外部のffmpegで
-生成し、映像フレームとPCMのSHA-256を`gallery.json`に残します。
+`goal.webm`は同じ固定エミュレータで`local-rom-demo-clear`のreplayを1/30秒ごとに記録した映像と、同じ実行の
+PCMから作った動画です（45.4秒、等速）。`tools/capture_video.py`と外部のffmpegで
+生成し、映像フレームとPCMのSHA-256を`gallery.json`に残します。前半のBASIC起動・ロード画面と音は含めません。
 
-これは固定エミュレータの証拠です。物理JR-200の表示、入力、音声は未確認です。
+メーカーFONTの字形が画面に映る場合がありますが、ROM/FONTファイル本体はリポジトリ、
+作品package、画像・動画へ組み込んでいません。これは固定エミュレータの証拠です。
+物理JR-200の表示、入力、音声は未確認です。

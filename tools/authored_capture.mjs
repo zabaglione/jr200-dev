@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
-// A ROM-backed gallery frame may only use the game's own standard glyphs or PCG.
+// Verify that the game's authored font is installed before ROM-backed capture.
+// The visible screen is captured unchanged, including ROM/FONT glyphs.
 import {readFileSync} from 'node:fs';
 
 export function verifyAuthoredScreen(module, sourcePath) {
@@ -22,13 +23,6 @@ export function verifyAuthoredScreen(module, sourcePath) {
   for (let index = 0; index < expected.length; ++index) {
     if (module._jr200_system_peek(0xd100 + index) !== expected[index]) {
       throw new Error('active glyphs differ from authored font');
-    }
-  }
-  for (let index = 0; index < 768; ++index) {
-    const attr = module._jr200_system_peek(0xc500 + index);
-    const code = module._jr200_system_peek(0xc100 + index);
-    if ((attr & 0x40) === 0 && (code < 0x20 || code > 0x5f)) {
-      throw new Error('screen uses a non-authored standard glyph');
     }
   }
 }

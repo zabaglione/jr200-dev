@@ -10,7 +10,7 @@ import tempfile
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from emulator_runner import (MAX_CYCLES, RunnerError, load_lock, run,
+from emulator_runner import (MAX_CYCLES, RunnerError, expand_replay_profile, load_lock, run,
                              validate_expectations, verify_bundle)
 from png_rgba import encode_rgba
 
@@ -212,6 +212,38 @@ class LockTests(unittest.TestCase):
         profile['max_cycles'] = MAX_CYCLES + 1
         with self.assertRaisesRegex(RunnerError, 'expectation contract'):
             validate_expectations(expectations, 0x1000)
+
+    def test_rom_gallery_replay_reuses_bounded_synthetic_input(self):
+        expectations = json.loads(
+            (self.fixture.project / 'tests/expectations.json').read_text())
+        synthetic, rom = expectations['runtime']['profiles']
+        synthetic['replay'] = [
+            {'kind': 'key', 'cycle': 100, 'code': '0x20', 'pressed': True},
+            {'kind': 'key', 'cycle': 200, 'code': '0x20', 'pressed': False},
+        ]
+        rom['replay_from'] = 'synthetic-ci'
+        rom['replay_offset'] = 6_000_000
+        checked = validate_expectations(expectations, 0x1000, 'local-rom-mload')
+        self.assertEqual(checked['replay'][-2:], [
+            {'kind': 'key', 'cycle': 6_000_100, 'code': 0x20, 'pressed': True},
+            {'kind': 'key', 'cycle': 6_000_200, 'code': 0x20, 'pressed': False},
+        ])
+        rom['replay_offset'] = 15_000_000
+        with self.assertRaisesRegex(RunnerError, 'cycle limit'):
+            validate_expectations(expectations, 0x1000, 'local-rom-mload')
+        rom['replay_offset'] = 6_000_000
+        rom['replay_from'] = 'missing-profile'
+        with self.assertRaisesRegex(RunnerError, 'synthetic source'):
+            validate_expectations(expectations, 0x1000, 'local-rom-mload')
+
+    def test_replay_reference_rejects_malformed_source_without_crashing(self):
+        source = {'mode': 'synthetic-injection', 'replay': [{'kind': 'key'}]}
+        target = {'profile': 'gallery', 'mode': 'rom-cassette', 'max_cycles': 100,
+                  'return_address': '0x7ff0', 'replay': [], 'observations': [],
+                  'breakpoints': [], 'expect': {}, 'replay_from': 'source',
+                  'replay_offset': 10}
+        with self.assertRaisesRegex(RunnerError, 'Invalid referenced replay'):
+            expand_replay_profile(target, {'source': source})
 
     def test_joystick_replay_normalizes_active_low_state(self):
         expectations = json.loads(

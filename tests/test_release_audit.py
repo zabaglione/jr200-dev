@@ -123,13 +123,15 @@ class GalleryVideoAuditTests(unittest.TestCase):
         self.manifest.write_text(json.dumps(manifest), encoding='utf-8')
         self.assertTrue(self.inspect()['blocks'])
 
-    def test_rom_profile_is_not_gallery_evidence(self):
+    def test_mismatched_profile_mode_is_not_gallery_evidence(self):
         manifest = json.loads(self.manifest.read_text(encoding='utf-8'))
         expectations_path = self.project / 'tests/expectations.json'
         expectations = json.loads(expectations_path.read_text(encoding='utf-8'))
         for profile in expectations['runtime']['profiles']:
             if profile['profile'] == manifest['video']['profile']:
-                profile['mode'] = 'rom-cassette'
+                profile['mode'] = ('synthetic-injection'
+                                   if profile['mode'] == 'rom-cassette'
+                                   else 'rom-cassette')
         expectations_path.write_text(json.dumps(expectations), encoding='utf-8')
         self.assertTrue(self.inspect()['blocks'])
 

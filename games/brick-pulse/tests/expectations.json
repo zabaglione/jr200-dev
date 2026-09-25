@@ -673,6 +673,50 @@
         }
       },
       {
+        "profile": "local-rom-title",
+        "mode": "rom-cassette",
+        "max_cycles": 83500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "text",
+            "cycle": 4000000,
+            "text": "mload\r",
+            "key_duration": 150000,
+            "key_interval": 300000
+          },
+          {
+            "kind": "text",
+            "cycle": 80000000,
+            "text": "a=usr($1000)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "00"
+          },
+          "framebuffer_sha256": "522a33ee65f292454b706965810528c4f2499aa67a64bcd24a8216460db5517f",
+          "pcm": null,
+          "cassette": {
+            "state": 6,
+            "mode": 1,
+            "remote": false
+          }
+        }
+      },
+      {
         "profile": "local-rom-lose-retry",
         "mode": "rom-cassette",
         "max_cycles": 114360000,
@@ -853,7 +897,7 @@
             "paddle": "0006",
             "mode": "01"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "6bcdbfcca0d3a5ff37e45abaf3aaccd73e797f51fbab4076eda4743432f5e4a8",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -995,7 +1039,7 @@
             "mode": "02",
             "status": "434c454152202d2052455455524e20464f52204e455854205354414745"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "1f07fb681485097bb2c933f400ac8268882fcecd45b623834601302e8b68848b",
           "pcm": null,
           "cassette": {
             "state": 6,

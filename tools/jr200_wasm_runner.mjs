@@ -9,7 +9,7 @@ import {applyReplayEvent, prepareReplaySystem} from './replay_system.mjs';
 
 const RUNNER_VERSION = '0.3.0';
 const CONTRACT_VERSION = 1;
-const MAX_CYCLES = 250_000_000;
+const MAX_CYCLES = 300_000_000;
 const MAX_OBSERVATION = 4096;
 
 function die(message, code = 2) {

@@ -44,7 +44,9 @@ JR100 Wikiの構成を参考にしていますが、文章は複製せず、作�
 - 公開指定時の `verified`、固定Release URL、clean sourceから作られたpackage
 
 - `gallery.json`の各画像のPNG SHA-256、320×224の画素hash、対応profileの期待framebuffer hash、
-  動画のSHA-256とWebM形式。ROM撮影の場合はCJRと自作字形sourceのhashも固定します。
+  動画のSHA-256とWebM形式。ROM撮影の場合はCJRと、ゲームが設置するASCII自作字形sourceの
+  hashも固定します（画面上の全字形の由来を示すものではありません）。
+  schema 3では`media/receipts/`に保存した実行reportと、CJR・現在の期待値・画面hash・通常カセット経路も照合します。
   古い版の画像が残っていれば停止します
 - ジャンルが`genres.json`にあること。catalog外の作品は`draft`／`not-published`に限ります
 - 生成した全ページのリンク：Wiki内ページ、`media/`、リポジトリ内file（`blob/main`・`tree/main`の
@@ -86,7 +88,8 @@ make wiki-preview
 実際のWikiにはどちらの作品リンクも出していません。
 
 画面例を再取得する場合は、既存PNGを退避したうえで所有ROM/FONTの通常MLOAD/USR profileを
-優先します。自作字形sourceを必ず指定し、撮影toolの検査を通します。
+優先します。ゲームが設置する自作字形sourceを指定して一致を検査します。
+画面は切り抜き・塗りつぶしをせずに記録し、メーカーFONTの字形もそのまま映る場合があります。
 
 ```sh
 python3 tools/emulator_runner.py run \
@@ -100,8 +103,8 @@ python3 tools/emulator_runner.py run \
 ```
 
 runnerは既存fileを上書きせず、PNG画素hashと検証済みframebuffer hashが一致した後だけ
-出力先へ移動します。ROM cassette profileの撮影では、字形RAMと全画面セルを検査し、
-メーカー字形が画面に使われる場合は拒否します。ROM/FONTはGitへ追加しません。
+出力先へ移動します。ROM cassette profileの撮影では、ゲームが設置した自作字形の一致を
+検査します。ROM/FONTファイルはGitやpackageへ追加しません。
 
 ## 作品の画面と動画
 

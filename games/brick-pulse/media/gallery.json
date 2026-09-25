@@ -1,44 +1,53 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
+  "capture": {
+    "mode": "rom-cassette",
+    "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+    "glyph_source": "sdk/font_data.inc",
+    "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
+  },
   "scenes": [
     {
       "id": "title",
       "file": "title.png",
-      "profile": "synthetic-title",
+      "profile": "local-rom-title",
       "role": "title",
-      "caption": "タイトル画面",
-      "sha256": "577fae31c5bf73579fd4b40bb18f3d081d790face8a7241afa217c9edc2f2b03",
+      "caption": "所有ROM/FONTの通常MLOAD/USR後のタイトル画面（無加工）",
+      "sha256": "d43eabb5f0a62e043c4c1e7e6e743ee6df0e08347c0bdb42562894109d6fd237",
       "framebuffer_sha256": "522a33ee65f292454b706965810528c4f2499aa67a64bcd24a8216460db5517f"
     },
     {
       "id": "play",
       "file": "play.png",
-      "profile": "synthetic-demo-play",
+      "profile": "local-rom-hold-left-release",
       "role": "play",
-      "caption": "自動デモでアリーナ1を進行中",
-      "sha256": "497556f1b53b39b4e689cde76d08f06c9530d8641330017be813ec4bb60456ad",
-      "framebuffer_sha256": "45d0b1daebf873450fe89a1df5faff0c3cfe971f6b1d10742a97cbef213e72be"
+      "caption": "所有ROM/FONTで第1面を実行し、A/Dの保持と離上を試した場面（無加工）",
+      "sha256": "4228069bd3075afb2cf2d7196c7498b1244f0989e5e48b875fac8be291a55cbb",
+      "framebuffer_sha256": "6bcdbfcca0d3a5ff37e45abaf3aaccd73e797f51fbab4076eda4743432f5e4a8"
     },
     {
       "id": "clear",
       "file": "clear.png",
-      "profile": "synthetic-demo-clear",
+      "profile": "local-rom-demo-clear",
       "role": "goal",
-      "caption": "アリーナ1のブロックをすべて壊してクリア",
-      "sha256": "ffecf2da937f74a508433ac61e6aa18d1cba8bf165eda2d78d5a25a0d9c59b35",
+      "caption": "所有ROM/FONTの自動デモで第1面をクリアした場面（無加工）",
+      "sha256": "0675c8828031d6fc66da2580bbbe93c168120605d1c5b680f3f8684fc68b595e",
       "framebuffer_sha256": "1f07fb681485097bb2c933f400ac8268882fcecd45b623834601302e8b68848b"
     }
   ],
   "video": {
     "file": "goal.webm",
-    "profile": "synthetic-demo-clear",
+    "profile": "local-rom-demo-clear",
+    "mode": "rom-cassette",
+    "artifact_sha256": "427068c12442ccfe04673e9a5ab30036f7d1b6b004061ba4d9c83ccc2ff85ba1",
+    "start_cycle": 83500000,
     "fps": 30,
     "speed": 1.0,
-    "seconds": 45.9,
-    "frames": 1377,
-    "frames_sha256": "1c03a755114349d46dcd1ec34b4349d07b43f6ed12d7c7466d133bda0c640cdd",
-    "pcm_sha256": "ba9615bd5b76a45672304c5d7f32508516128e9461d3b6767c093d71bc7b6670",
-    "sha256": "25b16aed3a557b6362fc4f1dfed24f1857e7b604ab5a6900ce54e9f0742cf873",
-    "caption": "自動デモでアリーナ1をクリアするまで（音付き）"
+    "seconds": 45.4,
+    "frames": 1361,
+    "frames_sha256": "31c2b8fa634fd941002dad60b65959a2201f35e748730e198dc2131e8e2ece68",
+    "pcm_sha256": "9be18b1d7b92d18702d157190bebbf4767f86bb90bdce574ddcfd5c2724f0c87",
+    "sha256": "9937082b6e6906ed89aee22336449119eb689406ba1d3e1e8603318ff42430a5",
+    "caption": "所有ROM/FONTで通常MLOAD/USR後、Pで第1面を自動デモクリアするまで（等速、実ゲームPCM、無加工）"
   }
 }
