@@ -21,6 +21,11 @@ def started():
 
 
 class CornerCrownRuleTests(unittest.TestCase):
+    def test_in_game_exit_hint_uses_graceful_key(self):
+        source = (PROJECT / 'src/main.asm').read_text(encoding='utf-8')
+        self.assertIn('"SPACE RESTART / CTRL+C EXIT"', source)
+        self.assertNotIn('"SPACE RESTART / ESC TO BASIC"', source)
+
     def test_opening_and_legal_moves(self):
         game, _ = started()
         self.assertEqual((game.white, game.black, game.cursor), (2, 2, 19))
@@ -101,8 +106,15 @@ class CornerCrownExpectationTests(unittest.TestCase):
         self.assertEqual(profiles['synthetic-win']['memory']['mode'], '02')
         self.assertEqual(profiles['synthetic-pass-lose']['memory']['mode'], '03')
         self.assertEqual(profiles['synthetic-win-end']['memory']['mode'], '04')
+        win_state = bytes.fromhex(profiles['synthetic-win']['memory']['state'])
+        loss_state = bytes.fromhex(profiles['synthetic-pass-lose']['memory']['state'])
+        self.assertEqual((win_state[65], win_state[66]), (39, 25))
+        self.assertEqual((loss_state[65], loss_state[66]), (10, 54))
+        self.assertEqual((win_state[:64].count(1), win_state[:64].count(2)), (39, 25))
         self.assertEqual(profiles['synthetic-exit']['stop_reason'], 'breakpoint')
         self.assertIsNotNone(profiles['synthetic-illegal-sound']['pcm'])
+        self.assertEqual(profiles['local-rom-first-turn']['cassette'],
+                         {'state': 6, 'mode': 1, 'remote': False})
 
 
 if __name__ == '__main__':
