@@ -86,7 +86,7 @@
             "playfield": "010020",
             "sound-control": "00"
           },
-          "framebuffer_sha256": "1a01ebcfeb4fd5379e981729ca8d5bf759f2863a2bd8cff7a21dded4efe70851",
+          "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67",
           "pcm": null,
           "cassette": null
         }
@@ -138,7 +138,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {"state": "000000000d"},
-          "framebuffer_sha256": "78f6a4eea89b95a32005de19bc737049a0bb9272a4a09cda1de1a0d3f9386454",
+          "framebuffer_sha256": "32ee8dca37184887a096fa3137ca8e703a8b813be6ab35f7113aac431a9c0b90",
           "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }
@@ -161,7 +161,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {"state": "0100010064"},
-          "framebuffer_sha256": "0089165764325b039fb0b1ff73995222af9bdb82ab3ce5a8d8ca58c99f373dd4",
+          "framebuffer_sha256": "2edd8a70e456fdf99a9da6aa24ca17059b66fe1d9cb1a7def5a11a534e1f01f3",
           "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }
@@ -185,7 +185,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {"state": "0001010072"},
-          "framebuffer_sha256": "1a01ebcfeb4fd5379e981729ca8d5bf759f2863a2bd8cff7a21dded4efe70851",
+          "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67",
           "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }

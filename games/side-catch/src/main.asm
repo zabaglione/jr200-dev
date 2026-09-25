@@ -20,6 +20,8 @@ GAME_CELL_RIGHT:        .equ    0xc290
 GAME_TITLE_CELL:        .equ    0xc14a
 GAME_PROMPT_CELL:       .equ    0xc384
 GAME_RESULT_CELL:       .equ    0xc344
+GAME_PLAYER_ATTR:       .equ    0x44
+GAME_TARGET_ATTR:       .equ    0x46
 
         .org    0x1000
 start:
@@ -94,7 +96,7 @@ game_setup_round:
         JSR     game_copy_text
         LDX     GAME_CELL_CENTER
         LDAA    0x00
-        LDAB    JR200_ATTR_USER_WHITE
+        LDAB    GAME_PLAYER_ATTR
         JSR     jr_screen_put
         LDAA    [GAME_ROUND]
         BEQ     game_setup_right
@@ -104,7 +106,7 @@ game_setup_right:
         LDX     GAME_CELL_RIGHT
 game_setup_target:
         LDAA    0x01
-        LDAB    JR200_ATTR_USER_WHITE
+        LDAB    GAME_TARGET_ATTR
         JSR     jr_screen_put
         LDAA    [GAME_ROUND]
         BEQ     game_prompt_right
@@ -134,7 +136,7 @@ game_catch_right:
         LDX     GAME_CELL_RIGHT
 game_catch_draw:
         LDAA    0x00
-        LDAB    JR200_ATTR_USER_WHITE
+        LDAB    GAME_PLAYER_ATTR
         JSR     jr_screen_put
         INC     [GAME_WINS]
         LDAA    1

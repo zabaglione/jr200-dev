@@ -20,6 +20,13 @@ def galleries():
 
 
 class GalleryTests(unittest.TestCase):
+    def test_side_catch_player_and_target_use_distinct_colors(self):
+        _, _, pixels = decode_rgba(
+            (ROOT / 'games/side-catch/media/title.png').read_bytes())
+        colors = {pixels[index:index + 4] for index in range(0, len(pixels), 4)}
+        self.assertIn(bytes.fromhex('00ff00ff'), colors)  # player: green
+        self.assertIn(bytes.fromhex('ffff00ff'), colors)  # target: yellow
+
     def test_rom_capture_guard_rejects_foreign_glyphs(self):
         node = shutil.which('node')
         if node is None:

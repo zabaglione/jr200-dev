@@ -3,6 +3,7 @@
 32×24文字画面の隣り合うtargetを捕まえる、短い自作reaction gameです。
 最初のroundはplayerの右隣にtargetが出ます。`D` で捕まえ、`R` で再開すると左隣に出るので
 `A` で捕まえます。`Q` でいつでも終了し、画面・文字RAM・PCGを復元してBASICへ戻ります。
+playerは緑、targetは黄で表示し、両者は字形でも区別できます。
 
 ## 操作
 
