@@ -29,6 +29,22 @@ async function quickType(page, text) {
     .textContent.includes('入力が完了しました。'), null, { timeout: 30000 });
 }
 
+async function peekPage(page, address) {
+  await page.locator('#debug-memory-address').fill(address.toString(16).padStart(4, '0'));
+  await page.locator('#debug-memory-read').click();
+  const lines = (await page.locator('#debug-memory').textContent()).split('\n');
+  assert.equal(lines.length, 16);
+  return lines.flatMap(line => line.slice(6).trim().split(' ').map(value => Number.parseInt(value, 16)));
+}
+
+async function sampleDisplayMemory(page) {
+  const result = {};
+  for (const [name, address] of Object.entries({
+    pcg0: 0xc000, codes: 0xc100, pcg1: 0xc400, attrs: 0xc500, font: 0xd000,
+  })) result[name] = await peekPage(page, address);
+  return result;
+}
+
 async function main() {
   const args = argumentsOf(process.argv.slice(2));
   const browser = await chromium.launch({ headless: true });
@@ -76,6 +92,11 @@ async function main() {
     await page.waitForFunction(() => document.querySelector('#tape-status')
       .textContent.includes('状態: 終端'), null, { timeout: 60000 });
     assert.match(await page.locator('#tape-status').textContent(), /REMOTE OFF/);
+    let beforeDisplay = null;
+    if (args['compare-restore'] === 'yes') {
+      await page.locator('.debugger-panel summary').click();
+      beforeDisplay = await sampleDisplayMemory(page);
+    }
     await quickType(page, `${entry.runCommand}\n`);
     await page.waitForTimeout(3000);
     if (args['play-key']) {
@@ -83,11 +104,47 @@ async function main() {
       await page.keyboard.press(args['play-key']);
       await page.waitForTimeout(1500);
     }
+    if (args['play-sequence']) {
+      const keys = args['play-sequence'].split(',');
+      for (const key of keys) {
+        assert.match(key, /^(?:Enter|CtrlC|[WASD])$/);
+        if (key === 'CtrlC') {
+          await page.keyboard.down('Control');
+          await page.keyboard.down('Shift');
+        }
+        await page.keyboard.down(key === 'CtrlC' ? 'c' : key);
+        await page.waitForTimeout(100);
+        await page.keyboard.up(key === 'CtrlC' ? 'c' : key);
+        if (key === 'CtrlC') {
+          await page.keyboard.up('Shift');
+          await page.keyboard.up('Control');
+        }
+        await page.waitForTimeout(key === 'Enter' ? 900 : 180);
+      }
+    }
     if (args.screenshot) await page.screenshot({ path: args.screenshot });
+    let restoreDiff = null;
+    let saveDiff = null;
+    if (beforeDisplay) {
+      const afterDisplay = await sampleDisplayMemory(page);
+      restoreDiff = Object.fromEntries(Object.keys(beforeDisplay).map(name => [name,
+        beforeDisplay[name].filter((value, index) => value !== afterDisplay[name][index]).length]));
+      saveDiff = {};
+      for (const [name, address] of Object.entries({
+        pcg0: 0x3600, codes: 0x3700, pcg1: 0x3a00, attrs: 0x3b00, font: 0x3e00,
+      })) {
+        const saved = await peekPage(page, address);
+        saveDiff[name] = beforeDisplay[name].filter((value, index) => value !== saved[index]).length;
+      }
+      assert.ok(Object.values(restoreDiff).every(count => count === 0),
+        `Display memory was not restored: ${JSON.stringify(restoreDiff)}`);
+    }
     assert.deepEqual(external, []);
     console.log(JSON.stringify({ game: args.game, cjr_sha256: args.sha256,
       cassette: 'normal MLOAD', run_command: entry.runCommand,
       external_requests: external.length, play_key: args['play-key'] || null,
+      play_sequence: args['play-sequence'] || null,
+      restore_diff: restoreDiff, save_diff: saveDiff,
       screenshot: args.screenshot || null }));
   } finally {
     await browser.close();
