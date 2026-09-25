@@ -52,10 +52,11 @@ class WebExportTests(unittest.TestCase):
             'side-catch-0.1.0/side-catch-0.1.0.zip')
         self.fixture.write_package(ready=ready, source_commit=self.commit)
 
-    def plan(self, approval='side-catch@0.1.0', site=None, version='0.1.0'):
+    def plan(self, approval='side-catch@0.1.0', site=None, version='0.1.0',
+             preview=False):
         return web_export.plan_export(self.root, 'side-catch', version, approval,
                                       self.site_catalog, site,
-                                      expected_commit=self.commit)
+                                      expected_commit=self.commit, preview=preview)
 
     def test_exports_verified_version_and_keeps_other_games(self):
         self.publish()
@@ -71,6 +72,12 @@ class WebExportTests(unittest.TestCase):
         web_export.write_export(plan, self.out / 'stage')
         manifest = json.loads((self.out / 'stage/export-manifest.json').read_text())
         self.assertEqual(set(manifest['files']), set(plan['files']))
+        self.assertEqual(manifest['schema_version'], 2)
+        self.assertEqual(manifest['mode'], 'release')
+        self.assertEqual(manifest['base_catalog_sha256'], hashlib.sha256(
+            self.site_catalog.read_bytes()).hexdigest())
+        self.assertEqual(manifest['source']['cjr_size'], len(cjr))
+        self.assertEqual(manifest['source']['runner_contract'], 1)
         staged = {p.relative_to(self.out / 'stage').as_posix()
                   for p in (self.out / 'stage').rglob('*') if p.is_file()}
         self.assertFalse({p for p in staged if p.endswith(('.zip', '.rom', '.asm'))})
@@ -85,10 +92,37 @@ class WebExportTests(unittest.TestCase):
         with self.assertRaisesRegex(web_export.ExportError, 'only verified'):
             self.plan()
 
+    def test_candidate_preview_is_local_only(self):
+        self.fixture.write_package(ready=True, source_commit=self.commit)
+        plan = self.plan(preview=True)
+        self.assertEqual(plan['mode'], 'preview')
+        self.assertEqual(plan['notice']['mode'], 'preview')
+        self.assertEqual(plan['notice']['license'], 'BSD-3-Clause')
+        web_export.write_export(plan, self.out / 'preview')
+        manifest = json.loads((self.out / 'preview/export-manifest.json').read_text())
+        self.assertEqual(manifest['mode'], 'preview')
+
+    def test_requires_expected_commit_and_rejects_symlink_output(self):
+        self.publish()
+        with self.assertRaisesRegex(web_export.ExportError, 'expected source commit'):
+            web_export.plan_export(self.root, 'side-catch', '0.1.0',
+                                   'side-catch@0.1.0', self.site_catalog)
+        target = self.out / 'linked-output'
+        target.symlink_to(self.out, target_is_directory=True)
+        with self.assertRaisesRegex(web_export.ExportError, 'Unsafe staging output'):
+            web_export.write_export(self.plan(), target)
+
     def test_rejects_version_mismatch(self):
         self.publish()
         with self.assertRaisesRegex(web_export.ExportError, 'catalog version'):
             self.plan(approval='side-catch@0.2.0', version='0.2.0')
+
+    def test_rejects_runner_version_newer_than_pinned_web_runner(self):
+        self.publish()
+        self.fixture.metadata['release']['minimum_runner_version'] = '99.0.0'
+        self.fixture.metadata_path.write_text(json.dumps(self.fixture.metadata, indent=2))
+        with self.assertRaisesRegex(web_export.ExportError, 'below required'):
+            self.plan()
 
     def test_fixed_paths_are_immutable_but_identical_reruns_are_noops(self):
         self.publish()
@@ -100,6 +134,10 @@ class WebExportTests(unittest.TestCase):
         target = site / 'games/side-catch/0.1.0/side-catch.cjr'
         target.write_bytes(b'tampered')
         with self.assertRaisesRegex(web_export.ExportError, 'immutable'):
+            self.plan(site=site)
+        target.unlink()
+        target.symlink_to(self.site_catalog)
+        with self.assertRaisesRegex(web_export.ExportError, 'Unsafe existing file'):
             self.plan(site=site)
 
     def test_rejects_invalid_site_catalogs(self):

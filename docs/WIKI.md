@@ -141,6 +141,15 @@ PR検査とは別workflow、最小書込み権限、直列実行を追加しま�
 `jr200-web-emulator`のsiteへ取り込むためのstaging directoryにします。エミュレータのリポジトリを
 変更・pushせず、Release作成も行いません。
 
+`--approve`は入力した作品ID・版の取り違えを防ぐ選択文字列であり、利用者による一般公開の
+承認を証明するものではありません。公開先への配置には、作品・版・配信先の別の明示指定と
+公開前監査が必要です。`--expected-commit`を必須として固定packageのclean source祖先を検査します。
+
+現在のSIDE CATCHとRELIC DIVEは未公開候補なので、公開用exportでは拒否します。両作品を
+ローカルで確認するときだけ`--preview-candidate`を追加します。これはmanifestに
+`mode=preview`と記録し、公開側の取込み対象にはできません。非semverの開発版は
+ローカルWebカタログ上で`0.0.0`を使い、元の版をタイトルとmanifestに残します。
+
 ```sh
 python3 tools/web_export.py \
   --game side-catch --version 0.1.0 --approve side-catch@0.1.0 \
@@ -161,7 +170,9 @@ python3 tools/web_export.py ...同じ引数... --output /absolute/path/to/empty/
 
 出力は`games/<id>/<version>/`のCJR、`LICENSE.txt`、MIT作品では`THIRD_PARTY_NOTICES.md`と
 `LICENSES/BSD-3-Clause.txt`、由来を記した`EXPORT.json`、更新後の`game-catalog.json`、
-`export-manifest.json`です。Webカタログは1 IDにつき推奨版1件だけを持ち、`?game=<id>`はその版を開きます。
+`export-manifest.json`です。manifestには全ファイルのsize・SHA-256、CJRのentry／実行条件、
+必要runner／SDK契約、作品ライセンス、元packageのhashも固定します。Webカタログは1 IDにつき
+推奨版1件だけを持ち、`?game=<id>`はその版を開きます。
 過去版のfileは同じpathに残して上書きしません。版指定リンクは現行の`game-launch.mjs`にないため、
 必要になった時点でエミュレータ側のschema拡張として別途合意します。
 
