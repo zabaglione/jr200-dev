@@ -112,3 +112,10 @@ Issue #14の階層遷移・敗北からの再挑戦もJR-200版での受入証�
 非ゼロ文字を置き、ESC終了の最終`RTS`直前に3領域の退避値と復元値が一致することを確認した。
 別profileでBASICに復帰した後の診断呼び出しも通過した。合成13件、所有ROM／FONT 3件は
 ローカルで成功した。これは実機での動作証拠ではなく、作品ReleaseやPages公開もまだ行っていない。
+新規Macクローンでsource commit `8905c77411d74e008086ed72c995f648139945ef`から
+両作品を再buildし、SIDE CATCHの合成2件・所有ROM／FONT 1件、RELIC DIVEの合成13件・
+所有ROM／FONT 3件を再実行した。clean source由来の候補ZIPはそれぞれ
+`6a741173cd5534e0f1e82c0d0e07d9561e74d0f306dacb677dfcbdf5bc8846c6`、
+`8d806acb332ab6dc8afac35aeec48711ddcc53940dd3ec7cf3633ca64f0589b2`で、
+`games/catalog.json`に固定した。ZIP内の`release_ready=true`は候補packageの検証結果であり、
+作品の公開許可や公開監査合格を意味しない。
