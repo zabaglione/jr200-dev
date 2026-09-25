@@ -546,7 +546,7 @@ lc_help_5:
 lc_help_6:
         .db     "SPACE : RESTART THIS PANEL", 0
 lc_help_7:
-        .db     "ESC / CTRL+C : BACK TO BASIC", 0
+        .db     "CTRL+C : BACK TO BASIC", 0
 lc_help_back:
         .db     "ANY KEY : TITLE", 0
 

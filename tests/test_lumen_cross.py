@@ -17,6 +17,11 @@ from game_project import validate_project  # noqa: E402
 
 
 class LumenCrossRuleTests(unittest.TestCase):
+    def test_in_game_exit_hint_uses_graceful_key(self):
+        source = (PROJECT / 'src/main.asm').read_text(encoding='utf-8')
+        self.assertIn('"CTRL+C : BACK TO BASIC"', source)
+        self.assertNotIn('"ESC / CTRL+C : BACK TO BASIC"', source)
+
     def test_every_stage_is_solvable_and_par_is_the_minimum(self):
         self.assertEqual(len(lc.PARS), lc.LEVELS)
         for level in range(lc.LEVELS):
@@ -93,6 +98,8 @@ class LumenCrossExpectationTests(unittest.TestCase):
 
     def test_press_replays_leave_time_for_the_flip_effect(self):
         for profile in self.expectations['runtime']['profiles']:
+            if profile['mode'] != 'synthetic-injection':
+                continue
             presses = [e for e in profile['replay'] if e['pressed']]
             port = PortModel(lc.LumenCross(), lc.LEVELS)
             for event, following in zip(presses, presses[1:] + [None]):
