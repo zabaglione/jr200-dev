@@ -6,8 +6,8 @@
   "cache_contract": 2,
   "emulator": {
     "lock": "emulator.lock.json",
-    "runtime_required": false,
-    "unavailable_reason": "runtime_distribution_acceptance_pending",
+    "runtime_required": true,
+    "unavailable_reason": "",
     "runtime_policy": {"joystick-sample": "local_rom_only"}
   }
 }

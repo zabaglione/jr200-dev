@@ -37,8 +37,12 @@ ROM／FONTのbytes・hash・ローカルpathは記録や配布へ含めていま
 `860f99be69037a78c6dea557cd28994b83ba7fe05709d512d8e86cb44b6c77b0`と一致しました。
 module生成元commitは上記の`c4c0c30...`、配布手順のRelease tag対象commitは`df031a53...`で
 別です。ゲームCIはエミュレータsourceをclone／buildするfallbackを持ちません。
-fresh cloneのMac/Linux実行とremote CIのruntime受入は別途確認中で、未確認の結果を
-合格として扱いません。
+Mac arm64の新規クローンではこのURLから取得し、固定jrasmで作成した`minimal` CJRを
+`synthetic-ci`で31 cycle実行しました。同じcloneで画面・入力・音声・game loop・port fixtureの
+追加19合成profileも合格し、表示、入力、PCM、終了経路を確認しました。Linux x86_64の
+[PR CI run 36075596458](https://github.com/zabaglione/jr200-dev/actions/runs/36075596458)
+は同じ公開ZIPを取得し、`minimal`を含む13 targetの合成runtimeが`emulator=passed`、
+ROM専用`joystick-sample`は`local_rom_only`で全ジョブ成功でした。いずれも実機動作の証拠ではありません。
 
 取得adapter `tools/runner_fetch.py` は固定URLとZIP全体のSHA-256、
 2つのmoduleと7つの権利表示ファイルそれぞれのsize／SHA-256を`emulator.lock.json`で固定します。
@@ -48,7 +52,8 @@ ZIPはその9ファイルだけを許し、ROM／FONT、余計なファイル、
 例外内のsigned URLもログへ出しません。
 破損ZIPや不一致時に既存directoryを置換せず、エミュレータのsource buildへfallbackもしません。
 現在のlockは公開ReleaseのURLとdigestを固定し、CIでadapterを呼ぶと検証済みZIPを取得します。
-Mac/Linuxのfresh clone試験とremote CI実測を終えるまでは`runtime_required=false`を維持します。
+Mac新規クローンとLinux CIでの配布受入後、`runtime_required=true`に設定しました。
+取得不能・不一致・合成runtime未実施はジョブ失敗とし、`not_run` receiptを受け入れません。
 ROM専用の`joystick-sample`は
 `ci/runner.lock.json`で`local_rom_only`と明示し、CIではbundle取得対象から除外します。
 receiptも`emulator=local_rom_only`、evidence=`not_run`、reason=`requires_local_rom_font`

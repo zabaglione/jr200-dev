@@ -10,7 +10,7 @@ JR-200向けゲームの開発ルール、共通ルーチン、サンプル、�
 `SIDE CATCH`、JR-100からカラー移植したローグライク`RELIC DIVE`、固定package、
 Wiki preview／dry-run同期を整備しています。
 runnerは固定Release資産として公開済みで、ZIPの匿名取得とdigestを確認しています。
-fresh cloneとremote CIでの実行受入は進行中です。
+Mac arm64新規クローンとLinux CIでROMなし合成実行を確認し、合成runtimeをCI必須条件にしました。
 ゲームのReleaseは未公開です。GitHub Wikiには非公開リポジトリ内の案内4ページを配置済みですが、
 作品の配布ページやワンクリック実行リンクはまだ掲載していません。
 構造検査やCJR生成の成功は、エミュレータや実機の動作確認を示しません。

@@ -13,8 +13,10 @@ GitHub Actions artifactへ保存し、次のrunで全targetのfingerprintと内�
 
 固定WASM runnerのversion、source commit、module digest、request／result、timeout契約を実装し、
 Macのローカルbundleで `minimal` のROMなしruntimeを確認しています。固定Release資産は公開済みで、
-ZIPの匿名取得とdigestを確認しました。fresh cloneのMac/Linuxおよびremote CIの実行受入中です。
-その実測後に `runtime_required=true` へ切り替え、未提供や不一致をjob失敗にします。
+ZIPの匿名取得とdigestを確認しました。Mac arm64の新規クローンでは公開ZIPから`minimal`を31 cycle実行、
+Linuxの[PR CI run 36075596458](https://github.com/zabaglione/jr200-dev/actions/runs/36075596458)では
+13 targetの全合成runtimeが`emulator=passed`、ROM専用1 targetは`local_rom_only`でした。
+配布受入後、`runtime_required=true`に切り替え、未提供や不一致をjob失敗にします。
 ROMありBASIC/cassette試験はゲーム別のreplayを実測してから接続します。hardwareは常に別証拠です。
 
 このworkflowはローカルで構文・planner・cache破損・gateを試験していますが、未pushの変更について
