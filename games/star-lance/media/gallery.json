@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "b5adff9cdaa3114c2a56228b8eba23e815ef2406c53907f11708678f6cc6a306",
+      "framebuffer_sha256": "22a7ea70a3570270cac6227714bf83608e0be7c39bfa971a38aa81d977922021"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで艦隊を撃つ場面",
+      "sha256": "99e5e8c6c41f80e41db4a3e3586a096d921e8824386b7892b92e448795b776cc",
+      "framebuffer_sha256": "8ccc6667ed547c963f4389cfeec5e35408d0e7f9fa1ea316230da1b66a53298a"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "18隻を撃ち落として1つ目の波をクリア",
+      "sha256": "373c0efe35b45a40cb1ccc2611fa8c9b1ed10994bec3b7b005a63ff56a46a00c",
+      "framebuffer_sha256": "e9bf9cdaf5a2ac9d2f9d7af1ff66e9aa4fe90d037e6392ffc6dfbfcd205cd30b"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 19.1,
+    "frames": 573,
+    "frames_sha256": "81e4e08105275dddaaf9c3f0f9c3e73908c7d45205ede9fac9a26d30f90169c4",
+    "pcm_sha256": "63aa5aa4b42abfc4cb856bc66c2b93e465a089047f8558ff48b4c7dd639d2e53",
+    "sha256": "673569a0c8b79a76e17987052af5e3e3519264427529314d1c06f47e480ae0ee",
+    "caption": "1つ目の波の自動デモ（18隻を撃ち落とす）"
+  }
+}
