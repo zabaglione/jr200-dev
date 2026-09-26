@@ -1306,8 +1306,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 59,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/auction-house",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "metro_weave",

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。木槌、壺、コイン",
+      "sha256": "65cd9b42d9719ef2e57d4219809ffe34e0d89a702ed8c83c41d90d56b82fa048",
+      "framebuffer_sha256": "5a7df58f3ccc5c58b8e98db9870493dc25ba82681dd4be7b07a6a97c92031e0a"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-inspect",
+      "role": "play",
+      "caption": "鑑定で価値を確かめてから入札し、相手が+2で応じた場面",
+      "sha256": "e91b7393550a5b8086accce2ed8de256d3e3fd9c30370e6f6ac0f64d4fee0fc4",
+      "framebuffer_sha256": "0035e2a6e77576494a9b76b6af5d8ea75e1bcd434057d720775b2055a6d9966c"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "6品を終えて持ち金が目標に届いた1市場目のクリア",
+      "sha256": "8ecf589d7e1083f05d968535aebdcb961e653dc1efa8b63fbcaaf0682e92996d",
+      "framebuffer_sha256": "92861239ef28d68f79ec77cdd251ce1be8733687f44f86f407fbe89e62e57667"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 18.3,
+    "frames": 548,
+    "frames_sha256": "7a8a53c12bf962d2766ecbc3a757715998d2ea7b64dbf29be0ca28a3439155ae",
+    "pcm_sha256": "e43d8c67cf848c3163fe4b79f77a06a47ecc107052d80269046b9b707b443e5b",
+    "sha256": "017e41feb074663dd57ec25ee7d9762337979057f08d5279c5025a77f43b7af4",
+    "caption": "1市場目の6品を競り、目標に届くまで"
+  }
+}

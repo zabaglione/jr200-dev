@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "id": "auction-house",
+  "title": "AUCTION HOUSE",
+  "version": "0.1.0-dev",
+  "summary": "Bid, jump-bid, inspect or pass over six lots to grow forty coins past each market goal.",
+  "genre": "management",
+  "license": "MIT",
+  "distribution": {
+    "format": "cjr",
+    "file": "auction-house.cjr"
+  },
+  "load": {
+    "method": "cjr_loader",
+    "address": "0x1000"
+  },
+  "run": {
+    "method": "basic_usr",
+    "command": "A=USR($1000)",
+    "entry_address": "0x1000",
+    "return": "RTS"
+  },
+  "verification": {
+    "emulator": "passed",
+    "hardware": "not_run"
+  },
+  "release": {
+    "status": "draft",
+    "sdk_contract": 1,
+    "runner_contract": 1,
+    "minimum_runner_version": "0.3.0",
+    "wav": "not-required",
+    "publication": "not-published"
+  }
+}
