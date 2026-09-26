@@ -2405,6 +2405,58 @@
         "games/iron-script/game.json",
         "games/iron-script/media/**"
       ]
+    },
+    {
+      "id": "metro-weave",
+      "kind": "game",
+      "project": "games/metro-weave",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/metro-weave/LICENSE",
+        "games/metro-weave/Makefile",
+        "games/metro-weave/THIRD_PARTY_NOTICES.md",
+        "games/metro-weave/assets/**",
+        "games/metro-weave/build.json",
+        "games/metro-weave/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/selftest.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/metro-weave/tests/**",
+        "tests/audio_model.py",
+        "tests/make_selftest.py",
+        "tests/port_model.py",
+        "tests/selftest_model.py",
+        "tests/test_metro_weave.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/metro-weave/README.md",
+        "games/metro-weave/UPSTREAM.md",
+        "games/metro-weave/game.json",
+        "games/metro-weave/media/**"
+      ]
     }
   ]
 }
