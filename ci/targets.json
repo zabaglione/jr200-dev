@@ -574,6 +574,52 @@
         "games/seed-merge/game.json",
         "games/seed-merge/media/**"
       ]
+    },
+    {
+      "id": "quiet-route",
+      "kind": "game",
+      "project": "games/quiet-route",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/quiet-route/LICENSE",
+        "games/quiet-route/Makefile",
+        "games/quiet-route/THIRD_PARTY_NOTICES.md",
+        "games/quiet-route/assets/**",
+        "games/quiet-route/build.json",
+        "games/quiet-route/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sfx.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/quiet-route/tests/**",
+        "tests/port_model.py",
+        "tests/test_quiet_route.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/quiet-route/README.md",
+        "games/quiet-route/UPSTREAM.md",
+        "games/quiet-route/game.json",
+        "games/quiet-route/media/**"
+      ]
     }
   ]
 }

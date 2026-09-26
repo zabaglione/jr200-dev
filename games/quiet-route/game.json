@@ -1,0 +1,35 @@
+{
+  "distribution": {
+    "file": "quiet-route.cjr",
+    "format": "cjr"
+  },
+  "id": "quiet-route",
+  "genre": "exploration",
+  "license": "MIT",
+  "load": {
+    "address": "0x1000",
+    "method": "cjr_loader"
+  },
+  "run": {
+    "command": "A=USR($1000)",
+    "entry_address": "0x1000",
+    "method": "basic_usr",
+    "return": "RTS"
+  },
+  "schema_version": 2,
+  "summary": "Steal the file and escape through six guarded routes, choosing speed or silence under a shrinking battery.",
+  "title": "QUIET ROUTE",
+  "verification": {
+    "emulator": "passed",
+    "hardware": "not_run"
+  },
+  "version": "0.1.0",
+  "release": {
+    "status": "draft",
+    "sdk_contract": 1,
+    "runner_contract": 1,
+    "minimum_runner_version": "0.3.0",
+    "wav": "not-required",
+    "publication": "not-published"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": 3,
+  "scenes": [
+    {
+      "id": "title", "file": "title.png", "profile": "local-rom-title", "role": "title",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後のタイトル画面（画面全体・無加工）",
+      "sha256": "f5dc46aba5f2e4e54526208bcda473ef5607c5e274861eb8293e07fa5d83261a",
+      "framebuffer_sha256": "fb018f3a5e80dbde1ce87473e6f845720644b3951917f54e82fa58d9ae5da6f8"
+    },
+    {
+      "id": "play", "file": "play.png", "profile": "local-rom-play", "role": "play",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、1経路目の開始画面（画面全体・無加工）",
+      "sha256": "d4509753acead63672850e1880aa48c626564a1b5a55a4c6667f5c86ef0fa065",
+      "framebuffer_sha256": "41b97bdb008232f7b285a38a2e47bf9db6613ba31e7ba9541884ce0de73e1223"
+    },
+    {
+      "id": "clear", "file": "clear.png", "profile": "local-rom-goal", "role": "goal",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、1経路目の機密取得と脱出（画面全体・無加工）",
+      "sha256": "06cf463eae70324e5d95bfea33af1c69885fd31c6cee506bfd162a94240a5d84",
+      "framebuffer_sha256": "808e75e68a4750a1bf551ee1930d56255527183326bdcfbdbf175f08a022e356"
+    }
+  ],
+  "video": {
+    "file": "goal.webm", "profile": "local-rom-goal", "fps": 30, "speed": 4,
+    "seconds": 15.2, "frames": 1827,
+    "frames_sha256": "c2adcce7fba82103074f5449e4769195e305bc09e90b77a86f0cc70c6e0f9a78",
+    "pcm_sha256": "23a50a25f52fee3217c3704f52fe7b85f03997cdafa65264ca65cf7b6d8ff979",
+    "sha256": "155e9ba714edc914a7050d6dbe7f9fb67f336a53623ea32718af7aca6f3ca403",
+    "caption": "所有ROM/FONTで通常MLOAD/USR後、機密取得と1経路目の脱出までを音付きで記録（画面全体・無加工）",
+    "mode": "rom-cassette",
+    "artifact_sha256": "092f7961c960c8d8f6f5a6daf2e54c1fb7795e4b5562a54ccd8b543d4cd2851a",
+    "start_cycle": 83500000
+  },
+  "capture": {
+    "mode": "rom-cassette",
+    "artifact_sha256": "092f7961c960c8d8f6f5a6daf2e54c1fb7795e4b5562a54ccd8b543d4cd2851a",
+    "glyph_source": "sdk/font_data.inc",
+    "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
+  }
+}

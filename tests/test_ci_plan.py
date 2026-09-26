@@ -152,7 +152,7 @@ class SelectionTests(unittest.TestCase):
         for game in sorted(path.parents[1].name for path in root.glob('games/*/media/gallery.json')):
             changed += [f'games/{game}/README.md', f'games/{game}/media/gallery.json',
                         f'games/{game}/media/goal.webm', f'games/{game}/media/README.md']
-        self.assertEqual(len(changed), 2 + 8 * 4)
+        self.assertEqual(len(changed), 2 + 9 * 4)
         plan = select(registered, changed)
         self.assertEqual(plan['build_candidates'], [])
         self.assertEqual(plan['test_candidates'], [])
@@ -162,6 +162,8 @@ class SelectionTests(unittest.TestCase):
             'build_candidates'], ['relic-dive'])
         self.assertEqual(select(registered, ['games/seed-merge/src/main.asm'])[
             'build_candidates'], ['seed-merge'])
+        self.assertEqual(select(registered, ['games/quiet-route/src/main.asm'])[
+            'build_candidates'], ['quiet-route'])
 
     def test_initial_contract(self):
         check(Path(__file__).resolve().parents[1])

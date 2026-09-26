@@ -1,0 +1,77 @@
+{
+  "artifact_sha256": "092f7961c960c8d8f6f5a6daf2e54c1fb7795e4b5562a54ccd8b543d4cd2851a",
+  "expectations_sha256": "451ff666ef0d168a552e4ddbb0e576165135e255a10ca1e3a3058d9b236043b0",
+  "mode": "rom-cassette",
+  "profile": "local-rom-goal",
+  "project": "quiet-route",
+  "result": {
+    "artifact_sha256": "092f7961c960c8d8f6f5a6daf2e54c1fb7795e4b5562a54ccd8b543d4cd2851a",
+    "cassette": {
+      "mode": 1,
+      "read_started": false,
+      "remote": false,
+      "state": 6
+    },
+    "elapsed_cycles": 165000004,
+    "evidence": "emulator_with_local_rom",
+    "framebuffer_sha256": "808e75e68a4750a1bf551ee1930d56255527183326bdcfbdbf175f08a022e356",
+    "hardware": "not_run",
+    "memory": {
+      "level": "00",
+      "mode": "02",
+      "state": "0101010101010101010000000000030101000000000000010101000101010101010000000000000101010101010001010100000000000601010101010101010136363333040418210001000104"
+    },
+    "mode": "rom-cassette",
+    "pcm": {
+      "dropped_high": 0,
+      "dropped_low": 5429027,
+      "frames": 4096,
+      "nonzero_frames": 0,
+      "peak": 0,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47"
+    },
+    "profile": "local-rom-goal",
+    "registers": {
+      "a": 2,
+      "b": 0,
+      "cc": 208,
+      "pc": 6528,
+      "sp": 20477,
+      "waiting": 0,
+      "x": 30
+    },
+    "runner_contract_version": 1,
+    "runner_version": "0.3.0",
+    "schema_version": 1,
+    "status": "passed",
+    "stop": {
+      "address": 0,
+      "reason": "cycle-limit"
+    }
+  },
+  "runner": {
+    "contract_version": 1,
+    "module_files": [
+      {
+        "path": "jr200_codec.mjs",
+        "sha256": "0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c",
+        "size": 17276
+      },
+      {
+        "path": "jr200_codec.wasm",
+        "sha256": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20",
+        "size": 83629
+      }
+    ],
+    "node_version": "26.9.0",
+    "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
+    "version": "0.3.0"
+  },
+  "schema_version": 1,
+  "verification": {
+    "cassette_path": "normal",
+    "emulator": "passed",
+    "hardware": "not_run",
+    "rom": "provided_locally"
+  }
+}

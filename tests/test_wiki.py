@@ -23,7 +23,7 @@ BASE_PAGES = ['All-Games.md', 'Controls.md', 'Games.md', 'Home.md', 'Licenses.md
 DEVELOPMENT = {'brick-pulse': 'Genre-Action', 'circuit-works': 'Genre-Tactics',
                'corner-crown': 'Genre-Tabletop', 'hearth-zero': 'Genre-Management',
                'lumen-cross': 'Genre-Puzzle', 'relic-dive': 'Genre-Exploration',
-               'seed-merge': 'Genre-Puzzle'}
+               'seed-merge': 'Genre-Puzzle', 'quiet-route': 'Genre-Exploration'}
 
 
 def make_cjr(payload=b'\x01\x39', start=0x1000):
@@ -518,7 +518,7 @@ class SevenGamePreviewTests(unittest.TestCase):
             self.assertIn(f'](Game-{game})', files['Controls.md'].decode('utf-8'))
             self.assertIn(f'](Game-{game})', files['Quality-Review.md'].decode('utf-8'))
         self.assertIn('| [アクション](Genre-Action) | 0 | 2 |', home)
-        self.assertIn('| [探索](Genre-Exploration) | 0 | 1 |', home)
+        self.assertIn('| [探索](Genre-Exploration) | 0 | 2 |', home)
         self.assertIn('公開作品準備中', home)
         quality = files['Quality-Review.md'].decode('utf-8')
         for game in DEVELOPMENT:

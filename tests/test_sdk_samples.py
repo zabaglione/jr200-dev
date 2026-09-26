@@ -37,7 +37,7 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-SEED_PORT_CONSUMERS = [*PORT_CONSUMERS, 'seed-merge']
+PORT_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 
 
 class SampleContractTests(unittest.TestCase):
@@ -188,23 +188,23 @@ class SdkImpactTests(unittest.TestCase):
         cases = {
             'sdk/jr200.inc': sorted([
                 'game-loop-sample', 'input-sample', 'joystick-sample', 'relic-dive',
-                'screen-sample', 'side-catch', 'sound-sample', *SEED_PORT_CONSUMERS]),
+                'screen-sample', 'side-catch', 'sound-sample', *PORT_GAME_CONSUMERS]),
             'sdk/joystick.inc': ['joystick-sample'],
             'sdk/screen.inc': [
                 'game-loop-sample', 'joystick-sample', 'screen-sample', 'side-catch'],
             'sdk/input.inc': ['game-loop-sample', 'input-sample', 'side-catch'],
             'sdk/sound.inc': sorted([
                 'game-loop-sample', 'relic-dive', 'side-catch', 'sound-sample',
-                *SEED_PORT_CONSUMERS]),
+                *PORT_GAME_CONSUMERS]),
             'sdk/timing.inc': ['game-loop-sample', 'side-catch', 'sound-sample'],
         }
         for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math',
                        'port', 'session', 'sfx'):
-            cases[f'sdk/{module}.inc'] = SEED_PORT_CONSUMERS
+            cases[f'sdk/{module}.inc'] = PORT_GAME_CONSUMERS
         cases['sdk/pcg.inc'] = PORT_CONSUMERS
-        cases['sdk/font.inc'] = [*SEED_PORT_CONSUMERS, 'side-catch']
-        cases['sdk/font_data.inc'] = sorted([*SEED_PORT_CONSUMERS, 'relic-dive', 'side-catch'])
-        cases['sdk/session.inc'] = [*SEED_PORT_CONSUMERS, 'side-catch']
+        cases['sdk/font.inc'] = [*PORT_GAME_CONSUMERS, 'side-catch']
+        cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])
+        cases['sdk/session.inc'] = [*PORT_GAME_CONSUMERS, 'side-catch']
         cases['sdk/keyscan.inc'] = ['brick-pulse', 'port-fixture-sample']
         cases['sdk/keyrepeat.inc'] = ['port-fixture-sample']
         cases['sdk/effect.inc'] = ['port-fixture-sample']
