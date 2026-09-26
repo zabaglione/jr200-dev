@@ -41,7 +41,7 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['fuse-box', 'peg-garden']
+AUDIO_GAMES = ['fuse-box', 'peg-garden', 'word-foundry']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 
@@ -212,9 +212,9 @@ class SdkImpactTests(unittest.TestCase):
         cases['sdk/audio.inc'] = sorted(['chord-sample', *AUDIO_GAMES])
         cases['sdk/audio_notes.inc'] = sorted(['chord-sample', *AUDIO_GAMES])
         cases['sdk/pcg.inc'] = sorted([*PORT_CONSUMERS, *AUDIO_GAMES])
-        cases['sdk/font.inc'] = [*PORT_GAME_CONSUMERS, 'side-catch']
+        cases['sdk/font.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])
         cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])
-        cases['sdk/session.inc'] = [*PORT_GAME_CONSUMERS, 'side-catch']
+        cases['sdk/session.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])
         cases['sdk/keyscan.inc'] = ['brick-pulse', 'port-fixture-sample']
         cases['sdk/keyrepeat.inc'] = ['port-fixture-sample']
         cases['sdk/effect.inc'] = ['port-fixture-sample']

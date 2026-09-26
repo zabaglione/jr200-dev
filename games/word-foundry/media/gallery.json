@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。CATからDOGへの単語はしご",
+      "sha256": "f5333fef6619e325d024307c045f590354e9040b105d6efc9970046b440a0988",
+      "framebuffer_sha256": "e70e6c517297670bd98b92d6a6d3aabdbd317e5c7fe8f6a6ecda7d37b98f9350"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-via",
+      "role": "play",
+      "caption": "CATをCOTに置き換えてVIAに到達。次に選べる単語が緑になる",
+      "sha256": "aba331c1886495440e741c8ccf0eead88de5842fb9f39a476437523cb285b236",
+      "framebuffer_sha256": "85c98e14e32d8e9d356954017f7877d0a5d133bf01eff62c78217bd3e4b2fe86"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "5手でPIGに着いて1面クリア",
+      "sha256": "e83b74a76fd30d507dbe1723ac924290d11335100cdf02c7da2d50b3723d6325",
+      "framebuffer_sha256": "8d19f140e9d85546b2dadee2635f652e9d4a86fd42f1c0442aacf2bf15be8d85"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 5.5,
+    "frames": 164,
+    "frames_sha256": "98440ec6ff1db565cef573117bb421394b98d8404ef1e232257b3a95d725eebd",
+    "pcm_sha256": "defdcd6fad0bbb2d7fe4b78a10784dc5b1fdce50aeb51c1bbf20f1cf0732d8cf",
+    "sha256": "c4dff8f33d007d0be70a44292c07cc11e001bd0f1a7d2dfc687029a0fcbdd239",
+    "caption": "1面でCATからVIAのCOTを通ってPIGまで5手でクリアし、3声のジングルが鳴るまで（音付き）"
+  }
+}

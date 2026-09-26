@@ -1543,8 +1543,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 59,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/word-foundry",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "relic_dive",
