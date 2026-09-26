@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。畝、苗、ベリー、若木、リンゴ、水滴",
+      "sha256": "04401612c9aafc885140a0affdf5ec8a3ab4d66c8d7fd1a26e78b9aa4a70483b",
+      "framebuffer_sha256": "db3c61030649e2bc0d138e8f7207451d639e83af547c9c63f1eadf16427c25f8"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-field",
+      "role": "play",
+      "caption": "リンゴとベリーが育つ畑",
+      "sha256": "a70ce41279d3a9389b935fabf4027fe7e0a0c81edd2681799798e95294ec82e4",
+      "framebuffer_sha256": "175f0d754b63814d4769d0b1e90c0d51184e0c15d5a9217c9b5179d73c525462"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "実りが目標に届いた1季節目のクリア",
+      "sha256": "9529be43f8643f65afdcffc37859817c84f0ece5748a2d6fea4ea127c85531f3",
+      "framebuffer_sha256": "c6ea1748a2f3bc220a27a2300d3f9b31c4bf6be6928214c5e91c5f5c3c0778cf"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 19.7,
+    "frames": 590,
+    "frames_sha256": "d69ed5e5b0159d91f27274e016a967925d561b5718d983cbdd49135f018a9509",
+    "pcm_sha256": "9e5e97279d1f733d07fd465712250c2d2275694c78edc348318ccf6ffd2b6443",
+    "sha256": "5b64f4c0459624ebdf6a007ccfa658b25b489361ddedf5d9166c910db32712bc",
+    "caption": "1季節目にベリーを植えて育て、目標の実りに届くまで"
+  }
+}
