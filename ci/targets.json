@@ -898,6 +898,55 @@
         "games/stone-balance/game.json",
         "games/stone-balance/media/**"
       ]
+    },
+    {
+      "id": "number-vault",
+      "kind": "game",
+      "project": "games/number-vault",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/number-vault/LICENSE",
+        "games/number-vault/Makefile",
+        "games/number-vault/THIRD_PARTY_NOTICES.md",
+        "games/number-vault/assets/**",
+        "games/number-vault/build.json",
+        "games/number-vault/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/number-vault/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_number_vault.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/number-vault/README.md",
+        "games/number-vault/UPSTREAM.md",
+        "games/number-vault/game.json",
+        "games/number-vault/media/**"
+      ]
     }
   ]
 }
