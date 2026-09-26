@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。フラスコ、盤、毒、注文の星",
+      "sha256": "8d0f5e68edda632408f106083e595ae79a3ff64d59d2eeb7df015cbac5419b64",
+      "framebuffer_sha256": "f88738ba17443dfdb69d04e9b28419ee9dc9ea58e79b5b9d378f0cc820e78b4d"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-dose",
+      "role": "play",
+      "caption": "1回注いで薬が動いた場面",
+      "sha256": "57cf20790e965f1ad076824e3c10cf862fcc79d54ec6af7581cd6acf2a4a337b",
+      "framebuffer_sha256": "23bb68069689b5040b515df9c6770c4e2eb28c4772625fe5d7901a12c328ed57"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "薬が注文の星に着いた1注文目のクリア",
+      "sha256": "320daa6d7a27a3bd616a74624de58faa0ee3b4d7d84ef26f3ab919154d4e35fc",
+      "framebuffer_sha256": "fca7579c4b5d8f1621849cba26ab4da40f6457fec02514a21a272452713f04e9"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 4.2,
+    "frames": 127,
+    "frames_sha256": "a62c3f44184ab897e88f6263a32369894e0d4f1511c659d69a92be22eed99ff8",
+    "pcm_sha256": "c780754bf6a3a91dba76118790d81023e0f80e9768eba4cddaff3126861bbb22",
+    "sha256": "7a8c6f328afdb881053ee38b4b15d76371250f6fbf8ce8c357cf278c1cd3c29a",
+    "caption": "1注文目で2種類の材料を注ぎ、薬を星へ届けるまで"
+  }
+}
