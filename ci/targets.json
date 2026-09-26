@@ -1388,6 +1388,55 @@
         "games/five-forge/game.json",
         "games/five-forge/media/**"
       ]
+    },
+    {
+      "id": "chain-suit",
+      "kind": "game",
+      "project": "games/chain-suit",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/chain-suit/LICENSE",
+        "games/chain-suit/Makefile",
+        "games/chain-suit/THIRD_PARTY_NOTICES.md",
+        "games/chain-suit/assets/**",
+        "games/chain-suit/build.json",
+        "games/chain-suit/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/chain-suit/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_chain_suit.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/chain-suit/README.md",
+        "games/chain-suit/UPSTREAM.md",
+        "games/chain-suit/game.json",
+        "games/chain-suit/media/**"
+      ]
     }
   ]
 }
