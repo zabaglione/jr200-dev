@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "0ab5dccf4586fd1d1dbbbe8f473846057df77c4aa24281e9ed7772da7d7b0ddd",
+      "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで門へ走る場面",
+      "sha256": "10b4bd9b890726bd766c91770be5a4f41012b445d1d54af3be7b72bdb4486fc7",
+      "framebuffer_sha256": "5e08cac6c8d7b140916dfb62bf9df3722bd8c66c7a12723704947a92986c28a0"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "9つの門を越えて金の走りで1つ目のコースをクリア",
+      "sha256": "613e17af326152860a198889dd0e40075c6c9ee061db04b7a2d76181bba23a87",
+      "framebuffer_sha256": "9b2f7bf375b39f81fb8df621fa60e11f9fd41babba98503be9c27a229dc57629"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 19.1,
+    "frames": 573,
+    "frames_sha256": "bb5eced7ab7b53e4ce7d8cc0c4550c4b524bc81f4a7abe307854bc6af30e5220",
+    "pcm_sha256": "84cc792b2fea819ed8744eec2058482951914c37491a6ae30654495001c63058",
+    "sha256": "bae2898070b8ecc5a5e8cdff3d7968abd548a7a356d87e4c4aa08160e49ce604",
+    "caption": "1つ目のコースの自動デモ（9つの門を越え、結晶をすべて取る）"
+  }
+}

@@ -1,0 +1,583 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "notes": "State expectations come from games/gate-runner/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six courses with their input scripts (held A/D included); synthetic-demo-clear plays course 1 with the same script at normal speed; synthetic-no-input-loss runs straight and falls into the pits; synthetic-hold-right holds D until the runner stops at column 28. Timed key replays only observe values that do not depend on tick timing. Replays start at 1.3M cycles because the MCU scan start-up drains the ROM-less font transfer. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
+  "runtime": {
+    "default_profile": "synthetic-self-test",
+    "profiles": [
+      {
+        "profile": "synthetic-title",
+        "mode": "synthetic-injection",
+        "max_cycles": 1900000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "pcg",
+            "address": "0xc400",
+            "length": 256
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "00",
+            "pcg": "0306060c0c181830c06060303018180c000000cccc000000ff92ff49ff92ff49ff0055aa55aa55aaffaaff242400000010386cc66c38100000000000007eff7e010302010f172707c0e0e0c0e0d0c8c407060c1830600000c0c0603010080c0003070703070b132380c04080f0e8e4e00303060c08103000e06030180c060000010302412f170707c0e0e0c1e6d8c0c0070c181000000000c06030100000000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
+          },
+          "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e",
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 1000,
+            "maximum_dropped_frames": 900000000,
+            "minimum_peak": 21000
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-help",
+        "mode": "synthetic-injection",
+        "max_cycles": 1650000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x61",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "05"
+          },
+          "framebuffer_sha256": "131ea4a9ed5bfe0e34db0e11a4ddf0ebf45f5c277447368628fc7e255acebbe2",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-start",
+        "mode": "synthetic-injection",
+        "max_cycles": 1380000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4640",
+            "length": 38
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0f03090106000000000000000000010b140002020500000000000000000002021001161e0a01",
+            "mode": "01",
+            "level": "00"
+          },
+          "framebuffer_sha256": "981c764097ee48597c5f397c8cf614f872269bd99e1ed93c7b4fa53dfcc17361",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-hold-right",
+        "mode": "synthetic-injection",
+        "max_cycles": 7900000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1600000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4600000,
+            "code": "0x64",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "x",
+            "address": "0x4640",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "01",
+            "level": "00",
+            "x": "1c"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-no-input-loss",
+        "mode": "synthetic-injection",
+        "max_cycles": 21000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4640",
+            "length": 38
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "status",
+            "address": "0xc3e1",
+            "length": 17
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0f00090106003a1200120202020002021e00020211010000000000000000010208010f1e0a00",
+            "mode": "03",
+            "level": "00",
+            "status": "46454c4c20494e544f2054484520504954"
+          },
+          "framebuffer_sha256": "5e5e41b3ccef20d6aff1fc81a5ed479036497a5f52a35d82c4a7205ecbfeabaf",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-lose-retry",
+        "mode": "synthetic-injection",
+        "max_cycles": 21680000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21000000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21040000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21300000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21340000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21600000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21640000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4640",
+            "length": 38
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0f03090106000000000000000000010b140002020500000000000000000002021001161e0a01",
+            "mode": "01",
+            "level": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-self-test",
+        "mode": "synthetic-injection",
+        "max_cycles": 3500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x74",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x74",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "fixtures",
+            "address": "0x5000",
+            "length": 1014
+          },
+          {
+            "name": "autoplay",
+            "address": "0x53f6",
+            "length": 246
+          },
+          {
+            "name": "quiet",
+            "address": "0x46e0",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "00",
+            "fixtures": "0f03090106000100000100000000010b140002020500000000000000000002021001161e0a01011003090106000100000100000000010b140002020500000000000000000002021001161e0a01010203090106000100000100000000010b140002020500000000000000000002021001161e0a01011c03090106000100000100000000010b140002020500000000000000000002021001161e0a01010f03090106040100000100000000010b140002020500000000000000000002021001161e0a01010f03090106000102000100040000010b140002020500000000000000000002021001161e0a01010f03090106000100000000000300010208010f1e0a00000000000000000003021e0002021400010f030c0106000100000000000500010913001e1e1800000000000000000002021e001e1e1301010c02090106000112001201010100010b140002020500000000000000000002021001161e0a01011403090106000100001200000100010b140002020500000000000000000002021001161e0a01010903090106000100001200000100010b140002020500000000000000000002021001161e0a01010f0209010600011200120202010002021e0002020500000000000000000002021001161e0a01010f0309010604010000120000010002021e0002020500000000000000000002021001161e0a01010f0309010600010000120000010003021e0002020500000000000000000002021001161e0a01010f0209010603011200120303010003021e0002020500000000000000000002021001161e0a01011402090106000112001201010100010b140113190500000000000000000002021001161e0a0101050309010600010c001200040101010b140002020500000000000000000002021001161e0a01010703090106000100001200000100010b140002020500000000000000000002021001161e0a010116030c010603010c001200040101020203001e1e1501000000000000000001181e0102111400010c00090106000112001201010000010b140002020500000000000000000002021001161e0a01031403090106000100001200000900010b140002020500000000000000000002021001161e0a01020e03090106000000000000000000010b140002020500000000000000000002021001161e0a01011003090106000000000000000000010b140002020500000000000000000002021001161e0a01010f03090106080000000000000000010b140002020500000000000000000002021001161e0a01010f03090106080000000000000000010b140002020500000000000000000002021001161e0a01010f03090106030000000000000000010b140002020500000000000000000002021001161e0a0101",
+            "autoplay": "0a0309010606b20c00120004090902021e0002020b010000000000000000020a1600020210010200b215030c010606ee0c001200040c0c02101e01020a1401000000000000000002021e001e1e0d010200ee09030c010500ee0c001200040c0c010208010f1e0a00000000000000000003021e00020214000200ee07030c010506ee0c001200040c0c02021e010f170601000000000000000003101e02021007010200ee05030c010400ee0c001200040c0c010d170002020600000000000000000002021e0002020b010200ee0d030c010406ee0c001200040c0c020a16001e1e0e010000000000000000010c1e001e1e05000200ee",
+            "quiet": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-demo-play",
+        "mode": "synthetic-injection",
+        "max_cycles": 13250000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x70",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x70",
+            "pressed": false
+          }
+        ],
+        "observations": [],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {},
+          "framebuffer_sha256": "5e08cac6c8d7b140916dfb62bf9df3722bd8c66c7a12723704947a92986c28a0",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-demo-clear",
+        "mode": "synthetic-injection",
+        "max_cycles": 25500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x70",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x70",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4640",
+            "length": 38
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0a0309010606b20c00120004090902021e0002020b010000000000000000020a160002021001",
+            "mode": "02",
+            "level": "00"
+          },
+          "framebuffer_sha256": "9b2f7bf375b39f81fb8df621fa60e11f9fd41babba98503be9c27a229dc57629",
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 1000,
+            "maximum_dropped_frames": 900000000,
+            "minimum_peak": 21000
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-exit",
+        "mode": "synthetic-injection",
+        "max_cycles": 1800000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 1300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1450000,
+            "code": "0x1b",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1490000,
+            "code": "0x1b",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "pcg0",
+            "address": "0xc000",
+            "length": 16
+          },
+          {
+            "name": "pcg1",
+            "address": "0xc400",
+            "length": 16
+          },
+          {
+            "name": "codes",
+            "address": "0xc100",
+            "length": 16
+          },
+          {
+            "name": "attrs",
+            "address": "0xc500",
+            "length": 16
+          },
+          {
+            "name": "font",
+            "address": "0xd100",
+            "length": 16
+          },
+          {
+            "name": "key-mask",
+            "address": "0xc81e",
+            "length": 1
+          },
+          {
+            "name": "stack-guard",
+            "address": "0x4f00",
+            "length": 16
+          },
+          {
+            "name": "channel-c",
+            "address": "0xc812",
+            "length": 1
+          },
+          {
+            "name": "channel-d",
+            "address": "0xc814",
+            "length": 1
+          },
+          {
+            "name": "channel-f",
+            "address": "0xc819",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "pcg0": "00ff00ff00ff00ff00ff00ff00ff00ff",
+            "pcg1": "00ff00ff00ff00ff00ff00ff00ff00ff",
+            "codes": "00000000000000000000000000000000",
+            "attrs": "00000000000000000000000000000000",
+            "font": "00000000000000000000000000000000",
+            "key-mask": "00",
+            "stack-guard": "0000ffff0000ffff0000ffff0000ffff",
+            "channel-c": "00",
+            "channel-d": "00",
+            "channel-f": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      }
+    ]
+  }
+}
