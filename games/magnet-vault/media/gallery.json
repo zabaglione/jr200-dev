@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "d43e043d2173be7f60faf6a0fe533f89d36dc2c0e45fdbb5246e5ffa208f9557",
+      "framebuffer_sha256": "97bf326a2a859524f0b2255b4aef637487ab7e0be82a87a9b0531829a732d341"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-pull",
+      "role": "play",
+      "caption": "箱を引き寄せたあと",
+      "sha256": "20dc2af92acd6771c6f4a09c8c8f2354a8faf864ca8ae5f498b35ab90fb61c9f",
+      "framebuffer_sha256": "bb22ecc902ce4891856630d4d2c1a25034db5440daac0663686061088935ae50"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "星3つで1室目をクリア",
+      "sha256": "6b27a818bc532626f88033d7ab232685ac706c577fb6868862b8b850f45f83f0",
+      "framebuffer_sha256": "272a6aed144fd93594c11c09f238c313ccd2fe722c52f29884ca0b0a1819d578"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 5.2,
+    "frames": 156,
+    "frames_sha256": "2e8d706cb4f678ca88a2b415cf9d127241f5244ade38a2197d3e11ba1af4876c",
+    "pcm_sha256": "f33f3993548f5593479bf660b52a18fa115faacaef9dcd0799085a7f9c679394",
+    "sha256": "879ac631017862b85b2635bde3f02c45d2ae1b6c518bea8f094c0a526765a344",
+    "caption": "1室目を星3つでクリア"
+  }
+}
