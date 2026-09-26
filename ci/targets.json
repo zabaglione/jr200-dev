@@ -1987,6 +1987,58 @@
         "games/ribbon-snake/game.json",
         "games/ribbon-snake/media/**"
       ]
+    },
+    {
+      "id": "pendulum-port",
+      "kind": "game",
+      "project": "games/pendulum-port",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/pendulum-port/LICENSE",
+        "games/pendulum-port/Makefile",
+        "games/pendulum-port/THIRD_PARTY_NOTICES.md",
+        "games/pendulum-port/assets/**",
+        "games/pendulum-port/build.json",
+        "games/pendulum-port/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/selftest.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/pendulum-port/tests/**",
+        "tests/audio_model.py",
+        "tests/make_selftest.py",
+        "tests/port_model.py",
+        "tests/selftest_model.py",
+        "tests/test_pendulum_port.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/pendulum-port/README.md",
+        "games/pendulum-port/UPSTREAM.md",
+        "games/pendulum-port/game.json",
+        "games/pendulum-port/media/**"
+      ]
     }
   ]
 }
