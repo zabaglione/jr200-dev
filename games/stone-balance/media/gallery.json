@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。3つの山の石",
+      "sha256": "1b007b720f792f0721445a2d6d9d4a90441493aca4afd296b8d40f32034140e4",
+      "framebuffer_sha256": "80e5ff358ffd88801f03b880df3589ffc9e079ecdacf410c5df5521693e73277"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-move",
+      "role": "play",
+      "caption": "左の山から2個取り、ライバルが1個取った後",
+      "sha256": "570e1003f30be30565c3977bc52d13020dd7069dd81a5cbf6007769ff620e53f",
+      "framebuffer_sha256": "7c8676e888c70c804bef84ab208cc8d174292fc1c1a5d98fc8f64edb9b0cb9e6"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "最後の石を取って1面クリア",
+      "sha256": "4ccea50c81c3ecdb75331b2dc5820a27d01dd2aa235ff300521ec4ddb7602070",
+      "framebuffer_sha256": "a84f2de535d1235cb863ebad000433eb8407ed2c16ba21c88227d9bfb4708248"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 13.9,
+    "frames": 417,
+    "frames_sha256": "e464ce3264eac1965bbfa39a17b06c0fe6ffa671a95279eab8c37e7e4f9bd9ea",
+    "pcm_sha256": "0d8710ef72c866c64c32f27b7d29b5fe58d3d59150d8224bae5fed21e1b5444a",
+    "sha256": "63414d7f92cd9da6be5e6eee2698aaad86b04f77f8939dd29783497fc7b78353",
+    "caption": "1面で5手を指し、最後の石を取ってクリアし、3声のジングルが鳴るまで（音付き）"
+  }
+}

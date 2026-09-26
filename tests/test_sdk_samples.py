@@ -41,7 +41,7 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['fuse-box', 'mirror-relic', 'peg-garden', 'word-foundry']
+AUDIO_GAMES = ['fuse-box', 'mirror-relic', 'peg-garden', 'stone-balance', 'word-foundry']
 KEYS_EXT_GAMES = ['mirror-relic']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])

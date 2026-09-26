@@ -849,6 +849,55 @@
         "games/mirror-relic/game.json",
         "games/mirror-relic/media/**"
       ]
+    },
+    {
+      "id": "stone-balance",
+      "kind": "game",
+      "project": "games/stone-balance",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/stone-balance/LICENSE",
+        "games/stone-balance/Makefile",
+        "games/stone-balance/THIRD_PARTY_NOTICES.md",
+        "games/stone-balance/assets/**",
+        "games/stone-balance/build.json",
+        "games/stone-balance/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/stone-balance/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_stone_balance.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/stone-balance/README.md",
+        "games/stone-balance/UPSTREAM.md",
+        "games/stone-balance/game.json",
+        "games/stone-balance/media/**"
+      ]
     }
   ]
 }
