@@ -11,6 +11,7 @@ GAME_ROUND:             .equ    0x2001
 GAME_WINS:              .equ    0x2002
 GAME_RETURN_PROOF:      .equ    0x2003
 GAME_LAST_KEY:          .equ    0x2004
+GAME_COUNT_REMAINDER:   .equ    0x2005
 GAME_TEXT_SOURCE:       .equ    0x2006
 GAME_TEXT_DESTINATION:  .equ    0x2008
 
@@ -20,6 +21,7 @@ GAME_CELL_RIGHT:        .equ    0xc290
 GAME_TITLE_CELL:        .equ    0xc14a
 GAME_PROMPT_CELL:       .equ    0xc384
 GAME_RESULT_CELL:       .equ    0xc344
+GAME_RESULT_DIGITS:     .equ    0xc34b
 GAME_PLAYER_ATTR:       .equ    0x44
 GAME_TARGET_ATTR:       .equ    0x46
 
@@ -146,6 +148,7 @@ game_catch_draw:
         LDX     GAME_RESULT_CELL
         STX     [GAME_TEXT_DESTINATION]
         JSR     game_copy_text
+        JSR     game_print_wins
         LDAA    213
         JSR     jr_sound_c_start
         BCC     game_sound_started
@@ -154,6 +157,39 @@ game_sound_started:
         LDX     1000
         JSR     jr_wait_x
         JSR     jr_sound_c_stop
+        RTS
+
+; Show the exact 8-bit catch count as three decimal digits (000-255).
+game_print_wins:
+        LDAA    [GAME_WINS]
+        CLRB
+game_count_hundreds:
+        CMPA    100
+        BCS     game_count_hundreds_done
+        SUBA    100
+        INCB
+        BRA     game_count_hundreds
+game_count_hundreds_done:
+        STAA    [GAME_COUNT_REMAINDER]
+        TBA
+        ADDA    0x30
+        STAA    [GAME_RESULT_DIGITS]
+        LDAA    [GAME_COUNT_REMAINDER]
+        CLRB
+game_count_tens:
+        CMPA    10
+        BCS     game_count_tens_done
+        SUBA    10
+        INCB
+        BRA     game_count_tens
+game_count_tens_done:
+        STAA    [GAME_COUNT_REMAINDER]
+        TBA
+        ADDA    0x30
+        STAA    [GAME_RESULT_DIGITS+1]
+        LDAA    [GAME_COUNT_REMAINDER]
+        ADDA    0x30
+        STAA    [GAME_RESULT_DIGITS+2]
         RTS
 
 game_copy_text:
@@ -177,7 +213,7 @@ game_prompt_right_text:
 game_prompt_left:
         .db     "A CATCH   Q QUIT", 0
 game_result:
-        .db     "CAUGHT  R RESTART", 0
+        .db     "CAUGHT 000 R RESTART", 0
 
         .include "../../../sdk/screen.inc"
         .include "../../../sdk/input.inc"

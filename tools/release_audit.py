@@ -26,7 +26,7 @@ SUPPORTED_LICENSES = {'BSD-3-Clause', 'MIT'}
 # video or changing its bytes requires a new content/provenance review.
 REVIEWED_GALLERY_VIDEOS = {
     'games/side-catch/media/goal.webm':
-        'd8156bef75e4e55d064a66642c1799d17b2143034145ff7f650a5fa879680889',
+        '6737e0b01cf8813519a613f0e48081e16db13199d6893b3e0cf1b5db39327ff7',
     'games/relic-dive/media/goal.webm':
         '5cb2930519bad2efb482fb0e028935129623f8ca47b09dfb729b361c2f577232',
     'games/lumen-cross/media/goal.webm':

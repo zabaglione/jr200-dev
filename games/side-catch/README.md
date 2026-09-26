@@ -4,6 +4,7 @@
 最初のroundはplayerの右隣にtargetが出ます。`D` で捕まえ、`R` で再開すると左隣に出るので
 `A` で捕まえます。`Q` でいつでも終了し、画面・文字RAM・PCGを復元してBASICへ戻ります。
 playerは緑、targetは黄で表示し、両者は字形でも区別できます。
+捕獲後の結果行には、そのプレイ中の累計捕獲数を3桁で表示します（000〜255、以後000に戻ります）。
 
 ## 操作
 
@@ -45,8 +46,10 @@ CJRを通常 `MLOAD` した場合は、BASICから `A=USR($1000)` で開始し�
 所有ROM/FONTの通常MLOAD/USRから撮影し、自作字形を照合します。動画は起動中のBASICを
 除外した実ゲーム画面・PCMです。撮影済みの同名fileは上書きしないため、上記の撮影commandは
 出力先がない場合の例です。候補packageには全合成・所有ROM/FONT profileの合格reportが必要です。
-対象は`--profile synthetic-sound`、`--profile local-rom-goal`、
-`--profile local-rom-play`も含みます。`synthetic-sound`は音声の回帰試験であり、
+対象は`--profile synthetic-count`、`--profile synthetic-count-tens`、
+`--profile synthetic-sound`、`--profile local-rom-goal`、
+`--profile local-rom-play`も含みます。`synthetic-count`と`synthetic-count-tens`は
+累計の2回目と10回目の表示を実CJRで検査します。`synthetic-sound`は音声の回帰試験であり、
 所有ROM/FONTでの合否判定は`local-rom-*`を基準にします。
 ROM／FONTは本リポジトリやpackageへコピーしません。
 
