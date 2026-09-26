@@ -95,7 +95,8 @@ make game-run PROJECT=games/my-game RUNNER_BUNDLE="$RUNNER_BUNDLE"
 
 `tests/expectations.json` version 2がdefault profileと複数profile、mode、cycle上限、入力replay、breakpoint、
 観測範囲、期待PC／memory／framebuffer hash／PCM frameを保持します。PCMはframe数、非0 sample数、
-peakとdrop数を記録し、sample側で最低frame数・最低非0数・最大drop数を検査できます。
+peakとdrop数を記録し、sample側で最低frame数・最低非0数・最大drop数と、任意の最低peak（`minimum_peak`）を
+検査できます。音源1系統の振幅は7000なので、peak 21000以上は3系統（またはキークリックを含む3音）の同時発音を示します。
 replayの `text` eventはASCII文字列を明示したpress／release列へ展開し、cycle、key duration、intervalを
 固定します。`joystick` eventは0始まりのplayer番号とactive-low stateを保持します。
 ROM/FONTギャラリー用profileは`replay_from`で同一作品の合成profileに記録済みの入力列を参照し、

@@ -23,6 +23,7 @@
 | `effect.inc` | 待機しない演出step／phase管理 | 呼出元がtickごとに進め、表示・入力・音声を並行処理する。実時間保証なし |
 | `math.inc` | 8-bit乗除算、X+A | M6800命令のみ |
 | `sfx.inc` | channel Cのnon-blocking効果音列 | frameごとに進める |
+| `audio.inc` / `audio_notes.inc` | 音源F・D・Cの3声の曲とジングル、channel Cの効果音（`sfx.inc`と同じAPI） | `sfx.inc`とは併用しない。28 bytesの`JR_AUDIO`が必要。テンポは`jr_sfx_tick`の回数 |
 | `port.inc` | タイトル・説明・面進行・クリア/失敗・やり直し確認・演出待ちの共通loop | 作品側hookを呼ぶ。演出待ちは同期処理で、効果音と終了キーだけを継続する |
 
 `session.inc` と `gfx.inc` 以外の全routineは呼出元のSを初期化せず、`JSR`／`RTS` の範囲だけstackを使います。

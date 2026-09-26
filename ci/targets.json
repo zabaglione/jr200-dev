@@ -119,6 +119,39 @@
       ]
     },
     {
+      "id": "chord-sample",
+      "kind": "sample",
+      "project": "samples/chord",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "mk/game.mk",
+        "rules/jr200.json",
+        "samples/chord/Makefile",
+        "samples/chord/assets/**",
+        "samples/chord/build.json",
+        "samples/chord/src/**",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/frame.inc",
+        "sdk/jr200.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "samples/chord/tests/**",
+        "tests/audio_model.py",
+        "tests/test_audio.py",
+        "tools/audio_notes.py"
+      ],
+      "doc_inputs": [
+        "samples/chord/README.md",
+        "samples/chord/game.json",
+        "samples/chord/media/**"
+      ]
+    },
+    {
       "id": "joystick-sample",
       "kind": "sample",
       "project": "samples/joystick",

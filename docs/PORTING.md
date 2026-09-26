@@ -1,7 +1,7 @@
 # JR100dev作品のJR-200移植契約
 
 JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約です。
-作業状況はIssue（#10〜#26）で管理し、この文書には移植の判断基準だけを置きます。
+作業状況はIssue（第1弾 #10〜#26、残り作品 #57〜#63）で管理し、この文書には移植の判断基準だけを置きます。
 
 ## 参照基準
 
@@ -49,7 +49,7 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
 | VIA timerの`TICK`、`animate`、`hold` | `sdk/frame.inc`、`jr_port_animate`、`jr_port_hold` |
 | 入力・tickと並行する演出 | `sdk/effect.inc`の`jr_effect_start`／`jr_effect_tick` |
 | 押し続け・離上・リピート | `sdk/keyscan.inc`と`sdk/keyrepeat.inc`（一定間隔のpoll） |
-| `sound(0-3)`とSFX表 | `sdk/sfx.inc`、`jr_port_sound`、作品の`game_sfx_table` |
+| `sound(0-3)`とSFX表 | `sdk/sfx.inc`（第1弾）または`sdk/audio.inc`（3和音）、`jr_port_sound`、作品の`game_sfx_table` |
 | 8-bitの乗除算 | `sdk/math.inc` |
 | `rules.py`の`init`／`act`／`tick`／`draw` | 作品の`game_init`／`game_act`／`game_tick`／`game_draw` |
 
@@ -114,5 +114,42 @@ Bがevent（0なし、1押下、2リピート、3離上）です。単一キー�
 | RELIC DIVE | 1.6.1 | 既存移植（`games/relic-dive/UPSTREAM.md`） | 既存の属性色 | #14 |
 
 SIDE CATCHはJR-200向け自作の導線確認作品で、JR100devの台帳には含めません。
-残る45作品は台帳の`candidate`です。第1弾の受入後に、台帳の難度・必要SDK・難所から
-次の少数作品を選びます（#26）。一括移植はしません。
+
+## 残り作品の移植（第2弾）
+
+台帳の残り45作品は`wave: 2`です。QUIET ROUTEとSEED MERGEは移植済みで、残る43作品を
+次の順に1作品ずつ移植します（#57）。
+
+| 段階 | Issue | 対象 |
+| --- | --- | --- |
+| ターン制・難度low | #59 | 18作品（QUIET ROUTE、SEED MERGEを含めて20） |
+| ターン制・難度medium | #60 | 8作品（多面の解答replay） |
+| リアルタイム | #61 | 11作品（作品内の自己試験と自動操縦） |
+| JR-100手書きASM | #62 | 6作品 |
+
+台帳の`status`は`planned`（未着手）、`ported-dev`（作品directoryあり・未公開）、
+`ported`（`games/catalog.json`で`verified`）で、`tests/test_porting_ledger.py`が実際の
+directoryとcatalogとの一致を検査します。
+
+## JR-200の色と3和音
+
+第2弾の作品は、JR-200の機能を次のように使います。
+
+- **色**: 属性RAMの前景・背景8色と、PCGの色付きタイルで状態を示します。同じ情報を文字や模様でも示し、
+  色だけに頼りません。作品のREADMEに「どの状態をどの色と記号で示すか」を書きます。
+- **3和音**: `sdk/audio.inc`で音源F・D・Cを同時に鳴らします。タイトル曲（ループ）と、クリア・失敗の
+  3声ジングルを持ちます。移動などの効果音はC系統で鳴り、その間だけ曲のC声部が止まって、終わると戻ります。
+
+`sdk/audio.inc`は`sdk/sfx.inc`と同じ`jr_sfx_play`／`jr_sfx_tick`／`jr_sfx_stop`を持つため、
+`sdk/port.inc`を変えずに置き換えられます。`game_sfx_table`のphraseの先頭を`0xfe`にすると、
+その後の曲定義を3声ジングルとして鳴らします。作品は28 bytesの`JR_AUDIO`（標準配置では`$4700`）を宣言し、
+`jr_session_enter`の後で`jr_audio_init`を呼びます。音符は`sdk/audio_notes.inc`（C2〜B6、
+`tools/audio_notes.py`で生成）を使います。
+
+音程はエミュレータの分周式で、F系統は最大17セント（低音域の整数Hz化による）、C・D系統は最大24セント
+（A3付近）ずれます。旋律は精度の高いF系統に置きます。テンポは`jr_sfx_tick`の呼出し回数で進むため、
+描画中は遅れます。3声の同時発音は、固定runnerのPCM peakが21000以上（1系統の振幅7000の3倍）で確認します
+（`samples/chord`）。物理JR-200での音程・音量は未確認です。
+
+公開済みの第1弾作品は`sdk/sfx.inc`のままです。`sfx.inc`と`port.inc`を変えないことで、公開済みCJRを
+作り直さずに済みます。

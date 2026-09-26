@@ -1,0 +1,91 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "notes": "synthetic-chord stops while all three voices sound: PCM peak 21000 equals three 7000-amplitude square waves in phase, so channels F, D and C are active together. synthetic-ci runs 200 frames; the driver state copied at frame 100 (JR_AUDIO bytes 0-19) must equal tests/audio_model.py, and channels C, D and F must be silent after return. Hardware pitch and volume are unverified.",
+  "runtime": {
+    "default_profile": "synthetic-ci",
+    "profiles": [
+      {
+        "profile": "synthetic-ci",
+        "mode": "synthetic-injection",
+        "max_cycles": 8000000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {
+            "name": "snapshot",
+            "address": "0x1420",
+            "length": 20
+          },
+          {
+            "name": "status",
+            "address": "0x1441",
+            "length": 1
+          },
+          {
+            "name": "channel-c",
+            "address": "0xc812",
+            "length": 1
+          },
+          {
+            "name": "channel-d",
+            "address": "0xc814",
+            "length": 1
+          },
+          {
+            "name": "channel-f",
+            "address": "0xc819",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "snapshot": "104c05104810541410521058141058010000000d",
+            "status": "01",
+            "channel-c": "00",
+            "channel-d": "00",
+            "channel-f": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 1000,
+            "maximum_dropped_frames": 1000000
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-chord",
+        "mode": "synthetic-injection",
+        "max_cycles": 1200000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {
+            "name": "voices-left",
+            "address": "0x1402",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {},
+          "framebuffer_sha256": null,
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 4096,
+            "maximum_dropped_frames": 1000000,
+            "minimum_peak": 21000
+          },
+          "cassette": null
+        }
+      }
+    ]
+  }
+}

@@ -23,6 +23,10 @@ PROJECTS = {
         'samples/sound',
         ('sdk/jr200.inc', 'sdk/sound.inc', 'sdk/timing.inc'),
     ),
+    'chord-sample': (
+        'samples/chord',
+        ('sdk/audio.inc', 'sdk/audio_notes.inc', 'sdk/frame.inc', 'sdk/jr200.inc'),
+    ),
     'game-loop-sample': (
         'samples/game-loop',
         ('sdk/input.inc', 'sdk/jr200.inc', 'sdk/screen.inc',
@@ -187,7 +191,7 @@ class SdkImpactTests(unittest.TestCase):
     def test_shared_module_changes_rebuild_only_consumers(self):
         cases = {
             'sdk/jr200.inc': sorted([
-                'game-loop-sample', 'input-sample', 'joystick-sample', 'relic-dive',
+                'chord-sample', 'game-loop-sample', 'input-sample', 'joystick-sample', 'relic-dive',
                 'screen-sample', 'side-catch', 'sound-sample', *PORT_GAME_CONSUMERS]),
             'sdk/joystick.inc': ['joystick-sample'],
             'sdk/screen.inc': [
@@ -201,6 +205,9 @@ class SdkImpactTests(unittest.TestCase):
         for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math',
                        'port', 'session', 'sfx'):
             cases[f'sdk/{module}.inc'] = PORT_GAME_CONSUMERS
+        cases['sdk/frame.inc'] = sorted(['chord-sample', *PORT_GAME_CONSUMERS])
+        cases['sdk/audio.inc'] = ['chord-sample']
+        cases['sdk/audio_notes.inc'] = ['chord-sample']
         cases['sdk/pcg.inc'] = PORT_CONSUMERS
         cases['sdk/font.inc'] = [*PORT_GAME_CONSUMERS, 'side-catch']
         cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])

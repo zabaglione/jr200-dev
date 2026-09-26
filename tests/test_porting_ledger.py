@@ -54,11 +54,17 @@ class PortingLedgerTests(unittest.TestCase):
         for game in wave1.values():
             self.assertEqual(game['jr200_project'], 'games/' + game['id'])
             self.assertIn(game['status'], ('planned', 'ported-dev', 'ported'))
-        candidates = [g for g in self.games if g['wave'] is None]
-        self.assertEqual(len(candidates), 45)
-        for game in candidates:
-            self.assertEqual((game['status'], game['issue'], game['jr200_project']),
-                             ('candidate', None, None))
+        wave2 = [g for g in self.games if g['wave'] == 2]
+        self.assertEqual(len(wave2), 45)
+        for game in wave2:
+            stage = (62 if game['source_method'] == 'asm'
+                     else 61 if game['timing'] == 'realtime'
+                     else 59 if game['difficulty'] == 'low' else 60)
+            self.assertEqual(game['issue'], stage, game['id'])
+            self.assertIn(game['status'], ('planned', 'ported-dev', 'ported'))
+            expected = None if game['status'] == 'planned' else 'games/' + game['id']
+            self.assertEqual(game['jr200_project'], expected, game['id'])
+        self.assertEqual(Counter(g['issue'] for g in wave2), {59: 20, 60: 8, 61: 11, 62: 6})
         self.assertEqual([s['id'] for s in self.ledger['separate']], ['side-catch'])
         self.assertNotIn('side-catch', {g['id'] for g in self.games})
 
@@ -66,6 +72,15 @@ class PortingLedgerTests(unittest.TestCase):
         for game in self.games:
             if game['status'] in ('ported-dev', 'ported'):
                 self.assertTrue((ROOT / game['jr200_project'] / 'UPSTREAM.md').is_file())
+
+    def test_status_matches_projects_and_catalog(self):
+        catalog = json.loads((ROOT / 'games/catalog.json').read_text(encoding='utf-8'))
+        verified = {g['id'] for g in catalog['games'] if g['status'] == 'verified'}
+        projects = {path.parent.name for path in ROOT.glob('games/*/UPSTREAM.md')}
+        for game in self.games:
+            with self.subTest(game=game['id']):
+                self.assertEqual(game['status'] == 'ported', game['id'] in verified)
+                self.assertEqual(game['status'] != 'planned', game['id'] in projects)
 
     def test_porting_contract_names_forbidden_carryover(self):
         text = (ROOT / 'docs/PORTING.md').read_text(encoding='utf-8')
