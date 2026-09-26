@@ -800,6 +800,55 @@
         "games/word-foundry/game.json",
         "games/word-foundry/media/**"
       ]
+    },
+    {
+      "id": "mirror-relic",
+      "kind": "game",
+      "project": "games/mirror-relic",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/mirror-relic/LICENSE",
+        "games/mirror-relic/Makefile",
+        "games/mirror-relic/THIRD_PARTY_NOTICES.md",
+        "games/mirror-relic/assets/**",
+        "games/mirror-relic/build.json",
+        "games/mirror-relic/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys_ext.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/mirror-relic/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_mirror_relic.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/mirror-relic/README.md",
+        "games/mirror-relic/UPSTREAM.md",
+        "games/mirror-relic/game.json",
+        "games/mirror-relic/media/**"
+      ]
     }
   ]
 }

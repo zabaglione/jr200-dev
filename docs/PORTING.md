@@ -99,6 +99,7 @@ Bがevent（0なし、1押下、2リピート、3離上）です。単一キー�
 | RETURN、パッドボタン | RETURN |
 | SPACE（面のやり直し確認） | SPACE。確認の初期選択はNO |
 | CTRL+C（BASICへ戻る） | ESCまたはCTRL+C |
+| X、F、Q、E、Z、C（操作7〜12） | `sdk/keys_ext.inc`と作品の`game_key_table`。`sdk/port.inc`はプレイ中に操作7以上を`game_act`へ渡す |
 
 ## 第1弾の固定仕様
 

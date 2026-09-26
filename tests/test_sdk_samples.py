@@ -41,7 +41,8 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['fuse-box', 'peg-garden', 'word-foundry']
+AUDIO_GAMES = ['fuse-box', 'mirror-relic', 'peg-garden', 'word-foundry']
+KEYS_EXT_GAMES = ['mirror-relic']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 
@@ -204,9 +205,10 @@ class SdkImpactTests(unittest.TestCase):
                 *PORT_GAME_CONSUMERS]),
             'sdk/timing.inc': ['game-loop-sample', 'side-catch', 'sound-sample'],
         }
-        for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math',
-                       'port', 'session'):
+        for module in ('font', 'font_data', 'frame', 'gfx', 'math', 'port', 'session'):
             cases[f'sdk/{module}.inc'] = PORT_GAME_CONSUMERS
+        cases['sdk/keys.inc'] = [g for g in PORT_GAME_CONSUMERS if g not in KEYS_EXT_GAMES]
+        cases['sdk/keys_ext.inc'] = KEYS_EXT_GAMES
         cases['sdk/sfx.inc'] = SFX_GAME_CONSUMERS
         cases['sdk/frame.inc'] = sorted(['chord-sample', *PORT_GAME_CONSUMERS])
         cases['sdk/audio.inc'] = sorted(['chord-sample', *AUDIO_GAMES])
