@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。5種類の札",
+      "sha256": "bd9bd496bd71b8742efc5810fbc784d052b33896d44807e4af531f7b337ce7d2",
+      "framebuffer_sha256": "8a3fa90525b38c9f26608da21af858aba0944f76fec1ff86654e11c02074a8ff"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-moves",
+      "role": "play",
+      "caption": "2枚を落とした盤面とメニュー",
+      "sha256": "63175b4952b6effbb90833694870cdfe7c0e8535a2cb43322b477f14087f0190",
+      "framebuffer_sha256": "95ccf6bfb04750f98fec37f8f27427e421b72e7ae4a1002717491150f4ebe3f7"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "連鎖で目標に届いた1ラウンド目のクリア",
+      "sha256": "0aaf16206e44e773726436c31371ed1d3c90955e7b104690f9cd7f8635e5e9b8",
+      "framebuffer_sha256": "59907f8aca4da30730e8ae554c0df2c50c54fd821e9110f527267873d9da283c"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 12.5,
+    "frames": 374,
+    "frames_sha256": "89b8d45075af1b312c7e871143ea120069eae536dd6c5266309db5b1c405a49a",
+    "pcm_sha256": "254d31c073a11be2fb2496a3316798a47bbc22eabf8582664ba289882f7ca5ff",
+    "sha256": "c58a92830ad5de8a5d7e0fc52df3b742105ccdf83b61732f7377562419e7ad9c",
+    "caption": "札を落として3つ並べ、1ラウンド目の目標に届くまで"
+  }
+}

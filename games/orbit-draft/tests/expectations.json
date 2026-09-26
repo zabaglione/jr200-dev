@@ -1,0 +1,3373 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "notes": "State expectations come from games/orbit-draft/tests/model.py (upstream rules 3.0.1). The only emulator-derived input is origin, upstream's entropy(): each new game samples the title-song position, logged at 0x4720 (count, values) and fed to the model; every other byte is the model's prediction, read from the kept state at 0x4740. The moves come from a greedy two-move search on the model; synthetic-second-clear continues into the next round with the board and score kept, and synthetic-lose fills the board without spins. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
+  "runtime": {
+    "default_profile": "synthetic-first-clear",
+    "profiles": [
+      {
+        "profile": "synthetic-title",
+        "mode": "synthetic-injection",
+        "max_cycles": 900000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "pcg",
+            "address": "0xc400",
+            "length": 128
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "00",
+            "pcg": "000003070f3f6fc70000c0e3f6fcf0e0070f0f0703000000e0f0f0e0c00000000001010303ff7f1f008080c0c0fffef80f1f1e3830000000f0f8781c0c00000000071e3c7878f0f000c0000000000000f078783c1e0700000000000000c000000000000000000103000e1f3f7ffef0c0070c1020400000000000000000000000",
+            "origins": "0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": "8a3fa90525b38c9f26608da21af858aba0944f76fec1ff86654e11c02074a8ff",
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 1000,
+            "maximum_dropped_frames": 900000000,
+            "minimum_peak": 21000
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-help",
+        "mode": "synthetic-injection",
+        "max_cycles": 650000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x61",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "05",
+            "origins": "0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": "6f3d2ad73332f8da26d437a441bc783ab0eada6d1c951e7592604db2e913958c",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-start",
+        "mode": "synthetic-injection",
+        "max_cycles": 700000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "00158efa020c00000000000000000000000000000002000000000000ffffffffffffffffffffffff0304000100000000000000000000000000000000000000000000000000000000000000000203020001",
+            "mode": "01",
+            "level": "00",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": "337113664127300cca4cde9959b85bc50766e9e0865053af662ff2e0be42d958",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-menu",
+        "mode": "synthetic-injection",
+        "max_cycles": 2500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 950000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 990000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1250000,
+            "code": "0x77",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1290000,
+            "code": "0x77",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1400000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1440000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1550000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1590000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1700000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1740000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1850000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1890000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2000000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2040000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2150000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2190000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "00158efa020c0000000000000000000000000c0c0002000000000000ffffffffffffffffffffffff0304000100000000000000000000000000000000000000000000000000000000000000000203020001",
+            "mode": "01",
+            "level": "00",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-first-moves",
+        "mode": "synthetic-injection",
+        "max_cycles": 3900000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2250000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2290000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2440000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0015cab8020c00000000000000000000000002020000000c0c000000ffffffffffffffffff0202ff0304000100000000000000000000000000000000000000000000000000000000000000000003010004",
+            "mode": "01",
+            "level": "00",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": "95ccf6bfb04750f98fec37f8f27427e421b72e7ae4a1002717491150f4ebe3f7",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-first-clear",
+        "mode": "synthetic-injection",
+        "max_cycles": 16650000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2250000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2290000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2440000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3700000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3740000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3850000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3890000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4000000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4040000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5450000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5490000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6750000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6790000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6900000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6940000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 7050000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 7090000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8350000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8390000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8500000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8540000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10250000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10290000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10400000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10440000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10550000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10590000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 11850000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 11890000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12000000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12040000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12150000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12190000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12300000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12340000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12450000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12490000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "00153e9f040c120000040c120002000000000303000000110c000000ffffffffffffffff0001ffff0304040100000000000000000000000000000000000000000000000000000000000000000003040201",
+            "mode": "02",
+            "level": "00",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": "59907f8aca4da30730e8ae554c0df2c50c54fd821e9110f527267873d9da283c",
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 1000,
+            "maximum_dropped_frames": 900000000,
+            "minimum_peak": 21000
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-next-round",
+        "mode": "synthetic-injection",
+        "max_cycles": 18870000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2250000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2290000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2440000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3700000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3740000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3850000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3890000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4000000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4040000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5450000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5490000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6750000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6790000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6900000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6940000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 7050000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 7090000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8350000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8390000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8500000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8540000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10250000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10290000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10400000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10440000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10550000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10590000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 11850000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 11890000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12000000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12040000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12150000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12190000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12300000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12340000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12450000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12490000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18370000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18410000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "01153e9f0412000000040c120002000000000303000000110c000000ffffffffffffffff0001ffff0304040100000000000000000000000000000000000000000000000000000000000000000003040201",
+            "mode": "01",
+            "level": "01",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": "a97e511ef9863b79ae21c1dbfee02c2a94a5d803636a97493e2d4e9e6ac9aee6",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-second-clear",
+        "mode": "synthetic-injection",
+        "max_cycles": 33440000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2250000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2290000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2440000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3700000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3740000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3850000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3890000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4000000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4040000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5450000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5490000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6750000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6790000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6900000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6940000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 7050000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 7090000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8350000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8390000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8500000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8540000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10250000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10290000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10400000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10440000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10550000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10590000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 11850000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 11890000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12000000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12040000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12150000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12190000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12300000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12340000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 12450000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12490000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18370000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18410000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18670000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18710000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18820000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18860000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18970000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19010000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19120000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19160000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19270000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19310000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 20570000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 20610000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 20720000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 20760000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 20870000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 20910000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21020000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21060000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21170000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21210000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 22470000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 22510000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 22620000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 22660000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 22770000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 22810000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 22920000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 22960000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 23070000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 23110000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 24370000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 24410000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 24520000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 24560000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 24670000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 24710000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 25970000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 26010000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 26120000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 26160000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 26270000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 26310000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 26420000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 26460000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 26570000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 26610000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 26720000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 26760000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "01156f200412120000040c2400020000020103030102000c0c010300ffffffff00ffffff00ffffff0303ffff00000000000000000000000000000000000000000000000000000000000000000202040104",
+            "mode": "02",
+            "level": "01",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-lose",
+        "mode": "synthetic-injection",
+        "max_cycles": 22770000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 950000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 990000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1100000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1140000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1250000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1290000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1440000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2760000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2800000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4120000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4160000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4270000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4310000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4420000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4460000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4570000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4610000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5870000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5910000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6020000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6060000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 7320000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 7360000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 7470000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 7510000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8770000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8810000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8920000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8960000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 9070000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 9110000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10370000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10410000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10520000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10560000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 11820000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 11860000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 11970000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12010000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13270000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13310000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13420000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13460000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13570000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13610000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13720000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13760000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 15020000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 15060000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 15170000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 15210000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 15320000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 15360000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 16620000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 16660000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 16770000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 16810000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18070000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18110000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18220000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18260000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19520000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19560000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19670000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19710000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19820000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19860000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21120000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21160000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21270000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21310000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "status",
+            "address": "0xc3e1",
+            "length": 21
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "00156f20000c0000000500000000000000000f0f00020011040003000004040102000002020102000001030400000000000000000000000000000000000000000000000000000000000000000203040104",
+            "mode": "03",
+            "level": "00",
+            "status": "46554c4c20424f415244202d204e4f205350494e53",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": "d43be8650537299ae444c847bfd32ae3d5d993985e3f8243da292915cbcc797b",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-lose-retry",
+        "mode": "synthetic-injection",
+        "max_cycles": 23370000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 950000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 990000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1100000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1140000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1250000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1290000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 1400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 1440000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2760000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2800000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4120000,
+            "code": "0x73",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4160000,
+            "code": "0x73",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4270000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4310000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4420000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4460000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4570000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4610000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 5870000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 5910000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 6020000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 6060000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 7320000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 7360000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 7470000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 7510000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8770000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8810000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 8920000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 8960000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 9070000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 9110000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10370000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10410000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 10520000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 10560000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 11820000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 11860000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 11970000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 12010000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13270000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13310000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13420000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13460000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13570000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13610000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 13720000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 13760000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 15020000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 15060000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 15170000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 15210000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 15320000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 15360000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 16620000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 16660000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 16770000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 16810000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18070000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18110000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 18220000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 18260000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19520000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19560000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19670000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19710000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 19820000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 19860000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21120000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21160000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 21270000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 21310000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 22570000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 22610000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 22720000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 22760000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 22870000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 22910000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "002a6f80020c00000000000000000000000000000004000000000000ffffffffffffffffffffffff0001020300000000000000000000000000000000000000000000000000000000000000000400030004",
+            "mode": "01",
+            "level": "00",
+            "origins": "02152aff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-restart",
+        "mode": "synthetic-injection",
+        "max_cycles": 4500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2250000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2290000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2440000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3700000,
+            "code": "0x20",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3740000,
+            "code": "0x20",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3850000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3890000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 4000000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 4040000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4740",
+            "length": 81
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "0000c9be020c00000000000000000000000000000003000000000000ffffffffffffffffffffffff0400010200000000000000000000000000000000000000000000000000000000000000000304040204",
+            "mode": "01",
+            "level": "00",
+            "origins": "021500ff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-exit",
+        "mode": "synthetic-injection",
+        "max_cycles": 4050000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 500000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 540000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 650000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 690000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 800000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 840000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2100000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2140000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2250000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2290000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 2400000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 2440000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 3700000,
+            "code": "0x1b",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 3740000,
+            "code": "0x1b",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "pcg0",
+            "address": "0xc000",
+            "length": 16
+          },
+          {
+            "name": "pcg1",
+            "address": "0xc400",
+            "length": 16
+          },
+          {
+            "name": "codes",
+            "address": "0xc100",
+            "length": 16
+          },
+          {
+            "name": "attrs",
+            "address": "0xc500",
+            "length": 16
+          },
+          {
+            "name": "font",
+            "address": "0xd100",
+            "length": 16
+          },
+          {
+            "name": "key-mask",
+            "address": "0xc81e",
+            "length": 1
+          },
+          {
+            "name": "stack-guard",
+            "address": "0x4f00",
+            "length": 16
+          },
+          {
+            "name": "channel-c",
+            "address": "0xc812",
+            "length": 1
+          },
+          {
+            "name": "channel-d",
+            "address": "0xc814",
+            "length": 1
+          },
+          {
+            "name": "channel-f",
+            "address": "0xc819",
+            "length": 1
+          },
+          {
+            "name": "origins",
+            "address": "0x4720",
+            "length": 32
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "pcg0": "00ff00ff00ff00ff00ff00ff00ff00ff",
+            "pcg1": "00ff00ff00ff00ff00ff00ff00ff00ff",
+            "codes": "00000000000000000000000000000000",
+            "attrs": "00000000000000000000000000000000",
+            "font": "00000000000000000000000000000000",
+            "key-mask": "00",
+            "stack-guard": "0000ffff0000ffff0000ffff0000ffff",
+            "channel-c": "00",
+            "channel-d": "00",
+            "channel-f": "00",
+            "origins": "0115ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      }
+    ]
+  }
+}
