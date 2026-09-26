@@ -1,0 +1,53 @@
+{
+  "schema_version": 3,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "local-rom-title",
+      "role": "title",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後のタイトル画面（画面全体・無加工）",
+      "sha256": "22e6ecca80616128bd8f9f6a5c7b7fb165ad602bfda3b8adfa680c29edb5e439",
+      "framebuffer_sha256": "eb06a73b5b80fae08514e88ee09f69e6f2ad36feac136eb8de66aac1bd9b62ab"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "local-rom-play",
+      "role": "play",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、4×4盤面の2個の種から開始（画面全体・無加工）",
+      "sha256": "6c3b2b1c413d00e4dbef156494c53beb99edba36d37a9806a822b227ce3837d8",
+      "framebuffer_sha256": "25db86d7cde926f1461469dd4367bdff8e932a3535472ae910a40663c607be5c"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "local-rom-goal",
+      "role": "goal",
+      "caption": "所有ROM/FONTで通常MLOAD/USR後、35手で64に到達した盤面（画面全体・無加工）",
+      "sha256": "80e29a3d386eedf4057b63b8968f74077148c4430d12013bcde5b603a1d5dab1",
+      "framebuffer_sha256": "59a5f8540cbc4ee65de5c72fefb11482374e085a2b180745da2d014606a9cbf5"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "local-rom-goal",
+    "fps": 30,
+    "speed": 4,
+    "seconds": 28.3,
+    "frames": 3395,
+    "frames_sha256": "d4d0dc41c148f2dc08258b2f326d0e29e95f7efd919f254ae598fd048183cfb6",
+    "pcm_sha256": "e4f07c9174196c2a8484c8ea693c1f0666920718456d1353583893a0c872622f",
+    "sha256": "95eafc6f6ede017cb6d954322ed80d77f992506f7c2b4d382fb63f0fb9d688de",
+    "caption": "所有ROM/FONTで通常MLOAD/USR後、35手で64に到達するまでを音付きで記録（画面全体・無加工）",
+    "mode": "rom-cassette",
+    "artifact_sha256": "0184459dd153a6cb9123e78512d2c2cae2c12b509c3591a9b22c005b804fe83b",
+    "start_cycle": 83500000
+  },
+  "capture": {
+    "mode": "rom-cassette",
+    "artifact_sha256": "0184459dd153a6cb9123e78512d2c2cae2c12b509c3591a9b22c005b804fe83b",
+    "glyph_source": "sdk/font_data.inc",
+    "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
+  }
+}

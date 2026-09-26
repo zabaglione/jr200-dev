@@ -22,7 +22,8 @@ BASE_PAGES = ['All-Games.md', 'Controls.md', 'Games.md', 'Home.md', 'Licenses.md
               'Play.md', 'Presentation.md', 'Quality-Review.md', '_Sidebar.md', *GENRE_PAGES]
 DEVELOPMENT = {'brick-pulse': 'Genre-Action', 'circuit-works': 'Genre-Tactics',
                'corner-crown': 'Genre-Tabletop', 'hearth-zero': 'Genre-Management',
-               'lumen-cross': 'Genre-Puzzle', 'relic-dive': 'Genre-Exploration'}
+               'lumen-cross': 'Genre-Puzzle', 'relic-dive': 'Genre-Exploration',
+               'seed-merge': 'Genre-Puzzle'}
 
 
 def make_cjr(payload=b'\x01\x39', start=0x1000):

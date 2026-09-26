@@ -1,0 +1,321 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "notes": "Provisional deterministic replay profiles for the new JR-200 port; expectations will be tightened against the independent rule model. ROM/FONT and real BASIC loading are separate gates.",
+  "runtime": {
+    "default_profile": "synthetic-start",
+    "profiles": [
+      {
+        "profile": "synthetic-title",
+        "mode": "synthetic-injection",
+        "max_cycles": 700000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [{"name": "mode", "address": "0x4620", "length": 1}],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "00"},
+          "framebuffer_sha256": "eb06a73b5b80fae08514e88ee09f69e6f2ad36feac136eb8de66aac1bd9b62ab", "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-start",
+        "mode": "synthetic-injection",
+        "max_cycles": 1800000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "01", "state": "00000000010100000000000000000000b50100"},
+          "framebuffer_sha256": "ef7f6fc9fcbc29fccb82b26bb9fc53232bfb08206d498471958060e93ce4f4d2", "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-right",
+        "mode": "synthetic-injection",
+        "max_cycles": 5000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "key", "cycle": 1900000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 1950000, "code": "0x64", "pressed": false}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "01", "state": "000000000000000200000100000000008a0201"},
+          "framebuffer_sha256": "18d60f6b2f8696abc8a46fe5cccc442fe11d594a48774f295f10099e93e48db0", "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-sound",
+        "mode": "synthetic-injection",
+        "max_cycles": 2300000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "key", "cycle": 1900000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 1950000, "code": "0x64", "pressed": false}
+        ],
+        "observations": [{"name": "mode", "address": "0x4620", "length": 1}],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "01"},
+          "framebuffer_sha256": null,
+          "pcm": {"minimum_frames": 1000, "minimum_nonzero_frames": 100, "maximum_dropped_frames": 400000},
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-win",
+        "mode": "synthetic-injection",
+        "max_cycles": 150000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "text", "cycle": 2000000, "text": "saaawwsddwaasaddwddwdwawssdsawawdaa", "key_duration": 100000, "key_interval": 4000000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "02", "state": "06010100020000000100000000000000600623"},
+          "framebuffer_sha256": "2101415b76397b9b36bf5d341d46e827777ebe4b660545fabe7fa4d0a03ac749", "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-lose",
+        "mode": "synthetic-injection",
+        "max_cycles": 105000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "text", "cycle": 2000000, "text": "waddaaaddadadsdwsaaadads", "key_duration": 100000, "key_interval": 4000000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "03", "state": "020102010103010202010201010201023d0318"},
+          "framebuffer_sha256": "227c58c5309dc525c97ee012f2146741a189f3eb59b6c87784a3b82d2efcf112", "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-end",
+        "mode": "synthetic-injection",
+        "max_cycles": 150000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "text", "cycle": 2000000, "text": "saaawwsddwaasaddwddwdwawssdsawawdaa\r", "key_duration": 100000, "key_interval": 4000000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "04", "state": "06010100020000000100000000000000600623"},
+          "framebuffer_sha256": null, "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-restart-no",
+        "mode": "synthetic-injection",
+        "max_cycles": 8000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "key", "cycle": 1900000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 1950000, "code": "0x64", "pressed": false},
+          {"kind": "key", "cycle": 5500000, "code": "0x20", "pressed": true},
+          {"kind": "key", "cycle": 5550000, "code": "0x20", "pressed": false},
+          {"kind": "key", "cycle": 7000000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 7050000, "code": "0x0d", "pressed": false}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "01", "state": "000000000000000200000100000000008a0201"},
+          "framebuffer_sha256": null, "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-restart-yes",
+        "mode": "synthetic-injection",
+        "max_cycles": 9500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "key", "cycle": 1900000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 1950000, "code": "0x64", "pressed": false},
+          {"kind": "key", "cycle": 5500000, "code": "0x20", "pressed": true},
+          {"kind": "key", "cycle": 5550000, "code": "0x20", "pressed": false},
+          {"kind": "key", "cycle": 6900000, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 6950000, "code": "0x64", "pressed": false},
+          {"kind": "key", "cycle": 7900000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 7950000, "code": "0x0d", "pressed": false}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "01", "state": "00000000010100000000000000000000b50100"},
+          "framebuffer_sha256": null, "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-exit",
+        "mode": "synthetic-injection",
+        "max_cycles": 4000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
+          {"kind": "key", "cycle": 1900000, "code": "0x03", "pressed": true},
+          {"kind": "key", "cycle": 1950000, "code": "0x03", "pressed": false}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1},
+          {"name": "pcg", "address": "0xc400", "length": 16},
+          {"name": "codes", "address": "0xc100", "length": 16},
+          {"name": "attrs", "address": "0xc500", "length": 16},
+          {"name": "font", "address": "0xd100", "length": 16},
+          {"name": "key-mask", "address": "0xc81e", "length": 1},
+          {"name": "stack-guard", "address": "0x4f00", "length": 16}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint", "pc": "0x7ff0",
+          "memory": {"mode": "01", "state": "00000000010100000000000000000000b50100", "pcg": "00ff00ff00ff00ff00ff00ff00ff00ff", "codes": "00000000000000000000000000000000", "attrs": "00000000000000000000000000000000", "font": "00000000000000000000000000000000", "key-mask": "00", "stack-guard": "0000ffff0000ffff0000ffff0000ffff"},
+          "framebuffer_sha256": null, "pcm": null, "cassette": null
+        }
+      },
+      {
+        "profile": "local-rom-title",
+        "mode": "rom-cassette",
+        "max_cycles": 83500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000}
+        ],
+        "observations": [
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "00"},
+          "framebuffer_sha256": "eb06a73b5b80fae08514e88ee09f69e6f2ad36feac136eb8de66aac1bd9b62ab", "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        }
+      },
+      {
+        "profile": "local-rom-play",
+        "mode": "rom-cassette",
+        "max_cycles": 86000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "01", "state": "00000000010100000000000000000000b50100"},
+          "framebuffer_sha256": "25db86d7cde926f1461469dd4367bdff8e932a3535472ae910a40663c607be5c", "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        },
+        "replay_from": "synthetic-start",
+        "replay_offset": 83700000
+      },
+      {
+        "profile": "local-rom-goal",
+        "mode": "rom-cassette",
+        "max_cycles": 235000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "02", "state": "06010100020000000100000000000000600623"},
+          "framebuffer_sha256": "59a5f8540cbc4ee65de5c72fefb11482374e085a2b180745da2d014606a9cbf5", "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        },
+        "replay_from": "synthetic-win",
+        "replay_offset": 83700000
+      },
+      {
+        "profile": "local-rom-lose",
+        "mode": "rom-cassette",
+        "max_cycles": 190000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "text", "cycle": 4000000, "text": "mload\r", "key_duration": 150000, "key_interval": 300000},
+          {"kind": "text", "cycle": 80000000, "text": "a=usr($1000)\r", "key_duration": 75000, "key_interval": 150000}
+        ],
+        "observations": [
+          {"name": "state", "address": "0x4640", "length": 19},
+          {"name": "mode", "address": "0x4620", "length": 1}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit", "pc": null,
+          "memory": {"mode": "03", "state": "020102010103010202010201010201023d0318"},
+          "framebuffer_sha256": "4ab5eac94c65aa6306498b83e9f96d01654b77f8706a7f2942a7899bf5f72d02", "pcm": null,
+          "cassette": {"state": 6, "mode": 1, "remote": false}
+        },
+        "replay_from": "synthetic-lose",
+        "replay_offset": 83700000
+      }
+    ]
+  }
+}

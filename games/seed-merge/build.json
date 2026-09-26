@@ -1,0 +1,49 @@
+{
+  "entry_address": "0x1000",
+  "entry_symbol": "start",
+  "execution": {
+    "command": "A=USR($1000)",
+    "launch": "basic_usr",
+    "loader": "cjr",
+    "return": "rts",
+    "stack": "caller"
+  },
+  "id": "seed-merge",
+  "inputs": {
+    "assembly": [
+      "src/main.asm"
+    ],
+    "assets": [],
+    "sdk": [
+      "sdk/font.inc",
+      "sdk/font_data.inc",
+      "sdk/frame.inc",
+      "sdk/gfx.inc",
+      "sdk/jr200.inc",
+      "sdk/keys.inc",
+      "sdk/math.inc",
+      "sdk/port.inc",
+      "sdk/session.inc",
+      "sdk/sfx.inc",
+      "sdk/sound.inc"
+    ]
+  },
+  "load_address": "0x1000",
+  "output": "seed-merge.cjr",
+  "regions": [
+    {
+      "end": "0x2fff",
+      "kind": "code",
+      "name": "program",
+      "start": "0x1000"
+    },
+    {
+      "name": "runtime",
+      "kind": "data",
+      "start": "0x3000",
+      "end": "0x4fff"
+    }
+  ],
+  "schema_version": 1,
+  "source": "src/main.asm"
+}

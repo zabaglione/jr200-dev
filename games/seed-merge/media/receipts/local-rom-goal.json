@@ -1,0 +1,76 @@
+{
+  "artifact_sha256": "0184459dd153a6cb9123e78512d2c2cae2c12b509c3591a9b22c005b804fe83b",
+  "expectations_sha256": "cd6034aaaa125eecf5dd37a8011fcb35f6cc3bb3ca475dd1c862fc9d80a697c6",
+  "mode": "rom-cassette",
+  "profile": "local-rom-goal",
+  "project": "seed-merge",
+  "result": {
+    "artifact_sha256": "0184459dd153a6cb9123e78512d2c2cae2c12b509c3591a9b22c005b804fe83b",
+    "cassette": {
+      "mode": 1,
+      "read_started": false,
+      "remote": false,
+      "state": 6
+    },
+    "elapsed_cycles": 235000005,
+    "evidence": "emulator_with_local_rom",
+    "framebuffer_sha256": "59a5f8540cbc4ee65de5c72fefb11482374e085a2b180745da2d014606a9cbf5",
+    "hardware": "not_run",
+    "memory": {
+      "mode": "02",
+      "state": "06010100020000000100000000000000600623"
+    },
+    "mode": "rom-cassette",
+    "pcm": {
+      "dropped_high": 0,
+      "dropped_low": 7733988,
+      "frames": 4096,
+      "nonzero_frames": 0,
+      "peak": 0,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47"
+    },
+    "profile": "local-rom-goal",
+    "registers": {
+      "a": 2,
+      "b": 0,
+      "cc": 208,
+      "pc": 6083,
+      "sp": 20477,
+      "waiting": 0,
+      "x": 2582
+    },
+    "runner_contract_version": 1,
+    "runner_version": "0.3.0",
+    "schema_version": 1,
+    "status": "passed",
+    "stop": {
+      "address": 0,
+      "reason": "cycle-limit"
+    }
+  },
+  "runner": {
+    "contract_version": 1,
+    "module_files": [
+      {
+        "path": "jr200_codec.mjs",
+        "sha256": "0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c",
+        "size": 17276
+      },
+      {
+        "path": "jr200_codec.wasm",
+        "sha256": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20",
+        "size": 83629
+      }
+    ],
+    "node_version": "26.9.0",
+    "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
+    "version": "0.3.0"
+  },
+  "schema_version": 1,
+  "verification": {
+    "cassette_path": "normal",
+    "emulator": "passed",
+    "hardware": "not_run",
+    "rom": "provided_locally"
+  }
+}

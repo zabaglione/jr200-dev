@@ -528,6 +528,52 @@
         "games/brick-pulse/game.json",
         "games/brick-pulse/media/**"
       ]
+    },
+    {
+      "id": "seed-merge",
+      "kind": "game",
+      "project": "games/seed-merge",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/seed-merge/LICENSE",
+        "games/seed-merge/Makefile",
+        "games/seed-merge/THIRD_PARTY_NOTICES.md",
+        "games/seed-merge/assets/**",
+        "games/seed-merge/build.json",
+        "games/seed-merge/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sfx.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/seed-merge/tests/**",
+        "tests/port_model.py",
+        "tests/test_seed_merge.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/seed-merge/README.md",
+        "games/seed-merge/UPSTREAM.md",
+        "games/seed-merge/game.json",
+        "games/seed-merge/media/**"
+      ]
     }
   ]
 }
