@@ -996,6 +996,55 @@
         "games/memory-mosaic/game.json",
         "games/memory-mosaic/media/**"
       ]
+    },
+    {
+      "id": "shadow-archive",
+      "kind": "game",
+      "project": "games/shadow-archive",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/shadow-archive/LICENSE",
+        "games/shadow-archive/Makefile",
+        "games/shadow-archive/THIRD_PARTY_NOTICES.md",
+        "games/shadow-archive/assets/**",
+        "games/shadow-archive/build.json",
+        "games/shadow-archive/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/shadow-archive/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_shadow_archive.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/shadow-archive/README.md",
+        "games/shadow-archive/UPSTREAM.md",
+        "games/shadow-archive/game.json",
+        "games/shadow-archive/media/**"
+      ]
     }
   ]
 }
