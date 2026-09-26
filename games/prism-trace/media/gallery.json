@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。光源、鏡、受光器をつなぐ光",
+      "sha256": "6c189d58c714823f5a1553ea8b49feb3515840cf6088769fd77328f5ee3f3f89",
+      "framebuffer_sha256": "d1158139b198e391a81af954ccdeaa4609b7f3c930c549239de0043d841f7784"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-turns",
+      "role": "play",
+      "caption": "3枚回して光が伸びた途中",
+      "sha256": "cab13f17532093628de2eba9a0d8f4b0aa4b08eefed1dfc5cb791c8f55ecccd6",
+      "framebuffer_sha256": "11ee52cddcbb635d7e1099d1f5dc60d7c78b66cad1246a2ed0cc627b0bfabd6e"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "光が受光器に届いたクリア",
+      "sha256": "db4726be849d9bcab262717a600b5763afacbffa7e87c2dacf9e402969cca6d7",
+      "framebuffer_sha256": "cb6b93781d1c008a2362cab605d3118bb4765fd9426faccc6550b4752dc094e0"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 7.8,
+    "frames": 233,
+    "frames_sha256": "dd4d3bd3ddddd0d580bf8b05460e0e330498cacdfb19e3b4a30c26300bae0a18",
+    "pcm_sha256": "190674fce7b7c7913e3508c45e825986d320406c0094e12296a9dc445f5bc9d8",
+    "sha256": "a1340e2ac74199296ccf8359296f4af13ee454c10d4b5cc98972b5a5991865e3",
+    "caption": "5枚の鏡を回して光を受光器へ届けるまで"
+  }
+}

@@ -1633,6 +1633,55 @@
         "games/potion-path/game.json",
         "games/potion-path/media/**"
       ]
+    },
+    {
+      "id": "prism-trace",
+      "kind": "game",
+      "project": "games/prism-trace",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/prism-trace/LICENSE",
+        "games/prism-trace/Makefile",
+        "games/prism-trace/THIRD_PARTY_NOTICES.md",
+        "games/prism-trace/assets/**",
+        "games/prism-trace/build.json",
+        "games/prism-trace/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/prism-trace/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_prism_trace.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/prism-trace/README.md",
+        "games/prism-trace/UPSTREAM.md",
+        "games/prism-trace/game.json",
+        "games/prism-trace/media/**"
+      ]
     }
   ]
 }

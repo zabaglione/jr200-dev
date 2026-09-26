@@ -41,7 +41,7 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'five-forge', 'fuse-box', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-draft', 'orchard-days', 'peg-garden', 'potion-path', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
+AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'five-forge', 'fuse-box', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-draft', 'orchard-days', 'peg-garden', 'potion-path', 'prism-trace', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
 KEYS_EXT_GAMES = ['compass-rose', 'mirror-relic']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])

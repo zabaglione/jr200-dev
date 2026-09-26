@@ -531,8 +531,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 60,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/prism-trace",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "tide_bridge",
