@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。水面、橋板、主人公、門",
+      "sha256": "dc08f1166fb3f2241010dfa13e859bf86ce46b2bfacb0981315d0e94b32e2dab",
+      "framebuffer_sha256": "97dcc898b91522b1638f123f12e661c8e5e527792a53e6e1819a014bdf68a1f7"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-changes",
+      "role": "play",
+      "caption": "3本の行を反転した後、5行目を選んだ場面",
+      "sha256": "bc4a5845d0131d4abe66582b3e51fdda42f179f757c71369d16175a45cac0f6c",
+      "framebuffer_sha256": "e9b4f0512306e4b8c12060ebbb18daffdf70957763bd9402eedaa640949a4acc"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "道がつながり、主人公が門に着いた1面目のクリア",
+      "sha256": "c839d781bc2bf1ecd6018454123b84c6e29192775578d1fdd0dcedd4fb8b35f8",
+      "framebuffer_sha256": "ede55dc83c7daf3f378bdeb6e6d17ec8005ab2ba9ad1eb4086afeca29a1079d8"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 5.5,
+    "frames": 166,
+    "frames_sha256": "a574971a607163ccff6c0bc3332b66e88dcdca22d96853033726939079629ead",
+    "pcm_sha256": "8498fe316538711b8f0525f028b4899e8173b859cc9025a350275faa61bf23c6",
+    "sha256": "9759281cc683bef4295e6dc05c91483b5e98a9a3a5bf1433e5ae92a11b00779d",
+    "caption": "1面目で4本の行・列を反転し、主人公が門まで歩くまで"
+  }
+}
