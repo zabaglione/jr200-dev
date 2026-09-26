@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "ad0d5aad0489898772de3f6648033a09a8daec914be05115479c411132ca7075",
+      "framebuffer_sha256": "81e00e72a1daf24e5e962ae053fb643194f10b54c4650900ec27c6f7eb525508"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで攻撃を待つ場面",
+      "sha256": "b0a759362fb7418da78e6c813fad6a1375a09c1ecb99847f15bf7a090907f7c8",
+      "framebuffer_sha256": "f4915634b9af076823d828a65a9041e43dd9748a6eaed352fdadb98120dbf7c9"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "鎧を削りきって1つ目の決闘に勝つ",
+      "sha256": "cf98af7f859031b7bd5c09e174c2ba8fe63851ac0d62f5c73761717dc41ef1be",
+      "framebuffer_sha256": "f75b2b3284e8d0a3b154c0c3cab36131a7308bd7d2d560a1be78ac81adfdd6aa"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 8.3,
+    "frames": 248,
+    "frames_sha256": "46142f5754263919ef53385eb8f243089d4d5c0532e7999b75ac0f76335fd28c",
+    "pcm_sha256": "892b5259b1516cf2c8c3cd2194f1a7da3415260cd3d9a62c2bcd0ac5d5d9d7c9",
+    "sha256": "262a59527d9222ed21c3b7f0c524cdd18ee83365265b95b3325bec75d9c5365f",
+    "caption": "1つ目の決闘の自動デモ（受け流しで鎧を削りきる）"
+  }
+}
