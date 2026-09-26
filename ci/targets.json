@@ -1884,6 +1884,57 @@
         "games/magnet-vault/game.json",
         "games/magnet-vault/media/**"
       ]
+    },
+    {
+      "id": "gravity-well",
+      "kind": "game",
+      "project": "games/gravity-well",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/gravity-well/LICENSE",
+        "games/gravity-well/Makefile",
+        "games/gravity-well/THIRD_PARTY_NOTICES.md",
+        "games/gravity-well/assets/**",
+        "games/gravity-well/build.json",
+        "games/gravity-well/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys_ext.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/ranked.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/gravity-well/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/ranked_model.py",
+        "tests/test_gravity_well.py",
+        "tests/test_ranked.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/gravity-well/README.md",
+        "games/gravity-well/UPSTREAM.md",
+        "games/gravity-well/game.json",
+        "games/gravity-well/media/**"
+      ]
     }
   ]
 }

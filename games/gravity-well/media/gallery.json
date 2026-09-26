@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "2e2d370d74b45167817aa17c477e7b8fd4e20b40e64aaeeb5183c9014b11797b",
+      "framebuffer_sha256": "fefe63e82814899a4d7307c1e37ceda02502fdd4cae30cc97eef93516b9f4c7d"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-roll",
+      "role": "play",
+      "caption": "部屋を傾けて球を転がしたあと",
+      "sha256": "ff72ff6c93eb1fe22cbb773f389a0556e9f1910591443ad58d229433ec695222",
+      "framebuffer_sha256": "d349621be4dc9573b0761088932a87c232f9ad0c3f8aa0518f8de738c7869d2d"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "星3つで1つ目の井戸をクリア",
+      "sha256": "3b9f127a30af6e38dfe00fa036582c7cb49a63bb46e39d304db4e6225f85f8e4",
+      "framebuffer_sha256": "3eb953836893c408fe5d0df6129cbe27b8531027329280d0cd4ad3e5d952ebd2"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 3.7,
+    "frames": 110,
+    "frames_sha256": "0f5aec030c28a3d25da500796015e4341bdaf59cbac6717c57d729d813323264",
+    "pcm_sha256": "587c38f06617b7b6053e897f71896b93f40698e83ef6a7fe622bd0b099e6f4a3",
+    "sha256": "5558eb2c5f710ae1e17aa2eed05e7918422c42b46fa1df646e765c85315db50d",
+    "caption": "1つ目の井戸を星3つでクリア"
+  }
+}
