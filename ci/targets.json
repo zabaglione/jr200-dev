@@ -653,6 +653,55 @@
         "games/quiet-route/game.json",
         "games/quiet-route/media/**"
       ]
+    },
+    {
+      "id": "peg-garden",
+      "kind": "game",
+      "project": "games/peg-garden",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/peg-garden/LICENSE",
+        "games/peg-garden/Makefile",
+        "games/peg-garden/THIRD_PARTY_NOTICES.md",
+        "games/peg-garden/assets/**",
+        "games/peg-garden/build.json",
+        "games/peg-garden/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/peg-garden/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_peg_garden.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/peg-garden/README.md",
+        "games/peg-garden/UPSTREAM.md",
+        "games/peg-garden/game.json",
+        "games/peg-garden/media/**"
+      ]
     }
   ]
 }

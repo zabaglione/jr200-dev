@@ -41,7 +41,9 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-PORT_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
+AUDIO_GAMES = ['peg-garden']
+SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
+PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 
 
 class SampleContractTests(unittest.TestCase):
@@ -203,12 +205,13 @@ class SdkImpactTests(unittest.TestCase):
             'sdk/timing.inc': ['game-loop-sample', 'side-catch', 'sound-sample'],
         }
         for module in ('font', 'font_data', 'frame', 'gfx', 'keys', 'math',
-                       'port', 'session', 'sfx'):
+                       'port', 'session'):
             cases[f'sdk/{module}.inc'] = PORT_GAME_CONSUMERS
+        cases['sdk/sfx.inc'] = SFX_GAME_CONSUMERS
         cases['sdk/frame.inc'] = sorted(['chord-sample', *PORT_GAME_CONSUMERS])
-        cases['sdk/audio.inc'] = ['chord-sample']
-        cases['sdk/audio_notes.inc'] = ['chord-sample']
-        cases['sdk/pcg.inc'] = PORT_CONSUMERS
+        cases['sdk/audio.inc'] = sorted(['chord-sample', *AUDIO_GAMES])
+        cases['sdk/audio_notes.inc'] = sorted(['chord-sample', *AUDIO_GAMES])
+        cases['sdk/pcg.inc'] = sorted([*PORT_CONSUMERS, *AUDIO_GAMES])
         cases['sdk/font.inc'] = [*PORT_GAME_CONSUMERS, 'side-catch']
         cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])
         cases['sdk/session.inc'] = [*PORT_GAME_CONSUMERS, 'side-catch']

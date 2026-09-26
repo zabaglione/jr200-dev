@@ -20,10 +20,23 @@ GENRE_PAGES = ['Genre-Action.md', 'Genre-Exploration.md', 'Genre-Management.md',
                'Genre-Puzzle.md', 'Genre-Tabletop.md', 'Genre-Tactics.md']
 BASE_PAGES = ['All-Games.md', 'Controls.md', 'Games.md', 'Home.md', 'Licenses.md',
               'Play.md', 'Presentation.md', 'Quality-Review.md', '_Sidebar.md', *GENRE_PAGES]
-DEVELOPMENT = {'brick-pulse': 'Genre-Action', 'circuit-works': 'Genre-Tactics',
-               'corner-crown': 'Genre-Tabletop', 'hearth-zero': 'Genre-Management',
-               'lumen-cross': 'Genre-Puzzle', 'relic-dive': 'Genre-Exploration',
-               'seed-merge': 'Genre-Puzzle', 'quiet-route': 'Genre-Exploration'}
+GENRE_PAGE = {'puzzle': 'Genre-Puzzle', 'tabletop': 'Genre-Tabletop',
+              'tactics': 'Genre-Tactics', 'action': 'Genre-Action',
+              'exploration': 'Genre-Exploration', 'management': 'Genre-Management'}
+
+
+def development_games():
+    """Every game directory except the catalogued fixture game, with its genre page."""
+    games = {}
+    for path in sorted(ROOT.glob('games/*/game.json')):
+        if path.parent.name == 'side-catch':
+            continue
+        metadata = json.loads(path.read_text(encoding='utf-8'))
+        games[path.parent.name] = GENRE_PAGE[metadata['genre']]
+    return games
+
+
+DEVELOPMENT = development_games()
 
 
 def make_cjr(payload=b'\x01\x39', start=0x1000):
@@ -517,15 +530,18 @@ class SevenGamePreviewTests(unittest.TestCase):
             self.assertEqual(page.count('\n# '), 0)
             self.assertIn(f'](Game-{game})', files['Controls.md'].decode('utf-8'))
             self.assertIn(f'](Game-{game})', files['Quality-Review.md'].decode('utf-8'))
-        self.assertIn('| [アクション](Genre-Action) | 0 | 2 |', home)
-        self.assertIn('| [探索](Genre-Exploration) | 0 | 2 |', home)
+        pages = [*DEVELOPMENT.values(), 'Genre-Action']
+        for page in set(pages):
+            self.assertRegex(home, rf'\]\({page}\) \| 0 \| {pages.count(page)} \|')
         self.assertIn('公開作品準備中', home)
         quality = files['Quality-Review.md'].decode('utf-8')
         for game in DEVELOPMENT:
-            if game != 'relic-dive':
-                row = next(line for line in quality.splitlines()
-                           if f'](Game-{game})' in line)
+            gallery = json.loads((ROOT / 'games' / game / 'media/gallery.json').read_text())
+            row = next(line for line in quality.splitlines() if f'](Game-{game})' in line)
+            if gallery['schema_version'] >= 2:
                 self.assertIn('ギャラリー撮影記録あり', row)
+            else:
+                self.assertNotIn('ギャラリー撮影記録あり', row)
         self.assertNotIn('?game=', ''.join(value.decode('utf-8')
                                            for name, value in files.items()
                                            if name.endswith('.md')))

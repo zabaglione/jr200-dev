@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "peg-garden",
+  "source": "src/main.asm",
+  "output": "peg-garden.cjr",
+  "load_address": "0x1000",
+  "entry_address": "0x1000",
+  "entry_symbol": "start",
+  "regions": [
+    {
+      "name": "program",
+      "kind": "code",
+      "start": "0x1000",
+      "end": "0x2fff"
+    },
+    {
+      "name": "runtime",
+      "kind": "data",
+      "start": "0x3000",
+      "end": "0x4fff"
+    }
+  ],
+  "inputs": {
+    "assembly": [
+      "src/art.inc",
+      "src/main.asm"
+    ],
+    "sdk": [
+      "sdk/audio.inc",
+      "sdk/audio_notes.inc",
+      "sdk/font.inc",
+      "sdk/font_data.inc",
+      "sdk/frame.inc",
+      "sdk/gfx.inc",
+      "sdk/jr200.inc",
+      "sdk/keys.inc",
+      "sdk/math.inc",
+      "sdk/pcg.inc",
+      "sdk/port.inc",
+      "sdk/session.inc",
+      "sdk/sound.inc"
+    ],
+    "assets": []
+  },
+  "execution": {
+    "loader": "cjr",
+    "launch": "basic_usr",
+    "command": "A=USR($1000)",
+    "return": "rts",
+    "stack": "caller"
+  }
+}
