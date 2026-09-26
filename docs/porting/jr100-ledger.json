@@ -858,8 +858,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 61,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/orbit-dodge",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "gate_runner",

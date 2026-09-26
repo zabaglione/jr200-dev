@@ -41,10 +41,10 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'glyph-shift', 'gravity-well', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
+AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'glyph-shift', 'gravity-well', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-dodge', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
 KEYS_EXT_GAMES = ['compass-rose', 'frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault', 'mirror-relic']
 RANKED_GAMES = ['frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault']
-SELFTEST_GAMES = ['echo-parry', 'lunar-touchdown', 'pendulum-port', 'ribbon-snake']
+SELFTEST_GAMES = ['echo-parry', 'lunar-touchdown', 'orbit-dodge', 'pendulum-port', 'ribbon-snake']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 

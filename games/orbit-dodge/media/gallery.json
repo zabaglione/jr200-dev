@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "4ed4ab62668de757d59ff44c247a2ea9f81db182d25e545e7d5778594eb3f185",
+      "framebuffer_sha256": "64dd5a522d3943a7ba8ee04e19bcfb22b78baa4ba4fc279cf41cefa3db144b6f"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで光線が放たれる前の場面",
+      "sha256": "c704291098ce2dcd5964e171bf6b39561fc64fde924a10f66126a6508c8a198a",
+      "framebuffer_sha256": "be287f6febb0c5512e003a32d8165bd6e50ad258e5c25529999358e31a33d558"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "12波を越えて金の軌道で1つ目の宙域をクリア",
+      "sha256": "299f0f54ac0b7e3e06d3f86eab05d2ab482e43a8734fc8a516c60a65290dc781",
+      "framebuffer_sha256": "5997a001107d6bad9a4fa2f0f70749c63e66d625ba68747b16fb8ceda64cc764"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 23.2,
+    "frames": 696,
+    "frames_sha256": "d41d85baa8f88e28c097bf32f4444ac94b336319e0943dcb8c151bd53f1a6e93",
+    "pcm_sha256": "e95053b12326a3d6e2c5eae034bf5eec6b368a05422b51679519778c7b9f1e88",
+    "sha256": "828c999e53cc09c6f77f722e4fec44a66b45755ab6640d8a795ff8156aed4a6c",
+    "caption": "1つ目の宙域の自動デモ（宝石を取り続けて金の軌道）"
+  }
+}
