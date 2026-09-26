@@ -1192,6 +1192,55 @@
         "games/auction-house/game.json",
         "games/auction-house/media/**"
       ]
+    },
+    {
+      "id": "compass-rose",
+      "kind": "game",
+      "project": "games/compass-rose",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/compass-rose/LICENSE",
+        "games/compass-rose/Makefile",
+        "games/compass-rose/THIRD_PARTY_NOTICES.md",
+        "games/compass-rose/assets/**",
+        "games/compass-rose/build.json",
+        "games/compass-rose/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys_ext.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/compass-rose/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_compass_rose.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/compass-rose/README.md",
+        "games/compass-rose/UPSTREAM.md",
+        "games/compass-rose/game.json",
+        "games/compass-rose/media/**"
+      ]
     }
   ]
 }

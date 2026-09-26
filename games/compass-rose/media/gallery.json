@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。砂地、足跡、探検家、岩、光",
+      "sha256": "7572f0f7837e7feea285cca3e7534a2a2aed773e0fba1e670b8d84f9fb9cb3c4",
+      "framebuffer_sha256": "4f92bb2b7f4c0530cc87c068ad521afb5c4314a0cef1647fefb6988dc542845a"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-survey",
+      "role": "play",
+      "caption": "岩にぶつかった後、東へ2歩進んで測り直した場面",
+      "sha256": "6458f08ab93be520539f3f0422f860ddd5b8455a8a8b8d0cda66c1750ce15579",
+      "framebuffer_sha256": "c854e857e66ae4be9f98e6c05279686da4ea74cbb7a63e075c5e175d8885a89b"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "遺物を掘り当てた1地点目のクリア",
+      "sha256": "566dd984ed54de24abd53a5e6fa9e3d55f15809975a5039a9f537eba364a796a",
+      "framebuffer_sha256": "43df75aaf5fdd958e69074da81fb29976a68b753718269159694c205115518a8"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 5.4,
+    "frames": 161,
+    "frames_sha256": "d2360519356f5d329ac53a26af6ab4846d2eca4ff7dad6ce770faeff7259ec1b",
+    "pcm_sha256": "ca8a209333b16014eb1a582f44c591a5feeb37e95bfa79027dbba636c10ae6ad",
+    "sha256": "ae8abe777082ad0cb726bd7b4bf18ced4e2bfa8cf1f6757d5b2b8293be4f58ec",
+    "caption": "1地点目で測定し、岩を回り込んで遺物を掘り当てるまで"
+  }
+}
