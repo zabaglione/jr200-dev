@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。波と2つの群れ",
+      "sha256": "f386a22866c83391040d400c36f4ff164ef55444b84405c9ddbc6f88484284ed",
+      "framebuffer_sha256": "3022efa0730341e5a80b442807b194900bd296596096acba8f73162a43e43f20"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-catch",
+      "role": "play",
+      "caption": "広い網で最初の投網をした後",
+      "sha256": "1976da0d16e4fb45553267f9993f7f83c3ec57effa138088abb6a5f99c070ea3",
+      "framebuffer_sha256": "835455f321f554bac1f428b4cd95034ea65d93c4fdb6e6f0e5d07a1fa39c80c5"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "漁獲が目標に届いて1回目のクリア",
+      "sha256": "8509af7539eb2ba452ab44bcb9eb6bb8a6ca287e99009e7ba5fba039e6ffc687",
+      "framebuffer_sha256": "41160b1321255b9a9ad021ac747f24930c08a6d0a6a48661fa73501f9ca82bfb"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 21.0,
+    "frames": 630,
+    "frames_sha256": "2c6d895cd122c906f62854e27921c796b8806f55ccab399de78fb64a7c1967e7",
+    "pcm_sha256": "facb671ed7e3b804df23764a0b700855971bd539f3011ff2850f46be99c5b3cc",
+    "sha256": "27c821d70321b98dbaa9ba1a7830d53599b60c2eaa0796335ef0347f3fd413e6",
+    "caption": "1回目の漁で9回の投網で目標30に届き、3声のジングルが鳴るまで（音付き）"
+  }
+}

@@ -1045,6 +1045,55 @@
         "games/shadow-archive/game.json",
         "games/shadow-archive/media/**"
       ]
+    },
+    {
+      "id": "tidal-nets",
+      "kind": "game",
+      "project": "games/tidal-nets",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/tidal-nets/LICENSE",
+        "games/tidal-nets/Makefile",
+        "games/tidal-nets/THIRD_PARTY_NOTICES.md",
+        "games/tidal-nets/assets/**",
+        "games/tidal-nets/build.json",
+        "games/tidal-nets/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/tidal-nets/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_tidal_nets.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/tidal-nets/README.md",
+        "games/tidal-nets/UPSTREAM.md",
+        "games/tidal-nets/game.json",
+        "games/tidal-nets/media/**"
+      ]
     }
   ]
 }
