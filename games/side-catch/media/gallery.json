@@ -2,7 +2,7 @@
   "schema_version": 2,
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "571e25aa5c7b76f00f3c827d0edbd11db4d3571b81b9fbc370412979a9f2c916",
+    "artifact_sha256": "afb7532fb0add608acc147e1c8c96600357e455fe9ae183a61484493f691816b",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   },
@@ -30,24 +30,24 @@
       "file": "goal.png",
       "profile": "local-rom-goal",
       "role": "goal",
-      "caption": "Dで最初の右targetを捕獲した場面",
-      "sha256": "e4b22bb4ff485395fcab5454c01f103d2accd0dfe0b0dc861cf6191f145b2880",
-      "framebuffer_sha256": "2edd8a70e456fdf99a9da6aa24ca17059b66fe1d9cb1a7def5a11a534e1f01f3"
+      "caption": "Dで最初の右targetを捕獲し、累計001を表示した場面",
+      "sha256": "02d2c8c6cd5313543ce9b791f801f48964c044a4ce901f3ba3a79c8ee8a79f20",
+      "framebuffer_sha256": "08fb415a3dde301e9b6ab9576df65751991b5e43748324746f523990f32107b4"
     }
   ],
   "video": {
     "file": "goal.webm",
     "profile": "local-rom-goal",
     "mode": "rom-cassette",
-    "artifact_sha256": "571e25aa5c7b76f00f3c827d0edbd11db4d3571b81b9fbc370412979a9f2c916",
+    "artifact_sha256": "afb7532fb0add608acc147e1c8c96600357e455fe9ae183a61484493f691816b",
     "start_cycle": 82800000,
     "fps": 30,
     "speed": 1.0,
     "seconds": 0.9,
     "frames": 28,
-    "frames_sha256": "fd8c5fe769d5bab4fef4771c7a103c012509bd13e8dc1a5bdcbd9b35e77e7122",
-    "pcm_sha256": "e2e89e1a26990648bc9c71f06b6a19131436cc6c4fee699e61dc25c51e1a3ed1",
-    "sha256": "d8156bef75e4e55d064a66642c1799d17b2143034145ff7f650a5fa879680889",
-    "caption": "通常MLOAD/USR後の最初の捕獲まで（実ゲームPCM付き、起動中のBASIC画面と音は除外）"
+    "frames_sha256": "8566c300950711229582b235c907278d3b1f08093a45c261573bb7332d7b4b3d",
+    "pcm_sha256": "14e645410798cb743abf42c266d76e94b74108fe114f29535900f6ce388c306d",
+    "sha256": "6737e0b01cf8813519a613f0e48081e16db13199d6893b3e0cf1b5db39327ff7",
+    "caption": "通常MLOAD/USR後の最初の捕獲と累計表示（実ゲームPCM付き、起動中のBASIC画面と音は除外）"
   }
 }

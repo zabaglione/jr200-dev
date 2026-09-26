@@ -137,7 +137,8 @@ class FirstGameTests(unittest.TestCase):
                 project, str(executable), root / 'toolchain.lock.json',
                 root / 'rules/jr200.json', root)
             with zipfile.ZipFile(package) as archive:
-                prefix = 'side-catch-0.1.2/'
+                version = json.loads((project / 'game.json').read_text())['version']
+                prefix = f'side-catch-{version}/'
                 manifest = json.loads(archive.read(prefix + 'RELEASE.json'))
                 self.assertEqual(manifest['artifact']['file'], 'side-catch.cjr')
                 self.assertEqual(manifest['artifact']['sha256'], artifact_hash)
