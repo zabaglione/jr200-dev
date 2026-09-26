@@ -947,6 +947,55 @@
         "games/number-vault/game.json",
         "games/number-vault/media/**"
       ]
+    },
+    {
+      "id": "memory-mosaic",
+      "kind": "game",
+      "project": "games/memory-mosaic",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/memory-mosaic/LICENSE",
+        "games/memory-mosaic/Makefile",
+        "games/memory-mosaic/THIRD_PARTY_NOTICES.md",
+        "games/memory-mosaic/assets/**",
+        "games/memory-mosaic/build.json",
+        "games/memory-mosaic/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/memory-mosaic/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_memory_mosaic.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/memory-mosaic/README.md",
+        "games/memory-mosaic/UPSTREAM.md",
+        "games/memory-mosaic/game.json",
+        "games/memory-mosaic/media/**"
+      ]
     }
   ]
 }
