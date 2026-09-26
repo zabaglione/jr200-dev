@@ -41,9 +41,10 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'five-forge', 'frost-steps', 'fuse-box', 'glyph-shift', 'gravity-well', 'magnet-vault', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-draft', 'orchard-days', 'peg-garden', 'phase-pairs', 'potion-path', 'prism-trace', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
+AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'five-forge', 'frost-steps', 'fuse-box', 'glyph-shift', 'gravity-well', 'magnet-vault', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-draft', 'orchard-days', 'peg-garden', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
 KEYS_EXT_GAMES = ['compass-rose', 'frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault', 'mirror-relic']
 RANKED_GAMES = ['frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault']
+SELFTEST_GAMES = ['ribbon-snake']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 
@@ -220,6 +221,7 @@ class SdkImpactTests(unittest.TestCase):
         cases['sdk/font.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])
         cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])
         cases['sdk/session.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])
+        cases['sdk/selftest.inc'] = SELFTEST_GAMES
         cases['sdk/keyscan.inc'] = ['brick-pulse', 'port-fixture-sample']
         cases['sdk/keyrepeat.inc'] = ['port-fixture-sample']
         cases['sdk/effect.inc'] = ['port-fixture-sample']

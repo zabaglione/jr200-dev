@@ -101,6 +101,7 @@ Bがevent（0なし、1押下、2リピート、3離上）です。単一キー�
 | CTRL+C（BASICへ戻る） | ESCまたはCTRL+C |
 | X、F、Q、E、Z、C（操作7〜12） | `sdk/keys_ext.inc`と作品の`game_key_table`。`sdk/port.inc`はプレイ中に操作7以上を`game_act`へ渡す |
 | `spend_move`／`take_rune`／`ranked_clear`／`ranked_hud`、`rankedCampaign`（ステージ選択・パスワード） | `sdk/ranked.inc`（`port.inc`の代わり）。モデルは`tests/ranked_model.py`。上流`password.py`の符号をテストで照合 |
+| `rate`（tickで進むリアルタイム作品）、デモ | `GAME_RATE`と`game_tick`。ルールの一致は`sdk/selftest.inc`の自己試験（タイトルで`T`）で示す。状態fixtureと面ごとのtick同期入力スクリプトを作品の`tests/selftest.py`に書き、`tests/selftest_model.py`が同じ結果を計算する。`P`で1面目のスクリプトを自動デモとして再生 |
 
 ## 第1弾の固定仕様
 

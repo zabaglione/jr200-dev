@@ -26,6 +26,7 @@
 | `sfx.inc` | channel Cのnon-blocking効果音列 | frameごとに進める |
 | `audio.inc` / `audio_notes.inc` | 音源F・D・Cの3声の曲とジングル、channel Cの効果音（`sfx.inc`と同じAPI） | `sfx.inc`とは併用しない。28 bytesの`JR_AUDIO`が必要。テンポは`jr_sfx_tick`の回数 |
 | `ranked.inc` | 40面の評価つきキャンペーン（上流`rankedCampaign`）: 手数とPARとルーンによる星、面ごとの最高評価、ステージマップ、CRC付きパスワード。`port.inc`と同じ`jr_port_*`に`jr_rank_spend`／`jr_rank_take`／`jr_rank_clear`／`jr_rank_hud`を加える | `port.inc`とは併用しない。`keys_ext.inc`（x→7、f→8）、120 bytesの`JR_RANK`、`GAME_PASSWORD_TAG`、`game_level_par`、`game_title_text`、`RANK_*`の番地が必要 |
+| `selftest.inc` | リアルタイム作品の開発用自己試験と自動デモ: 状態fixtureを1 tick／1操作進めた結果と、面ごとのtick同期入力スクリプトで通し遊びした結果を`JR_TEST_OUT`へ書き出す。同じスクリプトをタイトルの`P`で通常速度の自動デモとして再生する | `port.inc`と併用。16 bytesの`JR_TEST`、`GAME_TEST_SIZE`／`GAME_TEST_LIMIT`／`GAME_TEST_HELD`、`game_fixtures`、`game_scripts`、`game_test_draw`が必要。モデル側は`tests/selftest_model.py`、表は`tests/make_selftest.py`で生成 |
 | `port.inc` | タイトル・説明・面進行・クリア/失敗・やり直し確認・演出待ちの共通loop | 作品側hookを呼ぶ。演出待ちは同期処理で、効果音と終了キーだけを継続する |
 
 `session.inc` と `gfx.inc` 以外の全routineは呼出元のSを初期化せず、`JSR`／`RTS` の範囲だけstackを使います。
