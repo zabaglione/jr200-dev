@@ -158,6 +158,17 @@ Release ZIPをHTTP取得して固定版・hashを照合します。`--packages-d
 `--after-wiki-push`は生成した全Wikiページ・媒体と公開Wikiの生ファイルをbyte比較します。
 公開側の反映遅延があれば失敗し、再試行できます。実機互換性の検査ではありません。
 
+公開版の取消が必要なときは、Webカタログの推奨版を先に起動確認済みの固定版へ戻し、
+同一SHAのCI・Pagesと公開CJRのhash・起動を確認します。新しい版の固定URLは削除・
+上書きしません。続いて、その正常版を指定していた開発ソースcommitの別クローンから
+Wiki生成のdry-runを行い、変更対象が管理済み生成ページだけであることを確認します。
+承認後にその生成結果だけをWiki worktreeへ適用し、非強制pushします。古いsource
+commitは現在のmainではないため、main専用の`wiki-sync.yml`手動実行で代用しません。
+最後に、その別クローンを`--root`に指定した
+`tools/wiki/public_check.py --after-wiki-push`でWiki・公開CJR・Release ZIPを再照合します。
+`tests/test_wiki.py`は隔離worktreeで生成ページの差戻しと手書きページの維持を試験します。
+この手順は復旧の準備であり、公開Wikiを実際に巻き戻した証拠ではありません。
+
 `.github/workflows/wiki-sync.yml`のPR経路は読み取り専用で、公開資格情報を受け取りません。
 remote経路はmain上の`workflow_dispatch`だけです。`source_sha`に現在のmainの完全SHA、
 `approved_games`に公開対象の`id@version`全件をID順でカンマ区切り、`confirmation`に

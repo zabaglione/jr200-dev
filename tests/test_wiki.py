@@ -438,6 +438,28 @@ class WikiGenerationTests(unittest.TestCase):
         with self.assertRaisesRegex(WikiError, 'must be clean'):
             require_git_worktree(wiki.resolve(), clean=True)
 
+    def test_generated_wiki_can_return_to_last_approved_pages(self):
+        approved, _ = render_pages(self.fixture.root, None, True)
+        wiki = self.fixture.root / 'rollback-wiki'
+        wiki.mkdir()
+        (wiki / 'Notes.md').write_text('handwritten\n', encoding='utf-8')
+        apply_files(wiki, approved)
+
+        self.fixture.metadata['title'] = 'SIDE CATCH UPDATED'
+        self.fixture.metadata_path.write_text(
+            json.dumps(self.fixture.metadata) + '\n', encoding='utf-8')
+        replacement, _ = render_pages(self.fixture.root, None, True)
+        self.assertIn('Game-side-catch.md', sync_plan(wiki, replacement)['update'])
+        apply_files(wiki, replacement)
+
+        self.assertIn('Game-side-catch.md', sync_plan(wiki, approved)['update'])
+        apply_files(wiki, approved)
+        self.assertEqual(sync_plan(wiki, approved)['update'], [])
+        self.assertEqual((wiki / 'Notes.md').read_text(encoding='utf-8'),
+                         'handwritten\n')
+        for name, content in approved.items():
+            self.assertEqual((wiki / name).read_bytes(), content)
+
     def test_sync_refuses_unowned_generated_name_collision(self):
         files, _ = render_pages(self.fixture.root, None, True)
         wiki = self.fixture.root / 'collision'
