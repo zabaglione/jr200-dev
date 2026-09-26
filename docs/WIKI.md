@@ -202,7 +202,7 @@ source commitが公開対象main commitの祖先であることを照合しま�
 
 ```sh
 python3 tools/web_export.py \
-  --game side-catch --version 0.1.2 --approve side-catch@0.1.2 \
+  --game side-catch --version 0.1.3 --approve side-catch@0.1.3 \
   --site-catalog /absolute/path/to/jr200-web-emulator/web/game-catalog.json \
   --site /absolute/path/to/current/site --packages /absolute/path/to/fixed/packages \
   --expected-commit "$(git rev-parse HEAD)" --title-marker 'SIDE CATCH'

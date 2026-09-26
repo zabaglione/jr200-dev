@@ -5,13 +5,13 @@
       "id": "side-catch",
       "project": "games/side-catch",
       "status": "verified",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "genre": "action",
-      "artifact_sha256": "571e25aa5c7b76f00f3c827d0edbd11db4d3571b81b9fbc370412979a9f2c916",
+      "artifact_sha256": "afb7532fb0add608acc147e1c8c96600357e455fe9ae183a61484493f691816b",
       "package": {
-        "file": "side-catch-0.1.2.zip",
-        "sha256": "795ab19ad04abff98c7a069c860178274f1a3b6647e3fd6df8cd0b19e90b6d9c",
-        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/games-2026-09-25/side-catch-0.1.2.zip"
+        "file": "side-catch-0.1.3.zip",
+        "sha256": "37e8f21714585990f730f1a53ddbef9717fcd47cf2bfe783165aa5bce13945ce",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/side-catch-0.1.3/side-catch-0.1.3.zip"
       },
       "wiki": {
         "slug": "side-catch",
