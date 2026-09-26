@@ -2,7 +2,7 @@
 
 - Repository: `https://github.com/zabaglione/jr100dev`
 - Revision: `9a3921c4371d84c55fc468879dbed2f00fe42960`
-- Source project: `games//home/user/ext/jr100dev/games/magnet_vault`
+- Source project: `games/magnet_vault`
 - Upstream game version: `1.6.1`
 - License: MIT (`games/LICENSE`, SHA-256 `eb066d0b8b7ab2ae1da387a2dfd4aaabf15b47ffe11f4fefd72093e32a12cd16`; full text in `LICENSE`)
 
