@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。入と切のヒューズと切り替え中の形",
+      "sha256": "819539ab7d8506bf42aa75bd2c835b12b9676ea6aaa5c58486adad4c2d3431cf",
+      "framebuffer_sha256": "249569a7dac035e511385c4cf536df2bfd89ed65e947584987101d23984e9b78"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-partial",
+      "role": "play",
+      "caption": "1面で4個のスイッチを入れた途中。合った行と列の数字が緑に反転",
+      "sha256": "a9652d2c54986ffdb84f42c4af060023d32b3bac3e80edc38584e2cb64d0dc38",
+      "framebuffer_sha256": "398d62f280dc9a488928872b5181a885dd1f013b8c26cba946f9eff6802ac9ff"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "すべての行と列の個数がそろって1面クリア",
+      "sha256": "53215bfe5bae46b2564fcd8940df5daca6430a7e59a121007cf502af6fc5a2bf",
+      "framebuffer_sha256": "4b72a025f2f8f85f596562c1574f84a8949161fe1344319ea3e2356450bb05cb"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 8.9,
+    "frames": 266,
+    "frames_sha256": "7bf5403c11c9437a7b54acf6b890ab62c21abf21116e4973008280f4b1434b23",
+    "pcm_sha256": "0e4090080774fbf39bd81fd573ede7a631a60cece87dc0b7864299b5021846c3",
+    "sha256": "94e4c784ed351b3961a364cfd359e77cccdd79a840bb610631fb3094bd6fa834",
+    "caption": "1面の開始から10個のスイッチを入れてクリアし、3声のジングルが鳴るまで（音付き）"
+  }
+}
