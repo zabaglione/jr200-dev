@@ -577,9 +577,16 @@ def check_cjr_layout(spec: ProjectSpec, parsed: dict[str, Any],
             f'Entry symbol mismatch: expected 0x{entry:04x}, got {shown}')
     for block in blocks:
         for location in range(block.start, block.end + 1):
-            if not any(region.start <= location <= region.end for region in spec.regions):
+            region = next((item for item in spec.regions
+                           if item.start <= location <= item.end), None)
+            if region is None:
                 raise ProjectError(
                     f'CJR byte 0x{location:04x} is outside declared regions')
+            # Data regions are run-time work areas (screen shadow, stack, state):
+            # a program that grows into one would be overwritten while it runs.
+            if region.kind != 'code':
+                raise ProjectError(
+                    f'CJR byte 0x{location:04x} is in data region {region.name}')
 
 
 def build_project(project: Path, jrasm: str | None = None,
