@@ -594,8 +594,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 60,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/glyph-shift",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "gravity_well",
