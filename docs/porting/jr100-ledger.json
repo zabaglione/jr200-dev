@@ -714,8 +714,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 59,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/five-forge",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "corner_crown",

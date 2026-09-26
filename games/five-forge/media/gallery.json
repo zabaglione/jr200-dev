@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。白い石の五連と黒い石",
+      "sha256": "5c0cfba2d9956811959820dd8e56b4b3a341bf7cc3eb5b28903e8d21dce51257",
+      "framebuffer_sha256": "a920ff01b3617a629d7f5ebd4bf616aa51ff9e387c100ad2a5aa7168fbd998a0"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-moves",
+      "role": "play",
+      "caption": "3手目を置き、相手が打ち返した場面",
+      "sha256": "6fb4662943ab50ee546f6d6d53b89c6fa6b3099b462ed176e7716b5a0e18c528",
+      "framebuffer_sha256": "ef584d5f384c9a64add32e3462a55bbaeb2883c2a15ffc67b9dcb4d7bc22b68c"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "斜めの五連ができたクリア",
+      "sha256": "ff23eb759fa13572b85b4d973fb5cfd4393bd101039381ba0e6c0e0fab5c4d84",
+      "framebuffer_sha256": "ae5bd567505abc12eb3c7b5f33460420b379b1f257be1ea0adae473b46d0e213"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 22.7,
+    "frames": 682,
+    "frames_sha256": "326b127c456e5a1c97a24037075385488052ee3059acddc9366dec471a58f33c",
+    "pcm_sha256": "1cbc0f01374148a3603071803c0450d6109370970630e2983ca495ba14538db0",
+    "sha256": "e1c396af962a945735041d97f01129a6e13ae69608477781f4db92e7eee7faf8",
+    "caption": "5手で斜めの五連を作ってクリアするまで"
+  }
+}
