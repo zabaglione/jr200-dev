@@ -31,9 +31,12 @@ HEX64 = re.compile(r'[0-9a-f]{64}')
 SEMVER = re.compile(r'(\d+)\.(\d+)\.(\d+)')
 GENERATED_FILE = re.compile(
     r'(?:Home|_Sidebar|All-Games|Games|Controls|Play|Presentation|Quality-Review|Licenses|'
+    r'Porting-Plan|JR-200-Features|'
     r'Genre-[A-Z][a-z]{1,31}|Game-[a-z][a-z0-9-]{0,31})\.md|'
     r'media/[a-z][a-z0-9-]{0,63}\.(?:png|webm)')
 EMULATOR_URL = 'https://zabaglione.github.io/jr200-web-emulator/'
+ISSUE_URL = re.compile(r'https://github\.com/zabaglione/jr200-dev/issues/[1-9][0-9]{0,4}')
+LEDGER = 'docs/porting/jr100-ledger.json'
 REPOSITORY_URL = 'https://github.com/zabaglione/jr200-dev'
 SOURCE_URL = REPOSITORY_URL + '/blob/main/'
 TREE_URL = REPOSITORY_URL + '/tree/main/'
@@ -926,6 +929,7 @@ def check_links(root: Path, files: dict[str, bytes]) -> None:
                         break
                 else:
                     if not (target.startswith((EMULATOR_URL, UPSTREAM_URL))
+                            or ISSUE_URL.fullmatch(target)
                             or release_url(target, PurePosixPath(urlparse(target).path).name)):
                         raise WikiError(f'{name}: link outside the allowed set: {target}')
             elif target.startswith('#'):
@@ -1027,6 +1031,7 @@ def render_pages(root: Path, packages: Path | None,
         '## もっと知る', '',
         '- [全作品の一覧](All-Games)', '- [映像と音](Presentation)',
         '- [品質と検証範囲](Quality-Review)', '- [ライセンスと配布境界](Licenses)',
+        '- [JR-200の色と3和音](JR-200-Features)', '- [JR100devからの移植計画](Porting-Plan)',
         '- [ゲーム一覧（旧ページ）](Games)', '',
         '## 開発者向け', '', *developer, '',
         f'[JR-200 Web Emulatorを開く]({EMULATOR_URL})', '',
@@ -1036,6 +1041,7 @@ def render_pages(root: Path, packages: Path | None,
         *[f'- [{genre["title"]}]({genre["page"]})' for genre in genres_list],
         '- [操作](Controls)', '- [エミュレータで遊ぶ](Play)', '- [映像と音](Presentation)',
         '- [品質と検証範囲](Quality-Review)', '- [ライセンス](Licenses)',
+        '- [JR-200の色と3和音](JR-200-Features)', '- [移植計画](Porting-Plan)',
         f'- [開発者向け]({SOURCE_URL}docs/DEVELOPMENT.md)', '',
     ]).encode('utf-8')
     for genre in genres_list:
@@ -1137,6 +1143,8 @@ def render_pages(root: Path, packages: Path | None,
         'ゲームのCJRを公開するときは、作品ごとの固定版と含まれるSDKのライセンス全文を確認します。', '',
     ]).encode('utf-8')
     files['Play.md'] = PLAY_PAGE.encode('utf-8')
+    files['Porting-Plan.md'] = render_porting_plan(root, selected, genres_list).encode('utf-8')
+    files['JR-200-Features.md'] = render_features(selected).encode('utf-8')
     for entry in selected:
         files[f'Game-{entry["wiki"]["slug"]}.md'] = render_game(
             entry, genres[entry['genre']]).encode('utf-8')
@@ -1148,6 +1156,101 @@ def render_pages(root: Path, packages: Path | None,
         'package_sha256': entry['package']['sha256'] if 'package' in entry else None,
     } for entry in selected]
     return files, summary
+
+
+STAGE_ISSUES = {59: 'ターン制・難度low', 60: 'ターン制・難度medium', 61: 'リアルタイム',
+                62: 'JR-100手書きASM'}
+REPOSITORY_ISSUES = REPOSITORY_URL + '/issues/'
+
+
+def render_porting_plan(root: Path, selected: list[dict[str, Any]],
+                        genres_list: list[dict[str, str]]) -> str:
+    """JR100dev's 51 games and their JR-200 state; planned games are not achievements."""
+    ledger = read_json(root / LEDGER, 'porting ledger')
+    rendered = {entry['id']: entry for entry in selected}
+    published = {entry['id'] for entry in selected if entry['tier'] == 'published'}
+    games = ledger.get('games') if isinstance(ledger, dict) else None
+    if not isinstance(games, list) or len(games) != 51:
+        raise WikiError('Invalid porting ledger')
+    states = {'published': 0, 'development': 0, 'planned': 0}
+    rows_by_genre: dict[str, list[str]] = {genre['id']: [] for genre in genres_list}
+    for game in sorted(games, key=lambda item: item['title']):
+        project = root / 'games' / game['id']
+        if game['id'] in published:
+            state = 'published'
+            where = f'[公開](Game-{rendered[game["id"]]["wiki"]["slug"]})'
+        elif game['status'] in ('ported', 'ported-dev') and project.is_dir():
+            state = 'development'
+            where = (f'[開発中](Game-{rendered[game["id"]]["wiki"]["slug"]})'
+                     if game['id'] in rendered
+                     else f'[開発中（ソース）]({TREE_URL}games/{game["id"]})')
+        elif game['status'] == 'planned' and not project.exists():
+            state = 'planned'
+            issue = game.get('issue')
+            if issue not in STAGE_ISSUES:
+                raise WikiError(f'{game["id"]}: planned game without a stage issue')
+            where = f'予定（[{STAGE_ISSUES[issue]}]({REPOSITORY_ISSUES}{issue})）'
+        else:
+            raise WikiError(f'{game["id"]}: ledger status does not match the repository')
+        states[state] += 1
+        if game['genre'] not in rows_by_genre:
+            raise WikiError(f'{game["id"]}: unknown genre in the ledger')
+        rows_by_genre[game['genre']].append(
+            f'| {game["title"]} | {where} | {game["summary_ja"]} |')
+    lines = ['# JR100devからの移植計画', '', '[Home](Home) › 移植計画', '',
+             'JR100devの51作品を、JR-200の色と3和音を使って移植しています。'
+             '状態は台帳（`docs/porting/jr100-ledger.json`）とリポジトリの作品directoryから作ります。'
+             '「予定」は着手前の作品で、公開作品や完成した作品として数えていません。', '',
+             '| 状態 | 作品数 |', '| --- | ---: |',
+             f'| 公開 | {states["published"]} |',
+             f'| 開発中（未公開） | {states["development"]} |',
+             f'| 予定 | {states["planned"]} |', '',
+             '開発中の作品は、所有ROM/FONTでの通常`MLOAD`/`USR`の確認と、公開の承認を経てから公開します。', '']
+    for genre in genres_list:
+        rows = rows_by_genre[genre['id']]
+        lines.extend([f'## {genre["title"]}', '', '| 作品 | JR-200での状態 | 内容 |',
+                      '| --- | --- | --- |', *rows, ''])
+    lines.extend([f'移植の方針は[移植契約]({SOURCE_URL}docs/PORTING.md)にあります。', ''])
+    return '\n'.join(lines)
+
+
+def render_features(selected: list[dict[str, Any]]) -> str:
+    """How the ports use the JR-200's colour attributes and three sound channels."""
+    lines = ['# JR-200の色と3和音', '', '[Home](Home) › JR-200の色と3和音', '',
+             'JR-100は白黒の画面と1音です。JR-200への移植では8色の表示を使い、第2弾の作品からは'
+             '3つの音源を同時に鳴らす3和音も使います（第1弾の公開作品の音は1音です）。', '',
+             '## 色', '',
+             '- 文字や絵の1マスごとに、前景と背景を黒・青・赤・紫・緑・水色・黄・白の8色から選べます。',
+             '- 盤面や札、石などの絵は、作品ごとに描いた16×16ドットのユーザー定義文字（PCG）です。'
+             '上流の絵を写したものではありません。',
+             '- 色だけで状態を区別させません。同じ情報を形や記号でも示します'
+             '（例: 選んだ石は紫で、枠も付く）。', '',
+             '## 3和音', '',
+             '- JR-200の3つの音源（F・D・C）を同時に鳴らし、タイトル曲と、クリア・失敗の短い曲を3声にしています。',
+             '- 旋律は音程の細かいF、和音と低音はDとCが受け持ちます。移動などの効果音はCで鳴り、'
+             'その間だけ曲のC声部が止まって、終わると戻ります。',
+             '- 3声が同時に鳴っていることは、固定エミュレータの音声出力の振幅（1音源の3倍）で試験しています。'
+             '音程と音量は物理JR-200では未確認です。',
+             f'- 仕組みは[`sdk/audio.inc`]({SOURCE_URL}sdk/audio.inc)と'
+             f'[3和音のサンプル]({TREE_URL}samples/chord)にあります。', '']
+    uses = []
+    for entry in selected:
+        sections = dict(readme_parts(entry['_readme'])[1])
+        colour = sections.get('画面（色と記号）')
+        sound = sections.get('音')
+        if colour is None and sound is None:
+            continue
+        uses.append(f'### [{entry["_metadata"]["title"]}](Game-{entry["wiki"]["slug"]})')
+        uses.append('')
+        if colour is not None:
+            uses.extend(['**色と記号**', '', rewrite_readme(colour, f'games/{entry["id"]}'), ''])
+        if sound is not None:
+            uses.extend(['**音**', '', rewrite_readme(sound, f'games/{entry["id"]}'), ''])
+    if uses:
+        lines.extend(['## 作品ごとの使い方', '', *uses])
+    else:
+        lines.extend(['## 作品ごとの使い方', '', '公開作品準備中', ''])
+    return '\n'.join(lines)
 
 
 PLAY_PAGE = (

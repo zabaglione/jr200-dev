@@ -18,8 +18,9 @@ from wiki.generate import (WikiError, apply_files, render_pages,
 ROOT = Path(__file__).resolve().parents[1]
 GENRE_PAGES = ['Genre-Action.md', 'Genre-Exploration.md', 'Genre-Management.md',
                'Genre-Puzzle.md', 'Genre-Tabletop.md', 'Genre-Tactics.md']
-BASE_PAGES = ['All-Games.md', 'Controls.md', 'Games.md', 'Home.md', 'Licenses.md',
-              'Play.md', 'Presentation.md', 'Quality-Review.md', '_Sidebar.md', *GENRE_PAGES]
+BASE_PAGES = ['All-Games.md', 'Controls.md', 'Games.md', 'Home.md', 'JR-200-Features.md',
+              'Licenses.md', 'Play.md', 'Porting-Plan.md', 'Presentation.md',
+              'Quality-Review.md', '_Sidebar.md', *GENRE_PAGES]
 GENRE_PAGE = {'puzzle': 'Genre-Puzzle', 'tabletop': 'Genre-Tabletop',
               'tactics': 'Genre-Tactics', 'action': 'Genre-Action',
               'exploration': 'Genre-Exploration', 'management': 'Genre-Management'}
@@ -60,8 +61,9 @@ class WikiFixture:
         shutil.copytree(ROOT / 'sdk', self.root / 'sdk')
         shutil.copytree(ROOT / 'rules', self.root / 'rules')
         shutil.copytree(ROOT / 'docs', self.root / 'docs')
-        (self.root / 'samples').mkdir()
+        (self.root / 'samples/chord').mkdir(parents=True)
         shutil.copy2(ROOT / 'LICENSE', self.root / 'LICENSE')
+        self.sync_ledger()
         self.metadata_path = self.root / 'games/side-catch/game.json'
         self.metadata = json.loads(self.metadata_path.read_text(encoding='utf-8'))
         self.metadata['version'] = '0.1.0'  # independent fake package fixture
@@ -114,6 +116,18 @@ class WikiFixture:
                 metadata['release']['status'] = 'draft'
                 metadata['release']['publication'] = 'not-published'
                 metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
+        self.sync_ledger()
+
+    def sync_ledger(self):
+        """Make the fixture ledger describe the game directories the fixture holds."""
+        path = self.root / 'docs/porting/jr100-ledger.json'
+        ledger = json.loads(path.read_text(encoding='utf-8'))
+        for game in ledger['games']:
+            present = (self.root / 'games' / game['id']).is_dir()
+            game['status'] = 'ported-dev' if present else 'planned'
+            game['jr200_project'] = 'games/' + game['id'] if present else None
+            game['issue'] = game['issue'] if game['issue'] in (59, 60, 61, 62) else 59
+        path.write_text(json.dumps(ledger, ensure_ascii=False) + '\n', encoding='utf-8')
 
     def report(self, profile, mode, evidence, framebuffer='0' * 64):
         cassette = 'memory_injection' if mode == 'synthetic-injection' else 'normal'
@@ -275,6 +289,18 @@ class WikiGenerationTests(unittest.TestCase):
         self.fixture.write_catalog()
         with self.assertRaisesRegex(WikiError, 'Invalid game catalog entry'):
             render_pages(self.fixture.root, None, True)
+
+    def test_public_porting_plan_never_links_unrendered_pages(self):
+        files, _ = render_pages(self.fixture.root, None, False)
+        plan = files['Porting-Plan.md'].decode('utf-8')
+        self.assertIn('| 予定 | 51 |', plan)
+        self.assertNotIn('](Game-', plan)
+        ledger = self.fixture.root / 'docs/porting/jr100-ledger.json'
+        data = json.loads(ledger.read_text())
+        data['games'][0]['status'] = 'ported-dev'
+        ledger.write_text(json.dumps(data, ensure_ascii=False))
+        with self.assertRaisesRegex(WikiError, 'ledger status does not match'):
+            render_pages(self.fixture.root, None, False)
 
     def test_rejects_outer_hash_mismatch(self):
         self.fixture.catalog['games'][0]['package']['sha256'] = 'f' * 64
@@ -568,6 +594,35 @@ class SevenGamePreviewTests(unittest.TestCase):
         self.assertIn('`S` | その場で1ターン待つ', relic)
         self.assertIn('ジョイスティックは', relic)
         self.assertIn('`A` / `D`（押し続ける）', files['Game-brick-pulse.md'].decode('utf-8'))
+
+    def test_porting_plan_separates_published_development_and_planned(self):
+        files, _ = self.render()
+        plan = files['Porting-Plan.md'].decode('utf-8')
+        ledger = json.loads((self.fixture.root / 'docs/porting/jr100-ledger.json').read_text())
+        present = [g for g in ledger['games'] if (self.fixture.root / 'games' / g['id']).is_dir()]
+        self.assertIn(f'| 開発中（未公開） | {len(present)} |', plan)
+        self.assertIn(f'| 予定 | {51 - len(present)} |', plan)
+        self.assertIn('| 公開 | 0 |', plan)
+        for game in ledger['games']:
+            row = next(line for line in plan.splitlines() if line.startswith(f'| {game["title"]} |'))
+            if game in present:
+                self.assertIn(f'](Game-{game["id"]})', row)
+            else:
+                self.assertIn('予定（[', row)
+                self.assertNotIn('](Game-', row)
+                self.assertIn('/issues/', row)
+
+    def test_features_page_collects_colour_and_sound_sections(self):
+        files, _ = self.render()
+        page = files['JR-200-Features.md'].decode('utf-8')
+        for game in DEVELOPMENT:
+            readme = (ROOT / 'games' / game / 'README.md').read_text(encoding='utf-8')
+            if '## 音' in readme:
+                self.assertIn(f'](Game-{game})', page)
+        self.assertIn('samples/chord', page)
+        self.assertIn('物理JR-200では未確認', page)
+        self.assertIn('](JR-200-Features)', files['_Sidebar.md'].decode('utf-8'))
+        self.assertIn('](Porting-Plan)', files['Home.md'].decode('utf-8'))
 
     def test_rendering_is_deterministic_and_sync_reruns_without_changes(self):
         first, _ = self.render()

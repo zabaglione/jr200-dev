@@ -28,6 +28,8 @@ Pagesの配信・所有ROM/FONTによる実起動を確認後、Wikiに7作品�
 | `Presentation` | 全作品の画面と動画 |
 | `Quality-Review` | 検証方法と作品別の検証区分（ROMなし合成、所有ROM/FONT、物理JR-200） |
 | `Licenses` | 共通SDK、作品別ライセンス、移植元、エミュレータ |
+| `Porting-Plan` | JR100devの51作品とJR-200での状態（公開・開発中・予定）。`docs/porting/jr100-ledger.json`と作品directory、catalogから作り、食い違えば生成を止める。予定の作品は段階のIssueへ案内し、作品ページへはリンクしない |
+| `JR-200-Features` | 8色の属性とPCG、3音源の3和音（`sdk/audio.inc`）の使い方と、各作品READMEの「画面（色と記号）」「音」節 |
 | `Games` | 旧URLの維持。全作品とジャンル別ページへ案内 |
 
 JR100 Wikiの構成を参考にしていますが、文章は複製せず、作品の正本（`game.json`、README、
