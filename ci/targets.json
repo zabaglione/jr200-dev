@@ -1535,6 +1535,55 @@
         "games/orbit-draft/game.json",
         "games/orbit-draft/media/**"
       ]
+    },
+    {
+      "id": "ruin-lexicon",
+      "kind": "game",
+      "project": "games/ruin-lexicon",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/ruin-lexicon/LICENSE",
+        "games/ruin-lexicon/Makefile",
+        "games/ruin-lexicon/THIRD_PARTY_NOTICES.md",
+        "games/ruin-lexicon/assets/**",
+        "games/ruin-lexicon/build.json",
+        "games/ruin-lexicon/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/ruin-lexicon/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_ruin_lexicon.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/ruin-lexicon/README.md",
+        "games/ruin-lexicon/UPSTREAM.md",
+        "games/ruin-lexicon/game.json",
+        "games/ruin-lexicon/media/**"
+      ]
     }
   ]
 }
