@@ -2039,6 +2039,58 @@
         "games/pendulum-port/game.json",
         "games/pendulum-port/media/**"
       ]
+    },
+    {
+      "id": "lunar-touchdown",
+      "kind": "game",
+      "project": "games/lunar-touchdown",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/lunar-touchdown/LICENSE",
+        "games/lunar-touchdown/Makefile",
+        "games/lunar-touchdown/THIRD_PARTY_NOTICES.md",
+        "games/lunar-touchdown/assets/**",
+        "games/lunar-touchdown/build.json",
+        "games/lunar-touchdown/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/selftest.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/lunar-touchdown/tests/**",
+        "tests/audio_model.py",
+        "tests/make_selftest.py",
+        "tests/port_model.py",
+        "tests/selftest_model.py",
+        "tests/test_lunar_touchdown.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/lunar-touchdown/README.md",
+        "games/lunar-touchdown/UPSTREAM.md",
+        "games/lunar-touchdown/game.json",
+        "games/lunar-touchdown/media/**"
+      ]
     }
   ]
 }
