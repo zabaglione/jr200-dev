@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。重さ別の色の木箱とクレーン",
+      "sha256": "b30205c27c2aab3eefbab2ac8630b9dbb01956f2d850ddb0a0292368edfe107f",
+      "framebuffer_sha256": "2a9350900a05a36e05d3687f1404c3a785b1d039c78e712083023459ae264118"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-load",
+      "role": "play",
+      "caption": "最初の4個を外側の船倉へ積んだ後",
+      "sha256": "ce91b743a030eb5b27bff326005e3debae61fd2f86c338636b71dba168eedc7f",
+      "framebuffer_sha256": "2bd85f2782cca8dfdaabcc5666ffa3e1b89e68f7cb8084a938a3fe1858d19a02"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "12個を積み終えて1航海目のクリア",
+      "sha256": "515b870b3eba2952f45dad8fffb3bb3a4e90c4d039be4c75a416a0e865cdc91a",
+      "framebuffer_sha256": "09e5be2f044287f7453ebc12da272bda2a54194307a1a61946dc51fbabcdceb9"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 15.0,
+    "frames": 451,
+    "frames_sha256": "5648a38b13509487656dc5c037c6f13541732bcc18b449cdfeb78ea02137cb99",
+    "pcm_sha256": "b4dac2fde82e2caaf901d713726f5968359ca25c96e071128ffbc0ca97ba0d75",
+    "sha256": "1f4a2ffcebe25e5a6bcbd4cada5d06dc80ca47bb9d1da641a63ff4a72150f601",
+    "caption": "1航海目の12個を積み終えて出航するまで"
+  }
+}
