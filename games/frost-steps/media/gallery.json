@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。氷、滑る人、クリスタル、ルーン、壁",
+      "sha256": "72edbad95e5c6a4aab6af068a8e23867267a40c05a1007dfdeb1577b5038b5aa",
+      "framebuffer_sha256": "c8112cdcfbf8ca040925ca6faf136a250593d0528a8fba9d0e67b34c46abd16d"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-map",
+      "role": "play",
+      "caption": "40部屋のステージマップと星の記録",
+      "sha256": "9f8778d3530e4c18926870d0513de421ed20596d941eb4902790131dd5a40c70",
+      "framebuffer_sha256": "f62f651ea7b28407480fd0094d409ef82d763da2e1155625b50cfdd6d9b12fd4"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "星3つで1部屋目をクリア",
+      "sha256": "6f3c9c7b36e3c2ef83cabe15439fbbd7c89247e1cab20943368eebe40bdf8ff3",
+      "framebuffer_sha256": "b4dcce57a2854055a81c9ee539f5a2d7d1f0f0bde46d35b2a413bb3e8f057545"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 2.9,
+    "frames": 88,
+    "frames_sha256": "fdd5121eb810693583f4fa00a1ba730f6b562ca08092e0c53149e591b05fd24d",
+    "pcm_sha256": "6d15aafd6337db47766cc08a0efb433bb78434db3675df12d80f3bd8ac6162e1",
+    "sha256": "1aa47c7469a80b395afa3e88bf0227825a3d34d28adf697650305c959a4f417a",
+    "caption": "1部屋目で両方のルーンを拾い、PAR以内でクリスタルを集めるまで"
+  }
+}

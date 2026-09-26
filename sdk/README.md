@@ -25,6 +25,7 @@
 | `math.inc` | 8-bit乗除算、X+A | M6800命令のみ |
 | `sfx.inc` | channel Cのnon-blocking効果音列 | frameごとに進める |
 | `audio.inc` / `audio_notes.inc` | 音源F・D・Cの3声の曲とジングル、channel Cの効果音（`sfx.inc`と同じAPI） | `sfx.inc`とは併用しない。28 bytesの`JR_AUDIO`が必要。テンポは`jr_sfx_tick`の回数 |
+| `ranked.inc` | 40面の評価つきキャンペーン（上流`rankedCampaign`）: 手数とPARとルーンによる星、面ごとの最高評価、ステージマップ、CRC付きパスワード。`port.inc`と同じ`jr_port_*`に`jr_rank_spend`／`jr_rank_take`／`jr_rank_clear`／`jr_rank_hud`を加える | `port.inc`とは併用しない。`keys_ext.inc`（x→7、f→8）、120 bytesの`JR_RANK`、`GAME_PASSWORD_TAG`、`game_level_par`、`game_title_text`、`RANK_*`の番地が必要 |
 | `port.inc` | タイトル・説明・面進行・クリア/失敗・やり直し確認・演出待ちの共通loop | 作品側hookを呼ぶ。演出待ちは同期処理で、効果音と終了キーだけを継続する |
 
 `session.inc` と `gfx.inc` 以外の全routineは呼出元のSを初期化せず、`JSR`／`RTS` の範囲だけstackを使います。

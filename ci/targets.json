@@ -1731,6 +1731,57 @@
         "games/phase-pairs/game.json",
         "games/phase-pairs/media/**"
       ]
+    },
+    {
+      "id": "frost-steps",
+      "kind": "game",
+      "project": "games/frost-steps",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/frost-steps/LICENSE",
+        "games/frost-steps/Makefile",
+        "games/frost-steps/THIRD_PARTY_NOTICES.md",
+        "games/frost-steps/assets/**",
+        "games/frost-steps/build.json",
+        "games/frost-steps/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys_ext.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/ranked.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/frost-steps/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/ranked_model.py",
+        "tests/test_frost_steps.py",
+        "tests/test_ranked.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/frost-steps/README.md",
+        "games/frost-steps/UPSTREAM.md",
+        "games/frost-steps/game.json",
+        "games/frost-steps/media/**"
+      ]
     }
   ]
 }

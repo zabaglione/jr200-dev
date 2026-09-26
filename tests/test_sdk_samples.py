@@ -41,8 +41,9 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'five-forge', 'fuse-box', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-draft', 'orchard-days', 'peg-garden', 'phase-pairs', 'potion-path', 'prism-trace', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
-KEYS_EXT_GAMES = ['compass-rose', 'mirror-relic']
+AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'five-forge', 'frost-steps', 'fuse-box', 'memory-mosaic', 'mirror-relic', 'number-vault', 'orbit-draft', 'orchard-days', 'peg-garden', 'phase-pairs', 'potion-path', 'prism-trace', 'ruin-lexicon', 'shadow-archive', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
+KEYS_EXT_GAMES = ['compass-rose', 'frost-steps', 'mirror-relic']
+RANKED_GAMES = ['frost-steps']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 
@@ -205,8 +206,10 @@ class SdkImpactTests(unittest.TestCase):
                 *PORT_GAME_CONSUMERS]),
             'sdk/timing.inc': ['game-loop-sample', 'side-catch', 'sound-sample'],
         }
-        for module in ('font', 'font_data', 'frame', 'gfx', 'math', 'port', 'session'):
+        for module in ('font', 'font_data', 'frame', 'gfx', 'math', 'session'):
             cases[f'sdk/{module}.inc'] = PORT_GAME_CONSUMERS
+        cases['sdk/port.inc'] = [g for g in PORT_GAME_CONSUMERS if g not in RANKED_GAMES]
+        cases['sdk/ranked.inc'] = RANKED_GAMES
         cases['sdk/keys.inc'] = [g for g in PORT_GAME_CONSUMERS if g not in KEYS_EXT_GAMES]
         cases['sdk/keys_ext.inc'] = KEYS_EXT_GAMES
         cases['sdk/sfx.inc'] = SFX_GAME_CONSUMERS
