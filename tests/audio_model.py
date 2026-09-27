@@ -88,6 +88,7 @@ class AudioModel:
     # ------------------------------------------------------------ effects
     def sfx_play(self, phrase: int) -> None:
         if self.byte(phrase) == 0xfe:
+            self.sfx_left = 0
             self.music_play(phrase + 1)
             return
         self.sfx_ptr = phrase

@@ -14,7 +14,8 @@
 ; An effect phrase is a list of (channel-C count, frames) pairs ending with
 ; frames 0, exactly as in sfx.inc. A phrase whose first byte is 0xfe is a
 ; song (the bytes after 0xfe): jr_sfx_play then starts it as music, which
-; lets game_sfx_table hold three-voice jingles.
+; lets game_sfx_table hold three-voice jingles; it ends any effect still
+; sounding, so the jingle's channel-C voice is heard from its first note.
 ; While an effect sounds on channel C the music's channel-C voice keeps its
 ; timing silently and resumes when the effect ends.
 ; Everything advances once per jr_sfx_tick; the tempo is in calls, not in
@@ -226,6 +227,7 @@ jr_sfx_play:
         LDAA    [X]
         CMPA    JR_AU_SONG_MARK
         BNE     jr_sfx_play_effect
+        CLR     [JR_AU_SFX_LEFT]    ; a jingle replaces the effect on C
         INX
         JMP     jr_music_play
 jr_sfx_play_effect:

@@ -101,6 +101,18 @@ class DriverModelTests(unittest.TestCase):
         self.assertEqual([voice[1] for voice in model.voice], [0, 0, 0])
 
 
+    def test_jingle_replaces_a_sounding_effect(self):
+        model, _, beep = self.layout(0x1200)
+        model.load(0x1300, bytes([0xfe, 0, 0x13, 0x08, 0, 0, 0x13, 0x0c,
+                                  C5, 2, 0, 0, C3, 2, 0, 0]))
+        model.sfx_play(beep)
+        self.assertEqual(model.channel['C'], ('sfx', 120))
+        model.sfx_play(0x1300)
+        self.assertEqual((model.sfx_left, model.channel['C']), (0, C3))
+        model.tick()
+        self.assertEqual(model.channel['C'], C3)
+
+
 class DriverSourceTests(unittest.TestCase):
     def test_audio_replaces_sfx_without_changing_published_modules(self):
         audio = (ROOT / 'sdk/audio.inc').read_text()
