@@ -37,6 +37,7 @@ GENERATED_FILE = re.compile(
 EMULATOR_URL = 'https://zabaglione.github.io/jr200-web-emulator/'
 ISSUE_URL = re.compile(r'https://github\.com/zabaglione/jr200-dev/issues/[1-9][0-9]{0,4}')
 LEDGER = 'docs/porting/jr100-ledger.json'
+DEVELOPMENT_LIST = 'wiki-development.json'
 REPOSITORY_URL = 'https://github.com/zabaglione/jr200-dev'
 SOURCE_URL = REPOSITORY_URL + '/blob/main/'
 TREE_URL = REPOSITORY_URL + '/tree/main/'
@@ -462,7 +463,7 @@ def load_package(root: Path, entry: dict[str, Any], packages: Path | None,
 TIERS = {
     'published': '公開',
     'candidate': '候補版（非公開プレビュー）',
-    'development': '開発中（非公開プレビュー）',
+    'development': '開発中（CJR未公開）',
 }
 SCENE_ROLES = ('title', 'play', 'goal')
 MEDIA_NAME = re.compile(r'[a-z][a-z0-9-]{0,31}\.(png|webm)')
@@ -713,11 +714,36 @@ def first_sentence(paragraph: str) -> str:
     return paragraph if end < 0 else paragraph[:end + 1]
 
 
-def development_entries(root: Path, catalog_ids: set[str]) -> list[dict[str, Any]]:
+def listed_development(root: Path, catalog_ids: set[str]) -> dict[str, str]:
+    value = read_json(root / DEVELOPMENT_LIST, 'Wiki development list')
+    games = value.get('games') if isinstance(value, dict) else None
+    if (not isinstance(value, dict)
+            or set(value) != {'schema_version', 'games'} or value['schema_version'] != 1
+            or not isinstance(games, list)):
+        raise WikiError('Invalid Wiki development list')
+    listed: dict[str, str] = {}
+    for item in games:
+        if (not isinstance(item, dict) or set(item) != {'id', 'version'}
+                or not isinstance(item['id'], str)
+                or SAFE_ID.fullmatch(item['id']) is None
+                or not isinstance(item['version'], str)
+                or semantic_version(item['version'].removesuffix('-dev')) is None
+                or item['id'] in catalog_ids or item['id'] in listed):
+            raise WikiError('Invalid or duplicate Wiki development selection')
+        listed[item['id']] = item['version']
+    if list(listed) != sorted(listed):
+        raise WikiError('Wiki development selection must be sorted')
+    return listed
+
+
+def development_entries(root: Path, catalog_ids: set[str],
+                        listed: dict[str, str], include_unlisted: bool) -> list[dict[str, Any]]:
     entries = []
     for metadata_path in sorted((root / 'games').glob('*/game.json')):
         project = metadata_path.parent
         if project.name in catalog_ids:
+            continue
+        if project.name not in listed and not include_unlisted:
             continue
         if SAFE_ID.fullmatch(project.name) is None or project.is_symlink():
             raise WikiError(f'Unsafe game project directory: {project.name}')
@@ -731,6 +757,8 @@ def development_entries(root: Path, catalog_ids: set[str]) -> list[dict[str, Any
                 or metadata['release']['publication'] != 'not-published'):
             raise WikiError(f'{project.name}: games outside the catalog must be '
                             'schema 2, draft and not published')
+        if project.name in listed and metadata['version'] != listed[project.name]:
+            raise WikiError(f'{project.name}: listed Wiki development version differs')
         gallery = load_gallery(project)
         if gallery is None:
             raise WikiError(f'{project.name}: development preview requires a gallery')
@@ -748,7 +776,10 @@ def development_entries(root: Path, catalog_ids: set[str]) -> list[dict[str, Any
             '_metadata': metadata, '_project': project, '_spec': spec,
             '_gallery': gallery, '_thumbnail': thumbnail['bytes'],
             '_thumbnail_scene': thumbnail['id'], '_readme': readme, '_package': None,
+            '_preview_only': project.name not in listed,
         })
+    if set(listed) - {entry['id'] for entry in entries}:
+        raise WikiError('Listed Wiki development game is missing')
     return entries
 
 
@@ -822,7 +853,7 @@ def render_game(entry: dict[str, Any], genre: dict[str, str]) -> str:
     if entry['tier'] == 'candidate':
         lines.extend(['> 非公開の候補版プレビューです。公開ダウンロードはありません。', ''])
     elif entry['tier'] == 'development':
-        lines.extend(['> 開発中の版のプレビューです。CJRとパッケージは配布していません。', ''])
+        lines.extend(['> 開発中の版の紹介です。CJRとパッケージは配布していません。', ''])
     lines.extend([entry['_intro'], '',
                   '| 項目 | 内容 |', '| --- | --- |',
                   f'| 状態 | {TIERS[entry["tier"]]} |',
@@ -832,8 +863,10 @@ def render_game(entry: dict[str, Any], genre: dict[str, str]) -> str:
     if package is not None:
         lines.extend([f'| CJR SHA-256 | `{entry["artifact_sha256"]}` |',
                       f'| Package SHA-256 | `{entry["package"]["sha256"]}` |'])
-    lines.extend([f'| 起動 | `{metadata["distribution"]["file"]}`を`MLOAD`し、'
-                  f'`{metadata["run"]["command"]}` |', '', '## 遊ぶ', ''])
+    launch_label = '想定する起動' if entry['tier'] == 'development' else '起動'
+    lines.extend([f'| {launch_label} | `{metadata["distribution"]["file"]}`を`MLOAD`し、'
+                  f'`{metadata["run"]["command"]}` |', '',
+                  '## 開発者向け試用' if entry['tier'] == 'development' else '## 遊ぶ', ''])
     if entry['tier'] == 'development':
         lines.extend(['配布前の開発版です。開発者は'
                       f'[作品プロジェクトの手順]({SOURCE_URL}docs/PROJECTS.md)でCJRをbuildし、'
@@ -968,11 +1001,12 @@ def render_pages(root: Path, packages: Path | None,
         entry['_gallery'] = load_gallery(entry['_project'])
         entry['_thumbnail'] = entry['_screenshot']
         entry['_thumbnail_scene'] = None
-    if include_development:
-        for entry in development_entries(root, {item['id'] for item in catalog}):
-            if entry['genre'] not in genres:
-                raise WikiError(f'{entry["id"]}: unknown genre {entry["genre"]!r}')
-            selected.append(entry)
+    listed = listed_development(root, {item['id'] for item in catalog})
+    for entry in development_entries(root, {item['id'] for item in catalog},
+                                     listed, include_development):
+        if entry['genre'] not in genres:
+            raise WikiError(f'{entry["id"]}: unknown genre {entry["genre"]!r}')
+        selected.append(entry)
     files: dict[str, bytes] = {}
     for entry in selected:
         slug = entry['wiki']['slug']
@@ -1001,12 +1035,13 @@ def render_pages(root: Path, packages: Path | None,
             files[path] = video['bytes']
             entry['_video'] = {**video, 'path': path}
     selected.sort(key=lambda entry: (entry['_metadata']['title'], entry['id']))
-    preview = any(entry['tier'] != 'published' for entry in selected)
+    preview = any(entry['tier'] == 'candidate' or entry.get('_preview_only')
+                  for entry in selected)
     published = [entry for entry in selected if entry['tier'] == 'published']
     availability = ('検証済みの公開ゲームはまだありません。' if not published
                     else '検証済みの公開ゲームを作品一覧から選べます。')
     if preview:
-        availability += 'この表示は未公開の版を含むローカルプレビューです。配布リンクではありません。'
+        availability += 'この表示にはローカルプレビューの作品も含みます。配布リンクではありません。'
     counts = {genre: [entry for entry in selected if entry['genre'] == genre]
               for genre in genres}
     genre_rows = ['| ジャンル | 公開作品 | ' + ('プレビュー | ' if preview else '') + '内容 |',
@@ -1058,7 +1093,7 @@ def render_pages(root: Path, packages: Path | None,
                     f'`{entry["version"]}` | {first_sentence(entry["_intro"])} |')
     files['All-Games.md'] = '\n'.join([
         '# 全作品', '', '[Home](Home) › 全作品', '',
-        'タイトル順の一覧です。' + ('この表示は未公開の版を含むローカルプレビューです。'
+        'タイトル順の一覧です。' + ('この表示にはローカルプレビューの作品も含みます。'
                            if preview else ''), '',
         *(rows if selected else ['公開作品準備中']), '',
     ]).encode('utf-8')
@@ -1072,7 +1107,7 @@ def render_pages(root: Path, packages: Path | None,
     controls = ['# 操作', '', '[Home](Home) › 操作', '',
                 '## 共通', '',
                 '- 作品ごとに使うキーが違います。全作品がWASDやジョイスティックに対応しているわけではありません。',
-                '- CJRを`MLOAD`で読み込み、作品ページの実行コマンド（例: `A=USR($1000)`）で始めます。',
+                '- 公開作品はCJRを`MLOAD`で読み込み、作品ページの実行コマンド（例: `A=USR($1000)`）で始めます。',
                 '- ゲームを終えてBASICへ戻るキーも作品ごとに違います。下の表で確認してください。', '',
                 '## 作品別', '']
     for entry in selected:
@@ -1205,7 +1240,7 @@ def render_porting_plan(root: Path, selected: list[dict[str, Any]],
              f'| 公開 | {states["published"]} |',
              f'| 開発中（未公開） | {states["development"]} |',
              f'| 予定 | {states["planned"]} |', '',
-             '開発中の作品は、所有ROM/FONTでの通常`MLOAD`/`USR`の確認と、公開の承認を経てから公開します。', '']
+             '開発中の作品は紹介のみです。CJR/ZIPの配布は、所有ROM/FONTでの通常`MLOAD`/`USR`の確認と公開の承認を経てから行います。', '']
     for genre in genres_list:
         rows = rows_by_genre[genre['id']]
         lines.extend([f'## {genre["title"]}', '', '| 作品 | JR-200での状態 | 内容 |',
@@ -1407,7 +1442,7 @@ def parser() -> argparse.ArgumentParser:
     value.add_argument('--packages', type=Path)
     value.add_argument('--include-candidates', action='store_true')
     value.add_argument('--include-development', action='store_true',
-                       help='local preview only: add draft games with verified galleries')
+                       help='local preview only: add unlisted draft games with verified galleries')
     value.add_argument('--expected-commit')
     commands = value.add_subparsers(dest='command', required=True)
     commands.add_parser('check')

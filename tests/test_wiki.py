@@ -56,6 +56,8 @@ class WikiFixture:
         self.temporary = tempfile.TemporaryDirectory()
         self.root = Path(self.temporary.name)
         (self.root / 'games').mkdir()
+        (self.root / 'wiki-development.json').write_text(
+            '{"schema_version": 1, "games": []}\n', encoding='utf-8')
         shutil.copytree(ROOT / 'games/side-catch', self.root / 'games/side-catch',
                         ignore=shutil.ignore_patterns('build'))
         shutil.copytree(ROOT / 'sdk', self.root / 'sdk')
@@ -587,7 +589,7 @@ class SevenGamePreviewTests(unittest.TestCase):
             self.assertEqual(files[video], (self.fixture.root / 'games' / game / 'media' /
                                             gallery['video']['file']).read_bytes())
             self.assertIn(f']({video})', page)
-            self.assertIn('開発中の版のプレビュー', page)
+            self.assertIn('開発中の版の紹介です', page)
             self.assertIn('### 操作', page)
             self.assertIn('| 物理JR-200 | 未実施 |', page)
         relic = files['Game-relic-dive.md'].decode('utf-8')
@@ -644,6 +646,24 @@ class SevenGamePreviewTests(unittest.TestCase):
              str(self.fixture.root / 'wiki')], capture_output=True, text=True)
         self.assertEqual(result.returncode, 1)
         self.assertIn('cannot be synchronized', result.stderr)
+
+    def test_only_explicitly_listed_development_versions_enter_public_wiki(self):
+        selection = self.fixture.root / 'wiki-development.json'
+        selection.write_text(json.dumps({'schema_version': 1, 'games': [
+            {'id': 'relic-dive', 'version': '0.1.1'}]}) + '\n', encoding='utf-8')
+        files, games = render_pages(self.fixture.root, None, False)
+        self.assertEqual([item['id'] for item in games], ['relic-dive'])
+        self.assertIn('Game-relic-dive.md', files)
+        self.assertNotIn('Game-brick-pulse.md', files)
+        self.assertIn('開発中（CJR未公開）', files['All-Games.md'].decode('utf-8'))
+        self.assertNotIn('ローカルプレビュー', files['Home.md'].decode('utf-8'))
+        self.assertNotIn('遊ぶ]', files['Game-relic-dive.md'].decode('utf-8'))
+        self.assertNotIn('?game=', files['Game-relic-dive.md'].decode('utf-8'))
+        self.assertIn('## 開発者向け試用', files['Game-relic-dive.md'].decode('utf-8'))
+        selection.write_text(json.dumps({'schema_version': 1, 'games': [
+            {'id': 'relic-dive', 'version': '0.1.0-dev'}]}) + '\n', encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'version differs'):
+            render_pages(self.fixture.root, None, False)
 
     def test_detects_stale_gallery_broken_links_and_missing_sections(self):
         media = self.fixture.root / 'games/relic-dive/media'

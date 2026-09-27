@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "games": [
+    {
+      "id": "abyss-signal",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "auction-house",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "cargo-balance",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "chain-suit",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "chrono-breach",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "compass-rose",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "dice-relic",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "echo-parry",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "five-forge",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "frost-steps",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "fuse-box",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "gate-runner",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "glyph-shift",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "gravity-well",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "iron-script",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "loop-ten",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "lunar-touchdown",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "magnet-vault",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "memory-mosaic",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "metro-weave",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "mirror-relic",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "night-swarm",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "number-vault",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "orbit-dodge",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "orbit-draft",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "orchard-days",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "peg-garden",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "pendulum-port",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "phase-pairs",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "potion-path",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "prism-trace",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "quiet-route",
+      "version": "0.1.0"
+    },
+    {
+      "id": "ribbon-snake",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "ruin-lexicon",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "sand-rescue",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "seed-merge",
+      "version": "0.1.0"
+    },
+    {
+      "id": "shadow-archive",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "sigil-deck",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "star-lance",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "stone-balance",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "tidal-nets",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "tide-bridge",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "trace-blade",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "twenty-one",
+      "version": "0.1.0-dev"
+    },
+    {
+      "id": "word-foundry",
+      "version": "0.1.0-dev"
+    }
+  ]
+}
