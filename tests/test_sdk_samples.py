@@ -181,6 +181,30 @@ class SampleContractTests(unittest.TestCase):
                         fixture.index('JSR     jr_keyrepeat_poll\n'))
 
 
+class PcgBankTests(unittest.TestCase):
+    LOAD = re.compile(r'LDAA\s+(\S+)\s*\n\s*LDAB\s+(\S+)\s*\n\s*JSR\s+jr_pcg_load')
+
+    def value(self, source, token):
+        if re.fullmatch(r'0x[0-9a-fA-F]+|\d+', token):
+            return int(token, 0)
+        match = re.search(re.escape(token) + r':\s*\.equ\s+(\S+)', source)
+        self.assertIsNotNone(match, token)
+        return self.value(source, match.group(1))
+
+    def test_pcg_loads_stay_inside_one_bank(self):
+        # sdk/pcg.inc: at most 32 patterns, within 0x00-0x1F or 0x80-0x9F.
+        loads = 0
+        for path in sorted(ROOT.glob('games/*/src/main.asm')) + sorted(ROOT.glob('samples/*/src/main.asm')):
+            source = path.read_text()
+            for first, count in self.LOAD.findall(source):
+                with self.subTest(file=str(path.relative_to(ROOT)), first=first):
+                    start, number = self.value(source, first), self.value(source, count)
+                    self.assertIn(start & 0xe0, (0x00, 0x80))
+                    self.assertTrue(1 <= number and (start & 0x1f) + number <= 32)
+                    loads += 1
+        self.assertGreater(loads, 40)
+
+
 class SdkImpactTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

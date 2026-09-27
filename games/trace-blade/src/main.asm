@@ -77,7 +77,9 @@ TB_TILE_MARKED:     .equ    0x8c
 TB_TILE_EXIT:       .equ    0x90
 TB_TILE_TRAIL:      .equ    0x94
 TB_TILE_BLADE:      .equ    0x98
-TB_TILE_FLASH:      .equ    0x9c    ; then shards, dust
+TB_TILE_FLASH:      .equ    0x9c
+TB_TILE_SHARDS:     .equ    0x00    ; the second PCG bank (0x00-0x1F)
+TB_TILE_DUST:       .equ    0x04
 TB_ATTR_FLOOR:      .equ    0x47
 TB_ATTR_WALL:       .equ    0x41
 TB_ATTR_TARGET:     .equ    0x42
@@ -101,7 +103,11 @@ start:
         JSR     jr_test_init
         LDX     tb_patterns
         LDAA    TB_TILE_FLOOR
-        LDAB    40
+        LDAB    32
+        JSR     jr_pcg_load
+        LDX     tb_patterns_low
+        LDAA    TB_TILE_SHARDS
+        LDAB    8
         JSR     jr_pcg_load
         JMP     jr_port_run
 
@@ -579,12 +585,10 @@ tb_draw_row_done:
         LDAB    TB_TILE_BLADE
         TST     [TB_FX]
         BEQ     tb_draw_blade
+        LDX     tb_burst_tiles - 1
         LDAA    [TB_FX]
-        DECA
-        ASLA
-        ASLA
-        ADDA    TB_TILE_FLASH
-        TAB
+        JSR     jr_add_x_a
+        LDAB    [X]
         LDAA    TB_ATTR_BURST
 tb_draw_blade:
         STAA    [JR_RT_COLOR]
@@ -706,6 +710,9 @@ game_draw_help:
 
 game_key_table:
         .db     0x66, 8, 0          ; F: cut
+
+tb_burst_tiles:
+        .db     TB_TILE_FLASH, TB_TILE_SHARDS, TB_TILE_DUST
 
 ; map value (then trail, marked target) -> tile, attribute
 tb_cell_tiles:
