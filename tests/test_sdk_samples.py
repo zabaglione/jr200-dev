@@ -41,10 +41,10 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'gate-runner', 'glyph-shift', 'gravity-well', 'iron-script', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'metro-weave', 'mirror-relic', 'night-swarm', 'number-vault', 'orbit-dodge', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'sand-rescue', 'shadow-archive', 'star-lance', 'stone-balance', 'tidal-nets', 'tide-bridge', 'trace-blade', 'twenty-one', 'word-foundry']
+AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'gate-runner', 'glyph-shift', 'gravity-well', 'iron-script', 'loop-ten', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'metro-weave', 'mirror-relic', 'night-swarm', 'number-vault', 'orbit-dodge', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'sand-rescue', 'shadow-archive', 'star-lance', 'stone-balance', 'tidal-nets', 'tide-bridge', 'trace-blade', 'twenty-one', 'word-foundry']
 KEYS_EXT_GAMES = ['compass-rose', 'frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault', 'mirror-relic', 'night-swarm', 'trace-blade']
 RANKED_GAMES = ['frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault']
-SELFTEST_GAMES = ['echo-parry', 'gate-runner', 'iron-script', 'lunar-touchdown', 'metro-weave', 'night-swarm', 'orbit-dodge', 'pendulum-port', 'ribbon-snake', 'sand-rescue', 'star-lance', 'trace-blade']
+SELFTEST_GAMES = ['echo-parry', 'gate-runner', 'iron-script', 'loop-ten', 'lunar-touchdown', 'metro-weave', 'night-swarm', 'orbit-dodge', 'pendulum-port', 'ribbon-snake', 'sand-rescue', 'star-lance', 'trace-blade']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 
@@ -246,7 +246,7 @@ class SdkImpactTests(unittest.TestCase):
         cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])
         cases['sdk/session.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])
         cases['sdk/selftest.inc'] = SELFTEST_GAMES
-        cases['sdk/keyscan.inc'] = ['brick-pulse', 'gate-runner', 'port-fixture-sample', 'star-lance']
+        cases['sdk/keyscan.inc'] = ['brick-pulse', 'gate-runner', 'loop-ten', 'port-fixture-sample', 'star-lance']
         cases['sdk/keyrepeat.inc'] = ['port-fixture-sample']
         cases['sdk/effect.inc'] = ['port-fixture-sample']
         for path, expected in cases.items():

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "3146e5f1cd81e2234d0e1e41bfdcae55c88e40966c7bd0efa06e4793cd0ec7f4",
+      "framebuffer_sha256": "3d5e7d5fe3dde543328b038e0e8e172bebb55f036b97c48540e8cf8d54523c1d"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで封印へ向かう場面",
+      "sha256": "4978580f5aec3904f4e91230070737baddca4eb7d723600c188378e9c7c808a9",
+      "framebuffer_sha256": "7b10c8aa252c773cfab1e6fd534dc92ef34ea9adf78d96f39770c7db92cfdc0e"
+    },
+    {
+      "id": "goal",
+      "file": "goal.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "12番目の封印を点灯させ、ループから脱出する",
+      "sha256": "511d8ed0aad3e0184921b0de876ae8a951889c7d41a4660887ec4294252df13e",
+      "framebuffer_sha256": "7443398c46f050aba629c84761bc2640a39dc54a4c2d4d4a7ff0a001f7ed8532"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 32.0,
+    "frames": 960,
+    "frames_sha256": "4a6afac42b4a5d214c347c05dab19d46f2ddf35f5113ea1e0d825f7a0b03a451",
+    "pcm_sha256": "1b62c11d5d2a8db2dfb72e27a609225de76e978333f6fa9146a3e133b9df19ed",
+    "sha256": "5ce39df36c4a7526bab7273511bd2c76a6545175f8b0819225e216a8d6fce157",
+    "caption": "自動デモで12の封印を点灯させて脱出する（等速）"
+  }
+}
