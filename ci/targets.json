@@ -2712,6 +2712,55 @@
         "games/dice-relic/game.json",
         "games/dice-relic/media/**"
       ]
+    },
+    {
+      "id": "chrono-breach",
+      "kind": "game",
+      "project": "games/chrono-breach",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/chrono-breach/LICENSE",
+        "games/chrono-breach/Makefile",
+        "games/chrono-breach/THIRD_PARTY_NOTICES.md",
+        "games/chrono-breach/assets/**",
+        "games/chrono-breach/build.json",
+        "games/chrono-breach/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys_ext.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/chrono-breach/tests/**",
+        "tests/audio_model.py",
+        "tests/port_model.py",
+        "tests/test_chrono_breach.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/chrono-breach/README.md",
+        "games/chrono-breach/UPSTREAM.md",
+        "games/chrono-breach/game.json",
+        "games/chrono-breach/media/**"
+      ]
     }
   ]
 }

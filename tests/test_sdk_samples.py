@@ -41,8 +41,8 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['abyss-signal', 'auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'dice-relic', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'gate-runner', 'glyph-shift', 'gravity-well', 'iron-script', 'loop-ten', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'metro-weave', 'mirror-relic', 'night-swarm', 'number-vault', 'orbit-dodge', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'sand-rescue', 'shadow-archive', 'star-lance', 'stone-balance', 'tidal-nets', 'tide-bridge', 'trace-blade', 'twenty-one', 'word-foundry']
-KEYS_EXT_GAMES = ['abyss-signal', 'compass-rose', 'frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault', 'mirror-relic', 'night-swarm', 'trace-blade']
+AUDIO_GAMES = ['abyss-signal', 'auction-house', 'cargo-balance', 'chain-suit', 'chrono-breach', 'compass-rose', 'dice-relic', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'gate-runner', 'glyph-shift', 'gravity-well', 'iron-script', 'loop-ten', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'metro-weave', 'mirror-relic', 'night-swarm', 'number-vault', 'orbit-dodge', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'sand-rescue', 'shadow-archive', 'star-lance', 'stone-balance', 'tidal-nets', 'tide-bridge', 'trace-blade', 'twenty-one', 'word-foundry']
+KEYS_EXT_GAMES = ['abyss-signal', 'chrono-breach', 'compass-rose', 'frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault', 'mirror-relic', 'night-swarm', 'trace-blade']
 RANKED_GAMES = ['frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault']
 SELFTEST_GAMES = ['echo-parry', 'gate-runner', 'iron-script', 'loop-ten', 'lunar-touchdown', 'metro-weave', 'night-swarm', 'orbit-dodge', 'pendulum-port', 'ribbon-snake', 'sand-rescue', 'star-lance', 'trace-blade']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
