@@ -16,8 +16,14 @@ TITLE, PLAY, CLEAR, LOST, END, HELP = range(6)
 
 
 class PortModel:
-    def __init__(self, game, levels: int, space_reset: bool = True):
+    def __init__(self, game, levels: int, space_reset: bool = True,
+                 extra_keys: dict[str, int] | None = None):
+        """extra_keys maps lower-case letters to actions 7+ (sdk/keys_ext.inc)."""
         self.game = game
+        self.actions = dict(KEY_ACTIONS)
+        for letter, action in (extra_keys or {}).items():
+            self.actions[ord(letter)] = action
+            self.actions[ord(letter.upper())] = action
         self.levels = levels
         self.space_reset = space_reset
         self.mode = TITLE
@@ -47,7 +53,7 @@ class PortModel:
         if code in EXIT_KEYS:
             self.exited = True
             return
-        action = KEY_ACTIONS.get(code, 0)
+        action = self.actions.get(code, 0)
         if action == 0:
             return
         if self.confirm is not None:

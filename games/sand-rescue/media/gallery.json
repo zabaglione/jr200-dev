@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "b1af4d1ec064912fb62347ab5e54905732d75ba422fe01a7df8e6acb6cd7dc04",
+      "framebuffer_sha256": "cae2c7690ffe259ac94f2492234e97dfd5791e25c0953e1002cf04f598962aa9"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで水槽に水がたまる場面",
+      "sha256": "d97e6678801659301ec2bdddbf57586ed3ab213db519d0478e78341ac3130add",
+      "framebuffer_sha256": "56a2be6169fd63e8bcae7f80352facc451968df2628dfb1fdfbf3f5677d72a40"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "目標点に届いて1面を終える",
+      "sha256": "29388b16951666928b04a51e3cb3716797f01dedf0f68be2c2d61278fac2d959",
+      "framebuffer_sha256": "ab667b72b0776464913b90c683a80288ee92eaabc90f56eff04e5d6126584c67"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 14.6,
+    "frames": 438,
+    "frames_sha256": "aae8d41f5b10382e81c410b4730ad102cded8ebb6cf8d7889650cb46ad954989",
+    "pcm_sha256": "9ea652434014186ae0f51d28c9657b92f1909ad1a5cd751f69ea907e4c4849b0",
+    "sha256": "cd6a0dd19c572bb7ade9c64a274c969df938d29c443d57f2b96a5545022e3a46",
+    "caption": "1面の自動デモ（水をためて流し目標点へ）"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "70c537cfae231ffa9767bb91aed743089295770bd59234a8ee54c9776dccd81f",
+      "framebuffer_sha256": "359b03e5e8517bd628dc97f2995c0668c83de2b2ef7e2f3df8330fba8b389b95"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで餌へ向かうリボン",
+      "sha256": "d286434dc92c31928b2e2337deaa90ac9d00c9383452cea2414d5d7c04ab221e",
+      "framebuffer_sha256": "3052924bfef38d423965d51af75fa7f75e1b931b2c4b7670df6e1cf596daa2c0"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "8個目を食べて1つ目の庭をクリア",
+      "sha256": "5e028cc11b13c3c87d2a4ae4ba2fb24c955d9297528fdd78010951f6c641c41f",
+      "framebuffer_sha256": "7bd4d8cdce32052f47834f5a0dc0b73425d29e4a9ef50800484a7c4ee83eccc7"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 19.5,
+    "frames": 584,
+    "frames_sha256": "e80aed1f7bc7586dddf989fc3d231a1c7e9f689d0b16a88b6b3d192de064f198",
+    "pcm_sha256": "64a828c505f52da4775973f1703e7cd6efc0167eec54c4941cee67efe736bb96",
+    "sha256": "1c135ea21af737c90f07828014c6425e9eddea645a7cdbad8fc796ee3cf750e1",
+    "caption": "1つ目の庭の自動デモ（8個食べてクリア）"
+  }
+}

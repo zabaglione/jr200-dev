@@ -273,10 +273,11 @@ def validate_runtime_profile(runtime: Any) -> dict[str, Any]:
     pcm = expect['pcm']
     if pcm is not None:
         if (not isinstance(pcm, dict)
-                or set(pcm) != {'minimum_frames', 'minimum_nonzero_frames',
-                                'maximum_dropped_frames'}
+                or set(pcm) - {'minimum_peak'} != {'minimum_frames', 'minimum_nonzero_frames',
+                                                   'maximum_dropped_frames'}
                 or any(type(pcm[field]) is not int or pcm[field] < 0
                        for field in pcm)
+                or pcm.get('minimum_peak', 0) > 32768
                 or pcm['minimum_nonzero_frames'] > pcm['minimum_frames']):
             raise RunnerError('Invalid expected PCM result')
     cassette = expect['cassette']
@@ -488,7 +489,8 @@ def validate_result(value: Any, request: dict[str, Any], runtime: dict[str, Any]
         dropped = pcm_result['dropped_low'] + (pcm_result['dropped_high'] << 32)
         if (pcm_result['frames'] < expected_pcm['minimum_frames']
                 or pcm_result['nonzero_frames'] < expected_pcm['minimum_nonzero_frames']
-                or dropped > expected_pcm['maximum_dropped_frames']):
+                or dropped > expected_pcm['maximum_dropped_frames']
+                or pcm_result['peak'] < expected_pcm.get('minimum_peak', 0)):
             raise RunnerError('Runtime PCM expectation failed')
     cassette = runtime['expect']['cassette']
     if cassette is not None and any(value['cassette'].get(key) != expected

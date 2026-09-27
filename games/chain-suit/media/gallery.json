@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。4つのスート",
+      "sha256": "f20cf2d34178ec1018282d8feb4d6e7dc12b3a4e55f3a7af24a39fced1e2aaf9",
+      "framebuffer_sha256": "296442e30887d80e7e1d1689d4c40d748fb0464dd20a6db0500d7f7e9d57208e"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-redraw",
+      "role": "play",
+      "caption": "1枚目と3枚目を引き直してスリーカードになった手札",
+      "sha256": "617b118b067a31ac4154def64b399f9dc65595104c94274822100b14c846147a",
+      "framebuffer_sha256": "1fe4e0b6c8730b4db1cd23fc25150146829c714ec692823e1d1ffa8b6920113e"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "3回目の手札を採点して25点を超えたクリア",
+      "sha256": "bea376e186ce77cbec4a5d0d782f95baa009381e30c7e3ff809f866c10e7dbdc",
+      "framebuffer_sha256": "4710060fc6c38d9cb980ee7a8622bf3a04f595bf251b0f3c87dba11ddbf7bd42"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 23.8,
+    "frames": 713,
+    "frames_sha256": "faa8d82062b0754cf53acfc1c1d57e331265860e5ec8808191dcbddbdcfcce83",
+    "pcm_sha256": "72a25b6101616ed90a279052517b5863de08e03e5d200d514a038e5660ebb999",
+    "sha256": "329259eee095ab117f04f0c05ef00776248253a2dec5e27e6c9afbefe260675e",
+    "caption": "3回の手札で引き直して48点を取るまで"
+  }
+}

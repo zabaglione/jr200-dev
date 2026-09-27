@@ -14,6 +14,7 @@
 | `timing.inc` | cycle基準のbusy wait | 実時間保証ではなく、Xを破壊 |
 | `session.inc` | USR入口でのstack・IRQ mask・PCG・画面・文字RAMの保存と復元、高速copy | ゲーム専用stackへ切替える唯一のmodule |
 | `keys.inc` | Key-On eventからW/A/S/D・RETURN・SPACE・ESC/CTRL+Cへの変換 | 押下1回=1 event。保持状態は返さない |
+| `keys_ext.inc` | `keys.inc`と同じ操作1〜6に加え、作品の`game_key_table`（小文字キーと操作番号の組）で操作7以上を返す | `keys.inc`とは併用しない。上流の操作7=X、8=F、9=Q、10=E、11=Z、12=Cに合わせる |
 | `keyscan.inc` | キーボードMCUのKTEST/KACK走査で「今押しているキー」を読む | 手順は固定エミュレータのMN1544実装に基づく。状態は`JR_RT+50..51`でcopy用領域と分離。ROMなし実行では起動時にfont転送を読み捨てる |
 | `keyrepeat.inc` | `keyscan.inc`の現在キーから押下・保持リピート・離上eventを作る | `jr_keyscan_init`後に初期化し、一定周期でpoll。遅延4回・周期2回はpoll回数であり実時間ではない |
 | `gfx.inc` | RAM影画面への文字・数値・2×2 tile描画と一括転送 | `JR_SHADOW`はpage境界。転送中はSを使用 |
@@ -23,6 +24,9 @@
 | `effect.inc` | 待機しない演出step／phase管理 | 呼出元がtickごとに進め、表示・入力・音声を並行処理する。実時間保証なし |
 | `math.inc` | 8-bit乗除算、X+A | M6800命令のみ |
 | `sfx.inc` | channel Cのnon-blocking効果音列 | frameごとに進める |
+| `audio.inc` / `audio_notes.inc` | 音源F・D・Cの3声の曲とジングル、channel Cの効果音（`sfx.inc`と同じAPI） | `sfx.inc`とは併用しない。28 bytesの`JR_AUDIO`が必要。テンポは`jr_sfx_tick`の回数 |
+| `ranked.inc` | 40面の評価つきキャンペーン（上流`rankedCampaign`）: 手数とPARとルーンによる星、面ごとの最高評価、ステージマップ、CRC付きパスワード。`port.inc`と同じ`jr_port_*`に`jr_rank_spend`／`jr_rank_take`／`jr_rank_clear`／`jr_rank_hud`を加える | `port.inc`とは併用しない。`keys_ext.inc`（x→7、f→8）、120 bytesの`JR_RANK`、`GAME_PASSWORD_TAG`、`game_level_par`、`game_title_text`、`RANK_*`の番地が必要 |
+| `selftest.inc` | リアルタイム作品の開発用自己試験と自動デモ: 状態fixtureを1 tick／1操作進めた結果と、面ごとのtick同期入力スクリプトで通し遊びした結果を`JR_TEST_OUT`へ書き出す。同じスクリプトをタイトルの`P`で通常速度の自動デモとして再生する | `port.inc`と併用。16 bytesの`JR_TEST`、`GAME_TEST_SIZE`／`GAME_TEST_LIMIT`／`GAME_TEST_HELD`、`game_fixtures`、`game_scripts`、`game_test_draw`が必要。モデル側は`tests/selftest_model.py`、表は`tests/make_selftest.py`で生成 |
 | `port.inc` | タイトル・説明・面進行・クリア/失敗・やり直し確認・演出待ちの共通loop | 作品側hookを呼ぶ。演出待ちは同期処理で、効果音と終了キーだけを継続する |
 
 `session.inc` と `gfx.inc` 以外の全routineは呼出元のSを初期化せず、`JSR`／`RTS` の範囲だけstackを使います。

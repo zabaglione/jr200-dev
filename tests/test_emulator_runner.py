@@ -145,6 +145,26 @@ class LockTests(unittest.TestCase):
             run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
                 ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)
 
+    def test_pcm_minimum_peak_is_enforced(self):
+        path = self.fixture.project / 'tests/expectations.json'
+        expectations = json.loads(path.read_text(encoding='utf-8'))
+        pcm = {'minimum_frames': 0, 'minimum_nonzero_frames': 0,
+               'maximum_dropped_frames': 0}
+        expectations['runtime']['profiles'][0]['expect']['pcm'] = pcm
+        path.write_text(json.dumps(expectations), encoding='utf-8')
+        run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
+            ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)
+        pcm['minimum_peak'] = 21000
+        path.write_text(json.dumps(expectations), encoding='utf-8')
+        with self.assertRaisesRegex(RunnerError, 'PCM expectation failed'):
+            run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
+                ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)
+        pcm['minimum_peak'] = 40000
+        path.write_text(json.dumps(expectations), encoding='utf-8')
+        with self.assertRaisesRegex(RunnerError, 'Invalid expected PCM'):
+            run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
+                ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)
+
     def test_synthetic_contract_runs_and_writes_bounded_report(self):
         report = run(self.fixture.project, self.fixture.bundle, str(self.fixture.node),
                      ROOT / 'tools/jr200_wasm_runner.mjs', self.fixture.lock)

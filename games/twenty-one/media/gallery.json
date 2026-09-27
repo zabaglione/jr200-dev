@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。スペードのA、ハートのK、伏せ札",
+      "sha256": "7f8c16d7fa20eef126d1f58443d696535caeca1eca3288455f7935219621dcd4",
+      "framebuffer_sha256": "501331df6d5bd809efa9fcb9d64d4c7ea136d8e92c785801c0905c8b5a53c613"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-hands",
+      "role": "play",
+      "caption": "3回目の勝負の最初の2枚",
+      "sha256": "a821cbcd28aadf65c6fccc7f4f781e387058a7800ea0362a2e4edda8dc2d30fe",
+      "framebuffer_sha256": "5c029a030e6a1e1274224e8d8caad8e57cc916c92c9b276abf697780335e2afa"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "7回を終えて持ち金が12以上になったクリア",
+      "sha256": "e07c10da6be040c349c3868f76e6a56f3149c408d39de8d767f815d084ef0498",
+      "framebuffer_sha256": "01e78be5b1bca77b8b67fefff3c16aff727d79defecaadd577063919daa1e36e"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 54.0,
+    "frames": 1621,
+    "frames_sha256": "bb965782bdbed5ff3e97030c0f85e91c51aab29387f036284a66e1fffa957f16",
+    "pcm_sha256": "5cda85f9678320dc3cfc34ed79c5d2c6c2c6a6e516afb7e0e9d41deb28ee5ea7",
+    "sha256": "b82c755ee244cefa8b42eaa2d0f20e507dcac40c5aabc36890d4d28be487333a",
+    "caption": "7回の勝負で持ち金を12以上にするまで"
+  }
+}

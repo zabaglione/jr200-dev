@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "fc627bc0214a579a0d891484e3d41cc39aba3cedc4d9139f46a179ee94375282",
+      "framebuffer_sha256": "0a92c7c3281a7ea27c5ea7eae51b865cf5bfd816911d712b255ca06e9166a996"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで分岐を切り替える場面",
+      "sha256": "c9266f5f21ee433e2fa67d5d08cb2310ba673b2b4319450d68a50b07077de536",
+      "framebuffer_sha256": "1ca826fd4544bbb8276eeb01ceb6c624aec1c28ee42c6222d6e87eea31611bf9"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "8本を届けて金メダルで1つ目の勤務を終える",
+      "sha256": "08ece3baef92dca6a722e0e0d6f1c88f591e9509acb4852dd6107586c30fe5d6",
+      "framebuffer_sha256": "251ba8733275a595c53b745731d7da791d89ef89d03018b0cc1f77a498080ef9"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 24.7,
+    "frames": 741,
+    "frames_sha256": "89e4554b0524dd1da58917dffdbde92aa2e4286ad302726b3942d311f1d4bc52",
+    "pcm_sha256": "5ace78aa627147f85369339cb22816f856e46985a0813ca7a6f6fbd8dcf1a870",
+    "sha256": "9e85e301609f88aaeca663d00c09f75e0723bedaab6032de50204e76e82bd943",
+    "caption": "1つ目の勤務の自動デモ（8本を正しい駅へ）"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "25812c126b3978bd6bb7a068b63baba3352ca4f5d271be9aafa37c1189e686b6",
+      "framebuffer_sha256": "5624910503e09fd6538b7f3c627278fc7962f9e0ff6d0145b51376670fb123ec"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで振り子が揺れる場面",
+      "sha256": "a6b96e5adb0511d5ddd7b8b5d1e6c2434ea0cb991d616baf5e145310671aeaa7",
+      "framebuffer_sha256": "a28f035a1d4f5d9bcfcbd05b905bc1bb874f440785880e0ee58fce02baf83742"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "6回目の着地で1つ目の航路をクリア",
+      "sha256": "92be8c32ee66b7d59ec300ebf1505a1c451292727696e6ec7153888c02d8c944",
+      "framebuffer_sha256": "806072ff0a86b5989df01b950ab9a7439c6c86d008fdf5d25af4cdc0334ee904"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 7.9,
+    "frames": 237,
+    "frames_sha256": "27dce7ffa40ad464641f419e2623a5138da29a5095f081ceca9161f131559cb7",
+    "pcm_sha256": "58fdbab655680b70a725a5fd33d3e313333f8a8acbb2bd3703874fb0760609ea",
+    "sha256": "6aff7631663267f121960c99359fab88e1beccd3cee1b422b88b62de9b08a898",
+    "caption": "1つ目の航路の自動デモ（6回着地してクリア）"
+  }
+}

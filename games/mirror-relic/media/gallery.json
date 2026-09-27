@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。壁、遺物、探検者、出口の並び",
+      "sha256": "4c73fc9d5edbbe4819f69d9bc8fed4c7814ef635d576822cb55eac067d3f1111",
+      "framebuffer_sha256": "ab5ce9fbefe20f54236f3c421ab6f5ee1f7ddf56c126a3a977ac6477121e614d"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-relic",
+      "role": "play",
+      "caption": "時計回りに回転して位相Bの遺物を拾った場面",
+      "sha256": "8893381cf4aa7ab704e0fe6502070d304a779d3bdc37b4cc1ba76b303b840467",
+      "framebuffer_sha256": "08ec3f321955f49a3aba8227b80b5ae9282cac885684404a66c7ad0150f087c2"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "3つの遺物を拾い、開いた出口で1広間クリア",
+      "sha256": "038c1490f5074457984d79c445cbd21d13517d0fec993593c2ac1969d8df95d5",
+      "framebuffer_sha256": "03645ae43e759e1c3e2ee8afefe5fb603bb13607b35f0b93d93db691329b6362"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 10.8,
+    "frames": 324,
+    "frames_sha256": "24836df55a922138c9b005075338078c920130236f9059344c50f460df79519f",
+    "pcm_sha256": "0aaf4ee8c07805e055e83ab6d3bc7a2a58796c55a441aa1608f0eeb82cbac789",
+    "sha256": "6a4bcb7689031c95cb2c8b46312c4d1deb99ffda905ef5f7dcdb3e779b466f31",
+    "caption": "1広間で3つの遺物を位相に合わせて拾い、出口でクリアして3声のジングルが鳴るまで（音付き）"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "id": "potion-path",
+  "title": "POTION PATH",
+  "version": "0.1.0-dev",
+  "summary": "Steer a potion across a poisoned grid with four limited ingredients to reach each order.",
+  "genre": "management",
+  "license": "MIT",
+  "distribution": {
+    "format": "cjr",
+    "file": "potion-path.cjr"
+  },
+  "load": {
+    "method": "cjr_loader",
+    "address": "0x1000"
+  },
+  "run": {
+    "method": "basic_usr",
+    "command": "A=USR($1000)",
+    "entry_address": "0x1000",
+    "return": "RTS"
+  },
+  "verification": {
+    "emulator": "passed",
+    "hardware": "not_run"
+  },
+  "release": {
+    "status": "draft",
+    "sdk_contract": 1,
+    "runner_contract": 1,
+    "minimum_runner_version": "0.3.0",
+    "wav": "not-required",
+    "publication": "not-published"
+  }
+}

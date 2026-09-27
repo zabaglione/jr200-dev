@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。金庫の扉",
+      "sha256": "f5b885c1eccdc3796e188430d30040ed9608f2f25adaabb82cac456095473f2d",
+      "framebuffer_sha256": "4761dea9b95822fc2776d4992c1f05555ab793d27bd119b216b25cf57ba58ac2"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-history",
+      "role": "play",
+      "caption": "2回試した記録。EXACTとNEARが右に並ぶ",
+      "sha256": "b88d39b8ace9071a4755989a119083d457bfbc46617b542395afa5ca77e60fac",
+      "framebuffer_sha256": "79fcbfd462f2ba29849c368515b5d19fdad53388a55550bd2a38c720c1e73c32"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "4桁が合って扉が開き、1面クリア",
+      "sha256": "bc40fdb1fb375c708a98db78163d7e97ba27e2e4b42b33daa73aca70d8ff355c",
+      "framebuffer_sha256": "cc8ac571327dfdff25ecb7ed2311aabbc513964af08e96bd728e981277686dbb"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 9.4,
+    "frames": 283,
+    "frames_sha256": "5fd30b484677192fc79bf69274d3fe1eb218b4680e86af366dc3b66b14757511",
+    "pcm_sha256": "80f09132040db1b68a745a3b921e7d9587398ce465bd43ce6d154504cb230e50",
+    "sha256": "ce6c4c70d1e3ed15f742238935f629ef08d59364719d2dc2d530a86a0aa14782",
+    "caption": "1面で矛盾しない番号を順に試し、扉を開けて3声のジングルが鳴るまで（音付き）"
+  }
+}

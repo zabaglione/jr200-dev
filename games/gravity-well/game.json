@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "id": "gravity-well",
+  "title": "GRAVITY WELL",
+  "version": "0.1.0-dev",
+  "summary": "Tilt the room so both balls roll together onto the two sockets in forty wells, within par and past both runes for three stars.",
+  "genre": "puzzle",
+  "license": "MIT",
+  "distribution": {
+    "format": "cjr",
+    "file": "gravity-well.cjr"
+  },
+  "load": {
+    "method": "cjr_loader",
+    "address": "0x1000"
+  },
+  "run": {
+    "method": "basic_usr",
+    "command": "A=USR($1000)",
+    "entry_address": "0x1000",
+    "return": "RTS"
+  },
+  "verification": {
+    "emulator": "passed",
+    "hardware": "not_run"
+  },
+  "release": {
+    "status": "draft",
+    "sdk_contract": 1,
+    "runner_contract": 1,
+    "minimum_runner_version": "0.3.0",
+    "wav": "not-required",
+    "publication": "not-published"
+  }
+}

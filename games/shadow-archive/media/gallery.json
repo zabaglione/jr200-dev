@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。帽子・眼鏡・ネクタイの組み合わせの6つの顔",
+      "sha256": "dd2f2c7602410f5f4f80e2d1e8f9fda11a8733d6a2efd0d94e93e5f2569f06ac",
+      "framebuffer_sha256": "cd901de2bbeb150f982d268b0d8ad13e5ecffb8b86b729ef10563ca6463591d4"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-files",
+      "role": "play",
+      "caption": "調書を2冊開き、食い違う容疑者が赤くなった場面",
+      "sha256": "ccc21e16b0191df4e281e626ba4c382f9d1aa326191e45f3ee907a5686439dcb",
+      "framebuffer_sha256": "0e62dacc1f25043cf9b9345f3eeaad6a83a4735c28b3756df1bbf7ff8ae6a777"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "犯人を告発してGOLD DETECTIVEで解決",
+      "sha256": "af5b9d7fccca2630b8a085b9167572b63550b2e7c5904e60b62e750b4900d02d",
+      "framebuffer_sha256": "57ea233aeb85e0410382a82376bff09beb73cdb55c69672dc1ee1494fdf6cf9d"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 3.1,
+    "frames": 92,
+    "frames_sha256": "dc3a75def7a0e88d5e35a0bc190f7b65eab9c4d3efb25db4900f99aa29256007",
+    "pcm_sha256": "1881105d486aa6b027718b52ef157f2e9202ac262e6ba5b54cd7c08ae58d4a34",
+    "sha256": "fc5b3a8292691ac7794cd226c688ee22b4e2643f2649a5139054f8a3eeff5906",
+    "caption": "1件目で調書を2冊開き、犯人を告発してGOLDで解決し、3声のジングルが鳴るまで（音付き）"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "69ccdab5ed1af1b826412a1113a2f9fc100ea2612c6ea88a46460ebbf4fc3ae5",
+      "framebuffer_sha256": "addb86dff9ef9de8ccc9698e484f7a79d5575e942c00568299eff675ff47f78f"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモで群れを迎え撃つ場面",
+      "sha256": "9f0728fca5fc7437331f3057229172ecbf68ea7dd4cb345c0337e10d3cd013cc",
+      "framebuffer_sha256": "6884fd67919396218d8f7f132f49a908c55eed5bad5eb2bae3ab5660f48acbdd"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "12体を倒して1つ目の波をクリア",
+      "sha256": "12f183bb3d111534c3aaf34f568f57b9695ea9897e160010313d94ff2238755e",
+      "framebuffer_sha256": "c558447a61f704801b56c4d74f2ec62230bfc5298615c538dd9de75f8ed97cef"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 16.8,
+    "frames": 505,
+    "frames_sha256": "8a91145c980eb3b79eb36fff51a4bd9c16f2afd701595dba6b11d2cfb5159005",
+    "pcm_sha256": "70d33ca3c12440bcd6ef1fac1e6fb80365c699e4e32f5898eef0b54ba0468bfa",
+    "sha256": "6dc092340358f42ded5fa796fb752d9dcf9ae9a84c6ca8f92d637311bf811500",
+    "caption": "1つ目の波の自動デモ（12体を倒して夜明け）"
+  }
+}

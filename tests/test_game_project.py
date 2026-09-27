@@ -260,6 +260,16 @@ class ArtifactTests(unittest.TestCase):
         with self.assertRaisesRegex(ProjectError, 'first block'):
             build_project(self.fixture.project, str(executable))
 
+    def test_build_rejects_cjr_growing_into_a_data_region(self):
+        config = self.fixture.json('build.json')
+        config['regions'] = [
+            {'name': 'program', 'kind': 'code', 'start': '0x1000', 'end': '0x100f'},
+            {'name': 'runtime', 'kind': 'data', 'start': '0x1010', 'end': '0x10ff'}]
+        self.fixture.write_json('build.json', config)
+        executable = self.fixture.fake_jrasm(cjr(payload=b'\x01' * 31 + b'\x39'))
+        with self.assertRaisesRegex(ProjectError, 'in data region runtime'):
+            build_project(self.fixture.project, str(executable))
+
     def test_package_contains_artifact_metadata_license_and_receipt(self):
         executable = self.fixture.fake_jrasm()
         package = package_project(self.fixture.project, str(executable))

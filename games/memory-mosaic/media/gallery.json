@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。8種類の絵柄と色",
+      "sha256": "1dbe00594e0b2111e592149c3b873d90c9149a3d49bdb0784fa491618140898e",
+      "framebuffer_sha256": "93b5f2d92212acf87642e4dc20df90e41298c626cb6b2366b1bfb883a2295541"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-match",
+      "role": "play",
+      "caption": "最初の2枚が同じ絵柄でそろった場面",
+      "sha256": "7d216d8b7d6fa830ccf060c676a4a64cf48efb901f857940e04ebd8836e6f768",
+      "framebuffer_sha256": "8f95f61e44aa321a549c3da14a4d96b701ab04f59f70ac6b6fda848b303f6efd"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "8組がそろって1面クリア",
+      "sha256": "078694c2dc9e2736564953892b67de4b9964af939b26c75487381bafe8f0059b",
+      "framebuffer_sha256": "36d5988a3c7b0280db6d608f12d4cb14681567c190e763c904de672b0bb82a92"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 18.6,
+    "frames": 557,
+    "frames_sha256": "1e1ee8b40b5a1728302e51adca13a1034203a041c262dede1428f56b55edd714",
+    "pcm_sha256": "44604088ebacc80de540a156433c9222efa5c767257e336ba4147305dcbcbf54",
+    "sha256": "3b194903c2bbbb0fb8f818914b36abd9bc838e2ea9a9e83eb049a3649cf2442f",
+    "caption": "1面で8組をそろえてクリアし、3声のジングルが鳴るまで（音付き）"
+  }
+}

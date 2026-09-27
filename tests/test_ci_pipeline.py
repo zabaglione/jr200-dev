@@ -160,6 +160,15 @@ class PlannerTests(unittest.TestCase):
         toolchain = self.plan(['toolchain.lock.json'])
         self.assertEqual(toolchain['build_targets'], ['minimal'])
 
+    def test_many_unknown_paths_keep_the_matrix_small(self):
+        paths = [f'unknown/new-{i:04d}.file' for i in range(800)]
+        plan = self.plan(paths)
+        item = plan['matrix']['include'][0]
+        self.assertEqual(len(plan['reasons']['minimal']), 800)
+        self.assertLess(len(item['reason']), 1000)
+        self.assertTrue(item['reason'].endswith('and 792 more (see ci-plan.json)'))
+        self.assertIn('unclassified:unknown/new-0000.file', item['reason'])
+
     def test_build_and_test_fingerprints_are_separate(self):
         before = self.fixture.fingerprints()
         expectations = self.fixture.root / 'templates/minimal/tests/expectations.json'

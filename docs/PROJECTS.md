@@ -43,7 +43,8 @@ python3 tools/game_project.py new \
 - `output`: `build/` 直下へ生成する安全な `.cjr` ファイル名。
 - `load_address`: 最初の宣言領域の先頭。現在は標準user RAM `$0800-$7FFF` のみ許可。
 - `entry_address` / `entry_symbol`: code領域と、jrasm symbol listの双方に存在するentry。
-- `regions`: endを含む範囲。`code` と `data` は重複不可。
+- `regions`: endを含む範囲。`code` と `data` は重複不可。CJRのbyteは`code`領域だけに置けます。
+  `data`領域（影画面・stack・状態などの実行時作業域）へはみ出したCJRはbuildで拒否します。
 - `inputs.assembly`: 主ソースを含む、再帰 `.include` の正確な一覧。過不足を拒否。
 - `inputs.sdk`: 再帰 `.include` で使用する `sdk/` 以下の共有moduleをリポジトリ相対pathで列挙。
   project外のincludeはこの領域だけを許可し、過不足を拒否。

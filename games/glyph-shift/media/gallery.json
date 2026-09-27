@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。壁、歩く人、箱、敵、ルーン、門",
+      "sha256": "f028c8b6943bb0c8dff12fd11617dee78ea386a38476376d352bc899ddaf63df",
+      "framebuffer_sha256": "afd66aeea296fac9e494298c1cfcfb671c953a7100563972f7d5b88786d5d3d4"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-slides",
+      "role": "play",
+      "caption": "規則を書き換えて進む途中",
+      "sha256": "9dd45517ae657ed9f4ed4c9cb04ec88c0e8b8d22a019d58ad293d8e2a83e8691",
+      "framebuffer_sha256": "d09a474b98b892eb483835ba2fa77bbfb7c4df298c0ca957920beb8e2f1daa90"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "星3つで1部屋目をクリア",
+      "sha256": "e0514a19243469d653f7677654448a54498675fa6bdf5d68069359c6185b9d93",
+      "framebuffer_sha256": "e114069f27b5f13874d70582617640f986f9a95de74ecd744815ce161bdddae6"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 4.2,
+    "frames": 127,
+    "frames_sha256": "09cccdb0567d59655a6ad4efb6096c711e14d3dd4df00bb7909be81b860beb6a",
+    "pcm_sha256": "a65acdf7cded6c7e9ae0dd7f25d4511c3a02cf80358cbc7c2bcb41e5c7ee4f36",
+    "sha256": "3876f0608106e2e876b6ffad4a44f557b4d973dbbb99b50d40a2049265bddbbc",
+    "caption": "1部屋目で規則を書き換え、両方のルーンを通って門に着くまで"
+  }
+}

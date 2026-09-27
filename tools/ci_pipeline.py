@@ -245,6 +245,24 @@ def merge_reasons(current: dict[str, Any], previous: dict[str, Any] | None,
     return result
 
 
+REASON_SHOWN = 8
+
+
+def reason_text(reasons: list[str]) -> str:
+    """The display reason of a matrix entry; plan['reasons'] keeps every item.
+
+    A change unknown to the base registry lists every path for every target,
+    which would push the matrix output and step summary past GitHub's size
+    limits, so only the first REASON_SHOWN items are spelled out.
+    """
+    if not reasons:
+        return 'dependency graph selection'
+    text = ', '.join(reasons[:REASON_SHOWN])
+    if len(reasons) > REASON_SHOWN:
+        text += f' and {len(reasons) - REASON_SHOWN} more (see ci-plan.json)'
+    return text
+
+
 def make_plan(root: Path, registry_path: Path, platform_id: str,
               base: str | None, changed: list[str] | None,
               full: bool = False,
@@ -301,7 +319,7 @@ def make_plan(root: Path, registry_path: Path, platform_id: str,
             'build_fingerprint': fingerprints[name]['build'],
             'test_fingerprint': fingerprints[name]['test'],
             'build_required': name in build_names,
-            'reason': ', '.join(reasons.get(name, [])) or 'dependency graph selection',
+            'reason': reason_text(reasons.get(name, [])),
         })
     plan = {
         'schema_version': 1,

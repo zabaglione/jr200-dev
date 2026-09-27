@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。柱と石板",
+      "sha256": "87b1485cd7b0c71df3d026c18aaa85853cf3dca54151758cb08034c3c70f780b",
+      "framebuffer_sha256": "9973c9c4a46ceb4329ed1f44e110d1f054b627b8e1c3a5f6a88dc20159432524"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-wrong-try",
+      "role": "play",
+      "caption": "1回外して、合う和と合わない和に印が付いた場面",
+      "sha256": "908af5270ee47d42487c080f59e63db715351544ab93881e0c285e6bce6701e2",
+      "framebuffer_sha256": "9386e7f06d072f5755bf927f6c668e3deda284bd3523c44336007154ef726411"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "4文字がすべて合った1碑文目のクリア",
+      "sha256": "1c5043d3a2f8a3607e7417786225973a21f2a44039aa32074e594f74b9c38bf5",
+      "framebuffer_sha256": "54255400b7d14a43c573917380995ffa89488ae571aeb5dcd28b0196c141c4f3"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 4.5,
+    "frames": 134,
+    "frames_sha256": "d19d6b9944a429fcdec4e1c9437b94a02975c5fc778dc688a7206230d4a4dad0",
+    "pcm_sha256": "fab8ff648d03b4139e97a8bce038716fafd9ab772b2f9839b41ee6f47a637643",
+    "sha256": "e4c1fbec70424d8034342fcf8307462f57eeff5ecf43e9d46c45fb60d75a9bc2",
+    "caption": "1碑文目の和から数字を割り当てて照合するまで"
+  }
+}

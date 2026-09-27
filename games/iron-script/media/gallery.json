@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "51651af4add0a5420dea90f8f6733ec3faeced14ac569a75a4afee3d97b84f88",
+      "framebuffer_sha256": "a5b1ccf0b7ac4d16aba13919dfe9411a6a55c7021f0bf8e2d265c00bce028d5d"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-demo-play",
+      "role": "play",
+      "caption": "自動デモでプログラムを実行する場面",
+      "sha256": "3d80384bbb99c59254df121650321a6c80e71c5bc7c587d6ad282970fd4ed8eb",
+      "framebuffer_sha256": "f53c305cefcb36539c8593b285d07dcf04f69e5bd7d0828886c31d9b6664f8b1"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-demo-clear",
+      "role": "goal",
+      "caption": "端末に着いて1つ目の部屋をクリア",
+      "sha256": "3abf80ffecdf7c178d8f9b72e65ba0774f1a8a18ef4e7bd01faa27b29def6613",
+      "framebuffer_sha256": "39e3ecfa78236d99925397ec91f68f3425c672d7ec24d3a89a79937a1885cbf8"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-demo-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 3.8,
+    "frames": 113,
+    "frames_sha256": "b0cd6e9741fb8fb56fa9ad57a144c60ff3501f1e8c130d36e4be05ffa8092714",
+    "pcm_sha256": "afcac2a6cc1915764442efd9d348f188e5337cccb04f4f70284b8be4b2693ef4",
+    "sha256": "edfb233f955157a78a0adede6e1e521b6a32d437994ec5abb3e1a059d2b1d738",
+    "caption": "1つ目の部屋の自動デモ（プログラムを入力して実行）"
+  }
+}

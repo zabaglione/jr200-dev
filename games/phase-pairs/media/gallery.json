@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面。3と7、4と6の札",
+      "sha256": "162da5e054c59300384b6f355d81700c4edaf94714632a2ffc08edc02b384d76",
+      "framebuffer_sha256": "e7664aa3ab32f5a7ec7567fd26feade6576c26ea1789a1e6da5c304defa9c876"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-two-pairs",
+      "role": "play",
+      "caption": "2組を消した後の盤",
+      "sha256": "9779189c67be7df1425e842c099b06f4b1683abba5d4e39ba6335c262338597e",
+      "framebuffer_sha256": "bedae72f3b2810a63058d0bcf1747aa2504502cfea10dbdcc63a71c1828f028b"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "16個すべてを消した1面目のクリア",
+      "sha256": "d0bedf79d6145b22b8ca4f1fc9449b5e03c6bce57aaa9fb83b41c75950d92a86",
+      "framebuffer_sha256": "7c9574f50aa7749be4748c2f611d41b1a5e8c5b9cce6b7145adc3f763d8d58df"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 17.8,
+    "frames": 534,
+    "frames_sha256": "00b779c64f6ea1814c2650c3ea70279e72aeb922f09a189e5db5a33a0660f8d9",
+    "pcm_sha256": "d9134601f63e938a5dc661f68b0222a535fe2e104df4279c994394cc3b5a3ec8",
+    "sha256": "db326abdde3bac7c969a8ad979f0d63a093d77c84087cc51e20ee4c9f9b19221",
+    "caption": "1面目の8組を消してクリアするまで"
+  }
+}
