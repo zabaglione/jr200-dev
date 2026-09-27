@@ -190,8 +190,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 62,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/dice-relic",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "loop_ten",
