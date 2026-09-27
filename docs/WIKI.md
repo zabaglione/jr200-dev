@@ -37,8 +37,8 @@ JR100 Wikiの構成を参考にしていますが、文章は複製せず、作�
 
 ## 入力と検査
 
-正本は `games/catalog.json`、各作品の `game.json`、README、catalogで指定した代表画像、
-`media/gallery.json`、`tools/wiki/genres.json` です。
+正本は `games/catalog.json`、`wiki-development.json`、各作品の `game.json`、README、
+catalogで指定した代表画像、`media/gallery.json`、`tools/wiki/genres.json` です。
 候補版を含める場合でも、generatorは次をすべて検査します。
 
 - catalogと作品metadataのID、version、status、publication、license
@@ -63,17 +63,21 @@ generator自体は外部URLのHTTP到達性を検査しません。初回7作品
 公開Pagesのcatalog・CJRをHTTP取得してhashを照合し、所有ROM/FONTで起動した後に
 当時privateだったWikiの「遊ぶ」リンクを有効化しました。
 
-## 開発中の作品のpreview
+## 開発中の作品のWiki掲載とpreview
 
-移植中の作品（catalog外の`draft`）は、ローカルpreviewだけに出せます。packageやROMは不要です。
+`wiki-development.json`にIDと版を明示した移植中の作品（catalog外の`draft`）は、
+配布版とは区別した「開発中（CJR未公開）」の紹介ページとして公開Wikiに載せます。
+作品ごとのCJR・ZIP・「遊ぶ」リンクは掲載しません。指定した版が変わったり作品が欠けたりしたら生成を止めます。
+リストにない新しい作品は、公開Wikiへ自動追加しません。packageやROMは不要です。
+
+リスト外も含めた全開発作品のローカルpreviewは次で作ります。
 
 ```sh
 make wiki-preview-dev   # build/wiki-preview-dev/
 ```
 
 各作品にはREADMEの「目的と勝敗」「操作」「起動」「検証の範囲」「ライセンス」節と、
-`gallery.json`（3場面以上）が必要です。開発中の作品には「遊ぶ」リンクを出さず、
-`sync`に`--include-development`を渡すと停止します。
+`gallery.json`（3場面以上）が必要です。`sync`に`--include-development`を渡すと停止します。
 
 ## 候補版preview
 
@@ -138,7 +142,8 @@ python3 tools/capture_video.py --project games/relic-dive \
 ## Wiki worktreeへの同期
 
 `WIKI_DIR` は、originが正規の `jr200-dev.wiki.git` であるcleanなGit worktree rootに限ります。
-`wiki-sync-*`は検証済み・公開指定の作品だけを同期し、候補版は`wiki-preview`に限定します。
+`wiki-sync-*`は検証済み・公開指定の作品と、`wiki-development.json`で選んだ
+開発中の紹介ページだけを同期します。候補版とリスト外の開発版はpreviewに限定します。
 初回作成された`Home.md`だけは生成内容とbyte一致する場合に限って管理下へ取り込めます。
 まずdry-runで差分を確認します。
 

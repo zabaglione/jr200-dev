@@ -56,5 +56,6 @@ CTRL+C後の画面・属性・FONT・PCG・stack guardも照合しました。�
 SHA-256は[UPSTREAM.md](UPSTREAM.md)、移植固有コードのMIT全文は[LICENSE](LICENSE)、
 共通SDKのBSD-3-Clause表示は[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照してください。
 
-この0.1.0は開発中で、Release・公開Web・公開Wikiには配信していません。公開には
-作品版と配信先について別の承認が必要です。
+この0.1.0は開発中です。公開Wikiには紹介と画面を掲載しますが、CJR・ZIPは
+Releaseや公開Webで配信していません。CJR・ZIPの公開には作品版と配信先について
+別の承認が必要です。
