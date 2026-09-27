@@ -2457,6 +2457,58 @@
         "games/metro-weave/game.json",
         "games/metro-weave/media/**"
       ]
+    },
+    {
+      "id": "sand-rescue",
+      "kind": "game",
+      "project": "games/sand-rescue",
+      "runner": "jr200-project",
+      "depends_on": [],
+      "build_inputs": [
+        "games/sand-rescue/LICENSE",
+        "games/sand-rescue/Makefile",
+        "games/sand-rescue/THIRD_PARTY_NOTICES.md",
+        "games/sand-rescue/assets/**",
+        "games/sand-rescue/build.json",
+        "games/sand-rescue/src/**",
+        "mk/game.mk",
+        "rules/jr200.json",
+        "sdk/audio.inc",
+        "sdk/audio_notes.inc",
+        "sdk/font.inc",
+        "sdk/font_data.inc",
+        "sdk/frame.inc",
+        "sdk/gfx.inc",
+        "sdk/jr200.inc",
+        "sdk/keys.inc",
+        "sdk/math.inc",
+        "sdk/pcg.inc",
+        "sdk/port.inc",
+        "sdk/selftest.inc",
+        "sdk/session.inc",
+        "sdk/sound.inc",
+        "toolchain.lock.json",
+        "tools/game_project.py",
+        "tools/jrasm_tool.py"
+      ],
+      "test_inputs": [
+        "emulator.lock.json",
+        "games/sand-rescue/tests/**",
+        "tests/audio_model.py",
+        "tests/make_selftest.py",
+        "tests/port_model.py",
+        "tests/selftest_model.py",
+        "tests/test_sand_rescue.py",
+        "tools/emulator_runner.py",
+        "tools/jr200_wasm_runner.mjs",
+        "tools/png_rgba.py"
+      ],
+      "doc_inputs": [
+        "games/sand-rescue/README.md",
+        "games/sand-rescue/UPSTREAM.md",
+        "games/sand-rescue/game.json",
+        "games/sand-rescue/media/**"
+      ]
     }
   ]
 }

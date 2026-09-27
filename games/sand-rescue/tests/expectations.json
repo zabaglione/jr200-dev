@@ -1,0 +1,667 @@
+{
+  "schema_version": 2,
+  "expected_entry_address": "0x1000",
+  "notes": "State expectations come from games/sand-rescue/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six fields as one campaign with their input scripts; synthetic-demo-clear plays field 1 with the same script at normal speed; synthetic-loss lets the tank overflow until the reserve is empty, then selects channel A again and pours once (11 points of 14) and runs out of water. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
+  "runtime": {
+    "default_profile": "synthetic-self-test",
+    "profiles": [
+      {
+        "profile": "synthetic-title",
+        "mode": "synthetic-injection",
+        "max_cycles": 900000,
+        "return_address": "0x7ff0",
+        "replay": [],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "pcg",
+            "address": "0xc400",
+            "length": 256
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "00",
+            "pcg": "0000000000010305000000000000804001010f102a0000000000e010a8000000000708131713080700c02090d09020c001090f102a0000000020e010a80000000000040e0503091d000040e04080207001010f102a0000000000e010a8000000030f1f3d3f1f0f01c0f0f8bcfcf8f08001010f102a0000008080f008aa000000242424242424242424242320100f00000000c020120a1212ffa5ffa5ff242424242c3a2c3a2c3a2c3a2c3a2c3a2c3a2c8181c38181242424885224548a112000000000ff00ff0000000000ffaaff00000024182400000000422400244200000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
+          },
+          "framebuffer_sha256": "cae2c7690ffe259ac94f2492234e97dfd5791e25c0953e1002cf04f598962aa9",
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 1000,
+            "maximum_dropped_frames": 900000000,
+            "minimum_peak": 21000
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-help",
+        "mode": "synthetic-injection",
+        "max_cycles": 650000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x61",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "05"
+          },
+          "framebuffer_sha256": "5480011cc4e7af5ce0a64dadb4c410d82b7bbfb082732d15da30ef79e09f6ef2",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-start",
+        "mode": "synthetic-injection",
+        "max_cycles": 450000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4640",
+            "length": 40
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "6c000e050500000000000000000000000000000202020403050102030304030a0b0c000000000000",
+            "mode": "01",
+            "level": "00"
+          },
+          "framebuffer_sha256": "4261a5eceede568029544c111aa1e9d2083c395742aad001415649f00ef86c53",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-gate",
+        "mode": "synthetic-injection",
+        "max_cycles": 800000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 450000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 490000,
+            "code": "0x64",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "gate",
+            "address": "0x4645",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "01",
+            "level": "00",
+            "gate": "01"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-loss",
+        "mode": "synthetic-injection",
+        "max_cycles": 175000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 400000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 440000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 158400000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 158440000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 158700000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 158740000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "lost-mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "status",
+            "address": "0xc3e1",
+            "length": 29
+          },
+          {
+            "name": "water",
+            "address": "0x4640",
+            "length": 1
+          },
+          {
+            "name": "tank",
+            "address": "0x4648",
+            "length": 1
+          },
+          {
+            "name": "score",
+            "address": "0x4646",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "level": "00",
+            "lost-mode": "03",
+            "status": "4e4f205741544552204c45465420464f52205448452048415256455354",
+            "water": "00",
+            "tank": "00",
+            "score": "0b"
+          },
+          "framebuffer_sha256": "1526be409effe0b0c942193876e495a83eb7fddcc87971b7883ca0a977bb4804",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-lose-retry",
+        "mode": "synthetic-injection",
+        "max_cycles": 175750000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 400000,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 440000,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 158400000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 158440000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 158700000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 158740000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 175000000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 175040000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 175300000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 175340000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 175600000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 175640000,
+            "code": "0x0d",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4640",
+            "length": 40
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "6c000e050500000000000000000000000000000202020403050102030304030a0b0c000000000000",
+            "mode": "01",
+            "level": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-self-test",
+        "mode": "synthetic-injection",
+        "max_cycles": 3000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x74",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x74",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "fixtures",
+            "address": "0x5000",
+            "length": 861
+          },
+          {
+            "name": "autoplay",
+            "address": "0x535d",
+            "length": 258
+          },
+          {
+            "name": "quiet",
+            "address": "0x46e0",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "00",
+            "fixtures": "6c000e050400000000000000000000000100000202020403050102030304030a0b0c000000000000016b000e050500000001000000000000000100000202020403050102030304030a0b0c000000000000016b000e050500000009000003000800000101000202020403050102030304030a0b0c000000000000016c000e050502000000000000000000000000000202020403050102030304030a0b0c000000000000016c000e050502000000000000000000000000000202020403050102030304030a0b0c000000000000016c000e050502000600020000000000000000000202020403050102030304030a0b0c000000000000016c000e050500000000000000000000000000000202020403050102030304030a0b0c000000000000016c000e050500000204000000000000000000000202020403050102030304030a0b0c000000000000016c000e050400000500000200000000000100000202020403050102030304030a0b0c000000000000016c000e050400030300000301000c00030100000202020403050102030304030a0b0c020000000000016c000e050400000000000300000000000100000202020403050102030304030a0b0c010000000000016c000e050400000400000602000800000101000202020403050102030304030a0b0c000000000000016c000e050400080200000a01000c00080100000202020403050102030304030a0b0c020000040000016c000e050400000000000d00000000000102000202020403050102030304030a0b0c0000000000000100000e050500000000000000000000000100000202020403050102030304030a0b0c0000000000000300000e0505000e0000000000000000000100000202020403050102030304030a0b0c000000000000016c000e0505000d0000000000000000000000000202020403050102030304030a0b0c000000000000016c000e0505000e0100000000000000000000000202020403050102030304030a0b0c000000000000015a110e050500110004000000000000000000000202020403050102030304030a0b0c000000000000025e1111050400000000000000000000000100000203020405030201020403050c0a0b000000000000016c000e050400000000000000000000000100000202020403050102030304030a0b0c00000000000001",
+            "autoplay": "630e0e0502020e0000020301000c00033001000202020403050102030304030a0b0c020002040000020030502611050300180002000c01000c00086103000203020405030201020403050c0a0b020300040500020061413a13040202140002020a01000c00064603000302030504030302010503040b0c0a000203000403020046325015040102160002020b01000c00084703000203020405040103020305040a0c0b0200020400040200471e6818030300180004000c01000c000a4203000303020504050201030405030c0b0a0303000504000200420b831a0301001b0002000802000800034704000302030505040302010504030b0a0c030203000504020047",
+            "quiet": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-demo-play",
+        "mode": "synthetic-injection",
+        "max_cycles": 9750000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x70",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x70",
+            "pressed": false
+          }
+        ],
+        "observations": [],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {},
+          "framebuffer_sha256": "56a2be6169fd63e8bcae7f80352facc451968df2628dfb1fdfbf3f5677d72a40",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-demo-clear",
+        "mode": "synthetic-injection",
+        "max_cycles": 19500000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x70",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x70",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "state",
+            "address": "0x4640",
+            "length": 40
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "state": "630e0e0502020e0000020301000c00033001000202020403050102030304030a0b0c020002040000",
+            "mode": "02",
+            "level": "00"
+          },
+          "framebuffer_sha256": "ab667b72b0776464913b90c683a80288ee92eaabc90f56eff04e5d6126584c67",
+          "pcm": {
+            "minimum_frames": 4096,
+            "minimum_nonzero_frames": 1000,
+            "maximum_dropped_frames": 900000000,
+            "minimum_peak": 21000
+          },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-exit",
+        "mode": "synthetic-injection",
+        "max_cycles": 800000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 340000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 450000,
+            "code": "0x1b",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 490000,
+            "code": "0x1b",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "pcg0",
+            "address": "0xc000",
+            "length": 16
+          },
+          {
+            "name": "pcg1",
+            "address": "0xc400",
+            "length": 16
+          },
+          {
+            "name": "codes",
+            "address": "0xc100",
+            "length": 16
+          },
+          {
+            "name": "attrs",
+            "address": "0xc500",
+            "length": 16
+          },
+          {
+            "name": "font",
+            "address": "0xd100",
+            "length": 16
+          },
+          {
+            "name": "key-mask",
+            "address": "0xc81e",
+            "length": 1
+          },
+          {
+            "name": "stack-guard",
+            "address": "0x4f00",
+            "length": 16
+          },
+          {
+            "name": "channel-c",
+            "address": "0xc812",
+            "length": 1
+          },
+          {
+            "name": "channel-d",
+            "address": "0xc814",
+            "length": 1
+          },
+          {
+            "name": "channel-f",
+            "address": "0xc819",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "breakpoint",
+          "pc": "0x7ff0",
+          "memory": {
+            "pcg0": "00ff00ff00ff00ff00ff00ff00ff00ff",
+            "pcg1": "00ff00ff00ff00ff00ff00ff00ff00ff",
+            "codes": "00000000000000000000000000000000",
+            "attrs": "00000000000000000000000000000000",
+            "font": "00000000000000000000000000000000",
+            "key-mask": "00",
+            "stack-guard": "0000ffff0000ffff0000ffff0000ffff",
+            "channel-c": "00",
+            "channel-d": "00",
+            "channel-f": "00"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      }
+    ]
+  }
+}
