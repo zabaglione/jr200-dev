@@ -157,8 +157,8 @@
    "wave": 2,
    "priority": "P2",
    "issue": 62,
-   "jr200_project": null,
-   "status": "planned"
+   "jr200_project": "games/trace-blade",
+   "status": "ported-dev"
   },
   {
    "jr100_directory": "dice_relic",
