@@ -41,10 +41,10 @@ PROJECTS = {
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
-AUDIO_GAMES = ['auction-house', 'cargo-balance', 'chain-suit', 'compass-rose', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'gate-runner', 'glyph-shift', 'gravity-well', 'iron-script', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'metro-weave', 'mirror-relic', 'night-swarm', 'number-vault', 'orbit-dodge', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'sand-rescue', 'shadow-archive', 'star-lance', 'stone-balance', 'tidal-nets', 'tide-bridge', 'twenty-one', 'word-foundry']
-KEYS_EXT_GAMES = ['compass-rose', 'frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault', 'mirror-relic', 'night-swarm']
+AUDIO_GAMES = ['abyss-signal', 'auction-house', 'cargo-balance', 'chain-suit', 'chrono-breach', 'compass-rose', 'dice-relic', 'echo-parry', 'five-forge', 'frost-steps', 'fuse-box', 'gate-runner', 'glyph-shift', 'gravity-well', 'iron-script', 'loop-ten', 'lunar-touchdown', 'magnet-vault', 'memory-mosaic', 'metro-weave', 'mirror-relic', 'night-swarm', 'number-vault', 'orbit-dodge', 'orbit-draft', 'orchard-days', 'peg-garden', 'pendulum-port', 'phase-pairs', 'potion-path', 'prism-trace', 'ribbon-snake', 'ruin-lexicon', 'sand-rescue', 'shadow-archive', 'sigil-deck', 'star-lance', 'stone-balance', 'tidal-nets', 'tide-bridge', 'trace-blade', 'twenty-one', 'word-foundry']
+KEYS_EXT_GAMES = ['abyss-signal', 'chrono-breach', 'compass-rose', 'frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault', 'mirror-relic', 'night-swarm', 'trace-blade']
 RANKED_GAMES = ['frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault']
-SELFTEST_GAMES = ['echo-parry', 'gate-runner', 'iron-script', 'lunar-touchdown', 'metro-weave', 'night-swarm', 'orbit-dodge', 'pendulum-port', 'ribbon-snake', 'sand-rescue', 'star-lance']
+SELFTEST_GAMES = ['echo-parry', 'gate-runner', 'iron-script', 'loop-ten', 'lunar-touchdown', 'metro-weave', 'night-swarm', 'orbit-dodge', 'pendulum-port', 'ribbon-snake', 'sand-rescue', 'star-lance', 'trace-blade']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
 
@@ -181,6 +181,30 @@ class SampleContractTests(unittest.TestCase):
                         fixture.index('JSR     jr_keyrepeat_poll\n'))
 
 
+class PcgBankTests(unittest.TestCase):
+    LOAD = re.compile(r'LDAA\s+(\S+)\s*\n\s*LDAB\s+(\S+)\s*\n\s*JSR\s+jr_pcg_load')
+
+    def value(self, source, token):
+        if re.fullmatch(r'0x[0-9a-fA-F]+|\d+', token):
+            return int(token, 0)
+        match = re.search(re.escape(token) + r':\s*\.equ\s+(\S+)', source)
+        self.assertIsNotNone(match, token)
+        return self.value(source, match.group(1))
+
+    def test_pcg_loads_stay_inside_one_bank(self):
+        # sdk/pcg.inc: at most 32 patterns, within 0x00-0x1F or 0x80-0x9F.
+        loads = 0
+        for path in sorted(ROOT.glob('games/*/src/main.asm')) + sorted(ROOT.glob('samples/*/src/main.asm')):
+            source = path.read_text()
+            for first, count in self.LOAD.findall(source):
+                with self.subTest(file=str(path.relative_to(ROOT)), first=first):
+                    start, number = self.value(source, first), self.value(source, count)
+                    self.assertIn(start & 0xe0, (0x00, 0x80))
+                    self.assertTrue(1 <= number and (start & 0x1f) + number <= 32)
+                    loads += 1
+        self.assertGreater(loads, 40)
+
+
 class SdkImpactTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -222,7 +246,7 @@ class SdkImpactTests(unittest.TestCase):
         cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])
         cases['sdk/session.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])
         cases['sdk/selftest.inc'] = SELFTEST_GAMES
-        cases['sdk/keyscan.inc'] = ['brick-pulse', 'gate-runner', 'port-fixture-sample', 'star-lance']
+        cases['sdk/keyscan.inc'] = ['brick-pulse', 'gate-runner', 'loop-ten', 'port-fixture-sample', 'star-lance']
         cases['sdk/keyrepeat.inc'] = ['port-fixture-sample']
         cases['sdk/effect.inc'] = ['port-fixture-sample']
         for path, expected in cases.items():

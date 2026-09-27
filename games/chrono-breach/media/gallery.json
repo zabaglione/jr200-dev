@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "80e97d6e2d34bd7627e9ba5989d579dc781e234ee6b4a76f7c30936df2642c61",
+      "framebuffer_sha256": "03e8e623d99afd0ae3327911b3797b16c509d2401af7548a498c9a7755cbdef2"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-first-kill",
+      "role": "play",
+      "caption": "射線をかわして撃ち、衛兵を倒した場面",
+      "sha256": "988ea3d39201b15a5c0274a141fd5c6c50951d675cab53cb90a1e8894c138c28",
+      "framebuffer_sha256": "477fe960cca786e881df59728831a45810f743d8f141ef0449f237098d1b7b06"
+    },
+    {
+      "id": "menu",
+      "file": "menu.png",
+      "profile": "synthetic-menu",
+      "role": "play",
+      "caption": "戦術メニューで照準を選ぶ場面",
+      "sha256": "a23fecd5cc549f5f0d6327d47c4d34344c5f3e08dec6160e4d137ada7516526b",
+      "framebuffer_sha256": "8e037074d22bcc194d7d676e1560502d56743dc5cb39765e5e67990f132c008d"
+    },
+    {
+      "id": "goal",
+      "file": "goal.png",
+      "profile": "synthetic-all-sectors",
+      "role": "goal",
+      "caption": "20区画すべてを突破する",
+      "sha256": "5f8ecaf220b30f2faf6215271cb89e2af32c061a005a38e4896f85b54938af46",
+      "framebuffer_sha256": "de098bad3406073e56f1752552713c4435271fdf08444ce5948ad74c7625f738"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 5.3,
+    "frames": 158,
+    "frames_sha256": "a61224e850388cd2b0e3f825c4e1cfa18d48405bb27a3735ad6d4a23c51e433b",
+    "pcm_sha256": "9fe72b9c92a24cad7ea4d278540507cc86d62825fa431f3a6fdeb05ec4d4a683",
+    "sha256": "63504b5973c07867b1b72de021e0aac6094dfa3d1a4dd98be55e9b8668dc3f84",
+    "caption": "最初の区画FIRST CONTACTを突破する（11行動、等速）"
+  }
+}

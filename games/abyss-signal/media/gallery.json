@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "d04684707905ca0368e2cf24a5af9a58a10810869461cfd04279afd14c871712",
+      "framebuffer_sha256": "03879e3eb9a487d1b50ca47db495e544ade0d00cbc36b52d0e3a14f006379295"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-sonar",
+      "role": "play",
+      "caption": "ソナーの走査線が視界を横切る場面",
+      "sha256": "0b59c5fdaa9b579e91cfa2d2f2355c68ead59171b143794bfba375e5b9bbbe58",
+      "framebuffer_sha256": "1a73cd6c565fd888229db62afdc0d62239d3673161411a709d09c0aa52ce6b9e"
+    },
+    {
+      "id": "photo",
+      "file": "photo.png",
+      "profile": "synthetic-first-site",
+      "role": "play",
+      "caption": "最初の遺構LOST RELAYの観測画面",
+      "sha256": "5c9f7dd9c50407466d12d3e82acd4c87a4d83f88cb73f2cd4f21f8d65128fc21",
+      "framebuffer_sha256": "8a87ec6c65e43b95a00ebb7fb223cf94014aefce601c71ac2b072a71dfdd2994"
+    },
+    {
+      "id": "goal",
+      "file": "goal.png",
+      "profile": "synthetic-survey",
+      "role": "goal",
+      "caption": "5地点を記録して基地へ帰還する",
+      "sha256": "a6be8af27151d0735762381f96dc041b352b5ae5efb927bb3d040265de1450c5",
+      "framebuffer_sha256": "98f08ddff34d2a4ab625f76cc47743b65aefb164c6e3b6d7f988542d6ed0c0af"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-survey",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 34.5,
+    "frames": 1034,
+    "frames_sha256": "6a3598436177c1167ebaeef6b8c0d2d0cdb9faf5904431228067216febf43eff",
+    "pcm_sha256": "c2b6fbd37d54ae08a19a5498f8f973a43e84887ebefb0bb64281c70e7344545e",
+    "sha256": "40f14fad07652d13787685c4d6aacd782ff9a318e7a1b60560c2dc8f6333dea5",
+    "caption": "5地点を記録して基地へ帰還する（117行動、等速）"
+  }
+}

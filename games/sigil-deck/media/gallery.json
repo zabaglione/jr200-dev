@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "bafc3cbf65ec7d5919bd66baae16164acb3e49eacdbe197bc73babb45e41514f",
+      "framebuffer_sha256": "46645cb27cff7b99f0d542409e1dead856e879f0fa208bf80f2eb68eda68c18e"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-strike",
+      "role": "play",
+      "caption": "STRIKEで敵に斬りつける場面",
+      "sha256": "81e987d5d5f1f295efcb47c8f892e48bf10b5368389b619f368dcea11edf7a51",
+      "framebuffer_sha256": "31deb853b5f20a1f22dccf808bea39006f57a04c84333db626a192b10dbe6ec9"
+    },
+    {
+      "id": "reward",
+      "file": "reward.png",
+      "profile": "synthetic-first-win",
+      "role": "play",
+      "caption": "勝利後に3枚の報酬から選ぶ画面",
+      "sha256": "dbf83f3ce4286d6c8353e44bdf328386351dd87e6ba56e195ece8769635ecd77",
+      "framebuffer_sha256": "776f09267368b036ab0cbd82565d7d95f9f894d4d888f2582ccb246361605839"
+    },
+    {
+      "id": "goal",
+      "file": "goal.png",
+      "profile": "synthetic-victory",
+      "role": "goal",
+      "caption": "10戦を勝ち抜いた結果画面",
+      "sha256": "b6a217cb72a6394b70d7fc578f45c7efa9de8eede7054a0a5ee4bc68e92e0a83",
+      "framebuffer_sha256": "3d6975b01292c11863945e25fb756a39b717a8da123bfe4ad9d8f1dc6b858b46"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-win",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 10.4,
+    "frames": 312,
+    "frames_sha256": "985266b0b89483150f6bb59667ad8c1e09a99fda04f874d2d2ef733e96208d9f",
+    "pcm_sha256": "e7455fe4f52f935b225fa024dd9a6a7c65d8f888849680262119c3e4f013a3f5",
+    "sha256": "4742339007b22830e3954c858150e02e78611cfad79b77f1221259c62ca4d039",
+    "caption": "最初の敵ASH WRAITHに勝ち、報酬を選ぶ画面へ（等速）"
+  }
+}

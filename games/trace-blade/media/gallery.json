@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "scenes": [
+    {
+      "id": "title",
+      "file": "title.png",
+      "profile": "synthetic-title",
+      "role": "title",
+      "caption": "タイトル画面",
+      "sha256": "6901d9a8769a765307b9ae3fefa318e34524779ace3aa481e691920c754bade5",
+      "framebuffer_sha256": "72da7900b1f65aeb2fae1b381da830376dd69350141e3484dd75bcb5618015ef"
+    },
+    {
+      "id": "play",
+      "file": "play.png",
+      "profile": "synthetic-cut-play",
+      "role": "play",
+      "caption": "計画した経路を刀が走り、標的を斬る場面",
+      "sha256": "9cb7cf64bbc658303b8d281fea962a87c56ce6d5dcd1b5ee475d156dcec587ed",
+      "framebuffer_sha256": "233cacd02b3cf5e2d2a93636b21ca648ecc0673d30fa66ccd6fef84f187a3d1c"
+    },
+    {
+      "id": "plan",
+      "file": "plan.png",
+      "profile": "synthetic-plan",
+      "role": "play",
+      "caption": "経路を計画している場面（通った標的に四隅の印）",
+      "sha256": "d765b6b327d468b0400555b8e597313503252d10bae3f02b37a01c3c12d2f0c6",
+      "framebuffer_sha256": "4d1ad137bca9895c907c053eccf112b73e1c130042f0b162b6aaf15f52585181"
+    },
+    {
+      "id": "clear",
+      "file": "clear.png",
+      "profile": "synthetic-first-clear",
+      "role": "goal",
+      "caption": "全標的を斬って1つ目の部屋を突破する",
+      "sha256": "fd2a2c1006906ae73a6fb60f727aedc01c8ac88cecc55e6440beccdc640941f4",
+      "framebuffer_sha256": "59f4f62400b7032e4aba95e1365c3f9db3ac44c23c37b01a82099547c939b86e"
+    }
+  ],
+  "video": {
+    "file": "goal.webm",
+    "profile": "synthetic-first-clear",
+    "fps": 30,
+    "speed": 1.0,
+    "seconds": 5.0,
+    "frames": 149,
+    "frames_sha256": "bad75932fe923c9df85319d8317017dc76294c0b58d04917d28f7ace3d641f91",
+    "pcm_sha256": "da6d8d5d1b37a950cd6d6a38e8dcf804c2e1017b32fe70dd2957c100b06c74cf",
+    "sha256": "5f9496e390d6177dd1ea82fa14e4ed16906fcd32068b050456a8243c173c82c9",
+    "caption": "1つ目の部屋の経路を計画して斬る（等速）"
+  }
+}
