@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで光線が放たれる前の場面",
-      "sha256": "c704291098ce2dcd5964e171bf6b39561fc64fde924a10f66126a6508c8a198a",
-      "framebuffer_sha256": "be287f6febb0c5512e003a32d8165bd6e50ad258e5c25529999358e31a33d558"
+      "sha256": "776c6c594fb65248a9abc5cd7a48da8397924c4be0edef8ed67859939203fb23",
+      "framebuffer_sha256": "d100e130088175522811f9ffd3380de0cfce3be28fb674da597aca4c57ff8afb"
     },
     {
       "id": "clear",
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 23.2,
     "frames": 696,
-    "frames_sha256": "d41d85baa8f88e28c097bf32f4444ac94b336319e0943dcb8c151bd53f1a6e93",
-    "pcm_sha256": "e95053b12326a3d6e2c5eae034bf5eec6b368a05422b51679519778c7b9f1e88",
-    "sha256": "828c999e53cc09c6f77f722e4fec44a66b45755ab6640d8a795ff8156aed4a6c",
+    "frames_sha256": "7fdc9f37741d555a2ad041fb7f2e08287dfed5d4bebe9b63939bf50d27fa6e6b",
+    "pcm_sha256": "24d854abca176f9f21ebc650be98466508e2d43192d25ee6a0270ee66814df00",
+    "sha256": "f91730d42b28aa73d54c6e943307b82e6fd7fe857b1a4d477e6a153026553468",
     "caption": "1つ目の宙域の自動デモ（宝石を取り続けて金の軌道）"
   }
 }

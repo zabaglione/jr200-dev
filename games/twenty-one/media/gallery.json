@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 54.0,
     "frames": 1621,
-    "frames_sha256": "bb965782bdbed5ff3e97030c0f85e91c51aab29387f036284a66e1fffa957f16",
-    "pcm_sha256": "5cda85f9678320dc3cfc34ed79c5d2c6c2c6a6e516afb7e0e9d41deb28ee5ea7",
-    "sha256": "b82c755ee244cefa8b42eaa2d0f20e507dcac40c5aabc36890d4d28be487333a",
+    "frames_sha256": "b818caac3f52b6fe1ad1b4095ad9e337908eb895abd0c6577c992b642fcacb14",
+    "pcm_sha256": "f7b7370973d50e3e93db128a2ae2da2221a30208be5035c515a12208f1e4c2b4",
+    "sha256": "99b898f598baabb92728807613bbf25255f674c5cfe3d2aea573c72475169c06",
     "caption": "7回の勝負で持ち金を12以上にするまで"
   }
 }

@@ -16,8 +16,8 @@
       "profile": "synthetic-cut-play",
       "role": "play",
       "caption": "計画した経路を刀が走り、標的を斬る場面",
-      "sha256": "9cb7cf64bbc658303b8d281fea962a87c56ce6d5dcd1b5ee475d156dcec587ed",
-      "framebuffer_sha256": "233cacd02b3cf5e2d2a93636b21ca648ecc0673d30fa66ccd6fef84f187a3d1c"
+      "sha256": "0f7832b209760364d63b2cef022e24cefaee1fb46c7c08ed925d41a176610178",
+      "framebuffer_sha256": "89a8b4e17bf3b9dee77cb4c2bf8e4700de3682658bacb6779fd96befa7c60e69"
     },
     {
       "id": "plan",
@@ -45,9 +45,9 @@
     "speed": 1.0,
     "seconds": 5.0,
     "frames": 149,
-    "frames_sha256": "bad75932fe923c9df85319d8317017dc76294c0b58d04917d28f7ace3d641f91",
-    "pcm_sha256": "da6d8d5d1b37a950cd6d6a38e8dcf804c2e1017b32fe70dd2957c100b06c74cf",
-    "sha256": "5f9496e390d6177dd1ea82fa14e4ed16906fcd32068b050456a8243c173c82c9",
+    "frames_sha256": "4a2becb7cb07b7ab2272a02c4522898e16933fcdac16ef20ddaab474760766e0",
+    "pcm_sha256": "60e5ee1672fd8a20ee2cabafbc7938bed23e434d0b3a5bd5847481a5de6af2d4",
+    "sha256": "cce278ac5d788748150665bf88be83d4485866584c6465b119db73c02310a6a7",
     "caption": "1つ目の部屋の経路を計画して斬る（等速）"
   }
 }

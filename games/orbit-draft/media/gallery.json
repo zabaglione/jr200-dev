@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 12.5,
     "frames": 374,
-    "frames_sha256": "89b8d45075af1b312c7e871143ea120069eae536dd6c5266309db5b1c405a49a",
-    "pcm_sha256": "254d31c073a11be2fb2496a3316798a47bbc22eabf8582664ba289882f7ca5ff",
-    "sha256": "c58a92830ad5de8a5d7e0fc52df3b742105ccdf83b61732f7377562419e7ad9c",
+    "frames_sha256": "bc61a09982241171174db9ac02117392c8c42ab2bc82a52af842632898edbe22",
+    "pcm_sha256": "942fd393a49457811df0b30aa0b269e30a4039a3a73977f71160065d1d07cdbe",
+    "sha256": "88cdb5cd80cf98030e4dfbfd83e6a1f86cf9e24ec11fbe2fa7f7e45eb13e8c0e",
     "caption": "札を落として3つ並べ、1ラウンド目の目標に届くまで"
   }
 }

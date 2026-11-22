@@ -17,7 +17,7 @@
 | `keys_ext.inc` | `keys.inc`と同じ操作1〜6に加え、作品の`game_key_table`（小文字キーと操作番号の組）で操作7以上を返す | `keys.inc`とは併用しない。上流の操作7=X、8=F、9=Q、10=E、11=Z、12=Cに合わせる |
 | `keyscan.inc` | キーボードMCUのKTEST/KACK走査で「今押しているキー」を読む | 手順は固定エミュレータのMN1544実装に基づく。状態は`JR_RT+50..51`でcopy用領域と分離。ROMなし実行では起動時にfont転送を読み捨てる |
 | `keyrepeat.inc` | `keyscan.inc`の現在キーから押下・保持リピート・離上eventを作る | `jr_keyscan_init`後に初期化し、一定周期でpoll。遅延4回・周期2回はpoll回数であり実時間ではない |
-| `gfx.inc` | RAM影画面への文字・数値・2×2 tile描画と一括転送 | `JR_SHADOW`はpage境界。転送中はSを使用 |
+| `gfx.inc` | RAM影画面への文字・数値・2×2 tile描画と一括転送（8マスごとに文字→属性の順） | `JR_SHADOW`はpage境界。転送中はSを使用。`JR_RT + 46`と`56..63`を使用 |
 | `font.inc` / `font_data.inc` | 自作5×7字形を`$D100-$D2FF`へ設置 | メーカーFONTを使わない。終了時に元へ戻す |
 | `pcg.inc` | user pattern（code 0x00-0x1F／0x80-0x9F）の転送 | attribute mode 0x40で表示 |
 | `frame.inc` | 約1/60秒のbusy-wait frame | 固定エミュレータのCPU clock基準 |

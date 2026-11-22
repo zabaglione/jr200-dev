@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 23.8,
     "frames": 713,
-    "frames_sha256": "faa8d82062b0754cf53acfc1c1d57e331265860e5ec8808191dcbddbdcfcce83",
-    "pcm_sha256": "72a25b6101616ed90a279052517b5863de08e03e5d200d514a038e5660ebb999",
-    "sha256": "329259eee095ab117f04f0c05ef00776248253a2dec5e27e6c9afbefe260675e",
+    "frames_sha256": "461584c96f273a21d36679469c12e37b598e17c992a4bbaae14e4f739f76cb2f",
+    "pcm_sha256": "d91161a0b45fa98160bc2518c5742ef1b97b2cb345ce7b2ae77be8def5b1b483",
+    "sha256": "5da65349065c17f621fb7ffffc7af55bab4020c37dbbf122d148d62b8a5565bd",
     "caption": "3回の手札で引き直して48点を取るまで"
   }
 }

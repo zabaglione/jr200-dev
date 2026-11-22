@@ -211,7 +211,7 @@
           "memory": {
             "stage": "01"
           },
-          "framebuffer_sha256": "570c679bc9660ae18b2a9d2b36490561c8ac9606fadf62e47458e43f97e627dc",
+          "framebuffer_sha256": "bcf702856ce3c09f71e003eafe7d4dd455ba5288ea47089a9ad05c3620da37dc",
           "pcm": null,
           "cassette": null
         }

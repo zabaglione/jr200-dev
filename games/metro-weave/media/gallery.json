@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで分岐を切り替える場面",
-      "sha256": "c9266f5f21ee433e2fa67d5d08cb2310ba673b2b4319450d68a50b07077de536",
-      "framebuffer_sha256": "1ca826fd4544bbb8276eeb01ceb6c624aec1c28ee42c6222d6e87eea31611bf9"
+      "sha256": "1c9deb5d66766099757a31cf0967e331a29248818446c5a8894ec1dc5748150f",
+      "framebuffer_sha256": "cfa553fcd71426381a451c2c3eb2b0ea8e09094b67bbe320eb23af7151105c9a"
     },
     {
       "id": "clear",
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 24.7,
     "frames": 741,
-    "frames_sha256": "89e4554b0524dd1da58917dffdbde92aa2e4286ad302726b3942d311f1d4bc52",
-    "pcm_sha256": "5ace78aa627147f85369339cb22816f856e46985a0813ca7a6f6fbd8dcf1a870",
-    "sha256": "9e85e301609f88aaeca663d00c09f75e0723bedaab6032de50204e76e82bd943",
+    "frames_sha256": "c00a8ff88132811acefe4a19d9aac2d54e6130c15717cf171d9b571e55a34112",
+    "pcm_sha256": "a51b6596a423664aa85b16129b305ac4638a1e65d34f92ef14c80d8958c94138",
+    "sha256": "6b85161481d2c8e3784b4098bee3bac6caa9e6c2bc4688c147f955b2cf250f87",
     "caption": "1つ目の勤務の自動デモ（8本を正しい駅へ）"
   }
 }

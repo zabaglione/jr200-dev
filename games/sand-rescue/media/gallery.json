@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで水槽に水がたまる場面",
-      "sha256": "d97e6678801659301ec2bdddbf57586ed3ab213db519d0478e78341ac3130add",
-      "framebuffer_sha256": "56a2be6169fd63e8bcae7f80352facc451968df2628dfb1fdfbf3f5677d72a40"
+      "sha256": "3502b79094f5e5df6e179ad9ad6fe906435c1c6199ceea42203d9b91fdeacb46",
+      "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749"
     },
     {
       "id": "clear",
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 14.6,
     "frames": 438,
-    "frames_sha256": "aae8d41f5b10382e81c410b4730ad102cded8ebb6cf8d7889650cb46ad954989",
-    "pcm_sha256": "9ea652434014186ae0f51d28c9657b92f1909ad1a5cd751f69ea907e4c4849b0",
-    "sha256": "cd6a0dd19c572bb7ade9c64a274c969df938d29c443d57f2b96a5545022e3a46",
+    "frames_sha256": "59fd9b452b27918229918f372e30e486dafaa907a16e3a16696a0fdac7844a0e",
+    "pcm_sha256": "761a8a7e9455f343f9874055f72276ca3295d484521105a8194e3550b5778171",
+    "sha256": "c6b81b1b68c9fcc4caf491bd243d524f768674fa3930d9a87c7b297c760220f2",
     "caption": "1面の自動デモ（水をためて流し目標点へ）"
   }
 }

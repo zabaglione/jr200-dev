@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 8.3,
     "frames": 248,
-    "frames_sha256": "46142f5754263919ef53385eb8f243089d4d5c0532e7999b75ac0f76335fd28c",
-    "pcm_sha256": "892b5259b1516cf2c8c3cd2194f1a7da3415260cd3d9a62c2bcd0ac5d5d9d7c9",
-    "sha256": "262a59527d9222ed21c3b7f0c524cdd18ee83365265b95b3325bec75d9c5365f",
+    "frames_sha256": "001b3673b4a7dc2fab0c875ab18e1abb9e3eae5b100798963bd846ff4ab7a442",
+    "pcm_sha256": "8af41e902932e9ea5740e74342d5e5bf8d9cb21c06b83a728292635c076be8cf",
+    "sha256": "d96d02d3575cd6f8f9e0898c9f62f16e2a34837b93d3a76198968736690ee61d",
     "caption": "1つ目の決闘の自動デモ（受け流しで鎧を削りきる）"
   }
 }
