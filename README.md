@@ -4,7 +4,11 @@ JR-200向けゲームの開発ルール、共通ルーチン、サンプル、�
 エミュレータ本体は [jr200-web-emulator](https://github.com/zabaglione/jr200-web-emulator) で管理します。
 アセンブラは既存の [jrasm](https://github.com/ypsitau/jrasm) を外部ツールとして利用し、独自版を開発・同梱しません。
 
-**7作品の初版配信とWiki公開を確認しました。** 要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
+**52作品を公開カタログに登録しています。** 45の移植作品は0.1.0として
+[固定パッケージ](https://github.com/zabaglione/jr200-dev/releases/tag/jr200-ports-2026-11-22)を用意し、
+[作品一覧](https://github.com/zabaglione/jr200-dev/wiki/All-Games)からCJRとブラウザ起動へ進めます。
+
+初回7作品の公開にあわせて、要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
 合成fixtureに加え、JR-200ルール、プロジェクト契約、最小CJRテンプレート、選択的CI、
 固定エミュレータrunner、画面／入力／ジョイスティック／音声／待機module、6つのsample、最初のゲーム
 `SIDE CATCH`、JR-100からカラー移植したローグライク`RELIC DIVE`、固定package、
@@ -53,7 +57,7 @@ python3 tools/ci_plan.py --changed README.md
 
 これは対象選択の計画表示です。ビルドやテストの実行、成功キャッシュによる検証省略は行いません。
 `templates/minimal`、`samples/`、7作品をCI対象へ登録し、共有SDK変更が
-利用targetだけへ波及することを検査します。catalogの7作品は固定済みの公開版です。
+利用targetだけへ波及することを検査します。catalogは固定済みの公開版を指します。
 
 最小テンプレートはROMやFONTなしで構造検査できます。CJR生成には固定jrasmを指定します。
 

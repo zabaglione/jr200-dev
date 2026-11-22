@@ -422,6 +422,8 @@ class WikiGenerationTests(unittest.TestCase):
             self.fixture.root, None, False, expected_commit=current_commit)
         self.assertIn(item['wiki']['play_url'],
                       linked_files['Game-side-catch.md'].decode('utf-8'))
+        self.assertIn('/games/side-catch/0.1.0/side-catch.cjr)',
+                      linked_files['Game-side-catch.md'].decode('utf-8'))
         item['wiki']['play_url'] += '&launch=1'
         self.fixture.write_catalog()
         launched_files, _ = render_pages(

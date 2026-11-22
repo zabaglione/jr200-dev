@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "abyss-signal",
   "title": "ABYSS SIGNAL",
-  "version": "0.1.0-dev",
+  "version": "0.1.0",
   "summary": "Pilot a small submarine through a dark sea: record five sites by sonar and return to base before oxygen or hull run out.",
   "genre": "exploration",
   "license": "MIT",
@@ -25,11 +25,11 @@
     "hardware": "not_run"
   },
   "release": {
-    "status": "draft",
+    "status": "verified",
     "sdk_contract": 1,
     "runner_contract": 1,
     "minimum_runner_version": "0.3.0",
     "wav": "not-required",
-    "publication": "not-published"
+    "publication": "published"
   }
 }

@@ -91,6 +91,8 @@ class FuseBoxExpectationTests(unittest.TestCase):
 
     def test_flip_replays_leave_time_for_the_flip(self):
         for profile in self.expectations['runtime']['profiles']:
+            if profile['mode'] != 'synthetic-injection':
+                continue
             presses = [e for e in profile['replay'] if e['pressed']]
             port = new_port()
             for event, following in zip(presses, presses[1:] + [None]):

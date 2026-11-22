@@ -22,7 +22,7 @@ MAX_CANDIDATE_BYTES = 10_000_000
 TEXT_LIMIT = 2_000_000
 CODE_SUFFIXES = {'.asm', '.inc', '.mjs', '.py'}
 SUPPORTED_LICENSES = {'BSD-3-Clause', 'MIT'}
-# Exact gallery files reviewed for the seven-game publication. Adding a new
+# Exact gallery files reviewed for publication. Adding a new
 # video or changing its bytes requires a new content/provenance review.
 REVIEWED_GALLERY_VIDEOS = {
     'games/side-catch/media/goal.webm':
@@ -39,6 +39,96 @@ REVIEWED_GALLERY_VIDEOS = {
         'a6f46d240e1030d4d182579a9d8a0f775dd94a9ff47ef63b2bf98bc76f66a3c9',
     'games/brick-pulse/media/goal.webm':
         'f288f5c24b133b403b01640c628725a122f8694e19c517b05d29dfa5d6e0ccf8',
+    'games/abyss-signal/media/goal.webm':
+        '3ab3f8f3580697bec87d39172e495f0dae4d4daab76e9feace168efe4ace9278',
+    'games/auction-house/media/goal.webm':
+        'c65205053ef36b2707266a48cd8b248fe6c9fcf19c736e1aa4f56c5aea8793ec',
+    'games/cargo-balance/media/goal.webm':
+        'cf04b241ba837d0b146a38ae06952a05711172b19281fcccb90562ac34de089e',
+    'games/chain-suit/media/goal.webm':
+        '5da65349065c17f621fb7ffffc7af55bab4020c37dbbf122d148d62b8a5565bd',
+    'games/chrono-breach/media/goal.webm':
+        '0ec9e527f96d7f7d7483cfe6590b81b651aba33ebf7a086ad827aa3d51efa3d3',
+    'games/compass-rose/media/goal.webm':
+        'ee22fdebb8f24880e1bb65dd2e46caf39ed46e49799635fe8b4f3b356edd551d',
+    'games/dice-relic/media/goal.webm':
+        '6fb636e9d4a3bf04651f99548783be43eb3bcd8ee11e6234794c5401a1eab491',
+    'games/echo-parry/media/goal.webm':
+        'd96d02d3575cd6f8f9e0898c9f62f16e2a34837b93d3a76198968736690ee61d',
+    'games/five-forge/media/goal.webm':
+        'ed6b6fe1631647156f96fc13d6603a63e7907b0546b7bf1453474055f356fdf8',
+    'games/frost-steps/media/goal.webm':
+        'c6b9185bfdeb65badd35f62fc9f7fbd74c1430a7fa5c6f93554909d92702aadb',
+    'games/fuse-box/media/goal.webm':
+        '096ee0b506eed7670b53fe4d093f39fb8d68e3da5a333ede40ddbbbe5976f235',
+    'games/gate-runner/media/goal.webm':
+        'bf310951316fe665a7da157747967d4dcf73ca695d4d904ce4b1a671c779877e',
+    'games/glyph-shift/media/goal.webm':
+        'b5b4b923c12251ca04c6947c07061d6c151945b28e5973db4245db75bbd37634',
+    'games/gravity-well/media/goal.webm':
+        '4a3ee535bc30da0db5921f74347cc3eb9dcda6c5fcaf0684a94dfd785bdfd72d',
+    'games/iron-script/media/goal.webm':
+        '1cada940c8674897d51f1904fce0efad689e1ac421ceb09ac528b6c5e234d46d',
+    'games/loop-ten/media/goal.webm':
+        'baf76ce820c291b7d17e5a320b5e229224073d90189a5c110d709a059745702b',
+    'games/lunar-touchdown/media/goal.webm':
+        '9373ae2bfcfc01008e7bb5165dd04732fcfe421b987ddc5c1571216d7226b6a7',
+    'games/magnet-vault/media/goal.webm':
+        'fff73b5f0e5dd97718152715091a830f0c0cbff4076f769ac6e58b9e3a949310',
+    'games/memory-mosaic/media/goal.webm':
+        '05dab94115e01943292a94b365b95eebc4e58d78a3fbf766bc5742e070bfd2ab',
+    'games/metro-weave/media/goal.webm':
+        '6b85161481d2c8e3784b4098bee3bac6caa9e6c2bc4688c147f955b2cf250f87',
+    'games/mirror-relic/media/goal.webm':
+        '85c62d86924b5a77367cd2907e6fd8702c7a415f70c2d473914b93b5e5fa0e64',
+    'games/night-swarm/media/goal.webm':
+        '0384651508e166b0763e603dc0a3d8d81dc1223bc49cb68789cd0979e14e133c',
+    'games/number-vault/media/goal.webm':
+        '819b7c30eb669f82a4f992b965676981fc3d6e4f19fc0a30ba22b38e3333bfba',
+    'games/orbit-dodge/media/goal.webm':
+        'f91730d42b28aa73d54c6e943307b82e6fd7fe857b1a4d477e6a153026553468',
+    'games/orbit-draft/media/goal.webm':
+        '88cdb5cd80cf98030e4dfbfd83e6a1f86cf9e24ec11fbe2fa7f7e45eb13e8c0e',
+    'games/orchard-days/media/goal.webm':
+        'c76157602c6a4ef1bd424eaa5c446f6998242835024d7e5e2f849ced4082420c',
+    'games/peg-garden/media/goal.webm':
+        '761f0dbe0d9f0fa9dcc4bb3b38b1b9552812dbcc9dac5c3fefd64ec3160fffd1',
+    'games/pendulum-port/media/goal.webm':
+        '4be19d9891fcb9159e787e744869e39b040f06d53038ae6688f57404daffb531',
+    'games/phase-pairs/media/goal.webm':
+        'a879709a332555e5546ec9b760441528e906ba13403f45ffa2d9409b1987460f',
+    'games/potion-path/media/goal.webm':
+        '7f20091484c632ca6fbcec2eab420a2cd81332ae3b95d45326a2b057e2d51f10',
+    'games/prism-trace/media/goal.webm':
+        'bb6e355891219199e22e1c3be0da82d812e514e9456406750a4e53fa0b2bd4d0',
+    'games/quiet-route/media/goal.webm':
+        'd0fed30e7afa59e9c1841b871ef783bb9b38970d3d44b50118b5f3f8e249fd51',
+    'games/ribbon-snake/media/goal.webm':
+        '848c63cedaa2fbc57ec2890602c85be03e3dcc07e0f1137fb1a0ff455eea554d',
+    'games/ruin-lexicon/media/goal.webm':
+        '8125687fccd95f65299b31b99a68ff924f49190ab01a9a2fccb3385efd7650da',
+    'games/sand-rescue/media/goal.webm':
+        'c6b81b1b68c9fcc4caf491bd243d524f768674fa3930d9a87c7b297c760220f2',
+    'games/seed-merge/media/goal.webm':
+        '27c77aec18b29267a56db3a9b2897d5f25459bb0defdf421b0ddbd895d97549a',
+    'games/shadow-archive/media/goal.webm':
+        '0799fbf6e49d2adbded5e26178794c947188ccf86ea4a5b0c16ab8ab89e3898a',
+    'games/sigil-deck/media/goal.webm':
+        '2b73cb76091717fb51d47760567ed9f5bca52624bd62ccbb1ecbe2523ca6fc8a',
+    'games/star-lance/media/goal.webm':
+        '9ac19d881a1766e73e9e4832f4b719e3715cef84c35852068d1bdee6b58eeff3',
+    'games/stone-balance/media/goal.webm':
+        '1754b175771311e50b766a68d6be3dcd2f7d8158d398d6faf683954c6339ab7b',
+    'games/tidal-nets/media/goal.webm':
+        '270c1a2136d2c50ac90a5de345fd020e120c8f183ccd002985e73e1a5541dc99',
+    'games/tide-bridge/media/goal.webm':
+        '5c4b46ebe0c48c9f21fcd43266bb9b0486c81e10d582c286fb19d015ba03978c',
+    'games/trace-blade/media/goal.webm':
+        'cce278ac5d788748150665bf88be83d4485866584c6465b119db73c02310a6a7',
+    'games/twenty-one/media/goal.webm':
+        '99b898f598baabb92728807613bbf25255f674c5cfe3d2aea573c72475169c06',
+    'games/word-foundry/media/goal.webm':
+        '8a058c27764145c6b4814cc881dfc552e0e9d950f26ae59281f6a953e53f4dd2',
 }
 FORBIDDEN_SUFFIXES = {'.bin', '.cas', '.cjr', '.key', '.p12', '.pem', '.pfx',
                       '.rom', '.tap', '.wav', '.zip'}

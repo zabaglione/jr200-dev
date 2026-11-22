@@ -59,7 +59,7 @@
    "priority": "P2",
    "issue": 62,
    "jr200_project": "games/chrono-breach",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "sigil_deck",
@@ -94,7 +94,7 @@
    "priority": "P2",
    "issue": 62,
    "jr200_project": "games/sigil-deck",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "abyss_signal",
@@ -126,7 +126,7 @@
    "priority": "P2",
    "issue": 62,
    "jr200_project": "games/abyss-signal",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "trace_blade",
@@ -158,7 +158,7 @@
    "priority": "P2",
    "issue": 62,
    "jr200_project": "games/trace-blade",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "dice_relic",
@@ -191,7 +191,7 @@
    "priority": "P2",
    "issue": 62,
    "jr200_project": "games/dice-relic",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "loop_ten",
@@ -224,7 +224,7 @@
    "priority": "P2",
    "issue": 62,
    "jr200_project": "games/loop-ten",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "iron_script",
@@ -259,7 +259,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/iron-script",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "chain_suit",
@@ -287,7 +287,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/chain-suit",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "quiet_route",
@@ -315,7 +315,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/quiet-route",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "circuit_works",
@@ -403,7 +403,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/night-swarm",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "lumen_cross",
@@ -466,7 +466,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/magnet-vault",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "frost_steps",
@@ -501,7 +501,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/frost-steps",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "prism_trace",
@@ -532,7 +532,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/prism-trace",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "tide_bridge",
@@ -560,7 +560,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/tide-bridge",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "glyph_shift",
@@ -595,7 +595,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/glyph-shift",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "gravity_well",
@@ -630,7 +630,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/gravity-well",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "seed_merge",
@@ -657,7 +657,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/seed-merge",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "orbit_draft",
@@ -687,7 +687,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/orbit-draft",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "five_forge",
@@ -715,7 +715,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/five-forge",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "corner_crown",
@@ -772,7 +772,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/stone-balance",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "memory_mosaic",
@@ -801,7 +801,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/memory-mosaic",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "twenty_one",
@@ -829,7 +829,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/twenty-one",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "orbit_dodge",
@@ -859,7 +859,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/orbit-dodge",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "gate_runner",
@@ -892,7 +892,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/gate-runner",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "brick_pulse",
@@ -958,7 +958,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/star-lance",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "ribbon_snake",
@@ -988,7 +988,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/ribbon-snake",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "lunar_touchdown",
@@ -1018,7 +1018,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/lunar-touchdown",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "echo_parry",
@@ -1048,7 +1048,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/echo-parry",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "pendulum_port",
@@ -1078,7 +1078,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/pendulum-port",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "ruin_lexicon",
@@ -1108,7 +1108,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/ruin-lexicon",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "shadow_archive",
@@ -1136,7 +1136,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/shadow-archive",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "compass_rose",
@@ -1164,7 +1164,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/compass-rose",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "mirror_relic",
@@ -1192,7 +1192,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/mirror-relic",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "orchard_days",
@@ -1220,7 +1220,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/orchard-days",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "tidal_nets",
@@ -1248,7 +1248,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/tidal-nets",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "potion_path",
@@ -1278,7 +1278,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/potion-path",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "auction_house",
@@ -1307,7 +1307,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/auction-house",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "metro_weave",
@@ -1338,7 +1338,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/metro-weave",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "cargo_balance",
@@ -1366,7 +1366,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/cargo-balance",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "peg_garden",
@@ -1393,7 +1393,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/peg-garden",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "number_vault",
@@ -1422,7 +1422,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/number-vault",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "phase_pairs",
@@ -1458,7 +1458,7 @@
    "priority": "P2",
    "issue": 60,
    "jr200_project": "games/phase-pairs",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "fuse_box",
@@ -1486,7 +1486,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/fuse-box",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "sand_rescue",
@@ -1516,7 +1516,7 @@
    "priority": "P2",
    "issue": 61,
    "jr200_project": "games/sand-rescue",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "word_foundry",
@@ -1544,7 +1544,7 @@
    "priority": "P2",
    "issue": 59,
    "jr200_project": "games/word-foundry",
-   "status": "ported-dev"
+   "status": "ported"
   },
   {
    "jr100_directory": "relic_dive",

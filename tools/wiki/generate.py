@@ -893,6 +893,9 @@ def render_game(entry: dict[str, Any], genre: dict[str, str]) -> str:
         lines.extend(['パッケージは公開していません。手元でbuildしたCJRを手動で読み込みます。', ''])
     else:
         lines.extend([f'[固定パッケージをダウンロード]({entry["package"]["release_url"]})', ''])
+        if entry['wiki']['play_url'] is not None:
+            game, version = entry['id'], entry['version']
+            lines.extend([f'[CJRをダウンロード]({EMULATOR_URL}games/{game}/{version}/{game}.cjr)', ''])
     if entry['tier'] != 'development':
         if entry['wiki']['play_url'] is None:
             lines.extend([f'[Webエミュレータを開く]({EMULATOR_URL})（CJRは手動で選択）。',
