@@ -1174,7 +1174,7 @@ def render_pages(root: Path, packages: Path | None,
     gallery = title_gallery(selected)
     navigation = '[Home](Home) › 全作品'
     if gallery:
-        navigation += ' · [作品情報を見る](#作品情報)'
+        navigation += ' · [作品情報を見る](#user-content-作品情報)'
     files['All-Games.md'] = '\n'.join([
         '# 全作品', '', navigation, '',
         *(['この表示にはローカルプレビューの作品も含みます。', ''] if preview else []),
