@@ -867,6 +867,27 @@ def tier_sections(entries: list[dict[str, Any]], genres: dict[str, dict[str, str
     return lines
 
 
+def title_gallery(entries: list[dict[str, Any]]) -> list[str]:
+    cells = []
+    for entry in entries:
+        image = entry['_title_image']
+        if image is None:
+            continue
+        title = html.escape(entry['_metadata']['title'], quote=True)
+        page = f'Game-{entry["wiki"]["slug"]}'
+        cells.append(f'<td width="33%" align="center" valign="top"><a href="{page}">'
+                     f'<img src="{image}" alt="{title}のタイトル画面" width="320"><br>'
+                     f'{title}</a></td>')
+    if not cells:
+        return []
+    columns = 3
+    cells.extend(['<td></td>'] * (-len(cells) % columns))
+    lines = ['## タイトル画面', '', '<table width="100%">']
+    for index in range(0, len(cells), columns):
+        lines.extend(['<tr>', *cells[index:index + columns], '</tr>'])
+    return [*lines, '</table>', '', '## 作品情報', '']
+
+
 def verification_rows(entry: dict[str, Any]) -> list[str]:
     profiles = runtime_profiles(entry['_project'])
     synthetic = sum(1 for item in profiles.values() if item.get('mode') == 'synthetic-injection')
@@ -1142,24 +1163,22 @@ def render_pages(root: Path, packages: Path | None,
             genre['description'], '',
             *tier_sections(counts[genre['id']], genres, '公開作品準備中'),
         ]).encode('utf-8')
-    rows = ['| タイトル画面 | 作品 | ジャンル | 状態 | 版 | 紹介 |',
-            '| --- | --- | --- | --- | --- | --- |']
+    rows = ['| 作品 | ジャンル | 状態 | 版 | 紹介 |', '| --- | --- | --- | --- | --- |']
     for entry in selected:
         genre = genres[entry['genre']]
         title = entry['_metadata']['title']
         page = f'Game-{entry["wiki"]["slug"]}'
-        image = entry['_title_image']
-        thumbnail = '—'
-        if image is not None:
-            alt = html.escape(f'{title}のタイトル画面', quote=True)
-            thumbnail = f'<a href="{page}"><img src="{image}" alt="{alt}" width="160"></a>'
-        rows.append(f'| {thumbnail} | [{title}]({page}) | '
+        rows.append(f'| [{title}]({page}) | '
                     f'[{genre["title"]}]({genre["page"]}) | {TIERS[entry["tier"]]} | '
                     f'`{entry["version"]}` | {first_sentence(entry["_intro"])} |')
+    gallery = title_gallery(selected)
+    navigation = '[Home](Home) › 全作品'
+    if gallery:
+        navigation += ' · [作品情報を見る](#作品情報)'
     files['All-Games.md'] = '\n'.join([
-        '# 全作品', '', '[Home](Home) › 全作品', '',
-        'タイトル順の一覧です。' + ('この表示にはローカルプレビューの作品も含みます。'
-                           if preview else ''), '',
+        '# 全作品', '', navigation, '',
+        *(['この表示にはローカルプレビューの作品も含みます。', ''] if preview else []),
+        *gallery,
         *(rows if selected else ['公開作品準備中']), '',
     ]).encode('utf-8')
     files['Games.md'] = '\n'.join([
