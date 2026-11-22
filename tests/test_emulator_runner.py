@@ -256,6 +256,24 @@ class LockTests(unittest.TestCase):
         with self.assertRaisesRegex(RunnerError, 'synthetic source'):
             validate_expectations(expectations, 0x1000, 'local-rom-mload')
 
+    def test_startup_delay_moves_game_input_and_preserves_basic_input(self):
+        expectations = json.loads(
+            (self.fixture.project / 'tests/expectations.json').read_text())
+        synthetic, rom = expectations['runtime']['profiles']
+        expectations['runtime']['startup_delay_cycles'] = 240
+        synthetic['replay'] = [
+            {'kind': 'key', 'cycle': 100, 'code': '0x20', 'pressed': True},
+        ]
+        rom['replay_from'] = 'synthetic-ci'
+        rom['replay_offset'] = 6_000_000
+        original = rom['replay'][0]['cycle']
+        checked = validate_expectations(expectations, 0x1000, 'local-rom-mload')
+        self.assertEqual(checked['replay'][0]['cycle'], original)
+        self.assertEqual(checked['replay'][-1]['cycle'], 6_000_340)
+        self.assertEqual(checked['max_cycles'], rom['max_cycles'] + 240)
+        checked = validate_expectations(expectations, 0x1000, 'synthetic-ci')
+        self.assertEqual(checked['replay'][0]['cycle'], 340)
+
     def test_replay_reference_rejects_malformed_source_without_crashing(self):
         source = {'mode': 'synthetic-injection', 'replay': [{'kind': 'key'}]}
         target = {'profile': 'gallery', 'mode': 'rom-cassette', 'max_cycles': 100,

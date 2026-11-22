@@ -11,7 +11,7 @@
         .filename.jr "STAR-LANCE"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x6600
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
 GAME_STATE:         .equ    0x4640
@@ -114,6 +114,7 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init_state:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    14
@@ -962,6 +963,11 @@ sl_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     sl_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -995,6 +1001,7 @@ sl_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    SL_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1198,3 +1205,8 @@ sl_lose_bass:
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

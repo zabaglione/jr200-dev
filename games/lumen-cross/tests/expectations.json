@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "Memory expectations are computed by games/lumen-cross/tests/model.py (upstream rules 2.0.0), not recorded from the emulator; the emulator result must match them. Framebuffer hashes of title/start/first-clear fix the gallery images. Each cross shares its five poses across the affected cells. First-clear ends soon after its final press so the end-of-run PCM sample includes the short sound effect. stack-guard shows the game stack stayed above 0x4f10. The runner drains PCM only at the end, so long runs drop old frames.",
   "runtime": {
+    "startup_delay_cycles": 134338,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -25,7 +26,7 @@
           "memory": {
             "title-pcg": "007f7f706f6f6c6d00fefe0ef6f636b66d6c6f6f707f7f00b636f6f60efefe00"
           },
-          "framebuffer_sha256": "2ce2715b46dcdb6c4c464887de21a99005f1fc449beb076cfc367a674c52cbc2",
+          "framebuffer_sha256": "fd3be30db9932f0ac4baa346dcd5d2aefadc733d9fc826e667ac88ef231e3b65",
           "pcm": null,
           "cassette": null
         }
@@ -8439,7 +8440,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "2ce2715b46dcdb6c4c464887de21a99005f1fc449beb076cfc367a674c52cbc2",
+          "framebuffer_sha256": "fd3be30db9932f0ac4baa346dcd5d2aefadc733d9fc826e667ac88ef231e3b65",
           "pcm": null,
           "cassette": {
             "state": 6,

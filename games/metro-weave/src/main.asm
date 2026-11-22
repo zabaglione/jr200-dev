@@ -117,6 +117,7 @@ start:
 ; when the shift starts, or 0 for the self test and the demo.
 ; seed = origin ^ (37 + level * 17).
 game_init:
+        CLR     [JR200_BORDER]
         LDAA    [JR_AU_VOICE + 1]
         SUBA    [JR_AU_VOICE + 4]
         ASLA
@@ -1064,6 +1065,11 @@ mw_put_route:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     mw_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -1103,6 +1109,7 @@ game_test_draw:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    MW_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1310,3 +1317,8 @@ mw_lose_bass:
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

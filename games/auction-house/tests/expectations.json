@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/auction-house/tests/model.py (upstream rules 3.0.0). The only emulator-derived input is origin, upstream's entropy(): each market start samples the title-song position, logged at 0x4720 (count, values) and fed to the model in order; every other byte is the model's prediction. Each market follows the choices found by plan() for its origin; synthetic-all-markets clears all three. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 136057,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -43,7 +44,7 @@
             "action-pcg": "1c224141221c10084224181818244200",
             "origins": "0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
           },
-          "framebuffer_sha256": "5a7df58f3ccc5c58b8e98db9870493dc25ba82681dd4be7b07a6a97c92031e0a",
+          "framebuffer_sha256": "6b316a91d79f2e6b4745338d158245a43ffec1022952a02c4ddd94e15348bc20",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -2113,7 +2114,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "5a7df58f3ccc5c58b8e98db9870493dc25ba82681dd4be7b07a6a97c92031e0a",
+          "framebuffer_sha256": "6b316a91d79f2e6b4745338d158245a43ffec1022952a02c4ddd94e15348bc20",
           "pcm": null,
           "cassette": {
             "state": 6,

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "Memory expectations are computed by games/hearth-zero/tests/model.py (upstream rules 2.1.0), not recorded from the emulator. synthetic-all-waves survives all three cold waves (twelve nights each); the loss profiles end by cold and by hunger. synthetic-night only fixes a mid-night gallery frame. Replays leave 2.9M cycles for each day. stack-guard shows the stack stayed above 0x4f10.",
   "runtime": {
+    "startup_delay_cycles": 124599,
     "default_profile": "synthetic-first-wave",
     "profiles": [
       {
@@ -25,7 +26,7 @@
           "memory": {
             "pcg1": "00003f409ca2aaa20000f804020202029c403f003f403f000204f800f804f80000000718244442400000e018889442027f40403f00000000fe0202fc0000000001030307070f1f3900008088ccdcf8fc307070783f1f0700fc7c3c7cfcf8e000ff8181ff1010ff81ff0101ff1010ff0181ff1010ff8181ff01ff1010ff0101ff"
           },
-          "framebuffer_sha256": "fca6b63a8f6abfe75a66d5c7fd8c451f11600db33ebef9388b06ed4e7818e765",
+          "framebuffer_sha256": "0e3754e3ef4caa5953a1032b7873f769d981b6b536ac890a44578dce0076fc5c",
           "pcm": null,
           "cassette": null
         }
@@ -2953,7 +2954,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "fca6b63a8f6abfe75a66d5c7fd8c451f11600db33ebef9388b06ed4e7818e765",
+          "framebuffer_sha256": "0e3754e3ef4caa5953a1032b7873f769d981b6b536ac890a44578dce0076fc5c",
           "pcm": null,
           "cassette": {
             "state": 6,

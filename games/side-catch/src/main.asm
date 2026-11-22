@@ -21,7 +21,7 @@ GAME_CELL_RIGHT:        .equ    0xc290
 GAME_GUIDE_LEFT:        .equ    GAME_CELL_LEFT + 32
 GAME_GUIDE_CENTER:      .equ    GAME_CELL_CENTER + 32
 GAME_GUIDE_RIGHT:       .equ    GAME_CELL_RIGHT + 32
-GAME_TITLE_CELL:        .equ    0xc14a
+GAME_TITLE_CELL:        .equ    0xc30a
 GAME_PROMPT_CELL:       .equ    0xc384
 GAME_RESULT_CELL:       .equ    0xc344
 GAME_RESULT_DIGITS:     .equ    0xc34b
@@ -93,7 +93,8 @@ game_error:
         JMP     jr_session_leave
 
 game_setup_round:
-        JSR     jr_screen_clear
+        LDX     game_title_art
+        JSR     jr_title_draw
         LDX     game_title
         STX     [GAME_TEXT_SOURCE]
         LDX     GAME_TITLE_CELL
@@ -246,3 +247,8 @@ return_probe:
         .include "../../../sdk/session.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR200_SCREEN_CODES
+JR_TITLE_ATTRIBUTES: .equ   JR200_SCREEN_ATTRIBUTES
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

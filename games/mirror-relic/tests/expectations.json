@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/mirror-relic/tests/model.py (upstream rules 3.0.0), not from the emulator. Each hall is played with the breadth-first shortest solution from tests/model.py; synthetic-all-halls clears all six. X is the counterclockwise turn (sdk/keys_ext.inc, action 7). synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Walks leave 700000 cycles and turns 1500000 for the flight and relic sparkle.",
   "runtime": {
+    "startup_delay_cycles": 133270,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000001000000000000000000000000000000000000000000000000ff80bfa0afa8a8a8ff01fd05f3131313a8a8afa0bf80ff001313f303fe01ff00"
           },
-          "framebuffer_sha256": "ab5ce9fbefe20f54236f3c421ab6f5ee1f7ddf56c126a3a977ac6477121e614d",
+          "framebuffer_sha256": "56e917d1ae60fe8aeb5467cea35609e03b0036d0a075ac6bf668e1619efe979a",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -3187,7 +3188,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "ab5ce9fbefe20f54236f3c421ab6f5ee1f7ddf56c126a3a977ac6477121e614d",
+          "framebuffer_sha256": "56e917d1ae60fe8aeb5467cea35609e03b0036d0a075ac6bf668e1619efe979a",
           "pcm": null,
           "cassette": {
             "state": 6,

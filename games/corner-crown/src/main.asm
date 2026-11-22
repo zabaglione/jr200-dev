@@ -95,6 +95,7 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
+        CLR     [JR200_BORDER]
         LDAA    2
         STAA    [CC_B + 27]
         STAA    [CC_B + 36]
@@ -628,6 +629,11 @@ cc_cell_at:
         JMP     jr_gfx_at
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDAA    0x20
         LDAB    CC_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -657,6 +663,7 @@ cc_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    CC_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -793,3 +800,8 @@ cc_sfx_lose:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

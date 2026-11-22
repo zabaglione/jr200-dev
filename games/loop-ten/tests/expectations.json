@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/loop-ten/tests/model.py, which follows the upstream JR-100 assembly (jr100dev games/loop_ten 1.6.1, no Python rules module), and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays the whole twelve-chamber escape with its input script (upstream replay.py routes); synthetic-demo-clear plays the same script at normal speed. Timed key replays (walk, hold, rewind, time-out) only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 130751,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000002000000000000004000000000000000000000000000000000ffc0a09f90909090ff0305f909090909909090909fa0c0ff09090909f90503ff03070507030f1717c0e0a0e0c0f0e8e80f0606060e001f00f06060607000f800ffaaaaaaffaaaaaaffabababffabababaaffaaaaaaaaff00abffababababff000001020409122448008040209048241248241209040201001224489020408000000103070e1d3b770080c0e070b8dcee773b1d0e07030100eedcb870e0c080000021217373fb00000008089c9cef000021217373fb00000008089c9cef000000000708112121414100e01088848482fa4040202010080700020204040810e000"
           },
-          "framebuffer_sha256": "3d5e7d5fe3dde543328b038e0e8e172bebb55f036b97c48540e8cf8d54523c1d",
+          "framebuffer_sha256": "74913235d03b39c344ea69a8f706834a366647c96b69fc6bed7bcc041725d710",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -753,7 +754,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "3d5e7d5fe3dde543328b038e0e8e172bebb55f036b97c48540e8cf8d54523c1d",
+          "framebuffer_sha256": "74913235d03b39c344ea69a8f706834a366647c96b69fc6bed7bcc041725d710",
           "pcm": null,
           "cassette": {
             "state": 6,

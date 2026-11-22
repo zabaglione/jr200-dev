@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/sigil-deck/tests/model.py, which follows upstream src/main.asm and src/cards.asm (jr100dev games/sigil_deck 1.6.1) and whose card arithmetic is upstream replay.py's card_result, not from the emulator. The PRNG seed is the music position when RETURN starts a run; every replay starts with RETURN at the same cycle, and the model starts from the seed the emulator took (state byte 25; synthetic-lost-retry also takes the retry seed). synthetic-ten-battles plays upstream replay.py's policy (the visible hand and HUD choose each card and reward) through all ten battles. Key gaps leave 250000 cycles per key and 60000 per animation frame. synthetic-title, synthetic-first-win, synthetic-lost and synthetic-ten-battles require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 134333,
     "default_profile": "synthetic-ten-battles",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000000f0f0f0f0000000000f0f0f0f00000000ffffffff0000000000000000f0f0f0f0f0f0f0f0f0f0f0f00f0f0f0ff0f0f0f0fffffffff0f0f0f0000000000f0f0f0ff0f0f0f00f0f0f0f0f0f0f0f0f0f0f0fffffffff0f0f0f0f00000000fffffffff0f0f0f0ffffffff0f0f0f0fffffffffffffffffffffffff03070e9c783078c8ffbdbdbd5a5a24181038fe54386cc6006cfefefe7c3810000c18307e0c1830401010387c6c5c3800000000ffff00000018181818181818180000001f1f181818000000f8f81818181818181f1f000000181818f8f80000003c3c3cff7e3c18001018fefffe181000925438fe385492003838fefefe383800"
           },
-          "framebuffer_sha256": "46645cb27cff7b99f0d542409e1dead856e879f0fa208bf80f2eb68eda68c18e",
+          "framebuffer_sha256": "54fb63ee773bdceeb8ce06efaf4e19249217f60a22792b858f189c5e6ae73981",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -7917,7 +7918,7 @@
       {
         "profile": "local-rom-title",
         "mode": "rom-cassette",
-        "max_cycles": 124150000,
+        "max_cycles": 159150000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -7929,7 +7930,7 @@
           },
           {
             "kind": "text",
-            "cycle": 120000000,
+            "cycle": 155000000,
             "text": "a=usr($1000)\r",
             "key_duration": 75000,
             "key_interval": 150000
@@ -7949,7 +7950,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "46645cb27cff7b99f0d542409e1dead856e879f0fa208bf80f2eb68eda68c18e",
+          "framebuffer_sha256": "54fb63ee773bdceeb8ce06efaf4e19249217f60a22792b858f189c5e6ae73981",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -7961,7 +7962,7 @@
       {
         "profile": "local-rom-play",
         "mode": "rom-cassette",
-        "max_cycles": 124150000,
+        "max_cycles": 159150000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -7973,7 +7974,7 @@
           },
           {
             "kind": "text",
-            "cycle": 120000000,
+            "cycle": 155000000,
             "text": "a=usr($1000)\r",
             "key_duration": 75000,
             "key_interval": 150000
@@ -8002,7 +8003,7 @@
           }
         },
         "replay_from": "synthetic-start",
-        "replay_offset": 123000000
+        "replay_offset": 158000000
       }
     ]
   }

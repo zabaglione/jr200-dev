@@ -71,6 +71,7 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
+        CLR     [JR200_BORDER]
         LDAA    10
         STAA    [HZ_FOOD]
         LDAA    8
@@ -527,6 +528,11 @@ hz_weather_draw:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDAA    0x20
         LDAB    HZ_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -562,6 +568,7 @@ hz_title_cell:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    HZ_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -734,3 +741,8 @@ hz_sfx_lose:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

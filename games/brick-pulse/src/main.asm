@@ -128,6 +128,7 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
+        CLR     [JR200_BORDER]
         ; arena address = bp_arenas + level * 24 (up to 264: 16-bit steps)
         LDX     bp_arenas
         LDAB    [JR_PORT_LEVEL]
@@ -1062,6 +1063,11 @@ bp_ball_present_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         CLR     [BP_DEMO]
         CLR     [BP_BALL_VRAM]
         LDAA    0x20
@@ -1126,6 +1132,7 @@ bp_title_brick_hits:
         JMP     jr_gfx_putc
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    BP_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1487,3 +1494,8 @@ bp_sfx_vanish:
         .include "../../../sdk/port.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

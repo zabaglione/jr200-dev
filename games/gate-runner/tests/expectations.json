@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/gate-runner/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six courses with their input scripts (held A/D included); synthetic-demo-clear plays course 1 with the same script at normal speed; synthetic-no-input-loss runs straight and falls into the pits; synthetic-hold-right holds D until the runner stops at column 28. Timed key replays only observe values that do not depend on tick timing. Replays start at 1.3M cycles because the MCU scan start-up drains the ROM-less font transfer. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-start and local-rom-play sample the fully drawn opening board.",
   "runtime": {
+    "startup_delay_cycles": 119763,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0306060c0c181830c06060303018180c000000cccc000000ff92ff49ff92ff49ff0055aa55aa55aaffaaff242400000010386cc66c38100000000000007eff7e010302010f172707c0e0e0c0e0d0c8c407060c1830600000c0c0603010080c0003070703070b132380c04080f0e8e4e00303060c08103000e06030180c060000010302412f170707c0e0e0c1e6d8c0c0070c181000000000c06030100000000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e",
+          "framebuffer_sha256": "3ade51dd9ee5f086bb1c47731799092643254c450efa6769fbe7cb74dfbdedfb",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -613,7 +614,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e",
+          "framebuffer_sha256": "3ade51dd9ee5f086bb1c47731799092643254c450efa6769fbe7cb74dfbdedfb",
           "pcm": null,
           "cassette": {
             "state": 6,

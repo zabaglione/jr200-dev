@@ -58,8 +58,11 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
 `JR_RT` `$4600`、状態`$4640-`、stack top `$4FFF`の同じ配置を使います。
 各作品は`JR_SHADOW`（page境界の1536 bytes）、`JR_SAVE`（4096 bytes）、`JR_RT`（64 bytes）、
 `GAME_STATE`〜`GAME_STATE_END`、専用stackを`build.json`のdata領域内に宣言します。
+タイトル画のためにプログラム領域を延長する作品では、影画面を別のRAM領域へ置きます。
 USR入口で`jr_session_enter`がBASICの画面・PCG・文字RAM・key maskとSを保存し、
 ESC／CTRL+Cで`jr_session_leave`が戻します。
+タイトル画は作品ごとのセミグラと外周色で描画します。外周レジスタの読み出しから元の色は得られないため、
+外周色を使用した作品はBASICへ戻る際に黒を設定します。
 非アクション移植では`port_buffered.inc`または`ranked_buffered.inc`を
 `gfx_buffered.inc`と組み合わせます。プレイ中は描画と演出待ちでもKey-Onを読み、
 最大15件を押した順に保持します。方向入力は演出の終了後に処理し、

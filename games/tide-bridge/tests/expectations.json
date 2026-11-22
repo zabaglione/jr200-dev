@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/tide-bridge/tests/model.py (upstream rules 1.6.1), not from the emulator. Each tide is solved with the fewest row/column changes from plan() (an exhaustive search of the 4096 toggle sets); synthetic-all-tides clears all three. Key gaps leave 60000 cycles per animation frame the model counts. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 122239,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000304887000000000030488700000000000304f00000000000038478000000ff8181ff8888ff80ff0101ff0909ff81"
           },
-          "framebuffer_sha256": "97dcc898b91522b1638f123f12e661c8e5e527792a53e6e1819a014bdf68a1f7",
+          "framebuffer_sha256": "f8e6eea787d59ea81e123e21e0a5a02e232ee6a13ca29c54fd0e20d84c6e5586",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -2225,7 +2226,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "97dcc898b91522b1638f123f12e661c8e5e527792a53e6e1819a014bdf68a1f7",
+          "framebuffer_sha256": "f8e6eea787d59ea81e123e21e0a5a02e232ee6a13ca29c54fd0e20d84c6e5586",
           "pcm": null,
           "cassette": {
             "state": 6,

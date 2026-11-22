@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/chain-suit/tests/model.py (upstream rules 1.6.1), not from the emulator. The redraws come from plan(), an exhaustive search of the redraw choices in all three hands (48 points); synthetic-lose scores the dealt hands unchanged (9 points). Key gaps leave 60000 cycles per animation frame the model counts. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 125711,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "000103070f1f3f7f0080c0e0f0f8fcfe7f7e3d0103070000fefebc80c0e0000000003c7effffff7f00003c7efffffffe3f1f0f0703010000fcf8f0e0c0800000"
           },
-          "framebuffer_sha256": "296442e30887d80e7e1d1689d4c40d748fb0464dd20a6db0500d7f7e9d57208e",
+          "framebuffer_sha256": "e8da02ba824df338f93d4e14ac712cc954ab930506ecde165176552f25026aa7",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1495,7 +1496,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "296442e30887d80e7e1d1689d4c40d748fb0464dd20a6db0500d7f7e9d57208e",
+          "framebuffer_sha256": "e8da02ba824df338f93d4e14ac712cc954ab930506ecde165176552f25026aa7",
           "pcm": null,
           "cassette": {
             "state": 6,

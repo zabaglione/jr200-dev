@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/tidal-nets/tests/model.py (upstream rules 3.0.0), not from the emulator. Each trip follows the cast plan found by plan() and meets its quota; synthetic-all-trips completes all three. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Casts leave 2800000 cycles for the net, both fish and the catch to move.",
   "runtime": {
+    "startup_delay_cycles": 120062,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "00003048870000000000304887000000000030488700000000003048870000000000000000071f370000000020d0f2fb3f1f070000000000fbf2d02000000000aa55aa55aa55aa55aa55aa55aa55aa55aa55aa55ff000000aa55aa55ff000000"
           },
-          "framebuffer_sha256": "3022efa0730341e5a80b442807b194900bd296596096acba8f73162a43e43f20",
+          "framebuffer_sha256": "33f18c7acd2b996e9e8fb9dc4725e78d14d7b7a53a5a5c973b02fbc5a2b0b05d",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -2261,7 +2262,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "3022efa0730341e5a80b442807b194900bd296596096acba8f73162a43e43f20",
+          "framebuffer_sha256": "33f18c7acd2b996e9e8fb9dc4725e78d14d7b7a53a5a5c973b02fbc5a2b0b05d",
           "pcm": null,
           "cassette": {
             "state": 6,

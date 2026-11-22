@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/ruin-lexicon/tests/model.py (upstream rules 2.1.0), not from the emulator. Each inscription is deciphered by solve(), which reads only the three sums and the A/D order (every upstream inscription has exactly one answer); synthetic-all-ruins clears all twenty. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 130741,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "ff7f3f1212121212fffefc484848484812121212123f7fff4848484848fcfeff0f3f604643414741f0fc0662c282e28242444840603f00004222120206fc0000"
           },
-          "framebuffer_sha256": "9973c9c4a46ceb4329ed1f44e110d1f054b627b8e1c3a5f6a88dc20159432524",
+          "framebuffer_sha256": "5955db772e3a7da9ffe81d5251200030c1773a3eea04a14785c8b434686e51f5",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -3257,7 +3258,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "9973c9c4a46ceb4329ed1f44e110d1f054b627b8e1c3a5f6a88dc20159432524",
+          "framebuffer_sha256": "5955db772e3a7da9ffe81d5251200030c1773a3eea04a14785c8b434686e51f5",
           "pcm": null,
           "cassette": {
             "state": 6,

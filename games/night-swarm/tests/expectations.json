@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/night-swarm/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six waves with their input scripts; synthetic-demo-clear plays wave 1 with the same script at normal speed; synthetic-no-input-loss never moves and the swarm breaks through. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-rapid-taps expects all three right taps spaced 32 ms apart to move the player.",
   "runtime": {
+    "startup_delay_cycles": 130674,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "00000000000000010000000000000000000000000000000000000000000000000020130f1f3b3f7f0004c8f0f8dcfcfe9f97122202040000f9e94844402000000000000708121017000000e0104808e808070a120000000010e05048000000000003040913272f2f00c02090c8e4f4f42713090403000000e4c89020c0000000000718234c5192a400e018c4328a4925a492514c2318070025498a32c418e00000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "addb86dff9ef9de8ccc9698e484f7a79d5575e942c00568299eff675ff47f78f",
+          "framebuffer_sha256": "b54b8b184e305fcc7faf15ffb7d0c6f12682d55e377d99461ef8a49f16307b22",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -693,7 +694,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "addb86dff9ef9de8ccc9698e484f7a79d5575e942c00568299eff675ff47f78f",
+          "framebuffer_sha256": "b54b8b184e305fcc7faf15ffb7d0c6f12682d55e377d99461ef8a49f16307b22",
           "pcm": null,
           "cassette": {
             "state": 6,

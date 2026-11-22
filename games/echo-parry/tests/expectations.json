@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/echo-parry/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six duels with their input scripts; synthetic-demo-clear plays duel 1 with the same script at normal speed; synthetic-no-input-loss never guards and loses four hearts. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 133094,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "030705030f17274780c04081e6d8d0c0c7cfcc4c0c0c1c00c0e060606060700001030282631b0703c0e020a0e0e0f0e80303070606060e00e4e2f230303038003c42bda5bd423c0000030e3c70c00000ff8800220088000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "81e00e72a1daf24e5e962ae053fb643194f10b54c4650900ec27c6f7eb525508",
+          "framebuffer_sha256": "f88fe68ebe5404b208879010d2c3b5e48f54349e6be28dda8ac8a9a111604046",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -613,7 +614,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "81e00e72a1daf24e5e962ae053fb643194f10b54c4650900ec27c6f7eb525508",
+          "framebuffer_sha256": "f88fe68ebe5404b208879010d2c3b5e48f54349e6be28dda8ac8a9a111604046",
           "pcm": null,
           "cassette": {
             "state": 6,

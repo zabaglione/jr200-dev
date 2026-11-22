@@ -106,6 +106,7 @@ cw_inputs:
         RTS
 
 game_init:
+        CLR     [JR200_BORDER]
         LDX     cw_targets
         LDAA    [JR_PORT_LEVEL]
         LDAB    3
@@ -555,6 +556,11 @@ cw_value_attr_set:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDAA    0x20
         LDAB    CW_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -584,6 +590,7 @@ cw_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    CW_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -745,3 +752,8 @@ cw_sfx_miss:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/fuse-box/tests/model.py (upstream rules 1.6.1), not from the emulator. Each panel is solved by switching on its generated target pattern; synthetic-all-panels clears all ten. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Flip replays leave 600000 cycles for the five-phase flip.",
   "runtime": {
+    "startup_delay_cycles": 129478,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "007f40404344444400fe0202c22222224444444340407f00222222c20202fe007fffffc3c7cfcfcffefffdc7e7f7f7f7cfcfcfc7c3ffff7ff7f7f7e7c7fdfffe000f00000304040400f00000c02020200404040300000f00202020c00000f0000303030303030303c0c0c0c0c0c0c0c00303030303030303c0c0c0c0c0c0c0c00f0f0f03070f0f0ff0f0f0c0e0f0f0f00f0f0f07030f0f0ff0f0f0e0c0f0f0f0"
           },
-          "framebuffer_sha256": "249569a7dac035e511385c4cf536df2bfd89ed65e947584987101d23984e9b78",
+          "framebuffer_sha256": "1e7aaa525c982540beedb26012ce82bc09cafdd76a77c36aa4fee03fd3e9f1dd",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -6369,7 +6370,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "249569a7dac035e511385c4cf536df2bfd89ed65e947584987101d23984e9b78",
+          "framebuffer_sha256": "1e7aaa525c982540beedb26012ce82bc09cafdd76a77c36aa4fee03fd3e9f1dd",
           "pcm": null,
           "cassette": {
             "state": 6,

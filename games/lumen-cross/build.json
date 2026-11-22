@@ -23,7 +23,8 @@
   "inputs": {
     "assembly": [
       "src/art.inc",
-      "src/main.asm"
+      "src/main.asm",
+      "src/title_art.inc"
     ],
     "sdk": [
       "sdk/font.inc",
@@ -41,7 +42,8 @@
       "sdk/port_runtime.inc",
       "sdk/session.inc",
       "sdk/sfx.inc",
-      "sdk/sound.inc"
+      "sdk/sound.inc",
+      "sdk/title_art.inc"
     ],
     "assets": []
   },

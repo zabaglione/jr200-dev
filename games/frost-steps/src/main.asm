@@ -8,7 +8,7 @@
         .filename.jr "FROST-STEPS"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x6000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
 JR_INPUT:          .equ    JR_RT + 0x300
@@ -109,6 +109,7 @@ game_level_par:
         RTS
 
 game_init:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         ; d[0-63] from nibbles, d[64-69] as they are
         LDAA    [JR_PORT_LEVEL]
@@ -412,6 +413,11 @@ fs_draw_put:
         JMP     jr_rank_hud
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     fs_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -444,6 +450,7 @@ fs_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    FS_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -619,3 +626,8 @@ fs_lose_bass:
         .include "../../../sdk/ranked_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

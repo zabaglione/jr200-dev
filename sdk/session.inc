@@ -10,7 +10,8 @@
 ;   character RAM $D000-$D7FF, masks IRQs, enables the Key-On status bit and
 ;   returns on the game's own stack. Clobbers A, B and X.
 ;
-;   The border register is not readable, so sessions never change it.
+;   Title artwork may set the write-only border. Such a session returns
+;   to the default black border on exit. Other sessions leave it alone.
 ;
 ; jr_session_leave
 ;   Jump (do not JSR) here to stop sound, restore everything saved by
@@ -32,6 +33,7 @@ JR_RT_DST:          .equ    JR_RT + 9
 JR_RT_COUNT:        .equ    JR_RT + 11
 JR_RT_TABLE:        .equ    JR_RT + 13
 JR_RT_COPY_SP:      .equ    JR_RT + 44
+JR_RT_BORDER_ACTIVE: .equ   JR_RT + 55
 
 JR_SAVE_PCG0:       .equ    JR_SAVE
 JR_SAVE_CODES:      .equ    JR_SAVE + 0x100
@@ -51,6 +53,7 @@ jr_session_enter:
         SEI
         STS     [JR_RT_SAVE_SP]
         LDS     JR_STACK_TOP
+        CLR     [JR_RT_BORDER_ACTIVE]
         ; $C000-$C7FF is saved as one block: PCG0, codes, PCG1, attributes.
         LDX     JR200_PCG_BANK0
         STX     [JR_RT_SRC]
@@ -83,6 +86,10 @@ jr_session_enter:
 jr_session_leave:
         SEI
         JSR     jr_sound_all_stop
+        TST     [JR_RT_BORDER_ACTIVE]
+        BEQ     jr_session_restore_screen
+        CLR     [JR200_BORDER]
+jr_session_restore_screen:
         LDX     JR_SAVE
         STX     [JR_RT_SRC]
         LDX     JR200_PCG_BANK0

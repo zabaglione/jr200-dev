@@ -24,6 +24,7 @@
     "assembly": [
       "src/art.inc",
       "src/main.asm",
+      "src/title_art.inc",
       "src/world.inc"
     ],
     "sdk": [
@@ -43,7 +44,8 @@
       "sdk/port_input.inc",
       "sdk/port_runtime.inc",
       "sdk/session.inc",
-      "sdk/sound.inc"
+      "sdk/sound.inc",
+      "sdk/title_art.inc"
     ],
     "assets": []
   },

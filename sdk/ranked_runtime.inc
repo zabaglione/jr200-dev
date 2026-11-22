@@ -512,6 +512,7 @@ jr_rank_hud_par::
 ; ---------------------------------------------------------------- stage map
 
 jr_rank_map::
+        CLR     [JR200_BORDER]
         LDAA    JR_MODE_MAP
         STAA    [JR_PORT_MODE]
         LDAA    0x20
@@ -829,6 +830,7 @@ jr_rank_code_text_done::
         RTS
 
 jr_rank_password_open::
+        CLR     [JR200_BORDER]
         LDAA    [JR_PORT_MODE]
         STAA    [JR_RANK_BACK]
         LDAA    JR_MODE_PASSWORD

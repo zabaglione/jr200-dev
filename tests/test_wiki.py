@@ -11,6 +11,7 @@ import unittest
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+from png_rgba import decode_rgba
 from test_gallery import gallery_expectations_snapshot
 from wiki.generate import (WikiError, apply_files, render_pages,
                            require_git_worktree, sync_plan)
@@ -87,15 +88,28 @@ class WikiFixture:
         self.metadata_path.write_text(json.dumps(self.metadata) + '\n', encoding='utf-8')
         self.artifact = make_cjr()
         self.artifact_sha256 = hashlib.sha256(self.artifact).hexdigest()
-        self.expectations_sha256 = hashlib.sha256(
-            (self.root / 'games/side-catch/tests/expectations.json').read_bytes()
-        ).hexdigest()
+        gallery_path = self.root / 'games/side-catch/media/gallery.json'
+        gallery = json.loads(gallery_path.read_text(encoding='utf-8'))
+        title_scene = next(scene for scene in gallery['scenes']
+                           if scene['role'] == 'title')
+        self.screenshot_profile = title_scene['profile']
         screenshot = self.root / 'games/side-catch/media/screenshot.png'
-        self.screenshot_sha256 = hashlib.sha256(screenshot.read_bytes()).hexdigest()
-        self.framebuffer_sha256 = json.loads((ROOT / 'games/catalog.json').read_text())[
-            'games'][0]['wiki']['screenshot']['framebuffer_sha256']
+        screenshot_bytes = screenshot.read_bytes()
+        width, height, pixels = decode_rgba(screenshot_bytes)
+        if (width, height) != (320, 224):
+            raise AssertionError('fixture title capture must be 320x224')
+        self.screenshot_sha256 = hashlib.sha256(screenshot_bytes).hexdigest()
+        self.framebuffer_sha256 = hashlib.sha256(pixels).hexdigest()
+        expectations_path = self.root / 'games/side-catch/tests/expectations.json'
+        expectations = json.loads(expectations_path.read_text(encoding='utf-8'))
+        profiles = {profile['profile']: profile
+                    for profile in expectations['runtime']['profiles']}
+        for scene in gallery['scenes']:
+            profiles[scene['profile']]['expect']['framebuffer_sha256'] = (
+                scene['framebuffer_sha256'])
+        expectations_path.write_text(json.dumps(expectations) + '\n', encoding='utf-8')
+        self.expectations_sha256 = hashlib.sha256(expectations_path.read_bytes()).hexdigest()
         self.version = self.metadata['version']
-        self.screenshot_profile = 'local-rom-title'
         self.package = (self.root / 'games/side-catch/build/package/'
                         f'side-catch-{self.version}.zip')
         self.catalog = {
@@ -467,6 +481,7 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertTrue(games[0]['publish'])
         self.assertIn('検証済みの公開ゲームを作品一覧から選べます',
                       files['Home.md'].decode('utf-8'))
+
         item['wiki']['play_url'] = (
             'https://zabaglione.github.io/jr200-web-emulator/?game=side-catch')
         self.fixture.write_catalog()

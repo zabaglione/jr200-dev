@@ -168,6 +168,7 @@ start:
 
 ; NEW_MISSION.
 game_init:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDX     GAME_STATE
 as_init_clear:
@@ -1597,6 +1598,11 @@ as_draw_scene_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     as_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -1609,6 +1615,7 @@ game_draw_title:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    AS_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1939,3 +1946,8 @@ as_lose_bass:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

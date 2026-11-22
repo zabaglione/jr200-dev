@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/trace-blade/tests/model.py, which follows the upstream JR-100 assembly (jr100dev games/trace_blade 1.6.1, no Python rules module), not from the emulator. Routes are the upstream levels.json solutions. synthetic-self-test runs every fixture of tests/selftest.py and cuts all thirty rooms inside the program without drawing; synthetic-ten-rooms plays rooms 1-10 at normal speed (all thirty would pass the runner cycle limit). Moves are 130000 cycles apart; a cut leaves 135000 cycles per path step and 290000 per target burst. synthetic-title, synthetic-menu-cut and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 136984,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -20,7 +21,7 @@
           {
             "name": "pcg",
             "address": "0xc400",
-            "length": 320
+            "length": 256
           }
         ],
         "breakpoints": [],
@@ -29,9 +30,9 @@
           "pc": null,
           "memory": {
             "mode": "00",
-            "pcg": "0000000000000001000000000000000000000000000000000000000000000000ff818181ffe0a0a0ff818181ff616161ff818181ff8686ffff818181ff0505ff000103070c183163000080c06030188c31180c0703010000183060c080000000e0c183070c183163070681c06030188c31180c0783c1e000183060c081060700003f404143464c5800fc0282c262321a4c464341403f00003262c28202fc000000000000000307070000000000c0e0e00707030000000000e0e0c00000000000000000000000381f03070e1c3870e0400e0b132260c08000800080c0c00000000001110905037f03000010204080f0800509110100000000402010000000000007070707070707070707070707070707070707070707070707070707070707070707070707070707070707070707070707070707070707070707070707070707"
+            "pcg": "0000000000000001000000000000000000000000000000000000000000000000ff818181ffe0a0a0ff818181ff616161ff818181ff8686ffff818181ff0505ff000103070c183163000080c06030188c31180c0703010000183060c080000000e0c183070c183163070681c06030188c31180c0783c1e000183060c081060700003f404143464c5800fc0282c262321a4c464341403f00003262c28202fc000000000000000307070000000000c0e0e00707030000000000e0e0c00000000000000000000000381f03070e1c3870e0400e0b132260c08000800080c0c00000000001110905037f03000010204080f08005091101000000004020100000000000"
           },
-          "framebuffer_sha256": "72da7900b1f65aeb2fae1b381da830376dd69350141e3484dd75bcb5618015ef",
+          "framebuffer_sha256": "f727a612d59aaabd6caa87a3a683e5f4826236e18550ab1442f672eca60e871d",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -4580,7 +4581,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "72da7900b1f65aeb2fae1b381da830376dd69350141e3484dd75bcb5618015ef",
+          "framebuffer_sha256": "f727a612d59aaabd6caa87a3a683e5f4826236e18550ab1442f672eca60e871d",
           "pcm": null,
           "cassette": {
             "state": 6,

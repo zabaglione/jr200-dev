@@ -11,7 +11,7 @@
         .filename.jr "LOOP-TEN"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x6000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
 JR_INPUT:          .equ    JR_RT + 0x300
@@ -121,6 +121,7 @@ start:
 
 ; NEW_GAME: no seal lit, then the first loop.
 game_init:
+        CLR     [JR200_BORDER]
         JSR     jr_test_level
         JSR     jr_music_stop
         CLR     [LT_FLAGS]
@@ -681,6 +682,11 @@ lt_clear_cell:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     lt_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -714,6 +720,7 @@ lt_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    LT_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -908,3 +915,8 @@ lt_win_bass:
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

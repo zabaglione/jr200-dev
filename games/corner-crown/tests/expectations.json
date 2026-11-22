@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "Memory expectations are computed by games/corner-crown/tests/model.py (upstream rules 1.5.1), not recorded from the emulator. synthetic-win replays a 30-move line found by search against the deterministic rival that takes all four corners and wins 39-25; synthetic-pass-lose is a random legal line with two player passes that loses 10-54. Gaps after RETURN scale with the discs the model says will turn. Framebuffer hashes fix the gallery images; stack-guard shows the stack stayed above 0x4f10.",
   "runtime": {
+    "startup_delay_cycles": 140620,
     "default_profile": "synthetic-opening",
     "profiles": [
       {
@@ -25,7 +26,7 @@
           "memory": {
             "pcg": "ff80808080808080ff0000000000000080808080808080800000000000000000ff80808080808081ff000000000080c08381808080808080e0c0800000000000"
           },
-          "framebuffer_sha256": "8bbd4fa5f7062d276557948480ce641662691dd2accde3ad962103b8710c1a88",
+          "framebuffer_sha256": "cb4ef5631bda45a9697f19fe5d2fe55cb1efaa1bd91e28609303c1b184abd1d8",
           "pcm": null,
           "cassette": null
         }
@@ -8211,7 +8212,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "8bbd4fa5f7062d276557948480ce641662691dd2accde3ad962103b8710c1a88",
+          "framebuffer_sha256": "cb4ef5631bda45a9697f19fe5d2fe55cb1efaa1bd91e28609303c1b184abd1d8",
           "pcm": null,
           "cassette": {
             "state": 6,

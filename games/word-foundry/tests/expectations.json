@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/word-foundry/tests/model.py (upstream rules 2.0.0), not from the emulator. Each ladder is the breadth-first shortest route through the via word; its length equals the upstream PAR, and synthetic-all-ladders clears all 16. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Replays leave 900000 cycles after a change and 1600000 after the via sparkle.",
   "runtime": {
+    "startup_delay_cycles": 122825,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000101001039000000808000089c1301000101000000c88000808000000000201109000030c30004889000000cc3c330000009112000c30c0000908804008040000000000080010200000000000180000000000040800100000000000201"
           },
-          "framebuffer_sha256": "e70e6c517297670bd98b92d6a6d3aabdbd317e5c7fe8f6a6ecda7d37b98f9350",
+          "framebuffer_sha256": "8d60124db5772a7c81866c9f845a2afaa00439eb9cc6351563e7d4fd79e14125",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -5947,7 +5948,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "e70e6c517297670bd98b92d6a6d3aabdbd317e5c7fe8f6a6ecda7d37b98f9350",
+          "framebuffer_sha256": "8d60124db5772a7c81866c9f845a2afaa00439eb9cc6351563e7d4fd79e14125",
           "pcm": null,
           "cassette": {
             "state": 6,

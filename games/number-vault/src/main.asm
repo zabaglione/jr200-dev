@@ -89,6 +89,7 @@ start:
 ; origin = entropy(): (voice 0 offset * 8 + frames left) of the song playing
 ; when the stage starts. secret = origin ^ (level * 23 + 17).
 game_init:
+        CLR     [JR200_BORDER]
         LDAA    [JR_AU_VOICE + 1]
         SUBA    [JR_AU_VOICE + 4]
         ASLA
@@ -533,6 +534,11 @@ nv_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     nv_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -549,6 +555,7 @@ game_draw_title:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    NV_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -733,3 +740,8 @@ nv_lose_bass:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/chrono-breach/tests/model.py, whose world step matches the upstream solve.py (jr100dev games/chrono_breach 1.6.1) on every route action and whose menu and questions follow upstream src/main.asm, not from the emulator. synthetic-all-sectors plays the upstream solutions.json routes through all 20 sectors (a shot in another direction aims from the menu first). Key gaps leave 250000 cycles per key and 70000 per animation frame. synthetic-title, synthetic-first-clear, synthetic-lost and synthetic-all-sectors require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 125691,
     "default_profile": "synthetic-all-sectors",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "ffffc0a0908f8888ffff030509f1111188888f90a0c0ffff1111f1090503ffff030705030f1f2f2fc0e0a0c0f0f8f4f40f0e0e1e00000000f070707800000000010f1f3b3f3f1f0f80f0f8dcfcfcf8f014240000000000002824000000000000000f1f3b3f3f1f0f00f0f8dcfcfcf8f014240101010100002824808080800000"
           },
-          "framebuffer_sha256": "03e8e623d99afd0ae3327911b3797b16c509d2401af7548a498c9a7755cbdef2",
+          "framebuffer_sha256": "6e78f2236cb31265fff2f78e25018652e59808f6061b612fe2e23ca55db5a534",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -6657,7 +6658,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "03e8e623d99afd0ae3327911b3797b16c509d2401af7548a498c9a7755cbdef2",
+          "framebuffer_sha256": "6e78f2236cb31265fff2f78e25018652e59808f6061b612fe2e23ca55db5a534",
           "pcm": null,
           "cassette": {
             "state": 6,

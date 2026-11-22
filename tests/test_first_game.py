@@ -55,7 +55,8 @@ class FirstGameTests(unittest.TestCase):
             'emulator': 'passed', 'hardware': 'not_run'})
         self.assertEqual(spec.sdk_inputs, (
             'sdk/font.inc', 'sdk/font_data.inc', 'sdk/input.inc', 'sdk/jr200.inc',
-            'sdk/screen.inc', 'sdk/session.inc', 'sdk/sound.inc', 'sdk/timing.inc'))
+            'sdk/screen.inc', 'sdk/session.inc', 'sdk/sound.inc', 'sdk/timing.inc',
+            'sdk/title_art.inc'))
 
     def test_game_source_and_docs_have_separate_ci_effects(self):
         registry = json.loads((ROOT / 'ci/targets.json').read_text(encoding='utf-8'))
