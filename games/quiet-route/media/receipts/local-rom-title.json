@@ -1,18 +1,18 @@
 {
-  "artifact_sha256": "092f7961c960c8d8f6f5a6daf2e54c1fb7795e4b5562a54ccd8b543d4cd2851a",
+  "artifact_sha256": "f8f89697a5ed0e255c4ff3f392b216853ec82d2306deb48287f90446229bf574",
   "expectations_sha256": "451ff666ef0d168a552e4ddbb0e576165135e255a10ca1e3a3058d9b236043b0",
   "mode": "rom-cassette",
   "profile": "local-rom-title",
   "project": "quiet-route",
   "result": {
-    "artifact_sha256": "092f7961c960c8d8f6f5a6daf2e54c1fb7795e4b5562a54ccd8b543d4cd2851a",
+    "artifact_sha256": "f8f89697a5ed0e255c4ff3f392b216853ec82d2306deb48287f90446229bf574",
     "cassette": {
       "mode": 1,
       "read_started": false,
       "remote": false,
       "state": 6
     },
-    "elapsed_cycles": 83500000,
+    "elapsed_cycles": 83500004,
     "evidence": "emulator_with_local_rom",
     "framebuffer_sha256": "fb018f3a5e80dbde1ce87473e6f845720644b3951917f54e82fa58d9ae5da6f8",
     "hardware": "not_run",
@@ -33,10 +33,10 @@
       "a": 0,
       "b": 0,
       "cc": 209,
-      "pc": 6528,
+      "pc": 6636,
       "sp": 20477,
       "waiting": 0,
-      "x": 513
+      "x": 437
     },
     "runner_contract_version": 1,
     "runner_version": "0.3.0",
@@ -61,7 +61,7 @@
         "size": 83629
       }
     ],
-    "node_version": "26.9.0",
+    "node_version": "24.3.0",
     "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
     "version": "0.3.0"
   },

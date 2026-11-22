@@ -655,6 +655,96 @@
           "pcm": null,
           "cassette": null
         }
+      },
+      {
+        "profile": "local-rom-title",
+        "mode": "rom-cassette",
+        "max_cycles": 124150000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "text",
+            "cycle": 4000000,
+            "text": "mload\r",
+            "key_duration": 150000,
+            "key_interval": 300000
+          },
+          {
+            "kind": "text",
+            "cycle": 120000000,
+            "text": "a=usr($1000)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "00"
+          },
+          "framebuffer_sha256": "5624910503e09fd6538b7f3c627278fc7962f9e0ff6d0145b51376670fb123ec",
+          "pcm": null,
+          "cassette": {
+            "state": 6,
+            "mode": 1,
+            "remote": false
+          }
+        }
+      },
+      {
+        "profile": "local-rom-play",
+        "mode": "rom-cassette",
+        "max_cycles": 123700000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "text",
+            "cycle": 4000000,
+            "text": "mload\r",
+            "key_duration": 150000,
+            "key_interval": 300000
+          },
+          {
+            "kind": "text",
+            "cycle": 120000000,
+            "text": "a=usr($1000)\r",
+            "key_duration": 75000,
+            "key_interval": 150000
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "01"
+          },
+          "framebuffer_sha256": "79dd690860d41fc6c7aff1224409b23884e022f40267657b51831e4e27ffaad8",
+          "pcm": null,
+          "cassette": {
+            "state": 6,
+            "mode": 1,
+            "remote": false
+          }
+        },
+        "replay_from": "synthetic-start",
+        "replay_offset": 123000000
       }
     ]
   }

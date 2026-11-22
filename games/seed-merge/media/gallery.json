@@ -33,20 +33,20 @@
     "file": "goal.webm",
     "profile": "local-rom-goal",
     "fps": 30,
-    "speed": 4,
+    "speed": 4.0,
     "seconds": 28.3,
     "frames": 3395,
-    "frames_sha256": "d4d0dc41c148f2dc08258b2f326d0e29e95f7efd919f254ae598fd048183cfb6",
-    "pcm_sha256": "e4f07c9174196c2a8484c8ea693c1f0666920718456d1353583893a0c872622f",
-    "sha256": "95eafc6f6ede017cb6d954322ed80d77f992506f7c2b4d382fb63f0fb9d688de",
+    "frames_sha256": "bc82ad47657be58b099c18dd8c49106ba2519a8c2c6bd9c2a5bef1862e534940",
+    "pcm_sha256": "68a4ddcd7d1ddf77e5582bc24d7f4b55f31ec34605dafe90a73fd8a8c5f8f964",
+    "sha256": "27c77aec18b29267a56db3a9b2897d5f25459bb0defdf421b0ddbd895d97549a",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、35手で64に到達するまでを音付きで記録（画面全体・無加工）",
     "mode": "rom-cassette",
-    "artifact_sha256": "0184459dd153a6cb9123e78512d2c2cae2c12b509c3591a9b22c005b804fe83b",
+    "artifact_sha256": "79497def55904a480333db39554a8f7147472f3ae72751e67ff08f6ccdaede44",
     "start_cycle": 83500000
   },
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "0184459dd153a6cb9123e78512d2c2cae2c12b509c3591a9b22c005b804fe83b",
+    "artifact_sha256": "79497def55904a480333db39554a8f7147472f3ae72751e67ff08f6ccdaede44",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }

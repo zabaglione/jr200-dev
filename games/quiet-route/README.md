@@ -47,7 +47,7 @@ MLOAD/USRを分けて実施しました。全6経路のクリア、補給、電�
 RAM状態を独立ルールモデルと照合しました。合成profileではやり直しのNO/YES、
 CTRL+C後の画面・属性・FONT・PCG・stack guardも照合しました。所有ROM/FONTを
 使ったローカルブラウザでは通常MLOAD/USR、移動、BASIC復帰、画面復元と外部要求0件を
-確認。物理JR-200と公開版の動作は未確認です。
+確認。物理JR-200は未確認です。
 
 ## ライセンス
 
@@ -55,7 +55,3 @@ CTRL+C後の画面・属性・FONT・PCG・stack guardも照合しました。�
 `games/quiet_route/rules.py` 2.0.0です。JR-100のPRGやI/Oは流用していません。
 SHA-256は[UPSTREAM.md](UPSTREAM.md)、移植固有コードのMIT全文は[LICENSE](LICENSE)、
 共通SDKのBSD-3-Clause表示は[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照してください。
-
-この0.1.0は開発中です。公開Wikiには紹介と画面を掲載しますが、CJR・ZIPは
-Releaseや公開Webで配信していません。CJR・ZIPの公開には作品版と配信先について
-別の承認が必要です。

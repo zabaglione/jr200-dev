@@ -45,7 +45,7 @@ RUNNER_BUNDLE=/absolute/path/to/fixed/runner make -C games/seed-merge run
 MLOAD/USRを分けて実施しました。4方向の1列625通りずつを独立規則モデルと比較し、
 35手の64到達、24手の手詰まり、やり直しのNO/YES、CTRL+C後の画面・属性・フォント・
 PCG復元を試験しています。PCMの非ゼロ出力も固定runnerで確認しています。
-ブラウザでの手操作、物理JR-200、公開版の動作はまだ未確認です。
+物理JR-200は未確認です。
 合成実行やCJR生成を実機の証拠とはしません。
 
 ## ライセンス
@@ -54,7 +54,3 @@ PCG復元を試験しています。PCMの非ゼロ出力も固定runnerで確�
 `games/seed_merge/rules.py` 1.5.1です。JR-100のプログラムやI/Oは流用していません。
 SHA-256は[UPSTREAM.md](UPSTREAM.md)、移植固有コードの全文ライセンスは[LICENSE](LICENSE)、
 共通SDKのBSD-3-Clause表示は[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照してください。
-
-この0.1.0は開発中です。公開Wikiには紹介と画面を掲載しますが、CJR・ZIPは
-Releaseや公開Webで配信していません。CJR・ZIPの公開には作品版と配信先について
-別の承認が必要です。

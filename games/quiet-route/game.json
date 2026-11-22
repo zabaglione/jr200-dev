@@ -25,11 +25,11 @@
   },
   "version": "0.1.0",
   "release": {
-    "status": "draft",
+    "status": "verified",
     "sdk_contract": 1,
     "runner_contract": 1,
     "minimum_runner_version": "0.3.0",
     "wav": "not-required",
-    "publication": "not-published"
+    "publication": "published"
   }
 }
