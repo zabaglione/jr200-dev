@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-3-Clause
 """Original pixel-art title scenes for a group of JR-200 games."""
 
 from canvas import K, B, R, M, G, C, Y, W
