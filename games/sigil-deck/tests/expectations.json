@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/sigil-deck/tests/model.py, which follows upstream src/main.asm and src/cards.asm (jr100dev games/sigil_deck 1.6.1) and whose card arithmetic is upstream replay.py's card_result, not from the emulator. The PRNG seed is the music position when RETURN starts a run; every replay starts with RETURN at the same cycle, and the model starts from the seed the emulator took (state byte 25; synthetic-lost-retry also takes the retry seed). synthetic-ten-battles plays upstream replay.py's policy (the visible hand and HUD choose each card and reward) through all ten battles. Key gaps leave 250000 cycles per key and 60000 per animation frame. synthetic-title, synthetic-first-win, synthetic-lost and synthetic-ten-battles require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 134333,
     "default_profile": "synthetic-ten-battles",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000000f0f0f0f0000000000f0f0f0f00000000ffffffff0000000000000000f0f0f0f0f0f0f0f0f0f0f0f00f0f0f0ff0f0f0f0fffffffff0f0f0f0000000000f0f0f0ff0f0f0f00f0f0f0f0f0f0f0f0f0f0f0fffffffff0f0f0f0f00000000fffffffff0f0f0f0ffffffff0f0f0f0fffffffffffffffffffffffff03070e9c783078c8ffbdbdbd5a5a24181038fe54386cc6006cfefefe7c3810000c18307e0c1830401010387c6c5c3800000000ffff00000018181818181818180000001f1f181818000000f8f81818181818181f1f000000181818f8f80000003c3c3cff7e3c18001018fefffe181000925438fe385492003838fefefe383800"
           },
-          "framebuffer_sha256": "46645cb27cff7b99f0d542409e1dead856e879f0fa208bf80f2eb68eda68c18e",
+          "framebuffer_sha256": "54fb63ee773bdceeb8ce06efaf4e19249217f60a22792b858f189c5e6ae73981",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "6c7883f1c027af9cc2b8c7cf05accac405f3c31e719fe080acff2dcb91359dc8",
+          "framebuffer_sha256": "19d73b115a222161862f017a1db89e8e2d515ca017a96157b88e82473447a897",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "0a516d5c66c56b438c03852480799206cdc894a2251c27a2bb7978c68ee754b2",
+          "framebuffer_sha256": "86e7f58c023062cb3a40ad6b0e4ffea3610a0052d31c5f5601ad40ab5f57f527",
           "pcm": null,
           "cassette": null
         }
@@ -320,7 +321,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "31deb853b5f20a1f22dccf808bea39006f57a04c84333db626a192b10dbe6ec9",
+          "framebuffer_sha256": "0f1973106285b2027dc2369e009172513b1ca6036d07471ee43a3bbf6256cf3e",
           "pcm": null,
           "cassette": null
         }
@@ -516,7 +517,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "f438df46d2e591bbbaba8cecaec02d8dfab958f576e015120c202c6987b4e8a5",
+          "framebuffer_sha256": "e9dd8881e3990f96aa964f8d8409fb1b7d8b3e00f90171302efb639cf67828a9",
           "pcm": null,
           "cassette": null
         }
@@ -992,7 +993,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "776f09267368b036ab0cbd82565d7d95f9f894d4d888f2582ccb246361605839",
+          "framebuffer_sha256": "6fad47e633c7c72c84665f89edd63f3de50e3b81f218539aff99678b03fe690d",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1813,7 +1814,7 @@
             "level": "00",
             "status": "5448452052495455414c204641494c4544"
           },
-          "framebuffer_sha256": "512a5c8c225d4d78f04dddf4f5b56743c294e5bb60a7a53316c402ddc0be81d1",
+          "framebuffer_sha256": "5804c466571312d89775b0c16d121c4d65fbe81f12f5f9183c0fb29ad159cf25",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -4954,7 +4955,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "afcfdf52546fc2e1cf6e82507d4ebb1439a839a8cc608fb80a628a2bc6877bdd",
+          "framebuffer_sha256": "e7ab2682d2e05c854fc29a1d783496942a5fb2c21a88aaeb13b112426b91a8c5",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -7793,7 +7794,7 @@
             "mode": "04",
             "level": "00"
           },
-          "framebuffer_sha256": "3d6975b01292c11863945e25fb756a39b717a8da123bfe4ad9d8f1dc6b858b46",
+          "framebuffer_sha256": "2f50f5be7d5a3d7c12b221aa0c6ee8b2cb615b32c7e1b2e95abef08fccb84d5b",
           "pcm": null,
           "cassette": null
         }
@@ -7917,7 +7918,7 @@
       {
         "profile": "local-rom-title",
         "mode": "rom-cassette",
-        "max_cycles": 124150000,
+        "max_cycles": 159150000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -7929,7 +7930,7 @@
           },
           {
             "kind": "text",
-            "cycle": 120000000,
+            "cycle": 155000000,
             "text": "a=usr($1000)\r",
             "key_duration": 75000,
             "key_interval": 150000
@@ -7949,7 +7950,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "46645cb27cff7b99f0d542409e1dead856e879f0fa208bf80f2eb68eda68c18e",
+          "framebuffer_sha256": "54fb63ee773bdceeb8ce06efaf4e19249217f60a22792b858f189c5e6ae73981",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -7961,7 +7962,7 @@
       {
         "profile": "local-rom-play",
         "mode": "rom-cassette",
-        "max_cycles": 124150000,
+        "max_cycles": 159150000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -7973,7 +7974,7 @@
           },
           {
             "kind": "text",
-            "cycle": 120000000,
+            "cycle": 155000000,
             "text": "a=usr($1000)\r",
             "key_duration": 75000,
             "key_interval": 150000
@@ -7993,7 +7994,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "a97f48d36230b3e1d5157498be23c3b63ccedef9c85490859ae995509069fdb8",
+          "framebuffer_sha256": "4ddf63dde8a7cf442989e9d3dc0ccf97e42242c21b4d2dbc7f0225fa1f9155a8",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -8002,7 +8003,7 @@
           }
         },
         "replay_from": "synthetic-start",
-        "replay_offset": 123000000
+        "replay_offset": 158000000
       }
     ]
   }

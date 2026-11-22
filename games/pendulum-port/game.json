@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "pendulum-port",
   "title": "PENDULUM PORT",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Swing on a rope and let go to land on six routes of ever smaller harbour decks.",
   "genre": "action",
   "license": "MIT",

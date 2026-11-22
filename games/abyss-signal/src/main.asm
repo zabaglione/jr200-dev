@@ -14,6 +14,8 @@
 JR_SHADOW:          .equ    0x4000
 JR_SAVE:            .equ    0x4600
 JR_RT:              .equ    0x5600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x5640
 GAME_STATE_END:     .equ    0x56a0
 JR_AUDIO:           .equ    0x56c0
@@ -101,7 +103,24 @@ AS_CHAR_HULL:       .equ    0x99
 AS_CHAR_DIVIDER:    .equ    0x9a
 AS_CHAR_RULE:       .equ    0x9b
 AS_CHAR_SWEEP:      .equ    0x9c
-AS_TILE_SEABED:     .equ    0x00    ; discovery scenes, second PCG bank
+AS_ICON_O2:         .equ    0x00
+AS_ICON_HULL:       .equ    0x01
+AS_ICON_DEPTH:      .equ    0x02
+AS_ICON_RANGE:      .equ    0x03
+AS_ICON_BEARING:    .equ    0x04
+AS_ICON_SAMPLES:    .equ    0x05
+AS_ICON_ENGINE:     .equ    0x06
+AS_ICON_SONAR:      .equ    0x07
+AS_ICON_CONTACT:    .equ    0x08
+AS_ICON_RECORD:     .equ    0x09
+AS_ICON_WAIT:       .equ    0x0a
+AS_ICON_RESET:      .equ    0x0b
+AS_ICON_EXIT:       .equ    0x0c
+AS_ICON_TARGET:     .equ    0x0d
+AS_ICON_WARN:       .equ    0x0e
+AS_ICON_YES:        .equ    0x0f
+AS_ICON_NO:         .equ    0x10
+AS_TILE_SEABED:     .equ    0x00    ; scene bank, restored for title/photos
 AS_TILE_KELP:       .equ    0x04
 AS_TILE_MAST:       .equ    0x08
 AS_TILE_ARCH:       .equ    0x0c
@@ -126,6 +145,8 @@ AS_ATTR_LABEL:      .equ    0x04
 AS_ATTR_TITLE:      .equ    0x06
 AS_ATTR_DIM:        .equ    0x05
 AS_ATTR_WARN:       .equ    0x02
+AS_ATTR_ICON:       .equ    0x46
+AS_ATTR_ICON_WARN:  .equ    0x42
 AS_ATTR_PICK:       .equ    0x06
 
         .org    0x1000
@@ -165,6 +186,20 @@ as_init_clear:
         STAA    [AS_HX]
         LDAA    16
         STAA    [AS_HY]
+        JSR     as_load_icons
+        RTS
+
+as_load_icons:
+        LDX     as_icon_patterns
+        CLRA
+        LDAB    17
+        JMP     jr_pcg_load
+
+as_load_scene_patterns:
+        LDX     as_scene_patterns
+        CLRA
+        LDAB    32
+        JMP     jr_pcg_load
 game_raw_key:
 game_tick:
         RTS
@@ -316,6 +351,7 @@ as_act_question:
         RTS
 as_to_sea:
         CLR     [AS_SUB]
+        JSR     as_load_icons
 as_act_done:
         RTS
 
@@ -681,6 +717,7 @@ as_record_scan:
         BNE     as_record_done
         LDAA    AS_SUB_PHOTO
         STAA    [AS_SUB]
+        JSR     as_load_scene_patterns
         LDX     as_sfx_record
         JMP     jr_sfx_play
 as_record_next:
@@ -706,7 +743,8 @@ game_draw:
         BNE     as_draw_sea
         JMP     as_draw_photo
 as_draw_sea:
-        LDX     as_hud
+        JSR     as_draw_hud_icons
+        LDX     as_hud_units
         JSR     jr_gfx_lines
         ; rules on rows 1 and 20, the divider in column 20
         LDAA    AS_ATTR_RULE
@@ -772,6 +810,49 @@ as_draw_rule_cell:
         BNE     as_draw_rule_cell
         RTS
 
+as_draw_hud_icons:
+        LDAA    AS_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        CLRA
+        CLRB
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_O2
+        JSR     jr_gfx_putc
+        LDAA    23
+        CLRB
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_HULL
+        JSR     jr_gfx_putc
+        LDAA    22
+        LDAB    5
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_DEPTH
+        JSR     jr_gfx_putc
+        LDAB    8
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_RANGE
+        JSR     jr_gfx_putc
+        LDAB    10
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_BEARING
+        JSR     jr_gfx_putc
+        LDAB    12
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_SAMPLES
+        JSR     jr_gfx_putc
+        LDAB    15
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_ENGINE
+        JSR     jr_gfx_putc
+        LDAB    17
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_CONTACT
+        JSR     jr_gfx_putc
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_SONAR
+        JMP     jr_gfx_putc
+
 as_draw_gauges:
         ; O2: the value, a bar of one cell per 20, !!! at 30 or less
         LDAA    AS_ATTR_TEXT
@@ -806,13 +887,13 @@ as_draw_alarm:
         LDAA    [AS_OXYGEN]
         CMPA    30
         BHI     as_draw_hull
-        LDAA    AS_ATTR_WARN
+        LDAA    AS_ATTR_ICON_WARN
         STAA    [JR_RT_COLOR]
         LDAA    19
         CLRB
         JSR     jr_gfx_at
-        LDX     as_txt_alarm
-        JSR     jr_gfx_text
+        LDAA    AS_ICON_WARN
+        JSR     jr_gfx_putc
 as_draw_hull:
         LDAA    AS_ATTR_HULL
         STAA    [JR_RT_COLOR]
@@ -929,6 +1010,9 @@ as_draw_engine:
         STAA    [JR_RT_COLOR]
         LDX     as_txt_contact
 as_draw_contact:
+        LDAA    24
+        LDAB    17
+        JSR     jr_gfx_at
         JSR     jr_gfx_text
         LDAA    AS_ATTR_TEXT
         STAA    [JR_RT_COLOR]
@@ -946,15 +1030,29 @@ as_draw_sonar:
         STAA    [JR_RT_COLOR]
         TST     [AS_STATUS]
         BEQ     as_draw_to
+        LDAA    AS_ATTR_ICON_WARN
+        STAA    [JR_RT_COLOR]
+        CLRA
+        LDAB    21
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_WARN
+        JSR     jr_gfx_putc
         LDAA    AS_ATTR_WARN
         STAA    [JR_RT_COLOR]
-        LDAA    3
+        LDAA    2
         LDAB    21
         JSR     jr_gfx_at
         LDX     as_txt_none
         JMP     jr_gfx_text
 as_draw_to:
-        LDAA    4
+        LDAA    AS_ATTR_SITE
+        STAA    [JR_RT_COLOR]
+        CLRA
+        LDAB    21
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_TARGET
+        JSR     jr_gfx_putc
+        LDAA    2
         LDAB    21
         JSR     jr_gfx_at
         LDX     as_site_names
@@ -1328,6 +1426,7 @@ as_draw_panel_cell:
         BNE     as_draw_panel_row
         LDX     as_panel_lines
         JSR     jr_gfx_lines
+        JSR     as_draw_panel_icons
         LDAA    AS_ATTR_PICK
         STAA    [JR_RT_COLOR]
         LDAA    [AS_MENU]
@@ -1348,18 +1447,73 @@ as_draw_panel_title:
         LDX     as_ask_title_lines
 as_draw_panel_ask:
         JSR     jr_gfx_lines
+        JSR     as_draw_panel_choices
         LDAA    AS_ATTR_PICK
         STAA    [JR_RT_COLOR]
-        LDAA    10
+        LDAA    14
         TST     [AS_CHOICE]
-        BNE     as_draw_panel_choice
-        LDAA    15
-as_draw_panel_choice:
+        BEQ     as_draw_panel_cursor
+        LDAA    9
+as_draw_panel_cursor:
         LDAB    18
         JSR     jr_gfx_at
         LDAA    0x3e
         JMP     jr_gfx_putc
 as_draw_panel_done:
+        RTS
+
+as_draw_panel_icons:
+        LDAA    AS_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    4
+        LDAB    7
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_SONAR
+        JSR     jr_gfx_putc
+        LDAB    9
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_RECORD
+        JSR     jr_gfx_putc
+        LDAB    11
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_ENGINE
+        JSR     jr_gfx_putc
+        LDAB    13
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_WAIT
+        JSR     jr_gfx_putc
+        LDAB    15
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_RESET
+        JSR     jr_gfx_putc
+        LDAB    17
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_EXIT
+        JMP     jr_gfx_putc
+
+as_draw_panel_choices:
+        LDAA    AS_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    10
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_YES
+        JSR     jr_gfx_putc
+        LDAA    11
+        LDAB    18
+        JSR     jr_gfx_at
+        LDX     as_txt_yes
+        JSR     jr_gfx_text
+        LDAA    15
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AS_ICON_NO
+        JSR     jr_gfx_putc
+        LDAA    16
+        LDAB    18
+        JSR     jr_gfx_at
+        LDX     as_txt_no
+        JSR     jr_gfx_text
         RTS
 
 ; A discovery: the site's name, its scene over the seabed and a caption.
@@ -1443,11 +1597,17 @@ as_draw_scene_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     as_title_song
         JSR     jr_music_play
         LDAA    0x20
         LDAB    AS_ATTR_TEXT
         JSR     jr_gfx_fill
+        JSR     as_load_scene_patterns
         LDX     as_title_scene
         JSR     as_draw_scene
         LDX     as_title_lines
@@ -1457,6 +1617,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    AS_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     as_help_diagram
+        JSR     jr_guide_draw
         LDX     as_help_lines
         JMP     jr_gfx_lines
 
@@ -1537,48 +1699,26 @@ as_cap_3:
 as_cap_4:
         .db     "A DARK ORB HUMS UNDER THE SAND", 0
 
-as_hud:
-        .db     0, 0, AS_ATTR_LABEL
-        .dw     as_txt_o2
-        .db     23, 0, AS_ATTR_LABEL
-        .dw     as_txt_hull
-        .db     22, 2, AS_ATTR_TITLE
-        .dw     as_txt_abyss
-        .db     22, 3, AS_ATTR_TITLE
-        .dw     as_txt_signal
-        .db     22, 5, AS_ATTR_LABEL
-        .dw     as_txt_depth
+as_hud_units:
         .db     25, 7, AS_ATTR_DIM
         .dw     as_txt_metres
-        .db     22, 8, AS_ATTR_LABEL
-        .dw     as_txt_range
-        .db     22, 10, AS_ATTR_LABEL
-        .dw     as_txt_bearing
-        .db     22, 12, AS_ATTR_LABEL
-        .dw     as_txt_samples
         .db     26, 13, AS_ATTR_DIM
         .dw     as_txt_of5
-        .db     22, 15, AS_ATTR_LABEL
-        .dw     as_txt_engine
-        .db     22, 18, AS_ATTR_LABEL
-        .dw     as_txt_sonar
-        .db     0, 21, AS_ATTR_LABEL
-        .dw     as_txt_to
         .db     0xff
 as_panel_lines:
         .db     3, 5, AS_ATTR_TITLE
         .dw     as_txt_panel
-        .db     4, 7, AS_ATTR_TEXT
+        .db     6, 7, AS_ATTR_TEXT
         .dw     as_txt_m0
-        .db     4, 9, AS_ATTR_TEXT
+        .db     6, 9, AS_ATTR_TEXT
         .dw     as_txt_m1
-        .db     4, 11, AS_ATTR_TEXT
+        .db     6, 11, AS_ATTR_TEXT
         .dw     as_txt_m2
-        .db     4, 13, AS_ATTR_TEXT
+        .db     6, 13, AS_ATTR_TEXT
         .dw     as_txt_m3
-        .db     4, 15, AS_ATTR_TEXT
+        .db     6, 15, AS_ATTR_TEXT
         .dw     as_txt_m4
-        .db     4, 17, AS_ATTR_TEXT
+        .db     6, 17, AS_ATTR_TEXT
         .dw     as_txt_m5
         .db     0xff
 as_ask_restart_lines:
@@ -1604,66 +1744,61 @@ as_title_lines:
 as_help_lines:
         .db     10, 1, AS_ATTR_TITLE
         .dw     as_txt_name
-        .db     1, 3, AS_ATTR_TEXT
-        .dw     as_help_1
-        .db     1, 5, AS_ATTR_TEXT
-        .dw     as_help_2
-        .db     1, 6, AS_ATTR_TEXT
-        .dw     as_help_3
-        .db     1, 7, AS_ATTR_TEXT
-        .dw     as_help_4
-        .db     1, 9, AS_ATTR_TEXT
-        .dw     as_help_5
-        .db     1, 10, AS_ATTR_TEXT
-        .dw     as_help_6
-        .db     1, 11, AS_ATTR_TEXT
-        .dw     as_help_7
-        .db     1, 13, AS_ATTR_TEXT
-        .dw     as_help_8
-        .db     1, 14, AS_ATTR_TEXT
-        .dw     as_help_9
-        .db     1, 15, AS_ATTR_TEXT
-        .dw     as_help_10
-        .db     1, 17, AS_ATTR_TEXT
-        .dw     as_help_11
-        .db     1, 18, AS_ATTR_TEXT
-        .dw     as_help_12
-        .db     1, 20, AS_ATTR_TEXT
-        .dw     as_help_13
-        .db     7, 22, AS_ATTR_LABEL
-        .dw     as_help_back
+        .db     2, 4, AS_ATTR_LABEL
+        .dw     as_help_label_1
+        .db     21, 8, AS_ATTR_LABEL
+        .dw     as_help_label_2
+        .db     2, 12, AS_ATTR_TEXT
+        .dw     as_help_label_3
+        .db     2, 14, AS_ATTR_TEXT
+        .dw     as_help_label_4
+        .db     2, 16, AS_ATTR_TEXT
+        .dw     as_help_label_5
+        .db     2, 18, AS_ATTR_TEXT
+        .dw     as_help_label_6
+        .db     2, 20, AS_ATTR_TEXT
+        .dw     as_help_label_7
+        .db     2, 22, AS_ATTR_LABEL
+        .dw     as_help_label_8
+        .db     0xff
+as_help_label_1:
+        .db     "RECORD NEXT TO SITE", 0
+as_help_label_2:
+        .db     "5 > HOME", 0
+as_help_label_3:
+        .db     "WASD MOVE   X WAIT   F SONAR", 0
+as_help_label_4:
+        .db     "RETURN / SPACE CONTROL PANEL", 0
+as_help_label_5:
+        .db     "MOVE/WAIT 1 O2  QUIET 2 O2", 0
+as_help_label_6:
+        .db     "SONAR/RECORD 2 O2", 0
+as_help_label_7:
+        .db     "SONAR: 6 ACTIONS, LURES HUNTER", 0
+as_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+as_help_diagram:
+; The sub records beside the site and then sails back to the green base.
+        .db     2, 0x80 + 6, AS_ATTR_SUB, 1, AS_TILE_SUB
+        .db     4, 0x80 + 6, AS_ATTR_SITE, 1, AS_TILE_SITE
+        .db     6, 0x80 + 6, AS_ATTR_ROCK, 1, AS_TILE_ROCK
+        .db     2, 0x80 + 9, AS_ATTR_CURRENT, 1, AS_TILE_CURRENT
+        .db     6, 0x80 + 9, AS_ATTR_HUNTER, 1, AS_TILE_HUNTER
+        .db     10, 7, 0xad, 6, 0x2d, 0x2d, 0x2d, 0x2d, 0x2d, 0x2d
+        .db     16, 7, 0x85, 1, 0x05
+        .db     15, 6, 0x85, 1, 0x00
+        .db     15, 8, 0x80, 1, 0x05
+        .db     19, 0x80 + 5, AS_ATTR_SITE, 5, AS_TILE_SITE, AS_TILE_SITE, AS_TILE_SITE, AS_TILE_SITE, AS_TILE_SITE
+        .db     29, 0x80 + 8, AS_ATTR_BASE, 1, AS_TILE_SITE
         .db     0xff
 
 as_txt_name:
         .db     "ABYSS SIGNAL", 0
-as_txt_o2:
-        .db     "O2", 0
-as_txt_hull:
-        .db     "HULL", 0
-as_txt_alarm:
-        .db     "!!!", 0
-as_txt_abyss:
-        .db     "ABYSS", 0
-as_txt_signal:
-        .db     "SIGNAL", 0
-as_txt_depth:
-        .db     "DEPTH", 0
 as_txt_metres:
         .db     "X10 M", 0
-as_txt_range:
-        .db     "RANGE", 0
-as_txt_bearing:
-        .db     "BEARING", 0
-as_txt_samples:
-        .db     "SAMPLES", 0
 as_txt_of5:
         .db     "/005", 0
-as_txt_engine:
-        .db     "ENGINE", 0
-as_txt_sonar:
-        .db     "SONAR", 0
-as_txt_to:
-        .db     "TO:", 0
 as_txt_cruise:
         .db     "CRUISE", 0
 as_txt_silent:
@@ -1677,7 +1812,7 @@ as_txt_contact:
 as_txt_clear:
         .db     "CLEAR", 0
 as_txt_none:
-        .db     "NO SITE IN RECORDING RANGE", 0
+        .db     "NO SITE", 0
 as_txt_here:
         .db     "HERE", 0
 as_txt_n:
@@ -1699,23 +1834,27 @@ as_txt_ne:
 as_txt_se:
         .db     "SE", 0
 as_txt_panel:
-        .db     "CONTROL PANEL", 0
+        .db     "ORDERS", 0
 as_txt_m0:
-        .db     "SONAR PING", 0
+        .db     "PING", 0
 as_txt_m1:
-        .db     "RECORD SITE", 0
+        .db     "RECORD", 0
 as_txt_m2:
-        .db     "QUIET MODE", 0
+        .db     "QUIET", 0
 as_txt_m3:
         .db     "WAIT", 0
 as_txt_m4:
-        .db     "RESTART", 0
+        .db     "RESET", 0
 as_txt_m5:
         .db     "TITLE", 0
 as_txt_ask_restart:
-        .db     "RESTART?  YES  NO", 0
+        .db     "RESET?", 0
 as_txt_ask_title:
-        .db     "TITLE?    YES  NO", 0
+        .db     "TITLE?", 0
+as_txt_yes:
+        .db     "YES", 0
+as_txt_no:
+        .db     "NO", 0
 as_txt_archive:
         .db     "ARCHIVE SAVED / RETURN", 0
 as_txt_lost:
@@ -1732,34 +1871,6 @@ as_txt_howto:
         .db     "OTHER KEY : FIELD GUIDE", 0
 as_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-as_help_1:
-        .db     "SURVEY FIVE SITES. RETURN HOME.", 0
-as_help_2:
-        .db     "W/A/S/D : MOVE ONE CELL", 0
-as_help_3:
-        .db     "RETURN/SPACE : CONTROL PANEL", 0
-as_help_4:
-        .db     "F : SONAR   X : WAIT", 0
-as_help_5:
-        .db     "RECORD FROM AN ADJACENT CELL.", 0
-as_help_6:
-        .db     "ROCK IMPACTS DAMAGE THE HULL.", 0
-as_help_7:
-        .db     "CURRENTS PUSH AND COST 1 O2.", 0
-as_help_8:
-        .db     "EACH MOVE / WAIT COSTS 1 O2.", 0
-as_help_9:
-        .db     "QUIET: COST 2, SLOWER PURSUER.", 0
-as_help_10:
-        .db     "SONAR / RECORD COST 2 O2.", 0
-as_help_11:
-        .db     "SONAR REVEALS FOR SIX ACTIONS.", 0
-as_help_12:
-        .db     "ITS NOISE ATTRACTS THE HUNTER.", 0
-as_help_13:
-        .db     "PANELS AND PHOTOS PAUSE TIME.", 0
-as_help_back:
-        .db     "ANY KEY : TITLE", 0
 
         .include "world.inc"
 
@@ -1822,7 +1933,7 @@ as_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1830,5 +1941,11 @@ as_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

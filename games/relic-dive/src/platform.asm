@@ -25,6 +25,7 @@ END_SOUND_DURATION:
 END_SOUND_WAIT:
     DEX
     BNE END_SOUND_WAIT
+    JSR POLL_KEY
     DEC [SOUND_DURATION]
     BNE END_SOUND_DURATION
     JSR jr_sound_c_stop
@@ -35,7 +36,11 @@ END_SOUND_WAIT:
 END_SOUND_DONE_PLAYING:
     JSR jr_sound_c_stop
     JSR POLL_KEY
+    LDAA [G_MODE]
+    CMPA 8
+    BCS END_SOUND_INPUT_READY
     CLR [G_PENDING]
+END_SOUND_INPUT_READY:
 END_SOUND_DONE:
     RTS
 END_NOTES:
@@ -292,7 +297,9 @@ POLL_KEY:
     STX [POLL_SAVE_X]
     LDAA [JR200_KEY_IRQ_STATUS]
     BITA 1
-    BEQ POLL_DONE
+    BNE POLL_HAS_EVENT
+    JMP POLL_DONE
+POLL_HAS_EVENT:
     LDAA [JR200_KEY_DATA]
     CMPA 0x1B
     BEQ POLL_EXIT
@@ -332,20 +339,90 @@ POLL_KEY:
     BEQ POLL_SAMPLE
     BRA POLL_DONE
 POLL_EXIT:
-    JMP EXIT_GAME
+    LDAA 1
+    STAA [EXIT_PENDING]
+    BRA POLL_DONE
 POLL_CONFIRM:
     LDAB 5
     BRA POLL_SAMPLE
 POLL_BACK:
     LDAB 6
 POLL_SAMPLE:
-    STAB [G_PREVIOUS]
-    ; First pending edge wins until dispatch consumes it.
-    TST [G_PENDING]
+    ; During gameplay sound, movement is useful to queue; menu/back actions are not.
+    TST [SOUND_DURATION]
+    BEQ POLL_QUEUE_ALLOWED
+    LDAA [G_MODE]
+    CMPA 1
     BNE POLL_DONE
-    STAB [G_PENDING]
+    CMPB 5
+    BEQ POLL_DONE
+    CMPB 6
+    BEQ POLL_DONE
+POLL_QUEUE_ALLOWED:
+    ; Keep a short FIFO so one slow frame cannot collapse several key edges.
+    LDAA [G_PENDING]
+    CMPA INPUT_QUEUE_CAPACITY
+    BCC POLL_DONE
+    STAB [KEY_VALUE]
+    STAB [G_PREVIOUS]
+    LDX INPUT_QUEUE
+    LDAA [G_PENDING]
+    BEQ POLL_QUEUE_ACTION_READY
+    INX
+    DECA
+    BEQ POLL_QUEUE_ACTION_READY
+    INX
+    DECA
+    BEQ POLL_QUEUE_ACTION_READY
+    INX
+POLL_QUEUE_ACTION_READY:
+    LDAA [KEY_VALUE]
+    STAA [X]
+    LDX INPUT_QUEUE_MODES
+    LDAA [G_PENDING]
+    BEQ POLL_QUEUE_MODE_READY
+    INX
+    DECA
+    BEQ POLL_QUEUE_MODE_READY
+    INX
+    DECA
+    BEQ POLL_QUEUE_MODE_READY
+    INX
+POLL_QUEUE_MODE_READY:
+    LDAA [G_MODE]
+    STAA [X]
+    INC [G_PENDING]
 POLL_DONE:
     LDX [POLL_SAVE_X]
+    RTS
+
+; Pop the oldest action and its source mode. Shift the remaining four-byte FIFO.
+DEQUEUE_INPUT:
+    LDX INPUT_QUEUE
+    LDAA [X]
+    STAA [G_KEY]
+    LDX INPUT_QUEUE_MODES
+    LDAA [X]
+    STAA [KEY_VALUE]
+    LDAA [G_PENDING]
+    DECA
+    STAA [G_PENDING]
+    BEQ DEQUEUE_INPUT_DONE
+    LDX INPUT_QUEUE
+    LDAB [X + 1]
+    STAB [X]
+    LDAA [X + 2]
+    STAA [X + 1]
+    LDAB [X + 3]
+    STAB [X + 2]
+    LDX INPUT_QUEUE_MODES
+    LDAB [X + 1]
+    STAB [X]
+    LDAA [X + 2]
+    STAA [X + 1]
+    LDAB [X + 3]
+    STAB [X + 2]
+DEQUEUE_INPUT_DONE:
     RTS
 ; Clear only text rows when the map renderer will overwrite all terrain cells.
 
@@ -565,6 +642,10 @@ COLOR_CHECK_DONE:
     LDX [COLOR_ATTR_PTR]
     CPX JR200_SCREEN_ATTRIBUTES_END
     BEQ COLOR_DONE
+    LDAA [COLOR_COL]
+    BNE COLOR_NEXT_CELL
+    JSR POLL_KEY
+COLOR_NEXT_CELL:
     JMP COLOR_NEXT
 COLOR_DONE:
     RTS

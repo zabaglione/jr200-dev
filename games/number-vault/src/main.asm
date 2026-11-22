@@ -10,6 +10,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -531,6 +533,11 @@ nv_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     nv_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -550,6 +557,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    NV_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     nv_help_diagram
+        JSR     jr_guide_draw
         LDX     nv_help_lines
         JMP     jr_gfx_lines
 
@@ -584,24 +593,63 @@ nv_title_lines:
         .dw     nv_txt_credit
         .db     0xff
 nv_help_lines:
-        .db     10, 2, NV_ATTR_TITLE
+        .db     10, 1, NV_ATTR_TITLE
         .dw     nv_txt_name
-        .db     1, 5, NV_ATTR_TEXT
-        .dw     nv_help_1
-        .db     1, 7, NV_ATTR_TEXT
-        .dw     nv_help_2
-        .db     1, 9, NV_ATTR_TEXT
-        .dw     nv_help_3
-        .db     1, 11, NV_ATTR_TEXT
-        .dw     nv_help_4
-        .db     1, 13, NV_ATTR_TEXT
-        .dw     nv_help_5
-        .db     1, 15, NV_ATTR_TEXT
-        .dw     nv_help_6
-        .db     1, 17, NV_ATTR_TEXT
-        .dw     nv_help_7
-        .db     1, 20, NV_ATTR_LABEL
-        .dw     nv_help_back
+        .db     2, 4, NV_ATTR_LABEL
+        .dw     nv_help_label_1
+        .db     2, 8, NV_ATTR_LABEL
+        .dw     nv_help_label_2
+        .db     10, 12, NV_ATTR_TEXT
+        .dw     nv_help_label_3
+        .db     19, 12, NV_ATTR_TEXT
+        .dw     nv_help_label_4
+        .db     2, 16, NV_ATTR_TEXT
+        .dw     nv_help_label_5
+        .db     2, 18, NV_ATTR_TEXT
+        .dw     nv_help_label_6
+        .db     2, 20, NV_ATTR_TEXT
+        .dw     nv_help_label_7
+        .db     2, 22, NV_ATTR_LABEL
+        .dw     nv_help_label_8
+        .db     0xff
+nv_help_label_1:
+        .db     "CODE", 0
+nv_help_label_2:
+        .db     "TRY", 0
+nv_help_label_3:
+        .db     "EXACT", 0
+nv_help_label_4:
+        .db     "NEAR X2", 0
+nv_help_label_5:
+        .db     "A/D DIAL  W/S 1-4  RETURN TEST", 0
+nv_help_label_6:
+        .db     "OPEN WITHIN 10 TRIES", 0
+nv_help_label_7:
+        .db     "SPACE RETRY  CTRL+C BASIC", 0
+nv_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+nv_help_diagram:
+; One exact match, two swapped digits, and a digit absent from the code.
+        .db     10, 4, NV_ATTR_EXACT, 1, 0x31
+        .db     13, 4, NV_ATTR_NEAR, 1, 0x32
+        .db     16, 4, NV_ATTR_NEAR, 1, 0x33
+        .db     19, 4, NV_ATTR_TEXT, 1, 0x34
+        .db     10, 8, NV_ATTR_EXACT, 1, 0x31
+        .db     13, 8, NV_ATTR_NEAR, 1, 0x33
+        .db     16, 8, NV_ATTR_NEAR, 1, 0x32
+        .db     19, 8, NV_ATTR_TEXT, 1, 0x33
+        .db     10, 5, 0xa4, 1, 0x24
+        .db     10, 6, 0xa4, 1, 0x24
+        .db     10, 7, 0xa4, 1, 0x24
+        .db     13, 5, 0x86, 1, 0x06
+        .db     14, 6, 0x80, 2, 0x36, 0x36
+        .db     16, 7, 0x86, 1, 0x06
+        .db     16, 5, 0xb0, 1, 0x30
+        .db     13, 7, 0xb0, 1, 0x30
+        .db     10, 11, 0xa4, 1, 0x24
+        .db     19, 11, 0xb6, 2, 0x36, 0x36
+        .db     25, 0x80 + 5, NV_ATTR_DOOR, 1, NV_TILE_DOOR
         .db     0xff
 
 nv_txt_name:
@@ -628,22 +676,6 @@ nv_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 nv_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-nv_help_1:
-        .db     "A/D : SELECT A DIAL", 0
-nv_help_2:
-        .db     "W/S : DIGIT ONE TO FOUR", 0
-nv_help_3:
-        .db     "RETURN : TEST YOUR CODE", 0
-nv_help_4:
-        .db     "EXACT: RIGHT DIGIT, RIGHT SLOT.", 0
-nv_help_5:
-        .db     "NEAR: RIGHT DIGIT, WRONG SLOT.", 0
-nv_help_6:
-        .db     "OPEN THE VAULT IN TEN TRIES.", 0
-nv_help_7:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-nv_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -695,7 +727,7 @@ nv_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -703,5 +735,11 @@ nv_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

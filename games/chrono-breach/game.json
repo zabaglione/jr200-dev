@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "chrono-breach",
   "title": "CHRONO BREACH",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Time moves only when you do: read the guards' firing lines, strike or shoot them down and reach the exit across twenty sectors.",
   "genre": "tactics",
   "license": "MIT",

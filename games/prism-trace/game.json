@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "prism-trace",
   "title": "PRISM TRACE",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Turn six mirrors so the light beam from the left reaches the top-right receiver.",
   "genre": "puzzle",
   "license": "MIT",

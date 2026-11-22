@@ -7,8 +7,8 @@
       "profile": "local-rom-gallery-title",
       "role": "title",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、タイトル画面（画面全体・無加工）",
-      "sha256": "fff62800dbb99bd27695471410b5c13ae55f904ebe33f26a5afb3f007ae7903f",
-      "framebuffer_sha256": "fca6b63a8f6abfe75a66d5c7fd8c451f11600db33ebef9388b06ed4e7818e765"
+      "sha256": "e7c544ddac35d3af127216e1ed741646bdbbd21187083ce90ae5c2be5806498e",
+      "framebuffer_sha256": "0e3754e3ef4caa5953a1032b7873f769d981b6b536ac890a44578dce0076fc5c"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "local-rom-gallery-play",
       "role": "play",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、1日目に壁を作った夜。雪が降り、3夜の予報が見える（画面全体・無加工）",
-      "sha256": "b0439d6fa306bd1ba3f58917834e2e7bca2382f16ad163dbd1908cc7e168470d",
-      "framebuffer_sha256": "76949a071500fe6869b58c128b0b96380526f59926753570e8d602bdbe023208"
+      "sha256": "23edff845046c997893443797d77436304bc7407279240aa8c5c330662a8164c",
+      "framebuffer_sha256": "c2f8e05da0275f23e98d013f0e61209683657d28efc30d81ca8388687371ad69"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "local-rom-gallery-goal",
       "role": "goal",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、最初の寒波の12夜を生き延びた（画面全体・無加工）",
-      "sha256": "b88df4118d9cbf93aa7d321302d29cf0de40ce5cf43eea577ac17d9b5a63a98f",
-      "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48"
+      "sha256": "0b076356be9daa55e6c9a9dfd32d6f84fe03f6a94773bcc645d49edc1d307b0c",
+      "framebuffer_sha256": "7668357431116ba43dc17f1fdcb840d4620d2e50bf42804ff8b6ffd2be258fa9"
     }
   ],
   "video": {
@@ -34,19 +34,19 @@
     "profile": "local-rom-gallery-goal",
     "fps": 30,
     "speed": 1,
-    "seconds": 28.1,
-    "frames": 842,
-    "frames_sha256": "da03c2ebf8654ba08b58dfeaa79fd16a33a38fa07c3649c53c809fdfcc2914b8",
-    "pcm_sha256": "255206836a1f037cd711c01630628eee5f3e95f582af9c0cf37717d2251159c5",
-    "sha256": "a6f46d240e1030d4d182579a9d8a0f775dd94a9ff47ef63b2bf98bc76f66a3c9",
+    "seconds": 28.2,
+    "frames": 845,
+    "frames_sha256": "220d9923cc6b6a8ce8159aff399bc167167716834836c91e62ceba7c7ca1d142",
+    "pcm_sha256": "1a2034d33eff1cf2e9bb519101a84adafe3850e5ff82703eea2f5b81fa677f4c",
+    "sha256": "c9e8dc04da44395ce5adaf015396e972787693c4900d91faaaaaabb6437c729a",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、最初の寒波の12夜を越えるまで（音付き）（画面全体・無加工）",
     "mode": "rom-cassette",
-    "artifact_sha256": "79395367d52bf7750281250a58bdc71cd141475e75576979df9d73ea3792cdab",
+    "artifact_sha256": "bda01856d4a333495b6a7e2d1dfb3ccddbc5c245d3acba07f7b7ac395a919eef",
     "start_cycle": 83500000
   },
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "79395367d52bf7750281250a58bdc71cd141475e75576979df9d73ea3792cdab",
+    "artifact_sha256": "bda01856d4a333495b6a7e2d1dfb3ccddbc5c245d3acba07f7b7ac395a919eef",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }

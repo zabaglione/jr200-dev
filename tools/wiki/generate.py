@@ -312,12 +312,36 @@ def package_path(root: Path, entry: dict[str, Any], packages: Path | None) -> Pa
     return entry['_project'] / 'build/package' / entry['package']['file']
 
 
-def package_license_paths(root: Path, entry: dict[str, Any]) -> dict[str, Path]:
+def package_source_file(root: Path, path: Path, source_commit: str | None) -> bytes:
+    if source_commit is None:
+        return path.read_bytes()
+    relative = path.relative_to(root.resolve()).as_posix()
+    try:
+        return subprocess.run(
+            ['git', 'cat-file', 'blob', f'{source_commit}:{relative}'], cwd=root,
+            capture_output=True, check=True, timeout=10).stdout
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise WikiError(f'Cannot read package source file: {relative}') from exc
+
+
+def package_license_paths(root: Path, entry: dict[str, Any],
+                          source_commit: str | None) -> dict[str, Path]:
+    root = root.resolve()
     if entry['_metadata']['license'] == 'BSD-3-Clause':
         return {'LICENSE': root / 'LICENSE'}
-    paths = {'LICENSE': entry['_project'] / 'LICENSE'}
-    if entry['_spec'].sdk_inputs:
-        paths['THIRD_PARTY_NOTICES.md'] = entry['_project'] / 'THIRD_PARTY_NOTICES.md'
+    project = entry['_project']
+    sdk_inputs = entry['_spec'].sdk_inputs
+    if source_commit is not None:
+        try:
+            config = json.loads(package_source_file(root, project / 'build.json', source_commit))
+            sdk_inputs = config['inputs']['sdk']
+            if not isinstance(sdk_inputs, list):
+                raise TypeError('SDK inputs must be a list')
+        except (KeyError, TypeError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise WikiError(f'{entry["id"]}: invalid package source build configuration') from exc
+    paths = {'LICENSE': project / 'LICENSE'}
+    if sdk_inputs:
+        paths['THIRD_PARTY_NOTICES.md'] = project / 'THIRD_PARTY_NOTICES.md'
         paths['LICENSES/BSD-3-Clause.txt'] = root / 'LICENSE'
     return paths
 
@@ -331,25 +355,36 @@ def load_package(root: Path, entry: dict[str, Any], packages: Path | None,
     if sha256_file(path) != entry['package']['sha256']:
         raise WikiError(f'{entry["id"]}: package hash mismatch')
     prefix = f'{entry["id"]}-{entry["version"]}/'
-    license_paths = package_license_paths(root, entry)
     fixed = {
         prefix + name for name in (
             'BUILD_REPORT.json', 'README.md', 'RELEASE.json',
             'SHA256SUMS', 'game.json', entry['_metadata']['distribution']['file'])
     }
-    fixed.update(prefix + name for name in license_paths)
     try:
         with zipfile.ZipFile(path) as archive:
             names = set(safe_archive_names(archive))
             if not fixed.issubset(names):
                 raise WikiError(f'{entry["id"]}: package is missing required files')
             release = json.loads(archive.read(prefix + 'RELEASE.json').decode('utf-8'))
+            source = release.get('source') if isinstance(release, dict) else None
+            if not isinstance(source, dict):
+                raise WikiError(f'{entry["id"]}: package release contract mismatch')
+            source_commit = None
+            if require_release_ready:
+                source_commit = source.get('commit')
+                if not commit_is_ancestor(root, source_commit, expected_commit):
+                    raise WikiError(f'{entry["id"]}: package release contract mismatch')
+            license_paths = package_license_paths(root, entry, source_commit)
+            fixed.update(prefix + name for name in license_paths)
+            if not fixed.issubset(names):
+                raise WikiError(f'{entry["id"]}: package is missing required files')
             metadata = json.loads(archive.read(prefix + 'game.json').decode('utf-8'))
             build_report = json.loads(
                 archive.read(prefix + 'BUILD_REPORT.json').decode('utf-8'))
             archive.read(prefix + 'README.md').decode('utf-8')
             for name, license_path in license_paths.items():
-                if archive.read(prefix + name) != license_path.read_bytes():
+                source_bytes = package_source_file(root, license_path, source_commit)
+                if archive.read(prefix + name) != source_bytes:
                     raise WikiError(f'{entry["id"]}: package license or notice mismatch')
             artifact = archive.read(prefix + entry['_metadata']['distribution']['file'])
             parsed_artifact = parse_cjr(artifact)
@@ -377,7 +412,6 @@ def load_package(root: Path, entry: dict[str, Any], packages: Path | None,
         raise WikiError(f'{entry["id"]}: package cannot be inspected: {exc}') from exc
     profiles = release.get('verification', {}).get('runtime_profiles', [])
     evidence = {item.get('evidence') for item in profiles if isinstance(item, dict)}
-    source = release.get('source', {})
     artifact_record = release.get('artifact', {})
     compatibility = release.get('compatibility', {})
     runner_version = semantic_version(compatibility.get('runner_version'))
@@ -394,8 +428,6 @@ def load_package(root: Path, entry: dict[str, Any], packages: Path | None,
     immutable_metadata = {
         key for key in entry['_metadata'] if key not in ('title', 'summary', 'genre')
     }
-    source_is_eligible = (not require_release_ready or commit_is_ancestor(
-        root, source.get('commit'), expected_commit))
     if (not isinstance(release, dict) or release.get('schema_version') != 1
             or any(packaged_metadata.get(key) != entry['_metadata'].get(key)
                    for key in immutable_metadata)
@@ -450,8 +482,7 @@ def load_package(root: Path, entry: dict[str, Any], packages: Path | None,
             or expectation_hashes != {source['expectations_sha256']}
             or type(release.get('release_ready')) is not bool
             or release.get('release_ready') != (source.get('tree_state') == 'clean')
-            or (require_release_ready and release.get('release_ready') is not True)
-            or not source_is_eligible):
+            or (require_release_ready and release.get('release_ready') is not True)):
         raise WikiError(f'{entry["id"]}: package release contract mismatch')
     return {
         'release': release,
@@ -836,6 +867,27 @@ def tier_sections(entries: list[dict[str, Any]], genres: dict[str, dict[str, str
     return lines
 
 
+def title_gallery(entries: list[dict[str, Any]]) -> list[str]:
+    cells = []
+    for entry in entries:
+        image = entry['_title_image']
+        if image is None:
+            continue
+        title = html.escape(entry['_metadata']['title'], quote=True)
+        page = f'Game-{entry["wiki"]["slug"]}'
+        cells.append(f'<td width="33%" align="center" valign="top"><a href="{page}">'
+                     f'<img src="{image}" alt="{title}のタイトル画面" width="320"><br>'
+                     f'{title}</a></td>')
+    if not cells:
+        return []
+    columns = 3
+    cells.extend(['<td></td>'] * (-len(cells) % columns))
+    lines = ['## タイトル画面', '', '<table width="100%">']
+    for index in range(0, len(cells), columns):
+        lines.extend(['<tr>', *cells[index:index + columns], '</tr>'])
+    return [*lines, '</table>', '', '## 作品情報', '']
+
+
 def verification_rows(entry: dict[str, Any]) -> list[str]:
     profiles = runtime_profiles(entry['_project'])
     synthetic = sum(1 for item in profiles.values() if item.get('mode') == 'synthetic-injection')
@@ -1036,6 +1088,7 @@ def render_pages(root: Path, packages: Path | None,
         metadata = entry['_metadata']
         entry['_intro'] = first_paragraph(readme_parts(entry['_readme'])[0], metadata['summary'])
         files[f'media/{slug}.png'] = entry['_thumbnail']
+        entry['_title_image'] = None
         gallery = entry['_gallery']
         if gallery is None:
             entry['_scenes'] = [{'path': f'media/{slug}.png',
@@ -1050,6 +1103,8 @@ def render_pages(root: Path, packages: Path | None,
                 path = f'media/{slug}-{scene["id"]}.png'
                 files[path] = scene['bytes']
             entry['_scenes'].append({'path': path, 'caption': scene['caption']})
+            if scene['role'] == 'title' and entry['_title_image'] is None:
+                entry['_title_image'] = path
         video = gallery['video']
         if video is None:
             entry['_video'] = None
@@ -1111,13 +1166,19 @@ def render_pages(root: Path, packages: Path | None,
     rows = ['| 作品 | ジャンル | 状態 | 版 | 紹介 |', '| --- | --- | --- | --- | --- |']
     for entry in selected:
         genre = genres[entry['genre']]
-        rows.append(f'| [{entry["_metadata"]["title"]}](Game-{entry["wiki"]["slug"]}) | '
+        title = entry['_metadata']['title']
+        page = f'Game-{entry["wiki"]["slug"]}'
+        rows.append(f'| [{title}]({page}) | '
                     f'[{genre["title"]}]({genre["page"]}) | {TIERS[entry["tier"]]} | '
                     f'`{entry["version"]}` | {first_sentence(entry["_intro"])} |')
+    gallery = title_gallery(selected)
+    navigation = '[Home](Home) › 全作品'
+    if gallery:
+        navigation += ' · [作品情報を見る](#user-content-作品情報)'
     files['All-Games.md'] = '\n'.join([
-        '# 全作品', '', '[Home](Home) › 全作品', '',
-        'タイトル順の一覧です。' + ('この表示にはローカルプレビューの作品も含みます。'
-                           if preview else ''), '',
+        '# 全作品', '', navigation, '',
+        *(['この表示にはローカルプレビューの作品も含みます。', ''] if preview else []),
+        *gallery,
         *(rows if selected else ['公開作品準備中']), '',
     ]).encode('utf-8')
     files['Games.md'] = '\n'.join([

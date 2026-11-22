@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。砂地、足跡、探検家、岩、光",
-      "sha256": "7572f0f7837e7feea285cca3e7534a2a2aed773e0fba1e670b8d84f9fb9cb3c4",
-      "framebuffer_sha256": "4f92bb2b7f4c0530cc87c068ad521afb5c4314a0cef1647fefb6988dc542845a"
+      "sha256": "e3927ce014863673be280d1645eb3bcf61206a64d34c8be46bfa18aa18b4ef63",
+      "framebuffer_sha256": "cf6cfa1aae1b9c86a71a27577a3528a205d11e12e5568cc06964863d3f85f6a9"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-survey",
       "role": "play",
       "caption": "岩にぶつかった後、東へ2歩進んで測り直した場面",
-      "sha256": "6458f08ab93be520539f3f0422f860ddd5b8455a8a8b8d0cda66c1750ce15579",
-      "framebuffer_sha256": "c854e857e66ae4be9f98e6c05279686da4ea74cbb7a63e075c5e175d8885a89b"
+      "sha256": "5c56a287017bca3431b9ddfe6395c573bffe9a9adbcb5912f46796be1c9ac2aa",
+      "framebuffer_sha256": "9f599d6c9d6918587cead2dd4f451016f527c67156550e51a64b9373321a84e3"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "遺物を掘り当てた1地点目のクリア",
-      "sha256": "566dd984ed54de24abd53a5e6fa9e3d55f15809975a5039a9f537eba364a796a",
-      "framebuffer_sha256": "43df75aaf5fdd958e69074da81fb29976a68b753718269159694c205115518a8"
+      "sha256": "8ca1044bc1669691c3e5d8ad10976e2e9d0e7b72edca45ce643992bcefe07eaa",
+      "framebuffer_sha256": "7676429e27624de8e9bfbe9d8802077da29ed54d36d39a87bd33d3907c54ce2a"
     }
   ],
   "video": {
@@ -35,10 +35,10 @@
     "fps": 30,
     "speed": 1.0,
     "seconds": 5.4,
-    "frames": 161,
-    "frames_sha256": "9a3054684c07af39ae2fdc8cc1f96a263cd2245eded7b8931130bcd69c98674b",
-    "pcm_sha256": "b027738068c7a576992519df251279beeddc7916ecad4011c470993c682cc213",
-    "sha256": "ee22fdebb8f24880e1bb65dd2e46caf39ed46e49799635fe8b4f3b356edd551d",
+    "frames": 163,
+    "frames_sha256": "4e235df253a6d2c851813260077a29ffaa76bf2aed317485a296725141d9ed49",
+    "pcm_sha256": "7aa336afbb8d2225c6e0d9cda1999b5049c8b3113a56e104ed8053933b7445d0",
+    "sha256": "8fec9abb15fd3bba0d2279e57c23da4149947f6692653cedf5d1fb47e30f8913",
     "caption": "1地点目で測定し、岩を回り込んで遺物を掘り当てるまで"
   }
 }

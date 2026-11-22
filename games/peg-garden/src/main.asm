@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -370,6 +372,11 @@ pg_cell_xy:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     pg_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -405,6 +412,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    PG_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     pg_help_diagram
+        JSR     jr_guide_draw
         LDX     pg_help_lines
         JMP     jr_gfx_lines
 
@@ -455,24 +464,49 @@ pg_title_lines:
         .dw     pg_txt_credit
         .db     0xff
 pg_help_lines:
-        .db     10, 2, PG_ATTR_TITLE
+        .db     11, 1, PG_ATTR_TITLE
         .dw     pg_txt_name
-        .db     2, 5, PG_ATTR_TEXT
-        .dw     pg_help_1
-        .db     2, 7, PG_ATTR_TEXT
-        .dw     pg_help_2
-        .db     2, 9, PG_ATTR_TEXT
-        .dw     pg_help_3
-        .db     2, 11, PG_ATTR_TEXT
-        .dw     pg_help_4
-        .db     2, 13, PG_ATTR_TEXT
-        .dw     pg_help_5
-        .db     2, 15, PG_ATTR_TEXT
-        .dw     pg_help_6
-        .db     2, 17, PG_ATTR_TEXT
-        .dw     pg_help_7
-        .db     2, 20, PG_ATTR_LABEL
-        .dw     pg_help_back
+        .db     2, 4, PG_ATTR_LABEL
+        .dw     pg_help_label_1
+        .db     22, 4, PG_ATTR_LABEL
+        .dw     pg_help_label_2
+        .db     2, 14, PG_ATTR_TEXT
+        .dw     pg_help_label_3
+        .db     2, 16, PG_ATTR_TEXT
+        .dw     pg_help_label_4
+        .db     2, 18, PG_ATTR_TEXT
+        .dw     pg_help_label_5
+        .db     2, 20, PG_ATTR_TEXT
+        .dw     pg_help_label_6
+        .db     2, 22, PG_ATTR_LABEL
+        .dw     pg_help_label_7
+        .db     0xff
+pg_help_label_1:
+        .db     "PEG OVER PEG", 0
+pg_help_label_2:
+        .db     "LAND", 0
+pg_help_label_3:
+        .db     "WASD SELECT   RETURN PEG/HOLE", 0
+pg_help_label_4:
+        .db     "LEAVE 5 PEGS OR FEWER", 0
+pg_help_label_5:
+        .db     "SPACE RESTORE GARDEN", 0
+pg_help_label_6:
+        .db     "CTRL+C BASIC", 0
+pg_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+pg_help_diagram:
+; The moving peg leaps over one peg, removing only the jumped peg.
+        .db     2, 0x80 + 7, PG_ATTR_PEG, 2, PG_TILE_PEG, PG_TILE_PEG
+        .db     6, 0x80 + 7, PG_ATTR_HOLE, 1, PG_TILE_HOLE
+        .db     4, 6, 0x06, 3, 0x3e, 0x3e, 0x3e
+        .db     12, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     22, 0x80 + 7, PG_ATTR_HOLE, 2, PG_TILE_HOLE, PG_TILE_HOLE
+        .db     26, 0x80 + 7, PG_ATTR_PEG, 1, PG_TILE_PEG
         .db     0xff
 
 pg_txt_name:
@@ -497,22 +531,6 @@ pg_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 pg_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-pg_help_1:
-        .db     "WASD : SELECT A CELL", 0
-pg_help_2:
-        .db     "RETURN : PEG, THEN HOLE", 0
-pg_help_3:
-        .db     "JUMP OVER ONE ADJACENT PEG.", 0
-pg_help_4:
-        .db     "THE JUMPED PEG IS REMOVED.", 0
-pg_help_5:
-        .db     "LEAVE FIVE PEGS OR FEWER.", 0
-pg_help_6:
-        .db     "SPACE : RESTORE THE GARDEN", 0
-pg_help_7:
-        .db     "CTRL+C : BACK TO BASIC", 0
-pg_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -562,7 +580,7 @@ pg_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -570,5 +588,11 @@ pg_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

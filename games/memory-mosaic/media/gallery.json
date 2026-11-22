@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。8種類の絵柄と色",
-      "sha256": "1dbe00594e0b2111e592149c3b873d90c9149a3d49bdb0784fa491618140898e",
-      "framebuffer_sha256": "93b5f2d92212acf87642e4dc20df90e41298c626cb6b2366b1bfb883a2295541"
+      "sha256": "5e804f2cff0eeae382b9cb8f3419d7ff979648ae21b7bad0824959bd6fc44ad8",
+      "framebuffer_sha256": "b8859a3d8fa28165df724fe17ec04b90204bce7e1829153ea6bce43803316df9"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-match",
       "role": "play",
       "caption": "最初の2枚が同じ絵柄でそろった場面",
-      "sha256": "7d216d8b7d6fa830ccf060c676a4a64cf48efb901f857940e04ebd8836e6f768",
-      "framebuffer_sha256": "8f95f61e44aa321a549c3da14a4d96b701ab04f59f70ac6b6fda848b303f6efd"
+      "sha256": "d9d9d4a138ba2a40cc5276352b3ae01d0488291b3ca1234623724ab2e1e8b575",
+      "framebuffer_sha256": "668f8291bef87fa2aab85496167cdb0db055491298bc324e27c9099a8e7c3f00"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "8組がそろって1面クリア",
-      "sha256": "078694c2dc9e2736564953892b67de4b9964af939b26c75487381bafe8f0059b",
-      "framebuffer_sha256": "36d5988a3c7b0280db6d608f12d4cb14681567c190e763c904de672b0bb82a92"
+      "sha256": "b2e893d3ba016e4c7d39738d1be7dfb3a2031aa1e38fca932f79b21c85cc81d0",
+      "framebuffer_sha256": "ec11791ab1fc723de60fedd438d0c795ced0faa43dc9c24517a89d28d21d0c6c"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 18.6,
-    "frames": 557,
-    "frames_sha256": "7d33fa872bcbfb24cd9c1e93df9334d7115f846240e8aeb6706ca3aac15c1a23",
-    "pcm_sha256": "99385d5edd7e2748222a368c08969bd631035fddda9bac6791c21a3463af8298",
-    "sha256": "05dab94115e01943292a94b365b95eebc4e58d78a3fbf766bc5742e070bfd2ab",
+    "seconds": 18.9,
+    "frames": 568,
+    "frames_sha256": "637ef8f0652c018bd8729056a8ea60e92fd2955893297cfca5dcaca09bef33e5",
+    "pcm_sha256": "565bae14f38ecb7aca2bd24c7b5b0e6fd0d46ab390b4c66ed4f72f91d8f4f3cf",
+    "sha256": "ffb213a5fc0f25d642901f99c3321c4365724b034b4ea76ea859fc2131d720ea",
     "caption": "1面で8組をそろえてクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

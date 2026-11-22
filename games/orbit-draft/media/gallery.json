@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。5種類の札",
-      "sha256": "bd9bd496bd71b8742efc5810fbc784d052b33896d44807e4af531f7b337ce7d2",
-      "framebuffer_sha256": "8a3fa90525b38c9f26608da21af858aba0944f76fec1ff86654e11c02074a8ff"
+      "sha256": "6315dbefc8ea4eda4af18223983cee9be4611988a5f710b667de43b76059c48b",
+      "framebuffer_sha256": "092374b03dc4b0efb524229e5d3c085186f674d74a624db3e36cca9633f26493"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-moves",
       "role": "play",
       "caption": "2枚を落とした盤面とメニュー",
-      "sha256": "63175b4952b6effbb90833694870cdfe7c0e8535a2cb43322b477f14087f0190",
-      "framebuffer_sha256": "95ccf6bfb04750f98fec37f8f27427e421b72e7ae4a1002717491150f4ebe3f7"
+      "sha256": "a0d4d5684aa647461e2f3caa8bf71983873494c6da6e38aa700db24f6306a8cc",
+      "framebuffer_sha256": "c366a672dbb51a7841a6806ff241f8757b9a2a820ada9488ec008310833de413"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "連鎖で目標に届いた1ラウンド目のクリア",
-      "sha256": "0aaf16206e44e773726436c31371ed1d3c90955e7b104690f9cd7f8635e5e9b8",
-      "framebuffer_sha256": "59907f8aca4da30730e8ae554c0df2c50c54fd821e9110f527267873d9da283c"
+      "sha256": "48e9945eec3d95ed36df03876ca4600e2a4f782e9e165e8a7b25329fe520a6ea",
+      "framebuffer_sha256": "850c2db75cda630f59a6326d27fdd443f0c965e3d4922ac3beacf7d194e3c398"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 12.5,
-    "frames": 374,
-    "frames_sha256": "bc61a09982241171174db9ac02117392c8c42ab2bc82a52af842632898edbe22",
-    "pcm_sha256": "942fd393a49457811df0b30aa0b269e30a4039a3a73977f71160065d1d07cdbe",
-    "sha256": "88cdb5cd80cf98030e4dfbfd83e6a1f86cf9e24ec11fbe2fa7f7e45eb13e8c0e",
+    "seconds": 12.6,
+    "frames": 377,
+    "frames_sha256": "5caed15a74411e33acf23341642ce0a3e935b8cab8241c8f8f8aa16fb48b21c1",
+    "pcm_sha256": "b124d90d0fe93024ee1fa2ed374ec17e8fc7fbefec2ec5f00b28fedc5b202168",
+    "sha256": "547a7da9652e5b66598fa7de6b8acbce675b0d7081ca2a03bc13993921813e02",
     "caption": "札を落として3つ並べ、1ラウンド目の目標に届くまで"
   }
 }

@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_STACK_TOP:       .equ    0x4fff
@@ -42,6 +44,11 @@ LC_DCODE:           .equ    GAME_STATE + 51
 LC_DPOS:            .equ    GAME_STATE + 52
 LC_DCOL:            .equ    GAME_STATE + 53
 LC_DK:              .equ    GAME_STATE + 54
+; The current cross is applied before drawing, then all affected cells share
+; each of the five animation poses.
+LC_CROSS_CELLS:     .equ    GAME_STATE + 56
+LC_CROSS_COUNT:     .equ    GAME_STATE + 61
+LC_ANIMATING:       .equ    GAME_STATE + 62
 
 LC_LIMIT:           .equ    60
 LC_TILE_UNLIT:      .equ    0x80
@@ -172,6 +179,7 @@ lc_press_limit:
 
 ; A = position. Toggles the cell and its orthogonal neighbours.
 lc_cross:
+        CLR     [LC_CROSS_COUNT]
         STAA    [LC_POS]
         JSR     lc_toggle
         LDAA    [LC_POS]
@@ -203,9 +211,28 @@ lc_cross_right:
         INCA
         JSR     lc_toggle
 lc_cross_done:
+        TST     [LC_READY]
+        BEQ     lc_cross_return
+        LDAA    1
+        STAA    [LC_ANIMATING]
+        LDAA    0
+        JSR     jr_port_sound
+        CLR     [LC_FRAME]
+lc_cross_pose:
+        ; The partial render is below the usual two-frame budget; pace each
+        ; pose by one frame so the shared animation remains visible.
+        LDAA    3
+        JSR     jr_port_animate
+        INC     [LC_FRAME]
+        LDAA    [LC_FRAME]
+        CMPA    5
+        BNE     lc_cross_pose
+        CLR     [LC_ANIMATING]
+        CLR     [LC_FLASH]
+lc_cross_return:
         RTS
 
-; A = position. b[pos] ^= 1, then the five-pose flip when the stage is ready.
+; A = position. b[pos] ^= 1; record it for the shared pose pass when ready.
 lc_toggle:
         STAA    [LC_CELL]
         LDX     LC_BOARD
@@ -216,36 +243,24 @@ lc_toggle:
         STAA    [LC_NEW]
         TST     [LC_READY]
         BEQ     lc_toggle_done
+        LDX     LC_CROSS_CELLS
+        LDAA    [LC_CROSS_COUNT]
+        JSR     jr_add_x_a
+        STX     [LC_DPOS]
         LDAA    [LC_CELL]
-        INCA
-        STAA    [LC_FLASH]
-        CLRA
-        JSR     jr_port_sound
-        CLR     [LC_FRAME]
-lc_toggle_frame:
-        LDAA    [LC_FRAME]
-        TST     [LC_NEW]
-        BEQ     lc_toggle_off
-        INCA
-        BRA     lc_toggle_pose
-lc_toggle_off:
-        NEGA
-        ADDA    5
-lc_toggle_pose:
-        STAA    [LC_POSE]
-        LDAA    2
-        JSR     jr_port_animate
-        INC     [LC_FRAME]
-        LDAA    [LC_FRAME]
-        CMPA    5
-        BNE     lc_toggle_frame
-        CLR     [LC_FLASH]
+        LDX     [LC_DPOS]
+        STAA    [X]
+        INC     [LC_CROSS_COUNT]
 lc_toggle_done:
         RTS
 
 ; ---------------------------------------------------------------- drawing
 
 game_draw:
+        TST     [LC_ANIMATING]
+        BEQ     lc_draw_full
+        JMP     lc_draw_cross_pose
+lc_draw_full:
         LDAA    0x20
         LDAB    LC_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -298,16 +313,16 @@ lc_draw_tile:
         JSR     jr_gfx_tile
         INC     [LC_DI]
         LDAA    [LC_DX]
-        ADDA    3
+        ADDA    4
         STAA    [LC_DX]
-        CMPA    16
+        CMPA    21
         BNE     lc_draw_cell
         LDAA    [LC_DY]
         ADDA    3
         STAA    [LC_DY]
         CMPA    19
         BNE     lc_draw_row
-        ; cursor at (cursor % 5 * 3, 4 + cursor // 5 * 3)
+        ; cursor at (cursor % 5 * 4, 4 + cursor // 5 * 3)
         LDAA    LC_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    [LC_CURSOR]
@@ -334,7 +349,9 @@ lc_draw_tile:
         JSR     jr_gfx_dec2
         LDAA    [JR_PORT_MODE]
         CMPA    JR_MODE_PLAY
-        BEQ     lc_draw_marks
+        BNE     lc_draw_not_play
+        JMP     lc_draw_marks
+lc_draw_not_play:
         CMPA    JR_MODE_CLEAR
         BNE     lc_draw_done
         JSR     lc_par
@@ -350,7 +367,57 @@ lc_draw_tile:
 lc_draw_done:
         RTS
 
-; Preview: '^' under every light the cursor's cross would flip.
+; Draw only the changed cells during animation. The rest of the screen stays
+; in the shadow buffer until the regular full render after the action.
+lc_draw_cross_pose:
+        CLR     [LC_DI]
+lc_draw_cross_pose_loop:
+        LDAA    [LC_DI]
+        CMPA    [LC_CROSS_COUNT]
+        BEQ     lc_draw_cross_pose_done
+        LDX     LC_CROSS_CELLS
+        JSR     jr_add_x_a
+        LDAA    [X]
+        STAA    [LC_DPOS]
+        JSR     lc_cell_xy
+        STAA    [LC_DX]
+        STAB    [LC_DY]
+        LDX     LC_BOARD
+        LDAA    [LC_DPOS]
+        JSR     jr_add_x_a
+        LDAA    [X]
+        STAA    [LC_NEW]
+        BEQ     lc_draw_cross_pose_off
+        LDAA    [LC_FRAME]
+        INCA
+        BRA     lc_draw_cross_pose_ready
+lc_draw_cross_pose_off:
+        LDAA    5
+        SUBA    [LC_FRAME]
+lc_draw_cross_pose_ready:
+        STAA    [LC_POSE]
+        LDAA    [LC_DPOS]
+        INCA
+        STAA    [LC_FLASH]
+        LDAA    [LC_POSE]
+        DECA
+        ASLA
+        ASLA
+        ADDA    LC_TILE_POSE
+        STAA    [LC_DCODE]
+        LDAA    LC_ATTR_FLASH
+        STAA    [JR_RT_COLOR]
+        LDAA    [LC_DX]
+        LDAB    [LC_DY]
+        JSR     jr_gfx_at
+        LDAA    [LC_DCODE]
+        JSR     jr_gfx_tile
+        INC     [LC_DI]
+        BRA     lc_draw_cross_pose_loop
+lc_draw_cross_pose_done:
+        RTS
+
+; Preview: '^' in the gap under every light the cursor's cross would flip.
 lc_draw_marks:
         LDAA    LC_ATTR_MARK
         STAA    [JR_RT_COLOR]
@@ -380,12 +447,14 @@ lc_marks_left:
 lc_marks_right:
         LDAA    [LC_DCOL]
         CMPA    4
-        BCC     lc_draw_done
+        BCS     lc_marks_draw_right
+        RTS
+lc_marks_draw_right:
         LDAA    [LC_CURSOR]
         INCA
         JMP     lc_mark
 
-; A = position: '^' at (2 + pos % 5 * 3, 6 + pos // 5 * 3).
+; A = position: '^' at (2 + pos % 5 * 4, 6 + pos // 5 * 3).
 lc_mark:
         JSR     lc_cell_xy
         ADDA    2
@@ -394,7 +463,7 @@ lc_mark:
         LDAA    0x5e
         JMP     jr_gfx_putc
 
-; A = position -> A = pos % 5 * 3, B = 4 + pos // 5 * 3.
+; A = position -> A = pos % 5 * 4, B = 4 + pos // 5 * 3.
 lc_cell_xy:
         LDAB    5
         JSR     jr_divmod8
@@ -405,11 +474,8 @@ lc_cell_xy:
         ADDA    4
         TAB
         LDAA    [LC_DK]
-        STAB    [LC_DK]
-        TAB
         ASLA
-        ABA
-        LDAB    [LC_DK]
+        ASLA
         RTS
 
 ; A = PAR of the current stage.
@@ -421,6 +487,11 @@ lc_par:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDAA    0x20
         LDAB    LC_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -450,6 +521,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    LC_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     lc_help_diagram
+        JSR     jr_guide_draw
         LDX     lc_help_lines
         JMP     jr_gfx_lines
 
@@ -489,24 +562,55 @@ lc_title_lines:
         .dw     lc_txt_credit
         .db     0xff
 lc_help_lines:
-        .db     9, 2, LC_ATTR_TITLE
+        .db     10, 1, LC_ATTR_TITLE
         .dw     lc_txt_name
-        .db     2, 5, LC_ATTR_TEXT
-        .dw     lc_help_1
-        .db     2, 7, LC_ATTR_TEXT
-        .dw     lc_help_2
-        .db     2, 9, LC_ATTR_TEXT
-        .dw     lc_help_3
-        .db     2, 11, LC_ATTR_TEXT
-        .dw     lc_help_4
-        .db     2, 13, LC_ATTR_TEXT
-        .dw     lc_help_5
+        .db     4, 4, LC_ATTR_LABEL
+        .dw     lc_help_label_1
+        .db     12, 7, LC_ATTR_TEXT
+        .dw     lc_help_label_2
+        .db     22, 4, LC_ATTR_LABEL
+        .dw     lc_help_label_3
         .db     2, 15, LC_ATTR_TEXT
-        .dw     lc_help_6
+        .dw     lc_help_label_4
         .db     2, 17, LC_ATTR_TEXT
-        .dw     lc_help_7
-        .db     2, 20, LC_ATTR_LABEL
-        .dw     lc_help_back
+        .dw     lc_help_label_5
+        .db     2, 19, LC_ATTR_TEXT
+        .dw     lc_help_label_6
+        .db     2, 22, LC_ATTR_LABEL
+        .dw     lc_help_label_7
+        .db     0xff
+lc_help_label_1:
+        .db     "LIT", 0
+lc_help_label_2:
+        .db     "RETURN", 0
+lc_help_label_3:
+        .db     "DARK", 0
+lc_help_label_4:
+        .db     "WASD SELECT  /  RETURN FLIP", 0
+lc_help_label_5:
+        .db     "SPACE RETRY  /  60 PRESSES", 0
+lc_help_label_6:
+        .db     "CTRL+C : BACK TO BASIC", 0
+lc_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+lc_help_diagram:
+; Same patch before and after a cross press. The corner lights stay put.
+        .db     2, 0x80 + 6, LC_ATTR_UNLIT, 1, LC_TILE_UNLIT
+        .db     4, 0x80 + 6, LC_ATTR_LIT, 1, LC_TILE_LIT
+        .db     6, 0x80 + 6, LC_ATTR_UNLIT, 1, LC_TILE_UNLIT
+        .db     2, 0x80 + 8, LC_ATTR_LIT, 3, LC_TILE_LIT, LC_TILE_LIT, LC_TILE_LIT
+        .db     2, 0x80 + 10, LC_ATTR_UNLIT, 1, LC_TILE_UNLIT
+        .db     4, 0x80 + 10, LC_ATTR_LIT, 1, LC_TILE_LIT
+        .db     6, 0x80 + 10, LC_ATTR_UNLIT, 1, LC_TILE_UNLIT
+        .db     22, 0x80 + 6, LC_ATTR_UNLIT, 3, LC_TILE_UNLIT, LC_TILE_UNLIT, LC_TILE_UNLIT
+        .db     22, 0x80 + 8, LC_ATTR_UNLIT, 3, LC_TILE_UNLIT, LC_TILE_UNLIT, LC_TILE_UNLIT
+        .db     22, 0x80 + 10, LC_ATTR_UNLIT, 3, LC_TILE_UNLIT, LC_TILE_UNLIT, LC_TILE_UNLIT
+; Multicolor semigraphics arrow.
+        .db     12, 9, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 9, 0x86, 1, 0x06
+        .db     16, 8, 0x86, 1, 0x00
+        .db     16, 10, 0x80, 1, 0x06
         .db     0xff
 
 lc_txt_name:
@@ -533,22 +637,6 @@ lc_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 lc_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-lc_help_1:
-        .db     "WASD : SELECT A CELL", 0
-lc_help_2:
-        .db     "RETURN : FLIP CROSS", 0
-lc_help_3:
-        .db     "A CROSS FLIPS FIVE LIGHTS.", 0
-lc_help_4:
-        .db     "SWITCH EVERY LIGHT OFF.", 0
-lc_help_5:
-        .db     "SIXTY PRESSES PER PANEL.", 0
-lc_help_6:
-        .db     "SPACE : RESTART THIS PANEL", 0
-lc_help_7:
-        .db     "CTRL+C : BACK TO BASIC", 0
-lc_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 game_sfx_table:
         .dw     lc_sfx_flip, lc_sfx_press, lc_sfx_win, lc_sfx_lose
@@ -564,12 +652,18 @@ lc_sfx_lose:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
         .include "../../../sdk/math.inc"
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/sfx.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

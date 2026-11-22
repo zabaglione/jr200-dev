@@ -46,6 +46,7 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
 | `FRAMEBUFFER`と`PRESENT` | `sdk/gfx.inc`の影画面と`jr_gfx_present` |
 | ROM文字、`TEXT`、`NUMBER`、`digits` | `sdk/font.inc`の自作字形、`jr_gfx_text`、`jr_gfx_dec2`／`dec3` |
 | PCGの2×2 `tile` | `sdk/pcg.inc`と`jr_gfx_tile`（属性mode 0x40） |
+| 説明画面の盤面例 | `sdk/guide.inc`の`jr_guide_draw`（PCG・セミグラ・文字を同じ座標で配置） |
 | VIA timerの`TICK`、`animate`、`hold` | `sdk/frame.inc`、`jr_port_animate`、`jr_port_hold` |
 | 入力・tickと並行する演出 | `sdk/effect.inc`の`jr_effect_start`／`jr_effect_tick` |
 | 押し続け・離上・リピート | `sdk/keyscan.inc`と`sdk/keyrepeat.inc`（一定間隔のpoll） |
@@ -57,13 +58,25 @@ JR100devの作品を、既存jrasmとJR-200 SDKで再実装するときの契約
 `JR_RT` `$4600`、状態`$4640-`、stack top `$4FFF`の同じ配置を使います。
 各作品は`JR_SHADOW`（page境界の1536 bytes）、`JR_SAVE`（4096 bytes）、`JR_RT`（64 bytes）、
 `GAME_STATE`〜`GAME_STATE_END`、専用stackを`build.json`のdata領域内に宣言します。
+タイトル画のためにプログラム領域を延長する作品では、影画面を別のRAM領域へ置きます。
 USR入口で`jr_session_enter`がBASICの画面・PCG・文字RAM・key maskとSを保存し、
-ESC／CTRL+Cで`jr_session_leave`が戻します。演出（`jr_port_animate`）中に届いたキーは
-終了以外を捨て、次の手を誤って確定しません（上流作品READMEの「演出中に押したキーで結果を飛ばさない」に合わせる）。
-この演出待ちは同期処理で、効果音の進行と終了キーは処理しますが、通常入力やゲームtickを
-並行処理する非ブロッキング演出ではありません。並行演出には`sdk/effect.inc`の
-待機しないphase stepperを使い、作品のtick loopで入力・状態更新・描画を続けます。
-stepの間隔は呼出元が決めるため、固定60fpsを前提にしません。
+ESC／CTRL+Cで`jr_session_leave`が戻します。
+タイトル画は作品ごとのセミグラと外周色で描画します。設定した外周色は操作説明や本編でも維持します。
+外周レジスタの読み出しから元の色は得られないため、外周色を使用した作品はBASICへ戻る際に黒を設定します。
+非アクション移植では`port_buffered.inc`または`ranked_buffered.inc`を
+`gfx_buffered.inc`と組み合わせます。プレイ中は描画と演出待ちでもKey-Onを読み、
+最大15件を押した順に保持します。方向入力は演出の終了後に処理し、
+確定とやり直しは手番と演出が終わってから受け付けます。確認画面と次の面へは入力を持ち越しません。
+`JR_INPUT`には23 byteを確保し、`GAME_INPUT_POLICY`には通常`jr_input_default_policy`を指定します。
+ゲーム独自のチェックポイントは、Sが通常のスタックを指す場所から`jr_input_capture`を呼びます。
+
+`jr_port_animate`は同期処理で、入力の収集と効果音を進めます。状態とtickを更新する並行演出には
+`sdk/effect.inc`のphase stepperを使い、作品のtick loopで入力・状態更新・描画を続けます。
+stepの間隔は呼出元が決めます。
+
+説明画面は実際の盤面と同じPCGで、キーを押す前後、目標、避ける対象を示します。
+移動方向や図の接続にはセミグラを使えます。操作キー、制限回数、点数は読み取れる文字や数字で表示します。
+プレイ中の変化も、形や動きで区別できるようにし、配色だけに意味を持たせないようにします。
 
 ## 期待値の作り方
 

@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "auction-house",
   "title": "AUCTION HOUSE",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Bid, jump-bid, inspect or pass over six lots to grow forty coins past each market goal.",
   "genre": "management",
   "license": "MIT",

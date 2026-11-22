@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/potion-path/tests/model.py (upstream rules 3.0.0), not from the emulator. Each order is brewed with the fewest ingredients found by solve() (a breadth-first search that matches every upstream par); synthetic-all-orders clears all twenty. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 129348,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000001000000000000008001000000000000008000000000000000ffc0a09088848281ff030509112141808182848890a0c0ff81412111090503ff"
           },
-          "framebuffer_sha256": "f88738ba17443dfdb69d04e9b28419ee9dc9ea58e79b5b9d378f0cc820e78b4d",
+          "framebuffer_sha256": "d6b682b4cf2f87e19753516e553196826feb82f0e389730d29e8eb0b3bc02e19",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "f7143f58920eec971ec04fa612888001d4c05d43be179f1da8df13e625e133b3",
+          "framebuffer_sha256": "1d4fd8195f8dd50c60baabbd0376543a1022de9982b1d8cdd6dd064e475fb57f",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "d4814c1df44eef137e04c7e2e3d08d1ba9bfb40995728074c37db9b834ee60ac",
+          "framebuffer_sha256": "1f3264c2b566d171cb9c279cbeef044eb8a986fce1bf8fe719ed91005d2fd1c9",
           "pcm": null,
           "cassette": null
         }
@@ -296,7 +297,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "23bb68069689b5040b515df9c6770c4e2eb28c4772625fe5d7901a12c328ed57",
+          "framebuffer_sha256": "e26008af4d809f97ca4f175ff1168a440f875b73c3e224ef7f8e9f8f1ddee839",
           "pcm": null,
           "cassette": null
         }
@@ -394,7 +395,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "fca7579c4b5d8f1621849cba26ab4da40f6457fec02514a21a272452713f04e9",
+          "framebuffer_sha256": "5a9706c249f6a171744943c4e5d6049ef7428fc3e62799554b5c498abd1e2ce6",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1057,7 +1058,7 @@
             "level": "00",
             "status": "5457454c564520444f534553204d49535345442054484520524543495045"
           },
-          "framebuffer_sha256": "0ef82f8eaa60d4957899f4f9c5af4c5c9ef5718496d36b7b3bf29b9701f3daa5",
+          "framebuffer_sha256": "50d37846e397e3019dcd485a3ba38e32733e8a0a87aa7912ba9717911bce6ad3",
           "pcm": null,
           "cassette": null
         }
@@ -3667,7 +3668,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "f88738ba17443dfdb69d04e9b28419ee9dc9ea58e79b5b9d378f0cc820e78b4d",
+          "framebuffer_sha256": "d6b682b4cf2f87e19753516e553196826feb82f0e389730d29e8eb0b3bc02e19",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -3711,7 +3712,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "d4814c1df44eef137e04c7e2e3d08d1ba9bfb40995728074c37db9b834ee60ac",
+          "framebuffer_sha256": "1f3264c2b566d171cb9c279cbeef044eb8a986fce1bf8fe719ed91005d2fd1c9",
           "pcm": null,
           "cassette": {
             "state": 6,

@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "ruin-lexicon",
   "title": "RUIN LEXICON",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Decode four rune values from three sums and one comparison within five tries.",
   "genre": "exploration",
   "license": "MIT",

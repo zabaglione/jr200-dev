@@ -10,6 +10,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -514,6 +516,11 @@ mm_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     mm_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -548,6 +555,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    MM_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     mm_help_diagram
+        JSR     jr_guide_draw
         LDX     mm_help_lines
         JMP     jr_gfx_lines
 
@@ -585,24 +594,50 @@ mm_title_lines:
         .dw     mm_txt_credit
         .db     0xff
 mm_help_lines:
-        .db     9, 2, MM_ATTR_TITLE
+        .db     9, 1, MM_ATTR_TITLE
         .dw     mm_txt_name
-        .db     1, 5, MM_ATTR_TEXT
-        .dw     mm_help_1
-        .db     1, 7, MM_ATTR_TEXT
-        .dw     mm_help_2
-        .db     1, 9, MM_ATTR_TEXT
-        .dw     mm_help_3
-        .db     1, 11, MM_ATTR_TEXT
-        .dw     mm_help_4
-        .db     1, 13, MM_ATTR_TEXT
-        .dw     mm_help_5
-        .db     1, 15, MM_ATTR_TEXT
-        .dw     mm_help_6
-        .db     1, 17, MM_ATTR_TEXT
-        .dw     mm_help_7
-        .db     1, 20, MM_ATTR_LABEL
-        .dw     mm_help_back
+        .db     2, 4, MM_ATTR_LABEL
+        .dw     mm_help_label_1
+        .db     20, 4, MM_ATTR_LABEL
+        .dw     mm_help_label_2
+        .db     2, 14, MM_ATTR_TEXT
+        .dw     mm_help_label_3
+        .db     2, 16, MM_ATTR_TEXT
+        .dw     mm_help_label_4
+        .db     2, 18, MM_ATTR_TEXT
+        .dw     mm_help_label_5
+        .db     2, 20, MM_ATTR_TEXT
+        .dw     mm_help_label_6
+        .db     2, 22, MM_ATTR_LABEL
+        .dw     mm_help_label_7
+        .db     0xff
+mm_help_label_1:
+        .db     "TURN TWO", 0
+mm_help_label_2:
+        .db     "MATCH", 0
+mm_help_label_3:
+        .db     "WASD SELECT   RETURN TURN", 0
+mm_help_label_4:
+        .db     "MISMATCH: RETURN CLOSE", 0
+mm_help_label_5:
+        .db     "8 PAIRS   MATCHES CHAIN", 0
+mm_help_label_6:
+        .db     "SPACE RETRY  CTRL+C BASIC", 0
+mm_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+mm_help_diagram:
+; Two matching motifs stay open; other cards stay face down.
+        .db     2, 0x80 + 7, MM_ATTR_BACK, 4, MM_TILE_BACK, MM_TILE_BACK, MM_TILE_BACK, MM_TILE_BACK
+        .db     12, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     20, 0x80 + 7, 0x46, 1, 0x08
+        .db     22, 0x80 + 7, MM_ATTR_BACK, 1, MM_TILE_BACK
+        .db     24, 0x80 + 7, 0x46, 1, 0x08
+        .db     26, 0x80 + 7, MM_ATTR_BACK, 1, MM_TILE_BACK
+        .db     20, 9, 0x80, 6, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24
         .db     0xff
 
 mm_txt_name:
@@ -633,22 +668,6 @@ mm_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 mm_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-mm_help_1:
-        .db     "WASD : CHOOSE  RETURN : TURN", 0
-mm_help_2:
-        .db     "FIND EIGHT MATCHING PAIRS.", 0
-mm_help_3:
-        .db     "RETURN CLOSES UNMATCHED PAIRS.", 0
-mm_help_4:
-        .db     "MATCH PAIRS TO BUILD A CHAIN.", 0
-mm_help_5:
-        .db     "THE DECK CHANGES EVERY GAME.", 0
-mm_help_6:
-        .db     "LATER TABLES: FEWER MISSES.", 0
-mm_help_7:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-mm_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -702,7 +721,7 @@ mm_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -710,5 +729,11 @@ mm_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

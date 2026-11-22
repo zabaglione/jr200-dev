@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "d43e043d2173be7f60faf6a0fe533f89d36dc2c0e45fdbb5246e5ffa208f9557",
-      "framebuffer_sha256": "97bf326a2a859524f0b2255b4aef637487ab7e0be82a87a9b0531829a732d341"
+      "sha256": "a8c4a2640c95320e8d80bc7051446cd08983067cdee2f4db75cac2d567ccec2d",
+      "framebuffer_sha256": "ef5a90ecac79af9f5827bbc7ed707dfc2a88ed2d14a88eda29f051bf4b5a8ccb"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-pull",
       "role": "play",
       "caption": "箱を引き寄せたあと",
-      "sha256": "20dc2af92acd6771c6f4a09c8c8f2354a8faf864ca8ae5f498b35ab90fb61c9f",
-      "framebuffer_sha256": "bb22ecc902ce4891856630d4d2c1a25034db5440daac0663686061088935ae50"
+      "sha256": "8d5c3b8cd92da2ef28784f56db7bfa549d6874c6eb8e985ab478414a33a4a1e0",
+      "framebuffer_sha256": "192e640c482ca2b4001ec3485f5287ead5f7583a921e77531b9436d6548fce97"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "星3つで1室目をクリア",
-      "sha256": "6b27a818bc532626f88033d7ab232685ac706c577fb6868862b8b850f45f83f0",
-      "framebuffer_sha256": "272a6aed144fd93594c11c09f238c313ccd2fe722c52f29884ca0b0a1819d578"
+      "sha256": "4f447d811106a620520d8355d17601bfb3424f0ad1993d93bd61d939f61dc480",
+      "framebuffer_sha256": "548389351469a14d1ca3f6221d442ff2e822e48547e7b393965235e11d5810a1"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 5.2,
-    "frames": 156,
-    "frames_sha256": "3353e3929e5e55bb25d95ee32837face9e806f07b57cd0dfd8ab0b30e6c91c07",
-    "pcm_sha256": "24a3bb8c54b6b3cc92d5bc3e468959d9c2e75d6b3af12accc829214bab91193e",
-    "sha256": "fff73b5f0e5dd97718152715091a830f0c0cbff4076f769ac6e58b9e3a949310",
+    "seconds": 5.3,
+    "frames": 158,
+    "frames_sha256": "2f434f33896a8119b371559272b6f416d3956b4712859bba21c51c18bbda8fb4",
+    "pcm_sha256": "2f008c9359cd087d4427cf95aff2636f4feb8fffa0005006ab502f22952c3113",
+    "sha256": "b7e1e18ec4a2d1c32933b5e60e7151cdaadc96b0c077a0badcba4c5e47e9c1e3",
     "caption": "1室目を星3つでクリア"
   }
 }

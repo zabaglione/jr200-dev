@@ -6,6 +6,8 @@
 JR_SHADOW:          .equ 0x3000
 JR_SAVE:            .equ 0x3600
 JR_RT:              .equ 0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ 0x4640
 GAME_STATE_END:     .equ 0x4700
 JR_STACK_TOP:       .equ 0x4fff
@@ -48,10 +50,22 @@ QR_DRAW_X:          .equ GAME_STATE+91
 QR_DRAW_Y:          .equ GAME_STATE+92
 QR_DRAW_COLOR:      .equ GAME_STATE+93
 
+QR_TILE_FLOOR:      .equ 0x80
+QR_TILE_WALL:       .equ 0x84
+QR_TILE_FILE:       .equ 0x88
+QR_TILE_EXIT:       .equ 0x8c
+QR_TILE_CACHE:      .equ 0x90
+QR_TILE_GUARD:      .equ 0x94
+QR_TILE_PLAYER:     .equ 0x98
+
         .org 0x1000
 start:
         JSR jr_session_enter
         JSR jr_font_install
+        LDX qr_patterns
+        LDAA QR_TILE_FLOOR
+        LDAB 28
+        JSR jr_pcg_load
         JMP jr_port_run
 
 game_init:
@@ -407,7 +421,7 @@ game_draw:
         JSR jr_gfx_lines
         LDAA 0x06
         STAA [JR_RT_COLOR]
-        LDAA 9
+        LDAA 7
         LDAB 1
         JSR jr_gfx_at
         LDAA [JR_PORT_LEVEL]
@@ -423,53 +437,54 @@ qr_draw_loop:
         STAA [QR_DRAW_Y]
         TBA
         ASLA
-        ADDA 3
+        ABA
+        INCA
         STAA [QR_DRAW_X]
         LDAA [QR_DRAW_I]
         LDX QR_BOARD
         JSR jr_add_x_a
         LDAA [X]
-        LDX qr_tile_floor
-        LDAB 0x07
+        LDX qr_look_floor
+        LDAB 0x41
         CMPA 1
         BNE qr_draw_file
-        LDX qr_tile_wall
-        LDAB 0x01
+        LDX qr_look_wall
+        LDAB 0x45
         BRA qr_draw_overlay
 qr_draw_file:
         CMPA 3
         BNE qr_draw_exit
         TST [QR_KEY]
         BNE qr_draw_overlay
-        LDX qr_tile_file
-        LDAB 0x06
+        LDX qr_look_file
+        LDAB 0x46
         BRA qr_draw_overlay
 qr_draw_exit:
         CMPA 6
         BNE qr_draw_overlay
-        LDX qr_tile_exit
-        LDAB 0x04
+        LDX qr_look_exit
+        LDAB 0x44
 qr_draw_overlay:
         STAB [QR_DRAW_COLOR]
         LDAA [QR_DRAW_I]
         CMPA [QR_CACHE]
         BNE qr_draw_guard
-        LDX qr_tile_cache
-        LDAA 0x05
+        LDX qr_look_cache
+        LDAA 0x45
         STAA [QR_DRAW_COLOR]
 qr_draw_guard:
         LDAA [QR_DRAW_I]
         CMPA [QR_GUARD]
         BNE qr_draw_player
-        LDX qr_tile_guard
-        LDAA 0x02
+        LDX qr_look_guard
+        LDAA 0x42
         STAA [QR_DRAW_COLOR]
 qr_draw_player:
         LDAA [QR_DRAW_I]
         CMPA [QR_POS]
         BNE qr_draw_tile
-        LDX qr_tile_player
-        LDAA 0x03
+        LDX qr_look_player
+        LDAA 0x47
         STAA [QR_DRAW_COLOR]
 qr_draw_tile:
         STX [JR_RT_TABLE]
@@ -479,21 +494,38 @@ qr_draw_tile:
         LDAB [QR_DRAW_Y]
         JSR jr_gfx_at
         LDX [JR_RT_TABLE]
-        JSR jr_gfx_text
+        LDAA [X]
+        JSR jr_gfx_tile
+        LDX [JR_RT_TABLE]
+        LDAA [X]
+        CMPA QR_TILE_WALL
+        BNE qr_draw_next
+        ; Continue the wall across the third column of the map cell.
+        JSR jr_gfx_putc
+        LDAA [QR_DRAW_X]
+        ADDA 2
+        LDAB [QR_DRAW_Y]
+        INCB
+        JSR jr_gfx_at
+        LDAA QR_TILE_WALL + 2
+        JSR jr_gfx_putc
+qr_draw_next:
         INC [QR_DRAW_I]
         LDAA [QR_DRAW_I]
         CMPA 64
         BCC qr_draw_hud
         JMP qr_draw_loop
 qr_draw_hud:
+        LDX qr_hud_icons
+        JSR jr_guide_draw
         LDAA 0x06
         STAA [JR_RT_COLOR]
-        LDAA 25
+        LDAA 29
         LDAB 4
         JSR jr_gfx_at
         LDAA [QR_BATTERY]
         JSR jr_gfx_dec3
-        LDAA 21
+        LDAA 26
         LDAB 10
         JSR jr_gfx_at
         TST [QR_QUIET]
@@ -504,7 +536,7 @@ qr_draw_normal:
         LDX qr_txt_normal
 qr_draw_walk:
         JSR jr_gfx_text
-        LDAA 21
+        LDAA 26
         LDAB 14
         JSR jr_gfx_at
         TST [QR_KEY]
@@ -515,7 +547,7 @@ qr_draw_no_file:
         LDX qr_txt_get_file
 qr_draw_file_state:
         JSR jr_gfx_text
-        LDAA 21
+        LDAA 26
         LDAB 18
         JSR jr_gfx_at
         TST [QR_INTEL]
@@ -533,14 +565,14 @@ qr_draw_intel:
         BEQ qr_draw_result
         TST [QR_ALERT]
         BEQ qr_draw_done
-        LDAA 20
+        LDAA 1
         LDAB 19
         JSR jr_gfx_at
         LDX qr_txt_alert
         JSR jr_gfx_text
         BRA qr_draw_done
 qr_draw_result:
-        LDAA 20
+        LDAA 1
         LDAB 19
         JSR jr_gfx_at
         LDX qr_txt_escaped
@@ -553,6 +585,11 @@ qr_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDAA 0x20
         LDAB 0x07
         JSR jr_gfx_fill
@@ -562,33 +599,28 @@ game_draw_help:
         LDAA 0x20
         LDAB 0x07
         JSR jr_gfx_fill
+        LDX qr_help_diagram
+        JSR jr_guide_draw
         LDX qr_help_lines
         JMP jr_gfx_lines
 
-qr_tile_floor:      .db ". ",0
-qr_tile_wall:       .db "##",0
-qr_tile_file:       .db "F!",0
-qr_tile_exit:       .db "EX",0
-qr_tile_cache:      .db "B+",0
-qr_tile_guard:      .db "GG",0
-qr_tile_player:     .db "PP",0
+qr_look_floor:      .db QR_TILE_FLOOR
+qr_look_wall:       .db QR_TILE_WALL
+qr_look_file:       .db QR_TILE_FILE
+qr_look_exit:       .db QR_TILE_EXIT
+qr_look_cache:      .db QR_TILE_CACHE
+qr_look_guard:      .db QR_TILE_GUARD
+qr_look_player:     .db QR_TILE_PLAYER
+qr_hud_icons:
+        .db     26, 0x80 + 4, 0x45, 1, QR_TILE_CACHE
+        .db     26, 0x80 + 12, 0x46, 1, QR_TILE_FILE
+        .db     26, 0x80 + 16, 0x45, 1, QR_TILE_CACHE
+        .db     0xff
 qr_hud_lines:
-        .db 9,0,0x06
-        .dw qr_txt_name
-        .db 3,1,0x04
+        .db 1,1,0x04
         .dw qr_txt_route_label
-        .db 3,2,0x04
-        .dw qr_txt_route
-        .db 20,4,0x04
-        .dw qr_txt_battery
-        .db 20,8,0x04
+        .db 26,9,0x04
         .dw qr_txt_walk
-        .db 20,12,0x04
-        .dw qr_txt_file
-        .db 20,16,0x04
-        .dw qr_txt_intel
-        .db 1,22,0x07
-        .dw qr_txt_bottom
         .db 0xff
 qr_title_lines:
         .db 9,3,0x06
@@ -605,40 +637,65 @@ qr_title_lines:
         .dw qr_txt_credit
         .db 0xff
 qr_help_lines:
-        .db 9,2,0x06
-        .dw qr_txt_name
-        .db 3,5,0x07
-        .dw qr_help_1
-        .db 3,8,0x07
-        .dw qr_help_2
-        .db 3,11,0x07
-        .dw qr_help_3
-        .db 3,14,0x07
-        .dw qr_help_4
-        .db 3,17,0x07
-        .dw qr_help_5
-        .db 3,20,0x07
-        .dw qr_help_6
-        .db 5,22,0x04
-        .dw qr_help_back
-        .db 0xff
+        .db     10, 1, 0x06
+        .dw     qr_txt_name
+        .db     2, 4, 0x04
+        .dw     qr_help_label_1
+        .db     22, 4, 0x04
+        .dw     qr_help_label_2
+        .db     2, 12, 0x07
+        .dw     qr_help_label_3
+        .db     2, 15, 0x07
+        .dw     qr_help_label_4
+        .db     2, 17, 0x07
+        .dw     qr_help_label_5
+        .db     2, 19, 0x07
+        .dw     qr_help_label_6
+        .db     2, 22, 0x04
+        .dw     qr_help_label_7
+        .db     0xff
+qr_help_label_1:
+        .db     "NORMAL", 0
+qr_help_label_2:
+        .db     "QUIET", 0
+qr_help_label_3:
+        .db     "FILE FIRST     THEN EXIT", 0
+qr_help_label_4:
+        .db     "WASD WALK  RETURN TOGGLE", 0
+qr_help_label_5:
+        .db     "NORMAL: POWER 1 / NOISE <5", 0
+qr_help_label_6:
+        .db     "QUIET:  POWER 2 / NOISE <2", 0
+qr_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+qr_help_diagram:
+; Loud footsteps reach the guard; quiet steps only reach the next cell.
+        .db     2, 0x80 + 5, 0x47, 1, QR_TILE_PLAYER
+        .db     4, 6, 0x86, 5, 0x30, 0x30, 0x30, 0x30, 0x30
+        .db     9, 0x80 + 5, 0x42, 1, QR_TILE_GUARD
+        .db     21, 0x80 + 5, 0x47, 1, QR_TILE_PLAYER
+        .db     23, 6, 0x85, 2, 0x28, 0x28
+        .db     28, 0x80 + 5, 0x42, 1, QR_TILE_GUARD
+        .db     5, 0x80 + 9, 0x46, 1, QR_TILE_FILE
+        .db     9, 10, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     14, 10, 0x86, 1, 0x06
+        .db     13, 9, 0x86, 1, 0x00
+        .db     13, 11, 0x80, 1, 0x06
+        .db     17, 0x80 + 9, 0x44, 1, QR_TILE_EXIT
+        .db     0xff
 qr_txt_name:        .db "QUIET ROUTE",0
 qr_txt_mission:     .db "FIND FILE - REACH EXIT",0
 qr_txt_six:         .db "SIX ROUTES. ONE GUARD.",0
 qr_txt_start:       .db "RETURN : START",0
 qr_txt_howto:       .db "W/A/S/D : HOW TO PLAY",0
 qr_txt_credit:      .db "JR-200 PORT OF JR100DEV",0
-qr_txt_route:       .db "F!:FILE  B+:CACHE  EX:EXIT",0
 qr_txt_route_label: .db "ROUTE",0
-qr_txt_battery:     .db "BATTERY",0
 qr_txt_walk:        .db "WALK",0
-qr_txt_file:        .db "FILE",0
-qr_txt_intel:       .db "INTEL",0
-qr_txt_bottom:      .db "SPACE:RESTART  CTRL+C:BASIC",0
 qr_txt_quiet:       .db "SILENT",0
 qr_txt_normal:      .db "NORMAL",0
 qr_txt_taken:       .db "TAKEN",0
-qr_txt_get_file:    .db "GET FILE",0
+qr_txt_get_file:    .db "NEEDED",0
 qr_txt_intel_yes:   .db "FOUND",0
 qr_txt_intel_no:    .db "NONE",0
 qr_txt_alert:       .db "HEARD",0
@@ -646,13 +703,6 @@ qr_txt_escaped:     .db "ESCAPED",0
 qr_txt_all_intel:   .db "ALL INTEL",0
 qr_txt_battery_loss:.db "BATTERY EXHAUSTED",0
 qr_txt_guard_loss:  .db "CAUGHT BY THE GUARD",0
-qr_help_1:          .db "WASD : MOVE ONE STEP",0
-qr_help_2:          .db "RETURN: TOGGLE QUIET WALK",0
-qr_help_3:          .db "NORMAL:1 POWER, NOISE <5",0
-qr_help_4:          .db "SILENT:2 POWER, NOISE <2",0
-qr_help_5:          .db "FIND F! THEN REACH EX",0
-qr_help_6:          .db "B+ GIVES INTEL AND POWER",0
-qr_help_back:       .db "ANY KEY : TITLE",0
 
 game_sfx_table:
         .dw qr_sfx_step,qr_sfx_use,qr_sfx_win,qr_sfx_lose
@@ -661,13 +711,21 @@ qr_sfx_use:         .db 100,3,80,3,0,0
 qr_sfx_win:         .db 104,5,88,5,72,5,52,12,0,0
 qr_sfx_lose:        .db 120,7,170,7,215,16,0,0
 
+        .include "art.inc"
         .include "../../../sdk/session.inc"
+        .include "../../../sdk/pcg.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/frame.inc"
         .include "../../../sdk/math.inc"
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/sfx.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

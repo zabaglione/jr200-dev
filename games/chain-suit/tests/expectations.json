@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/chain-suit/tests/model.py (upstream rules 1.6.1), not from the emulator. The redraws come from plan(), an exhaustive search of the redraw choices in all three hands (48 points); synthetic-lose scores the dealt hands unchanged (9 points). Key gaps leave 60000 cycles per animation frame the model counts. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 125711,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "000103070f1f3f7f0080c0e0f0f8fcfe7f7e3d0103070000fefebc80c0e0000000003c7effffff7f00003c7efffffffe3f1f0f0703010000fcf8f0e0c0800000"
           },
-          "framebuffer_sha256": "296442e30887d80e7e1d1689d4c40d748fb0464dd20a6db0500d7f7e9d57208e",
+          "framebuffer_sha256": "e8da02ba824df338f93d4e14ac712cc954ab930506ecde165176552f25026aa7",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "240046df20497443aaeaef5f2bf6d813350daa2ad6ba6cdc79755f0d3b6efae5",
+          "framebuffer_sha256": "eef1990df80a3a902ac672637955781f870579e0b7c279a940bcf6c46b363147",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "20c3c3e6b10e3c4bccba16eb8e1079d7003e2569f89dcd215adb14b6882d4d51",
+          "framebuffer_sha256": "8466a282db88cfac53adaab321dd4a42878208a38cb04b11f26b43574fdab288",
           "pcm": null,
           "cassette": null
         }
@@ -344,7 +345,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "1fe4e0b6c8730b4db1cd23fc25150146829c714ec692823e1d1ffa8b6920113e",
+          "framebuffer_sha256": "4deda23dd4cc940191cc719d59bb0d2deb20636b73227e35a5fb2492543b5daf",
           "pcm": null,
           "cassette": null
         }
@@ -720,7 +721,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "4710060fc6c38d9cb980ee7a8622bf3a04f595bf251b0f3c87dba11ddbf7bd42",
+          "framebuffer_sha256": "38a72c8cd99915980bb7b82071df56f4a34ded641f96ca5f7648fb7638ee6fe6",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -817,7 +818,7 @@
             "level": "00",
             "status": "544f54414c2042454c4f57203235"
           },
-          "framebuffer_sha256": "aebe213d29c3ecfbca676d1bb47a42fbd80f6a85ccd7030e600f4c4dd3a2ffc5",
+          "framebuffer_sha256": "25c71ccfc0ecdfec3e6a095d42a405c9efe4459df2fbdde5f70b15dc0b5d08d4",
           "pcm": null,
           "cassette": null
         }
@@ -1495,7 +1496,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "296442e30887d80e7e1d1689d4c40d748fb0464dd20a6db0500d7f7e9d57208e",
+          "framebuffer_sha256": "e8da02ba824df338f93d4e14ac712cc954ab930506ecde165176552f25026aa7",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -1539,7 +1540,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "20c3c3e6b10e3c4bccba16eb8e1079d7003e2569f89dcd215adb14b6882d4d51",
+          "framebuffer_sha256": "8466a282db88cfac53adaab321dd4a42878208a38cb04b11f26b43574fdab288",
           "pcm": null,
           "cassette": {
             "state": 6,

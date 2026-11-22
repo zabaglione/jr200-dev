@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "b1af4d1ec064912fb62347ab5e54905732d75ba422fe01a7df8e6acb6cd7dc04",
-      "framebuffer_sha256": "cae2c7690ffe259ac94f2492234e97dfd5791e25c0953e1002cf04f598962aa9"
+      "sha256": "77c170571e9daeea8f55b6b61149376a49d157c74f6b7fb427c13141883b58f9",
+      "framebuffer_sha256": "09c55e7d0080c75a0d4ae482c574cc5859191200e4b20c54c483d3750fa422bb"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで水槽に水がたまる場面",
-      "sha256": "3502b79094f5e5df6e179ad9ad6fe906435c1c6199ceea42203d9b91fdeacb46",
-      "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749"
+      "sha256": "ac3bb691bffacd9f0c08a20e824aa6a2c67ec1919f201c8d88c17a83b7772a77",
+      "framebuffer_sha256": "31f886f9c99fdd84a0f11539c5c834345f3a658ce8042b9066b6dc158c5a89ce"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "目標点に届いて1面を終える",
-      "sha256": "29388b16951666928b04a51e3cb3716797f01dedf0f68be2c2d61278fac2d959",
-      "framebuffer_sha256": "ab667b72b0776464913b90c683a80288ee92eaabc90f56eff04e5d6126584c67"
+      "sha256": "def835eb1067dd3486b6916e29f61bdb79db17e15bd3af8f1de39c4d9a0050b1",
+      "framebuffer_sha256": "b93be4757f7f122dccf948e4256d4b8fcba3603908dfa6bbe8984667b0028c43"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 14.6,
-    "frames": 438,
-    "frames_sha256": "59fd9b452b27918229918f372e30e486dafaa907a16e3a16696a0fdac7844a0e",
-    "pcm_sha256": "761a8a7e9455f343f9874055f72276ca3295d484521105a8194e3550b5778171",
-    "sha256": "c6b81b1b68c9fcc4caf491bd243d524f768674fa3930d9a87c7b297c760220f2",
+    "seconds": 14.7,
+    "frames": 441,
+    "frames_sha256": "368bbc8c15eb3bf4bafa4bfd4e12c6e5e079e82320b42c603228583ee5714314",
+    "pcm_sha256": "25f78b47b44ac530925e81f9832dffecd1c8b11d4ce47df1b900cac5edb0c69e",
+    "sha256": "80bbf9072bf7c763ce620bd7a2ee2c1d10160a85566d8d4426aceb74fe5aff00",
     "caption": "1面の自動デモ（水をためて流し目標点へ）"
   }
 }

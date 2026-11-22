@@ -15,6 +15,8 @@
 JR_SHADOW:          .equ    0x4000
 JR_SAVE:            .equ    0x4600
 JR_RT:              .equ    0x5600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x5640
 GAME_STATE_END:     .equ    0x5700
 JR_AUDIO:           .equ    0x5700
@@ -118,6 +120,7 @@ SD_ICON_CROSS:      .equ    0x9f
 SD_SLASH:           .equ    0x00    ; second PCG bank: two slash frames
 SD_STAR:            .equ    0x02
 SD_DIAMOND:         .equ    0x03
+SD_ICON_TURN:       .equ    0x04
 
 SD_ATTR_TEXT:       .equ    0x07
 SD_ATTR_LABEL:      .equ    0x05
@@ -142,7 +145,7 @@ start:
         JSR     jr_pcg_load
         LDX     sd_patterns_low
         LDAA    SD_SLASH
-        LDAB    4
+        LDAB    5
         JSR     jr_pcg_load
         JMP     jr_port_run
 
@@ -150,7 +153,9 @@ start:
 
 ; NEW_RUN: HP 60, the eight-card deck; the seed is the music's position.
 game_init:
+        ; Keep the original song-based seeds when the melody moves in memory.
         LDAA    [JR_AU_VOICE + 1]
+        ADDA    (0x54 - sd_music_title_f) & 0xff
         EORA    [JR_AU_VOICE + 2]
         ORAA    1
         STAA    [SD_SEED]
@@ -916,6 +921,8 @@ sd_draw_scene_deck:
 sd_draw_battle:
         LDX     sd_hud_lines
         JSR     jr_gfx_lines
+        LDX     sd_hud_icons
+        JSR     jr_guide_draw
         LDX     sd_hud_numbers
         JSR     sd_numbers
         ; the battle number, and HP / shield coloured by the effect
@@ -1303,8 +1310,6 @@ sd_draw_card_face:
         LDAA    [X]
         ADDA    0x30
         JSR     jr_gfx_putc
-        LDX     sd_txt_en
-        JSR     jr_gfx_text
         ; the main number: attack, shield or the special's value
         LDX     [SD_DCPTR]
         LDAB    SD_ICON_SIGIL
@@ -1360,6 +1365,8 @@ sd_draw_reward:
         JSR     sd_draw_ornament
         LDX     sd_reward_lines
         JSR     jr_gfx_lines
+        LDX     sd_rest_icons
+        JSR     jr_guide_draw
         CLR     [SD_DI]
 sd_draw_reward_card:
         LDX     SD_REWARDS
@@ -1536,6 +1543,11 @@ sd_logo_cell:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     sd_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -1583,6 +1595,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    SD_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     sd_help_diagram
+        JSR     jr_guide_draw
         LDX     sd_help_lines
         JMP     jr_gfx_lines
 
@@ -1614,13 +1628,25 @@ sd_hud_numbers:
         .db     25, 10, SD_ATTR_TEXT, 17
         .db     0xff
 
+sd_hud_icons:
+        .db     1, 0, 0x44, 1, SD_ICON_HEART
+        .db     11, 0, 0x45, 1, SD_ICON_SHIELD
+        .db     22, 0, 0x46, 1, SD_ICON_BOLT
+        .db     4, 3, 0x42, 1, SD_ICON_HEART
+        .db     4, 5, 0x45, 1, SD_ICON_SHIELD
+        .db     11, 19, 0x46, 1, SD_ICON_TURN
+        .db     13, 19, 0xa4, 1, 0x24
+        .db     15, 19, 0x42, 1, SD_ICON_SWORD
+        .db     0xff
+sd_rest_icons:
+        .db     6, 18, 0x44, 1, SD_ICON_HEART
+        .db     8, 18, SD_ATTR_TEXT, 3, 0x2b, 0x31, 0x30
+        .db     6, 20, 0x46, 1, SD_ICON_SPARK
+        .db     8, 20, 0x44, 1, SD_ICON_HEART
+        .db     10, 20, SD_ATTR_TEXT, 2, 0x2b, 0x34
+        .db     0xff
+
 sd_hud_lines:
-        .db     0, 0, SD_ATTR_LABEL
-        .dw     sd_txt_hp
-        .db     10, 0, SD_ATTR_LABEL
-        .dw     sd_txt_sh
-        .db     21, 0, SD_ATTR_LABEL
-        .dw     sd_txt_en
         .db     0, 1, SD_ATTR_LABEL
         .dw     sd_txt_f
         .db     7, 1, SD_ATTR_LABEL
@@ -1629,10 +1655,6 @@ sd_hud_lines:
         .dw     sd_txt_used
         .db     26, 1, SD_ATTR_LABEL
         .dw     sd_txt_x
-        .db     1, 3, SD_ATTR_LABEL
-        .dw     sd_txt_enemy_hp
-        .db     1, 5, SD_ATTR_LABEL
-        .dw     sd_txt_shield
         .db     1, 7, SD_ATTR_LABEL
         .dw     sd_txt_poison
         .db     1, 9, SD_ATTR_LABEL
@@ -1645,18 +1667,12 @@ sd_hud_lines:
         .dw     sd_txt_echo
         .db     22, 9, SD_ATTR_LABEL
         .dw     sd_txt_thorn
-        .db     11, 19, SD_ATTR_TITLE
-        .dw     sd_txt_end_label
         .db     0xff
 sd_reward_lines:
         .db     7, 3, SD_ATTR_TITLE
         .dw     sd_txt_reward_1
         .db     4, 5, SD_ATTR_LABEL
         .dw     sd_txt_reward_2
-        .db     6, 18, SD_ATTR_TEXT
-        .dw     sd_txt_reward_3
-        .db     2, 20, SD_ATTR_LABEL
-        .dw     sd_txt_reward_4
         .db     0xff
 sd_death_lines:
         .db     8, 5, SD_ATTR_HURT
@@ -1701,46 +1717,57 @@ sd_title_lines:
 sd_help_lines:
         .db     11, 1, SD_ATTR_TITLE
         .dw     sd_txt_name
-        .db     1, 3, SD_ATTR_TEXT
-        .dw     sd_help_1
-        .db     1, 5, SD_ATTR_TEXT
-        .dw     sd_help_2
-        .db     1, 6, SD_ATTR_TEXT
-        .dw     sd_help_3
-        .db     1, 7, SD_ATTR_TEXT
-        .dw     sd_help_4
-        .db     1, 8, SD_ATTR_TEXT
-        .dw     sd_help_5
-        .db     1, 10, SD_ATTR_TEXT
-        .dw     sd_help_6
-        .db     1, 11, SD_ATTR_TEXT
-        .dw     sd_help_7
-        .db     1, 12, SD_ATTR_TEXT
-        .dw     sd_help_8
-        .db     1, 13, SD_ATTR_TEXT
-        .dw     sd_help_9
-        .db     1, 15, SD_ATTR_TEXT
-        .dw     sd_help_10
-        .db     1, 16, SD_ATTR_TEXT
-        .dw     sd_help_11
-        .db     1, 17, SD_ATTR_TEXT
-        .dw     sd_help_12
-        .db     1, 18, SD_ATTR_TEXT
-        .dw     sd_help_13
-        .db     1, 20, SD_ATTR_TEXT
-        .dw     sd_help_14
-        .db     8, 22, SD_ATTR_LABEL
-        .dw     sd_help_back
+        .db     2, 4, SD_ATTR_LABEL
+        .dw     sd_help_label_1
+        .db     12, 4, SD_ATTR_LABEL
+        .dw     sd_help_label_2
+        .db     23, 4, SD_ATTR_LABEL
+        .dw     sd_help_label_3
+        .db     2, 13, SD_ATTR_TEXT
+        .dw     sd_help_label_4
+        .db     2, 15, SD_ATTR_TEXT
+        .dw     sd_help_label_5
+        .db     2, 17, SD_ATTR_TEXT
+        .dw     sd_help_label_6
+        .db     2, 19, SD_ATTR_TEXT
+        .dw     sd_help_label_7
+        .db     2, 22, SD_ATTR_LABEL
+        .dw     sd_help_label_8
+        .db     0xff
+sd_help_label_1:
+        .db     "ATTACK", 0
+sd_help_label_2:
+        .db     "SHIELD", 0
+sd_help_label_3:
+        .db     "POISON", 0
+sd_help_label_4:
+        .db     "A/D SELECT   RETURN PLAY", 0
+sd_help_label_5:
+        .db     "SPACE END TURN   W VIEW DECK", 0
+sd_help_label_6:
+        .db     "3 ENERGY EACH TURN", 0
+sd_help_label_7:
+        .db     "RECYCLE USED    EXHAUST STAYS", 0
+sd_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+sd_help_diagram:
+; Attack deals damage, a shield stops a blow, and poison bypasses the shield.
+        .db     2, 6, 0x42, 1, SD_ICON_SWORD
+        .db     4, 6, 0x06, 1, 0x3e
+        .db     6, 6, 0x44, 1, SD_ICON_HEART
+        .db     12, 6, 0x45, 1, SD_ICON_SHIELD
+        .db     14, 6, 0x06, 1, 0x3c
+        .db     16, 6, 0x42, 1, SD_ICON_SWORD
+        .db     23, 6, 0x43, 1, SD_ICON_SIGIL
+        .db     25, 6, 0x45, 1, SD_ICON_SHIELD
+        .db     27, 6, 0x44, 1, SD_ICON_HEART
+        .db     23, 7, 0x9b, 5, 0x1b, 0x1b, 0x1b, 0x1b, 0x03
+        .db     10, 10, 0x46, 3, SD_ICON_BOLT, SD_ICON_BOLT, SD_ICON_BOLT
         .db     0xff
 
 sd_txt_name:
         .db     "SIGIL DECK", 0
-sd_txt_hp:
-        .db     "HP", 0
-sd_txt_sh:
-        .db     "SH", 0
-sd_txt_en:
-        .db     "EN", 0
 sd_txt_f:
         .db     "F", 0
 sd_txt_draw:
@@ -1749,10 +1776,6 @@ sd_txt_used:
         .db     "USED", 0
 sd_txt_x:
         .db     "X", 0
-sd_txt_enemy_hp:
-        .db     "ENEMY HP", 0
-sd_txt_shield:
-        .db     "SHIELD", 0
 sd_txt_poison:
         .db     "POISON", 0
 sd_txt_weak:
@@ -1765,8 +1788,6 @@ sd_txt_echo:
         .db     "ECHO", 0
 sd_txt_thorn:
         .db     "THORN", 0
-sd_txt_end_label:
-        .db     "END TURN", 0
 sd_txt_next_attack:
         .db     "NEXT: ATTACK", 0
 sd_txt_next_shield:
@@ -1774,17 +1795,13 @@ sd_txt_next_shield:
 sd_txt_empty:
         .db     "EMPTY SLOT", 0
 sd_txt_end_turn:
-        .db     "DISCARD HAND. ENEMY ACTS.", 0
+        .db     "DISCARD HAND / ENEMY ACTS", 0
 sd_txt_exh:
         .db     "EXH", 0
 sd_txt_reward_1:
         .db     "A NEW SIGIL AWAITS", 0
 sd_txt_reward_2:
-        .db     "CHOOSE ONE CARD OR REST", 0
-sd_txt_reward_3:
-        .db     "REST: HEAL 10 HP", 0
-sd_txt_reward_4:
-        .db     "EVERY VICTORY ALSO HEALS 4 HP", 0
+        .db     "TAKE ONE CARD OR HEAL", 0
 sd_txt_failed:
         .db     "THE RITUAL FAILED", 0
 sd_txt_death_2:
@@ -1817,36 +1834,6 @@ sd_txt_howto:
         .db     "OTHER KEY : FIELD GUIDE", 0
 sd_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-sd_help_1:
-        .db     "TEN BATTLES. BUILD YOUR DECK.", 0
-sd_help_2:
-        .db     "A/D : SELECT A CARD", 0
-sd_help_3:
-        .db     "RETURN : PLAY / CONFIRM", 0
-sd_help_4:
-        .db     "SPACE : SELECT END TURN", 0
-sd_help_5:
-        .db     "W : VIEW YOUR DECK", 0
-sd_help_6:
-        .db     "ENERGY RETURNS TO 3 EACH TURN.", 0
-sd_help_7:
-        .db     "UNUSED CARDS ARE DISCARDED.", 0
-sd_help_8:
-        .db     "DRAW PILE EMPTY? RECYCLE USED.", 0
-sd_help_9:
-        .db     "EXHAUSTED CARDS STAY OUT.", 0
-sd_help_10:
-        .db     "SHIELD EXPIRES NEXT TURN.", 0
-sd_help_11:
-        .db     "POISON BYPASSES ENEMY SHIELD.", 0
-sd_help_12:
-        .db     "VULNERABLE: +50% ATTACK HIT.", 0
-sd_help_13:
-        .db     "WEAK: ENEMY ATTACK -3.", 0
-sd_help_14:
-        .db     "WIN: PICK A CARD OR REST.", 0
-sd_help_back:
-        .db     "ANY KEY : TITLE", 0
 
         .include "data.inc"
 
@@ -1896,7 +1883,7 @@ sd_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1904,5 +1891,11 @@ sd_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

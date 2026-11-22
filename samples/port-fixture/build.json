@@ -18,6 +18,7 @@
       "sdk/font_data.inc",
       "sdk/frame.inc",
       "sdk/gfx.inc",
+      "sdk/gfx_runtime.inc",
       "sdk/jr200.inc",
       "sdk/keyrepeat.inc",
       "sdk/keys.inc",
@@ -25,6 +26,7 @@
       "sdk/math.inc",
       "sdk/pcg.inc",
       "sdk/port.inc",
+      "sdk/port_runtime.inc",
       "sdk/session.inc",
       "sdk/sfx.inc",
       "sdk/sound.inc"

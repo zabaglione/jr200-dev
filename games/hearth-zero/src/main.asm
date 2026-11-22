@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4680
 JR_STACK_TOP:       .equ    0x4fff
@@ -307,6 +309,8 @@ game_draw:
         JSR     jr_gfx_fill
         LDX     hz_hud
         JSR     jr_gfx_lines
+        LDX     hz_play_icons
+        JSR     jr_guide_draw
         LDAA    HZ_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    28
@@ -431,9 +435,12 @@ hz_draw_cursor:
         ASLA
         ASLA
         INCA
-        LDAB    20
+        LDAB    21
         JSR     jr_gfx_at
-        LDAA    0x3e
+        LDAA    0xb6
+        STAA    [JR_RT_COLOR]
+        LDAA    0x36
+        JSR     jr_gfx_putc
         JSR     jr_gfx_putc
         ; notice / phase line
         LDX     hz_txt_fire_wood
@@ -457,7 +464,7 @@ hz_draw_note:
         STAA    [JR_RT_COLOR]
         STX     [JR_RT_TABLE]
         LDAA    1
-        LDAB    21
+        LDAB    22
         JSR     jr_gfx_at
         LDX     [JR_RT_TABLE]
         JSR     jr_gfx_text
@@ -520,6 +527,11 @@ hz_weather_draw:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDAA    0x20
         LDAB    HZ_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -558,6 +570,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    HZ_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     hz_help_diagram
+        JSR     jr_guide_draw
         LDX     hz_help_lines
         JMP     jr_gfx_lines
 
@@ -576,27 +590,31 @@ hz_kind_tiles:
         .db     0x80, 0x42, 0x84, 0x44, 0x80, 0x42, 0x88, 0x46
         .db     0x80, 0x42, 0x80, 0x42, 0x8c, 0x47
 
+; Resource tiles and four job buttons. Numeric modifiers are in the job row.
+hz_play_icons:
+        .db     20, 0x80 + 4, 0x44, 1, HZ_TILE_WOOD + 4
+        .db     20, 0x80 + 7, 0x42, 1, HZ_TILE_WOOD
+        .db     20, 0x80 + 10, HZ_ATTR_FLAME, 1, HZ_TILE_FIRE
+        .db     20, 0x80 + 13, 0x47, 1, HZ_TILE_FIRE + 4
+        .db     1, 0x80 + 19, 0x42, 1, HZ_TILE_WOOD
+        .db     9, 0x80 + 19, 0x44, 1, HZ_TILE_WOOD + 4
+        .db     17, 0x80 + 19, HZ_ATTR_FLAME, 1, HZ_TILE_FIRE
+        .db     25, 0x80 + 19, 0x47, 1, HZ_TILE_FIRE + 4
+        .db     4, 20, 0x07, 2, 0x2b, 0x37
+        .db     12, 20, 0x07, 2, 0x2b, 0x37
+        .db     20, 20, 0x07, 4, 0x2d, 0x33, 0x2b, 0x39
+        .db     28, 20, 0x07, 2, 0x2d, 0x34
+        .db     0xff
+
 hz_hud:
         .db     1, 0, HZ_ATTR_TITLE
         .dw     hz_txt_name
         .db     23, 0, HZ_ATTR_LABEL
         .dw     hz_txt_wave
-        .db     2, 2, HZ_ATTR_LABEL
-        .dw     hz_txt_last
-        .db     14, 4, 0x04
-        .dw     hz_txt_food
-        .db     14, 7, 0x02
-        .dw     hz_txt_wood
-        .db     14, 10, 0x06
-        .dw     hz_txt_heat
-        .db     14, 13, 0x07
-        .dw     hz_txt_wall
         .db     14, 15, HZ_ATTR_COLD
         .dw     hz_txt_cold
         .db     19, 18, HZ_ATTR_LABEL
         .dw     hz_txt_day
-        .db     0, 19, HZ_ATTR_TEXT
-        .dw     hz_txt_jobs
         .db     0xff
 hz_title_lines:
         .db     10, 9, HZ_ATTR_TITLE
@@ -611,46 +629,71 @@ hz_title_lines:
         .dw     hz_txt_credit
         .db     0xff
 hz_help_lines:
-        .db     10, 2, HZ_ATTR_TITLE
+        .db     10, 1, HZ_ATTR_TITLE
         .dw     hz_txt_name
-        .db     2, 5, HZ_ATTR_TEXT
-        .dw     hz_help_1
-        .db     2, 7, HZ_ATTR_TEXT
-        .dw     hz_help_2
-        .db     2, 9, HZ_ATTR_TEXT
-        .dw     hz_help_3
-        .db     2, 11, HZ_ATTR_TEXT
-        .dw     hz_help_4
-        .db     2, 13, HZ_ATTR_TEXT
-        .dw     hz_help_5
-        .db     2, 15, HZ_ATTR_TEXT
-        .dw     hz_help_6
-        .db     2, 17, HZ_ATTR_TEXT
-        .dw     hz_help_7
-        .db     2, 20, HZ_ATTR_LABEL
-        .dw     hz_help_back
+        .db     2, 4, HZ_ATTR_LABEL
+        .dw     hz_help_label_1
+        .db     14, 4, HZ_ATTR_LABEL
+        .dw     hz_help_label_2
+        .db     23, 4, HZ_ATTR_LABEL
+        .dw     hz_help_label_3
+        .db     2, 14, HZ_ATTR_TEXT
+        .dw     hz_help_label_4
+        .db     2, 16, HZ_ATTR_TEXT
+        .dw     hz_help_label_5
+        .db     2, 18, HZ_ATTR_TEXT
+        .dw     hz_help_label_6
+        .db     2, 19, HZ_ATTR_TEXT
+        .dw     hz_help_label_7
+        .db     2, 21, HZ_ATTR_TEXT
+        .dw     hz_help_exit
+        .db     2, 23, HZ_ATTR_LABEL
+        .dw     hz_help_label_8
+        .db     0xff
+hz_help_label_1:
+        .db     "3 WOOD", 0
+hz_help_label_2:
+        .db     "FIRE", 0
+hz_help_label_3:
+        .db     "+9 HEAT", 0
+hz_help_label_4:
+        .db     "WASD JOB   RETURN SPEND A DAY", 0
+hz_help_label_5:
+        .db     "WOOD +7  FOOD +7  EAT 2", 0
+hz_help_label_6:
+        .db     "WALL: 4 WOOD SAVES 1 HEAT", 0
+hz_help_label_7:
+        .db     "SURVIVE 12 NIGHTS", 0
+hz_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+hz_help_exit:
+        .db     "SPACE RESTART / CTRL+C EXIT", 0
+
+hz_help_diagram:
+; Logs feed the flame and raise the heat bar for the night.
+        .db     2, 0x80 + 7, 0x46, 3, HZ_TILE_WOOD, HZ_TILE_WOOD, HZ_TILE_WOOD
+        .db     9, 7, 0xb6, 3, 0x36, 0x36, 0x36
+        .db     12, 7, 0x86, 1, 0x06
+        .db     11, 6, 0x86, 1, 0x00
+        .db     11, 8, 0x80, 1, 0x06
+        .db     14, 0x80 + 7, HZ_ATTR_FLAME, 1, HZ_TILE_FIRE
+        .db     18, 7, 0xb6, 3, 0x36, 0x36, 0x36
+        .db     21, 7, 0x86, 1, 0x06
+        .db     20, 6, 0x86, 1, 0x00
+        .db     20, 8, 0x80, 1, 0x06
+        .db     23, 7, 0xb6, 6, 0x36, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     23, 8, 0x92, 6, 0x12, 0x12, 0x12, 0x12, 0x12, 0x12
         .db     0xff
 
 hz_txt_name:
         .db     "HEARTH ZERO", 0
 hz_txt_wave:
         .db     "WAVE", 0
-hz_txt_last:
-        .db     "THE LAST HEARTH", 0
-hz_txt_food:
-        .db     "FOOD", 0
-hz_txt_wood:
-        .db     "WOOD", 0
-hz_txt_heat:
-        .db     "HEAT", 0
-hz_txt_wall:
-        .db     "WALL", 0
 hz_txt_cold:
         .db     "COLD NOW/NEXT", 0
 hz_txt_day:
         .db     "DAY", 0
-hz_txt_jobs:
-        .db     "WOOD    FOOD    FIRE    WALL", 0
 hz_txt_fire_wood:
         .db     "FIRE NEEDS THREE WOOD", 0
 hz_txt_wall_wood:
@@ -671,22 +714,6 @@ hz_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 hz_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-hz_help_1:
-        .db     "WASD : SELECT A DAILY JOB", 0
-hz_help_2:
-        .db     "RETURN : SPEND ONE DAY", 0
-hz_help_3:
-        .db     "WOOD +7 / FOOD +7 / EAT 2", 0
-hz_help_4:
-        .db     "FIRE: 3 WOOD GIVES 9 HEAT", 0
-hz_help_5:
-        .db     "WALL: 4 WOOD SAVES 1 HEAT", 0
-hz_help_6:
-        .db     "READ COLD, SURVIVE 12 NIGHTS.", 0
-hz_help_7:
-        .db     "SPACE RESTART / CTRL+C EXIT", 0
-hz_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 game_sfx_table:
         .dw     hz_sfx_tick, hz_sfx_work, hz_sfx_win, hz_sfx_lose
@@ -702,12 +729,18 @@ hz_sfx_lose:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
         .include "../../../sdk/math.inc"
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/sfx.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

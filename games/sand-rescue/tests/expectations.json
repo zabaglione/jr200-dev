@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/sand-rescue/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six fields as one campaign with their input scripts; synthetic-demo-clear plays field 1 with the same script at normal speed; synthetic-loss lets the tank overflow until the reserve is empty, then selects channel A again and pours once (11 points of 14) and runs out of water. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 123068,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000010305000000000000804001010f102a0000000000e010a8000000000708131713080700c02090d09020c001090f102a0000000020e010a80000000000040e0503091d000040e04080207001010f102a0000000000e010a8000000030f1f3d3f1f0f01c0f0f8bcfcf8f08001010f102a0000008080f008aa000000242424242424242424242320100f00000000c020120a1212ffa5ffa5ff242424242c3a2c3a2c3a2c3a2c3a2c3a2c3a2c8181c38181242424885224548a112000000000ff00ff0000000000ffaaff00000024182400000000422400244200000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "cae2c7690ffe259ac94f2492234e97dfd5791e25c0953e1002cf04f598962aa9",
+          "framebuffer_sha256": "09c55e7d0080c75a0d4ae482c574cc5859191200e4b20c54c483d3750fa422bb",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "5480011cc4e7af5ce0a64dadb4c410d82b7bbfb082732d15da30ef79e09f6ef2",
+          "framebuffer_sha256": "a41933c8adcb17255f3f93fbeb0900229c370355ff1ca81c4d0acc6166c9a6bc",
           "pcm": null,
           "cassette": null
         }
@@ -82,7 +83,7 @@
       {
         "profile": "synthetic-start",
         "mode": "synthetic-injection",
-        "max_cycles": 450000,
+        "max_cycles": 472501,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "567a04d504a1c0582dc4979752c71a5e109c039610a9aac3ab52354b8e298510",
+          "framebuffer_sha256": "7e0d7633d346e829988fb39864a67daf833ecb8e7beb72fad743d86ffaf83be0",
           "pcm": null,
           "cassette": null
         }
@@ -194,7 +195,7 @@
       {
         "profile": "synthetic-loss",
         "mode": "synthetic-injection",
-        "max_cycles": 175000000,
+        "max_cycles": 180224000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -211,37 +212,37 @@
           },
           {
             "kind": "key",
-            "cycle": 400000,
+            "cycle": 404000,
             "code": "0x61",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 440000,
+            "cycle": 444000,
             "code": "0x61",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158400000,
+            "cycle": 164724000,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158440000,
+            "cycle": 164764000,
             "code": "0x64",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158700000,
+            "cycle": 165036000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158740000,
+            "cycle": 165076000,
             "code": "0x0d",
             "pressed": false
           }
@@ -290,7 +291,7 @@
             "tank": "00",
             "score": "0b"
           },
-          "framebuffer_sha256": "1526be409effe0b0c942193876e495a83eb7fddcc87971b7883ca0a977bb4804",
+          "framebuffer_sha256": "c9a6e381faf0f7bc9bd9dc5f36ef4624c7eaf18c256c9ddc4682dbadde72d739",
           "pcm": null,
           "cassette": null
         }
@@ -298,7 +299,7 @@
       {
         "profile": "synthetic-lose-retry",
         "mode": "synthetic-injection",
-        "max_cycles": 175750000,
+        "max_cycles": 182676001,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -315,73 +316,73 @@
           },
           {
             "kind": "key",
-            "cycle": 400000,
+            "cycle": 404000,
             "code": "0x61",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 440000,
+            "cycle": 444000,
             "code": "0x61",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158400000,
+            "cycle": 164724000,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158440000,
+            "cycle": 164764000,
             "code": "0x64",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158700000,
+            "cycle": 165036000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158740000,
+            "cycle": 165076000,
             "code": "0x0d",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 175000000,
+            "cycle": 181988000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 175040000,
+            "cycle": 182028000,
             "code": "0x0d",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 175300000,
+            "cycle": 182300000,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 175340000,
+            "cycle": 182340000,
             "code": "0x64",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 175600000,
+            "cycle": 182612000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 175640000,
+            "cycle": 182652000,
             "code": "0x0d",
             "pressed": false
           }
@@ -498,7 +499,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749",
+          "framebuffer_sha256": "31f886f9c99fdd84a0f11539c5c834345f3a658ce8042b9066b6dc158c5a89ce",
           "pcm": null,
           "cassette": null
         }
@@ -548,7 +549,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "ab667b72b0776464913b90c683a80288ee92eaabc90f56eff04e5d6126584c67",
+          "framebuffer_sha256": "b93be4757f7f122dccf948e4256d4b8fcba3603908dfa6bbe8984667b0028c43",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -697,7 +698,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "cae2c7690ffe259ac94f2492234e97dfd5791e25c0953e1002cf04f598962aa9",
+          "framebuffer_sha256": "09c55e7d0080c75a0d4ae482c574cc5859191200e4b20c54c483d3750fa422bb",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -741,7 +742,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "567a04d504a1c0582dc4979752c71a5e109c039610a9aac3ab52354b8e298510",
+          "framebuffer_sha256": "7e0d7633d346e829988fb39864a67daf833ecb8e7beb72fad743d86ffaf83be0",
           "pcm": null,
           "cassette": {
             "state": 6,

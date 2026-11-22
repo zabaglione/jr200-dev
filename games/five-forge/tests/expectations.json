@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/five-forge/tests/model.py (upstream rules 1.6.1), not from the emulator. The winning stones come from plan(), a depth-first search against the model of upstream's rival; synthetic-lose lets the rival complete five. Key gaps leave time for the rival's 64-cell evaluation and 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 131478,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "01010101010101018080808080808080ff01010101010101ff8080808080808000071f3f7f7fffff00e0f8fcfefeffffffff7f7f3f1f0700fffffefefcf8e00000071f3f7f7fffff00e0f8fcfefeffffffff7f7f3f1f0700fffffefefcf8e000"
           },
-          "framebuffer_sha256": "a920ff01b3617a629d7f5ebd4bf616aa51ff9e387c100ad2a5aa7168fbd998a0",
+          "framebuffer_sha256": "17f037e44f3b006895b42e406a131fa52efd53885fe3191a71297617d0f5baad",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "5d727841eea1de83df85171083fa744c4ae89a9fd25dcf54ef1118729b742d72",
+          "framebuffer_sha256": "c44fbdcf56b9a39b24afb15b572bde5de3eff752a763fcba30aea59e4c371c2a",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "f34769a077a180d2a3e3876c1909c11af29f0d98adea18eab89730e9c8eab40b",
+          "framebuffer_sha256": "bb2fc6c4baa1e623623863e58194e83263a4b42a37fee13ababc5b6b22dc21ed",
           "pcm": null,
           "cassette": null
         }
@@ -428,7 +429,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "ef584d5f384c9a64add32e3462a55bbaeb2883c2a15ffc67b9dcb4d7bc22b68c",
+          "framebuffer_sha256": "a068afc1aceab1e38d02a1abbda16796cd5e8f69dcd95b7a2a74c14a9387b211",
           "pcm": null,
           "cassette": null
         }
@@ -756,7 +757,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "ae5bd567505abc12eb3c7b5f33460420b379b1f257be1ea0adae473b46d0e213",
+          "framebuffer_sha256": "74f04364e3931527fbb06ff0bbd1689d373a7ce2c78894211459636e6e2513a9",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1477,7 +1478,7 @@
             "level": "00",
             "status": "524956414c20434f4d504c455445442046495645"
           },
-          "framebuffer_sha256": "18392bcfbb342e999a16ddb09298234c39f02ecc9436e16bee5791b85606d03a",
+          "framebuffer_sha256": "57e66e441e01ae066734fddaf104826fcf7dd53651c6afe79513124684f0e19c",
           "pcm": null,
           "cassette": null
         }
@@ -2743,7 +2744,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "a920ff01b3617a629d7f5ebd4bf616aa51ff9e387c100ad2a5aa7168fbd998a0",
+          "framebuffer_sha256": "17f037e44f3b006895b42e406a131fa52efd53885fe3191a71297617d0f5baad",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -2787,7 +2788,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "f34769a077a180d2a3e3876c1909c11af29f0d98adea18eab89730e9c8eab40b",
+          "framebuffer_sha256": "bb2fc6c4baa1e623623863e58194e83263a4b42a37fee13ababc5b6b22dc21ed",
           "pcm": null,
           "cassette": {
             "state": 6,

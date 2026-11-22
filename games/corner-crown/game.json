@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "corner-crown",
   "title": "CORNER CROWN",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Place discs on an 8x8 board, flip the rival's discs in eight directions and finish with more discs.",
   "genre": "tabletop",
   "license": "MIT",

@@ -8,15 +8,19 @@ The built CJR incorporates code from these jr200-dev SDK modules:
 - `sdk/font_data.inc`
 - `sdk/frame.inc`
 - `sdk/gfx.inc`
+- `sdk/gfx_runtime.inc`
+- `sdk/guide.inc`
 - `sdk/jr200.inc`
 - `sdk/keys.inc`
 - `sdk/keyscan.inc`
 - `sdk/math.inc`
 - `sdk/pcg.inc`
 - `sdk/port.inc`
+- `sdk/port_runtime.inc`
 - `sdk/session.inc`
 - `sdk/sfx.inc`
 - `sdk/sound.inc`
+- `sdk/title_art.inc`
 
 They are distributed under the BSD-3-Clause license. The complete license text is
 included in `LICENSES/BSD-3-Clause.txt` in the package. BRICK PULSE's own source and

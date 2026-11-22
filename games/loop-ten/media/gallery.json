@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "3146e5f1cd81e2234d0e1e41bfdcae55c88e40966c7bd0efa06e4793cd0ec7f4",
-      "framebuffer_sha256": "3d5e7d5fe3dde543328b038e0e8e172bebb55f036b97c48540e8cf8d54523c1d"
+      "sha256": "c086ccd431537ca804d0141f1ec57b24e321e2ae75cbff18c4285c29c807fd29",
+      "framebuffer_sha256": "74913235d03b39c344ea69a8f706834a366647c96b69fc6bed7bcc041725d710"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで封印へ向かう場面",
-      "sha256": "40170a7ac938f04461335a3841ed8a9add00cfa8f2fa9c693ce473eee19516e9",
-      "framebuffer_sha256": "1d9053a16241ade800789523d66c6e163103aabe892c8d5a6ba7817512a919a8"
+      "sha256": "044ca2aaab7af9cf2cb8c7c17d7fc43d5989bc0afc4e21a8dc16b5d1b3f7c3bd",
+      "framebuffer_sha256": "eac2d9c4e377060d5d380f488f1b0d2bcf384bc7047cca0fd6940ddc1bfad199"
     },
     {
       "id": "goal",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "12番目の封印を点灯させ、ループから脱出する",
-      "sha256": "511d8ed0aad3e0184921b0de876ae8a951889c7d41a4660887ec4294252df13e",
-      "framebuffer_sha256": "7443398c46f050aba629c84761bc2640a39dc54a4c2d4d4a7ff0a001f7ed8532"
+      "sha256": "3f356764e1077284aca6604714cd84293bb4b8af014def52f9f22badaf5089e1",
+      "framebuffer_sha256": "fd858b869827347fcc14895fec0d3ac7bfc17f651007aa5654ffb41e497b428d"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 32.0,
-    "frames": 960,
-    "frames_sha256": "03708d66ac07a801a6df816a0d3d5ed25eceafeb42c495fbc569f0b933c6fb62",
-    "pcm_sha256": "ea0530f72bed3d9f46171ea6f5e4ffeb427093ca237d230052451d0a420703eb",
-    "sha256": "baf76ce820c291b7d17e5a320b5e229224073d90189a5c110d709a059745702b",
+    "seconds": 32.1,
+    "frames": 963,
+    "frames_sha256": "4ffa19e8025d24305caa6780f2b56473621461cdd571571e54803cdab057da61",
+    "pcm_sha256": "dbb4e58b019ebedbcc68a23bfc03940b0935965d9e24bfcd702904ebcf0b56c4",
+    "sha256": "7ac1cfa8709d8dc410da2fe1898e363b22645b018ac35e79664005c453b17047",
     "caption": "自動デモで12の封印を点灯させて脱出する（等速）"
   }
 }

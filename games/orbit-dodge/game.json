@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "orbit-dodge",
   "title": "ORBIT DODGE",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Circle a planet on two orbits, dodging flashing beam targets and collecting gems in six sectors.",
   "genre": "action",
   "license": "MIT",

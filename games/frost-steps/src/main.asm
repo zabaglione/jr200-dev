@@ -8,9 +8,11 @@
         .filename.jr "FROST-STEPS"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x6000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -197,7 +199,9 @@ game_act:
         JMP     fs_act_done
 fs_act_done_near196:
         TSTA
-        BEQ     fs_act_done
+        BNE     fs_act_direction
+        RTS
+fs_act_direction:
         STAA    [FS_FACING]
         STAA    [FS_ACTION]
         LDAA    [FS_POS]
@@ -240,8 +244,13 @@ fs_slide_ice:
         CLRA
         JSR     jr_port_sound
 fs_slide_show:
+        JSR     jr_input_capture
+        LDAA    [JR_INPUT_HEAD]
+        CMPA    [JR_INPUT_TAIL]
+        BNE     fs_slide_settle
         LDAA    2
         JSR     jr_port_animate
+fs_slide_settle:
         LDAA    [FS_POS]
         STAA    [FS_ORIGIN]
 fs_slide_next:
@@ -403,6 +412,11 @@ fs_draw_put:
         JMP     jr_rank_hud
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     fs_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -438,6 +452,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    FS_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     fs_help_diagram
+        JSR     jr_guide_draw
         LDX     fs_help_lines
         JMP     jr_gfx_lines
 
@@ -484,26 +500,52 @@ fs_title_lines:
 fs_help_lines:
         .db     10, 1, FS_ATTR_TITLE
         .dw     game_title_text
-        .db     1, 3, FS_ATTR_TEXT
-        .dw     fs_help_1
-        .db     1, 5, FS_ATTR_TEXT
-        .dw     fs_help_2
-        .db     1, 7, FS_ATTR_TEXT
-        .dw     fs_help_3
-        .db     1, 9, FS_ATTR_TEXT
-        .dw     fs_help_4
-        .db     1, 11, FS_ATTR_TEXT
-        .dw     fs_help_5
-        .db     1, 13, FS_ATTR_TEXT
-        .dw     fs_help_6
-        .db     1, 15, FS_ATTR_TEXT
-        .dw     fs_help_7
-        .db     1, 17, FS_ATTR_TEXT
-        .dw     fs_help_8
-        .db     1, 19, FS_ATTR_TEXT
-        .dw     fs_help_9
-        .db     1, 21, FS_ATTR_LABEL
-        .dw     fs_help_back
+        .db     2, 4, FS_ATTR_LABEL
+        .dw     fs_help_label_1
+        .db     20, 4, FS_ATTR_LABEL
+        .dw     fs_help_label_2
+        .db     2, 12, FS_ATTR_TEXT
+        .dw     fs_help_label_3
+        .db     16, 12, FS_ATTR_TEXT
+        .dw     fs_help_label_4
+        .db     2, 16, FS_ATTR_TEXT
+        .dw     fs_help_label_5
+        .db     2, 18, FS_ATTR_TEXT
+        .dw     fs_help_label_6
+        .db     2, 22, FS_ATTR_LABEL
+        .dw     fs_help_label_7
+        .db     0xff
+fs_help_label_1:
+        .db     "D SLIDE", 0
+fs_help_label_2:
+        .db     "WALL STOPS", 0
+fs_help_label_3:
+        .db     "ALL CRYSTALS", 0
+fs_help_label_4:
+        .db     "RUNES + PAR = 3*", 0
+fs_help_label_5:
+        .db     "WASD SLIDE  SPACE RETRY", 0
+fs_help_label_6:
+        .db     "F STAGES  X CODE  CTRL+C BASIC", 0
+fs_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+fs_help_diagram:
+; The traveler slides through a crystal and stops at the wall.
+        .db     2, 0x80 + 6, FS_ATTR_HERO, 1, FS_TILE_HERO + 12
+        .db     4, 0x80 + 6, FS_ATTR_ICE, 1, FS_TILE_ICE
+        .db     6, 0x80 + 6, FS_ATTR_CRYSTAL, 1, FS_TILE_CRYSTAL
+        .db     8, 0x80 + 6, FS_ATTR_ICE, 1, FS_TILE_ICE
+        .db     10, 0x80 + 6, FS_ATTR_WALL, 1, FS_TILE_WALL
+        .db     14, 7, 0xb6, 3, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     20, 0x80 + 6, FS_ATTR_ICE, 3, FS_TILE_ICE, FS_TILE_ICE, FS_TILE_ICE
+        .db     26, 0x80 + 6, FS_ATTR_HERO, 1, FS_TILE_HERO + 12
+        .db     28, 0x80 + 6, FS_ATTR_WALL, 1, FS_TILE_WALL
+        .db     2, 0x80 + 10, FS_ATTR_CRYSTAL, 1, FS_TILE_CRYSTAL
+        .db     16, 0x80 + 10, FS_ATTR_RUNE, 1, FS_TILE_RUNE
         .db     0xff
 
 fs_txt_compass:
@@ -520,26 +562,6 @@ fs_txt_start:
         .db     "RETURN : PLAY THE STAGE", 0
 fs_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-fs_help_1:
-        .db     "WASD : SLIDE TO A WALL", 0
-fs_help_2:
-        .db     "TAKE ALL DIAMOND CRYSTALS.", 0
-fs_help_3:
-        .db     "ROUND RUNES ARE OPTIONAL.", 0
-fs_help_4:
-        .db     "PAR OR LESS = TWO STARS.", 0
-fs_help_5:
-        .db     "PLUS BOTH RUNES = THREE STARS.", 0
-fs_help_6:
-        .db     "OVER PAR = CLEAR / ONE STAR.", 0
-fs_help_7:
-        .db     "SPACE RETRY / F STAGE SELECT", 0
-fs_help_8:
-        .db     "X : PASSWORD (TITLE / MAP)", 0
-fs_help_9:
-        .db     "CTRL+C : BASIC", 0
-fs_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -591,7 +613,7 @@ fs_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -599,5 +621,11 @@ fs_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/ranked.inc"
+        .include "../../../sdk/ranked_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

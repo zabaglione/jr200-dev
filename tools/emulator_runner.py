@@ -357,12 +357,16 @@ def validate_expectations(value: Any, entry: int,
         raise RunnerError('Invalid target expectations')
     runtime = value['runtime']
     if (not isinstance(runtime, dict)
-            or set(runtime) != {'default_profile', 'profiles'}
+            or set(runtime) - {'default_profile', 'profiles', 'startup_delay_cycles'}
+            or not {'default_profile', 'profiles'} <= set(runtime)
             or not isinstance(runtime['default_profile'], str)
             or SAFE_NAME.fullmatch(runtime['default_profile']) is None
             or not isinstance(runtime['profiles'], list)
             or not runtime['profiles']):
         raise RunnerError('Invalid runtime profile collection')
+    startup_delay = runtime.get('startup_delay_cycles', 0)
+    if type(startup_delay) is not int or not 0 <= startup_delay < MAX_CYCLES:
+        raise RunnerError('Invalid runtime startup delay')
     raw_profiles: dict[str, dict[str, Any]] = {}
     for item in runtime['profiles']:
         if not isinstance(item, dict) or not isinstance(item.get('profile'), str):
@@ -372,7 +376,24 @@ def validate_expectations(value: Any, entry: int,
         raw_profiles[item['profile']] = item
     profiles: dict[str, dict[str, Any]] = {}
     for item in runtime['profiles']:
-        checked = validate_runtime_profile(expand_replay_profile(item, raw_profiles))
+        expanded = expand_replay_profile(item, raw_profiles)
+        checked = validate_runtime_profile(expanded)
+        if startup_delay and checked['replay']:
+            if checked['mode'] == 'synthetic-injection':
+                replay_start = 0
+            elif 'replay_from' in item:
+                replay_start = len(validate_runtime_profile({
+                    **expanded, 'replay': item['replay'],
+                })['replay'])
+            else:
+                replay_start = len(checked['replay'])
+            shifted = checked['replay'][replay_start:]
+            for event in shifted:
+                event['cycle'] += startup_delay
+            if shifted:
+                checked['max_cycles'] += startup_delay
+                if checked['max_cycles'] > MAX_CYCLES:
+                    raise RunnerError('Runtime startup delay exceeds the cycle limit')
         if checked['profile'] in profiles:
             raise RunnerError(f'Duplicate runtime profile: {checked["profile"]}')
         profiles[checked['profile']] = checked

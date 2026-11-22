@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "metro-weave",
   "title": "METRO WEAVE",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Switch points and hold trains to deliver eight trains per shift to the right platforms, express ones on time.",
   "genre": "tactics",
   "license": "MIT",

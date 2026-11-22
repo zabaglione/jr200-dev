@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/pendulum-port/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six routes with their input scripts; synthetic-demo-clear plays route 1 with the same script at normal speed. Timed key replays only observe values that do not depend on tick timing (synthetic-loss: three releases 700000 cycles apart miss). synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 125867,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "00000f1027282b2a0000f008e414d4542a2b2827100f000054d414e408f00000010303013f43830380c0c080fcc2c1c00306040c08183000c060203010180c00ff80ff2424242424ff01ff2424242424242424242476240024242424246e2400ff81ff24272a292bff81ff24e45494d4292a2724247624009454e424246e240018241824182418248181424224241800000030498600000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "5624910503e09fd6538b7f3c627278fc7962f9e0ff6d0145b51376670fb123ec",
+          "framebuffer_sha256": "d8037464920bf11b9b6012a2210d85bc5bcc5aae83d8e76296a127d883ee23f7",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "9b8108d3db615af0175d8ec241d45576d95dea9671882a7a04a24e89f6999f03",
+          "framebuffer_sha256": "d39bd53bf436f6aba395adb3d97425873d582fda75d8518990afb587638c552b",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "83ddddab3824a45ad7b8ef02af6ebaad28a33d0bb440c1a40c6025594a532e2f",
+          "framebuffer_sha256": "f53f013cb233a9f355f704c06389f02dd5fdbbabadd383e3f29a85b7d0be8b69",
           "pcm": null,
           "cassette": null
         }
@@ -284,7 +285,7 @@
             "hp": "00",
             "ports": "00"
           },
-          "framebuffer_sha256": "b6b6468b0bfbc2cc0c6fc00943cdbf6627f2b54e63536325aff00722d6c819ef",
+          "framebuffer_sha256": "d0e1c2434579d3d14b11bc54e6c437a60a5d6bed101adf74c2f0709e717a313b",
           "pcm": null,
           "cassette": null
         }
@@ -492,7 +493,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "a28f035a1d4f5d9bcfcbd05b905bc1bb874f440785880e0ee58fce02baf83742",
+          "framebuffer_sha256": "4ba1a16c639823900787f925a2c233993518aa3726012ee180e3f84993ca43c6",
           "pcm": null,
           "cassette": null
         }
@@ -542,7 +543,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "806072ff0a86b5989df01b950ab9a7439c6c86d008fdf5d25af4cdc0334ee904",
+          "framebuffer_sha256": "90a1963c97653056edf313497299113ad1471409eabcd4e5ad8143f01e1fd275",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -691,7 +692,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "5624910503e09fd6538b7f3c627278fc7962f9e0ff6d0145b51376670fb123ec",
+          "framebuffer_sha256": "d8037464920bf11b9b6012a2210d85bc5bcc5aae83d8e76296a127d883ee23f7",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -735,7 +736,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "79dd690860d41fc6c7aff1224409b23884e022f40267657b51831e4e27ffaad8",
+          "framebuffer_sha256": "f34fb7c656c01549415e9940396b2749ae684dbbdfc06c3ece719fc9e0c1d9a3",
           "pcm": null,
           "cassette": {
             "state": 6,

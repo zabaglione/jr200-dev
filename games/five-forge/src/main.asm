@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -708,6 +710,11 @@ ff_cell_xy:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     ff_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -743,6 +750,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    FF_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     ff_help_diagram
+        JSR     jr_guide_draw
         LDX     ff_help_lines
         JMP     jr_gfx_lines
 
@@ -798,24 +807,48 @@ ff_title_lines:
         .dw     ff_txt_credit
         .db     0xff
 ff_help_lines:
-        .db     11, 2, FF_ATTR_TITLE
+        .db     11, 1, FF_ATTR_TITLE
         .dw     ff_txt_name
-        .db     1, 5, FF_ATTR_TEXT
-        .dw     ff_help_1
-        .db     1, 7, FF_ATTR_TEXT
-        .dw     ff_help_2
-        .db     1, 9, FF_ATTR_TEXT
-        .dw     ff_help_3
-        .db     1, 11, FF_ATTR_TEXT
-        .dw     ff_help_4
-        .db     1, 13, FF_ATTR_TEXT
-        .dw     ff_help_5
-        .db     1, 15, FF_ATTR_TEXT
-        .dw     ff_help_6
-        .db     1, 17, FF_ATTR_TEXT
-        .dw     ff_help_7
-        .db     1, 21, FF_ATTR_LABEL
-        .dw     ff_help_back
+        .db     2, 4, FF_ATTR_LABEL
+        .dw     ff_help_label_1
+        .db     20, 4, FF_ATTR_LABEL
+        .dw     ff_help_label_2
+        .db     2, 14, FF_ATTR_TEXT
+        .dw     ff_help_label_3
+        .db     2, 16, FF_ATTR_TEXT
+        .dw     ff_help_label_4
+        .db     2, 18, FF_ATTR_TEXT
+        .dw     ff_help_label_5
+        .db     2, 20, FF_ATTR_TEXT
+        .dw     ff_help_label_6
+        .db     2, 22, FF_ATTR_LABEL
+        .dw     ff_help_label_7
+        .db     0xff
+ff_help_label_1:
+        .db     "PLACE", 0
+ff_help_label_2:
+        .db     "FIVE WINS", 0
+ff_help_label_3:
+        .db     "WASD SELECT  RETURN PLACE", 0
+ff_help_label_4:
+        .db     "ROW / COLUMN / DIAGONAL", 0
+ff_help_label_5:
+        .db     "FULL BOARD WITHOUT FIVE LOSES", 0
+ff_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+ff_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+ff_help_diagram:
+; Four neighboring white stones become the highlighted five.
+        .db     1, 0x80 + 7, FF_ATTR_OWN, 4, FF_TILE_OWN, FF_TILE_OWN, FF_TILE_OWN, FF_TILE_OWN
+        .db     9, 0x80 + 7, FF_ATTR_BOARD, 1, FF_TILE_GRID
+        .db     9, 6, 0x06, 1, 0x76
+        .db     13, 7, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     20, 0x80 + 7, FF_ATTR_OWN_FIVE, 5, FF_TILE_OWN, FF_TILE_OWN, FF_TILE_OWN, FF_TILE_OWN, FF_TILE_OWN
         .db     0xff
 
 ff_txt_name:
@@ -846,22 +879,6 @@ ff_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 ff_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-ff_help_1:
-        .db     "WASD : SELECT A CELL", 0
-ff_help_2:
-        .db     "RETURN : PLACE YOUR STONE", 0
-ff_help_3:
-        .db     "MAKE FIVE IN ANY DIRECTION.", 0
-ff_help_4:
-        .db     "THE RIVAL BLOCKS IMMEDIATE WINS", 0
-ff_help_5:
-        .db     "AND BUILDS ITS OWN THREATS.", 0
-ff_help_6:
-        .db     "A FULL BOARD WITHOUT FIVE LOSES", 0
-ff_help_7:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-ff_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -913,7 +930,7 @@ ff_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -921,5 +938,11 @@ ff_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。畝、苗、ベリー、若木、リンゴ、水滴",
-      "sha256": "04401612c9aafc885140a0affdf5ec8a3ab4d66c8d7fd1a26e78b9aa4a70483b",
-      "framebuffer_sha256": "db3c61030649e2bc0d138e8f7207451d639e83af547c9c63f1eadf16427c25f8"
+      "sha256": "b4ee38755bb8759092bce6cc75c30bde5427ba04594d2adb1564bc9181b7fa45",
+      "framebuffer_sha256": "88a54fe09535d7290de9c98dc06bab630455383c23aa8d2b28cd2ebdc0943869"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-field",
       "role": "play",
       "caption": "リンゴとベリーが育つ畑",
-      "sha256": "a70ce41279d3a9389b935fabf4027fe7e0a0c81edd2681799798e95294ec82e4",
-      "framebuffer_sha256": "175f0d754b63814d4769d0b1e90c0d51184e0c15d5a9217c9b5179d73c525462"
+      "sha256": "637f62f57e49b21a53ca43be7421c025fe3fe8bbd19761a17a322a812caf0931",
+      "framebuffer_sha256": "8f6c8807b24e0a00c8329f9950e339e3691a8f1fafa48e1f15c95d4caaeac522"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "実りが目標に届いた1季節目のクリア",
-      "sha256": "9529be43f8643f65afdcffc37859817c84f0ece5748a2d6fea4ea127c85531f3",
-      "framebuffer_sha256": "c6ea1748a2f3bc220a27a2300d3f9b31c4bf6be6928214c5e91c5f5c3c0778cf"
+      "sha256": "8e96ec1f1152a6d6328c0554c5437a5febe54dcc39cb3fade39f643d2e3b1d25",
+      "framebuffer_sha256": "2d956524315dd8f63a215579ea3b178e4a400b8654eabc19797d2b4197e59302"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 19.7,
-    "frames": 590,
-    "frames_sha256": "f5538230d6133675b0d4d04d911d54fe89c744ed5fe2860e0e016c792b5de84d",
-    "pcm_sha256": "3429280c64997592e4b72f913ab2a6d6511c5f916e4ce2c07bbfa5b0ea8f3950",
-    "sha256": "c76157602c6a4ef1bd424eaa5c446f6998242835024d7e5e2f849ced4082420c",
+    "seconds": 19.8,
+    "frames": 593,
+    "frames_sha256": "33efeb0cd3895d61c7805ba96de27eca4e02d5f0deac5ab45f3f072e7053f32f",
+    "pcm_sha256": "4c1b1151c9308b114e0b08a80e4e9aa0f5e33d73125085028eb7fb2644b23316",
+    "sha256": "95217d49a1df5a5db7c6d7907edac02bb60e715e8b2126a3dbac0eefd6c82188",
     "caption": "1季節目にベリーを植えて育て、目標の実りに届くまで"
   }
 }

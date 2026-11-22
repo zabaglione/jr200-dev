@@ -293,14 +293,23 @@ RENDER_TITLE:
     JMP TEXT
 ; The bank is switched only at title/game transitions, never per terrain cell.
 SELECT_PCG_BANK:
+    LDAA [G_MODE]
+    BEQ SELECT_TITLE_BANK
+    CMPA 2
+    BEQ SELECT_MENU_BANK
     LDAA 2
     LDX TILES
     LDAB TILES_END - TILES
-    TST [G_MODE]
-    BNE SELECT_BANK_READY
+    BRA SELECT_BANK_READY
+SELECT_TITLE_BANK:
     LDAA 1
     LDX TITLE_TILES
     LDAB ((TITLE_TILES_END - TITLE_TILES) & 255)
+    BRA SELECT_BANK_READY
+SELECT_MENU_BANK:
+    LDAA 3
+    LDX MENU_TILES
+    CLRB                     ; COPY_BYTES counts 0 as the entire 256-byte bank
 SELECT_BANK_READY:
     CMPA [PCG_BANK]
     BEQ SELECT_BANK_DONE
@@ -383,17 +392,36 @@ RENDER_SUSPEND:
     LDAA ((FRAMEBUFFER + 261) >> 8)
     JMP TEXT
 RENDER_HELP:
-    LDX HELP_LINES
-    STX [UI_PTR]
-    LDAA 7
+    LDX HELP_TITLE
+    LDAA (FRAMEBUFFER + 2 * 32 + 11) >> 8
+    LDAB (FRAMEBUFFER + 2 * 32 + 11) & 255
+    JSR TEXT
+    LDX HELP_DUNGEON
+    STX [TEXT_SRC]
+    LDX FRAMEBUFFER + 6 * 32 + 3
+    STX [TEXT_DEST]
+    LDAA 5
     STAA [COUNT]
-    LDAA 1
+HELP_DUNGEON_ROW:
+    LDAB 26
+    JSR COPY_BYTES
+    LDX [TEXT_DEST]
+    INX
+    INX
+    INX
+    INX
+    INX
+    INX
+    STX [TEXT_DEST]
+    DEC [COUNT]
+    BNE HELP_DUNGEON_ROW
+    LDX HELP_CONTROLS
+    STX [UI_PTR]
+    LDAA 6
+    STAA [COUNT]
+    LDAA 6
     STAA [UI_ROW]
-    JSR RENDER_LINES
-    LDX S_BACK
-    LDAB ((FRAMEBUFFER + 736) & 255)
-    LDAA ((FRAMEBUFFER + 736) >> 8)
-    JMP TEXT
+    JMP RENDER_LINES
 RENDER_END:
     LDX S_DEAD
     LDAA [G_MODE]
@@ -624,6 +652,7 @@ MAP_NEXT_PACKED:
     JMP MAP_COLUMN
 MAP_NEXT_ROW:
     INC [ROW]
+    JSR POLL_KEY
     LDAA [ROW]
     SUBA [VIEW_Y]
     CMPA 20
@@ -793,8 +822,51 @@ MENU_DRAW:
     STAA [COUNT]
     LDAA 1
     STAA [UI_ROW]
-    JSR RENDER_CHOICES
-    LDX S_MENU_KEYS
+    CLR [CANDIDATE]
+MENU_DRAW_ICON:
+    ; The stairs tile is omitted when there are no stairs.
+    LDAA [UI_ROW]
+    LDAB 64
+    JSR MULTIPLY
+    ADDB (FRAMEBUFFER + 3) & 255
+    ADCA (FRAMEBUFFER + 3) >> 8
+    STAB [P2 + 1]
+    STAA [P2]
+    LDX [P2]
+    LDAA [CANDIDATE]
+    INCA
+    SUBA [G_CONTEXT]
+    ASLA
+    ASLA
+    ORAA 0x80
+    STAA [X]
+    INCA
+    STAA [X + 1]
+    INCA
+    STAA [X + 32]
+    INCA
+    STAA [X + 33]
+    LDAA [CANDIDATE]
+    CMPA [G_MENU]
+    BNE MENU_DRAW_NEXT
+    JSR DRAW_SELECTION
+    ; Only the highlighted command needs a name.
+    LDX [UI_PTR]
+    LDX [X]
+    LDAA [P2]
+    LDAB [P2 + 1]
+    ADDB 8
+    JSR TEXT
+MENU_DRAW_NEXT:
+    LDX [UI_PTR]
+    INX
+    INX
+    STX [UI_PTR]
+    INC [CANDIDATE]
+    INC [UI_ROW]
+    DEC [COUNT]
+    BNE MENU_DRAW_ICON
+    LDX MENU_KEYS
     LDAB ((FRAMEBUFFER + 704) & 255)
     LDAA ((FRAMEBUFFER + 704) >> 8)
     JMP TEXT

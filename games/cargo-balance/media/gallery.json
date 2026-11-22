@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。重さ別の色の木箱とクレーン",
-      "sha256": "b30205c27c2aab3eefbab2ac8630b9dbb01956f2d850ddb0a0292368edfe107f",
-      "framebuffer_sha256": "2a9350900a05a36e05d3687f1404c3a785b1d039c78e712083023459ae264118"
+      "sha256": "ca2faec59a9d7c9dc2d5b266237962b7e0750ca946b75b4a9fe75ba6390909e1",
+      "framebuffer_sha256": "ce551544f536b6676780879638e282baca58d511d941746c6510a0f422cc8bf3"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-load",
       "role": "play",
       "caption": "最初の4個を外側の船倉へ積んだ後",
-      "sha256": "ce91b743a030eb5b27bff326005e3debae61fd2f86c338636b71dba168eedc7f",
-      "framebuffer_sha256": "2bd85f2782cca8dfdaabcc5666ffa3e1b89e68f7cb8084a938a3fe1858d19a02"
+      "sha256": "406901885afa3557a6b9b2790dda28082ee1abb31be1d72b035479e108866bad",
+      "framebuffer_sha256": "fd20de67abfff0d9d3a01bd9db6887008e9ab2770eb8bcb48faba9a6244a355b"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "12個を積み終えて1航海目のクリア",
-      "sha256": "515b870b3eba2952f45dad8fffb3bb3a4e90c4d039be4c75a416a0e865cdc91a",
-      "framebuffer_sha256": "09e5be2f044287f7453ebc12da272bda2a54194307a1a61946dc51fbabcdceb9"
+      "sha256": "94c0603c3f36fa97c62baa98bf60e7c4e0e694ba701f6f4a87549a7ba659c4ad",
+      "framebuffer_sha256": "41862a9e665d237ba780e42ada8763767b5be5e166ec711e0664f1165bdd0329"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 15.0,
-    "frames": 451,
-    "frames_sha256": "7081a5d7900dbb05e3bde25ffd54a9bef2e82e610311e17fa192208c24c5a7ad",
-    "pcm_sha256": "2de111f0d3e70f893a973f51d87b748d6b74011e80ef13e6513a97d7eccaccdb",
-    "sha256": "cf04b241ba837d0b146a38ae06952a05711172b19281fcccb90562ac34de089e",
+    "seconds": 15.1,
+    "frames": 453,
+    "frames_sha256": "5523406617d9ec8ae5197d23b8f4a3e299992673fafdf4cf4c48fd54d81de218",
+    "pcm_sha256": "03bf98593383ea4e255e8730348a51cc57d0deccfad05f890d7dcfe926fdaff2",
+    "sha256": "c9792d1f3cdeaefe6dbda14ee681322f4f2015e2f5e7945ea2ae5d36e104c539",
     "caption": "1航海目の12個を積み終えて出航するまで"
   }
 }

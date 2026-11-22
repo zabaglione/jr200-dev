@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/cargo-balance/tests/model.py (upstream rules 2.0.0), not from the emulator. Each voyage follows the hold plan found by plan() and never tips; synthetic-all-voyages completes all six. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Drops leave 1500000 cycles for the crate to fall and the ship to roll.",
   "runtime": {
+    "startup_delay_cycles": 120380,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "ff80bfb0a8a4a2a1ff01fd0d15254585a1a2a4a8b0bf80ff854525150dfd01ff010101010101010780808080808080e0"
           },
-          "framebuffer_sha256": "2a9350900a05a36e05d3687f1404c3a785b1d039c78e712083023459ae264118",
+          "framebuffer_sha256": "ce551544f536b6676780879638e282baca58d511d941746c6510a0f422cc8bf3",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "8b8d7663f3830c66a0bd13f2a91a25e0675bee0b07376eef9ecaf3ba602861f6",
+          "framebuffer_sha256": "b092643d026c9cea5c6796f3b47d3c2ee03362f987ad5d3f535e9c66045d972f",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "de85e31cd70f47327d1e85c87408209381ac43a4c34947e4887681340b436fc9",
+          "framebuffer_sha256": "ac3574fdde06a6dfe8a81a1a0a42bb9561dc89d3193f6cbd7e792e73bc5f4206",
           "pcm": null,
           "cassette": null
         }
@@ -356,7 +357,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "2bd85f2782cca8dfdaabcc5666ffa3e1b89e68f7cb8084a938a3fe1858d19a02",
+          "framebuffer_sha256": "fd20de67abfff0d9d3a01bd9db6887008e9ab2770eb8bcb48faba9a6244a355b",
           "pcm": null,
           "cassette": null
         }
@@ -756,7 +757,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "09e5be2f044287f7453ebc12da272bda2a54194307a1a61946dc51fbabcdceb9",
+          "framebuffer_sha256": "41862a9e665d237ba780e42ada8763767b5be5e166ec711e0664f1165bdd0329",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -853,7 +854,7 @@
             "level": "00",
             "status": "544845204c4f414420544950504544205448452053484950"
           },
-          "framebuffer_sha256": "fe9f6151c98e834351654d0519c646e750f7890e101b4258e24bb0a1a5d896b7",
+          "framebuffer_sha256": "9158096278ef4da0a0e11064795b03bfcef5ef6a4db06ead55b530862dc32b7a",
           "pcm": null,
           "cassette": null
         }
@@ -2851,7 +2852,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "2a9350900a05a36e05d3687f1404c3a785b1d039c78e712083023459ae264118",
+          "framebuffer_sha256": "ce551544f536b6676780879638e282baca58d511d941746c6510a0f422cc8bf3",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -2895,7 +2896,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "de85e31cd70f47327d1e85c87408209381ac43a4c34947e4887681340b436fc9",
+          "framebuffer_sha256": "ac3574fdde06a6dfe8a81a1a0a42bb9561dc89d3193f6cbd7e792e73bc5f4206",
           "pcm": null,
           "cassette": {
             "state": 6,

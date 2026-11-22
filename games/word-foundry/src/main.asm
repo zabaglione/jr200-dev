@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -491,6 +493,11 @@ wf_grid_xy:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     wf_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -519,6 +526,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    WF_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     wf_help_diagram
+        JSR     jr_guide_draw
         LDX     wf_help_lines
         JMP     jr_gfx_lines
 
@@ -581,24 +590,59 @@ wf_title_lines:
         .dw     wf_txt_arrows
         .db     0xff
 wf_help_lines:
-        .db     10, 2, WF_ATTR_TITLE
+        .db     10, 1, WF_ATTR_TITLE
         .dw     wf_txt_name
-        .db     1, 5, WF_ATTR_TEXT
-        .dw     wf_help_1
-        .db     1, 7, WF_ATTR_TEXT
-        .dw     wf_help_2
-        .db     1, 9, WF_ATTR_TEXT
-        .dw     wf_help_3
-        .db     1, 11, WF_ATTR_TEXT
-        .dw     wf_help_4
-        .db     1, 13, WF_ATTR_TEXT
-        .dw     wf_help_5
-        .db     1, 15, WF_ATTR_TEXT
-        .dw     wf_help_6
-        .db     1, 17, WF_ATTR_TEXT
-        .dw     wf_help_7
-        .db     1, 20, WF_ATTR_LABEL
-        .dw     wf_help_back
+        .db     2, 4, WF_ATTR_LABEL
+        .dw     wf_help_label_1
+        .db     13, 4, WF_ATTR_LABEL
+        .dw     wf_help_label_2
+        .db     23, 4, WF_ATTR_LABEL
+        .dw     wf_help_label_3
+        .db     2, 14, WF_ATTR_TEXT
+        .dw     wf_help_label_4
+        .db     2, 16, WF_ATTR_TEXT
+        .dw     wf_help_label_5
+        .db     2, 18, WF_ATTR_TEXT
+        .dw     wf_help_label_6
+        .db     2, 20, WF_ATTR_TEXT
+        .dw     wf_help_label_7
+        .db     2, 22, WF_ATTR_LABEL
+        .dw     wf_help_label_8
+        .db     0xff
+wf_help_label_1:
+        .db     "START", 0
+wf_help_label_2:
+        .db     "VIA", 0
+wf_help_label_3:
+        .db     "TARGET", 0
+wf_help_label_4:
+        .db     "WASD WORD   RETURN REPLACE", 0
+wf_help_label_5:
+        .db     "ONE LETTER PER MOVE", 0
+wf_help_label_6:
+        .db     "GREEN * = NEXT   PAR + 2 LIMIT", 0
+wf_help_label_7:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+wf_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+wf_help_diagram:
+; CAT -> COT -> COG; the change moves from the middle to the last letter.
+        .db     2, 7, WF_ATTR_CURRENT, 3, 0x43, 0x41, 0x54
+        .db     13, 7, WF_ATTR_VIA, 3, 0x43, 0x4f, 0x54
+        .db     24, 7, WF_ATTR_TARGET, 3, 0x43, 0x4f, 0x47
+        .db     3, 8, 0x80, 1, 0x36
+        .db     14, 8, 0x80, 1, 0x36
+        .db     15, 9, 0x80, 1, 0x36
+        .db     26, 9, 0x80, 1, 0x36
+        .db     6, 7, 0xad, 3, 0x2d, 0x2d, 0x2d
+        .db     9, 7, 0x85, 1, 0x05
+        .db     8, 6, 0x85, 1, 0x00
+        .db     8, 8, 0x80, 1, 0x05
+        .db     17, 7, 0xad, 3, 0x2d, 0x2d, 0x2d
+        .db     20, 7, 0x85, 1, 0x05
+        .db     19, 6, 0x85, 1, 0x00
+        .db     19, 8, 0x80, 1, 0x05
         .db     0xff
 
 wf_txt_name:
@@ -629,22 +673,6 @@ wf_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 wf_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-wf_help_1:
-        .db     "WASD : WORD  RETURN : REPLACE", 0
-wf_help_2:
-        .db     "CHANGE EXACTLY ONE LETTER.", 0
-wf_help_3:
-        .db     "REACH VIA BEFORE THE TARGET.", 0
-wf_help_4:
-        .db     "GREEN * WORDS ARE NEXT STEPS.", 0
-wf_help_5:
-        .db     "PAR + TWO STEPS IS THE LIMIT.", 0
-wf_help_6:
-        .db     "SPACE : RESTART THIS LADDER", 0
-wf_help_7:
-        .db     "CTRL+C : BACK TO BASIC", 0
-wf_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -699,7 +727,7 @@ wf_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -707,5 +735,11 @@ wf_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

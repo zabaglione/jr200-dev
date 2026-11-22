@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "compass-rose",
   "title": "COMPASS ROSE",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Read the last survey bearing and distance band to dig up the buried relic at ten sites.",
   "genre": "exploration",
   "license": "MIT",

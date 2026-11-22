@@ -7,13 +7,13 @@
       {
         "profile": "synthetic-ci",
         "mode": "synthetic-injection",
-        "max_cycles": 1000000,
+        "max_cycles": 1064913,
         "return_address": "0x7ff0",
         "replay": [
-          {"kind": "key", "cycle": 300000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 450000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 600000, "code": "0x61", "pressed": true},
-          {"kind": "key", "cycle": 750000, "code": "0x71", "pressed": true}
+          {"kind": "key", "cycle": 364913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 514913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 664913, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 814913, "code": "0x71", "pressed": true}
         ],
         "observations": [
           {"name": "state", "address": "0x2000", "length": 5},
@@ -39,12 +39,12 @@
       {
         "profile": "synthetic-count",
         "mode": "synthetic-injection",
-        "max_cycles": 650000,
+        "max_cycles": 714913,
         "return_address": "0x7ff0",
         "replay": [
-          {"kind": "key", "cycle": 300000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 450000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 600000, "code": "0x61", "pressed": true}
+          {"kind": "key", "cycle": 364913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 514913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 664913, "code": "0x61", "pressed": true}
         ],
         "observations": [
           {"name": "state", "address": "0x2000", "length": 5},
@@ -63,28 +63,28 @@
       {
         "profile": "synthetic-count-tens",
         "mode": "synthetic-injection",
-        "max_cycles": 3050000,
+        "max_cycles": 3114913,
         "return_address": "0x7ff0",
         "replay": [
-          {"kind": "key", "cycle": 300000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 450000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 600000, "code": "0x61", "pressed": true},
-          {"kind": "key", "cycle": 750000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 900000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 1050000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 1200000, "code": "0x61", "pressed": true},
-          {"kind": "key", "cycle": 1350000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 1500000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 1650000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 1800000, "code": "0x61", "pressed": true},
-          {"kind": "key", "cycle": 1950000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 2100000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 2250000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 2400000, "code": "0x61", "pressed": true},
-          {"kind": "key", "cycle": 2550000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 2700000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 2850000, "code": "0x72", "pressed": true},
-          {"kind": "key", "cycle": 3000000, "code": "0x61", "pressed": true}
+          {"kind": "key", "cycle": 364913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 514913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 664913, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 814913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 964913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 1114913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 1264913, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 1414913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 1564913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 1714913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 1864913, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 2014913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 2164913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 2314913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 2464913, "code": "0x61", "pressed": true},
+          {"kind": "key", "cycle": 2614913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 2764913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 2914913, "code": "0x72", "pressed": true},
+          {"kind": "key", "cycle": 3064913, "code": "0x61", "pressed": true}
         ],
         "observations": [
           {"name": "state", "address": "0x2000", "length": 5},
@@ -128,11 +128,11 @@
       {
         "profile": "synthetic-screenshot",
         "mode": "synthetic-injection",
-        "max_cycles": 550000,
+        "max_cycles": 704913,
         "return_address": "0x7ff0",
         "replay": [
-          {"kind": "key", "cycle": 300000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 450000, "code": "0x72", "pressed": true}
+          {"kind": "key", "cycle": 364913, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 514913, "code": "0x72", "pressed": true}
         ],
         "observations": [
           {"name": "state", "address": "0x2000", "length": 5},
@@ -150,7 +150,7 @@
             "playfield": "010020",
             "sound-control": "00"
           },
-          "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67",
+          "framebuffer_sha256": "888797d73517d93a15667ace3324d48592ad101fb12e506fef90ae8473258696",
           "pcm": null,
           "cassette": null
         }
@@ -202,7 +202,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {"state": "000000000d"},
-          "framebuffer_sha256": "32ee8dca37184887a096fa3137ca8e703a8b813be6ab35f7113aac431a9c0b90",
+          "framebuffer_sha256": "6768b93dae5e7c4b116d44354e48ccd0cdc1ac7e3b18fd7cd566753f40b655af",
           "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }
@@ -226,7 +226,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {"state": "0100010064", "count": "303031"},
-          "framebuffer_sha256": "08fb415a3dde301e9b6ab9576df65751991b5e43748324746f523990f32107b4",
+          "framebuffer_sha256": "337528abc236ec3aac3b28c024dde751f7dacf89109cde3a6d79e030dd6b8b09",
           "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }
@@ -250,7 +250,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {"state": "0001010072"},
-          "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67",
+          "framebuffer_sha256": "888797d73517d93a15667ace3324d48592ad101fb12e506fef90ae8473258696",
           "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }

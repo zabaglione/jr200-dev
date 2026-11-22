@@ -8,9 +8,11 @@
         .filename.jr "MAGNET-VAULT"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x4800
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    0x4e00
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -490,6 +492,11 @@ mv_draw_box_next:
         JMP     jr_rank_hud
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     mv_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -525,6 +532,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    MV_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     mv_help_diagram
+        JSR     jr_guide_draw
         LDX     mv_help_lines
         JMP     jr_gfx_lines
 
@@ -579,26 +588,55 @@ mv_title_lines:
 mv_help_lines:
         .db     10, 1, MV_ATTR_TITLE
         .dw     game_title_text
-        .db     1, 3, MV_ATTR_TEXT
-        .dw     mv_help_1
-        .db     1, 5, MV_ATTR_TEXT
-        .dw     mv_help_2
-        .db     1, 7, MV_ATTR_TEXT
-        .dw     mv_help_3
-        .db     1, 9, MV_ATTR_TEXT
-        .dw     mv_help_4
-        .db     1, 11, MV_ATTR_TEXT
-        .dw     mv_help_5
-        .db     1, 13, MV_ATTR_TEXT
-        .dw     mv_help_6
-        .db     1, 15, MV_ATTR_TEXT
-        .dw     mv_help_7
-        .db     1, 17, MV_ATTR_TEXT
-        .dw     mv_help_8
-        .db     1, 19, MV_ATTR_TEXT
-        .dw     mv_help_9
-        .db     1, 21, MV_ATTR_LABEL
-        .dw     mv_help_back
+        .db     2, 4, MV_ATTR_LABEL
+        .dw     mv_help_label_1
+        .db     12, 5, MV_ATTR_TEXT
+        .dw     mv_help_label_2
+        .db     22, 4, MV_ATTR_LABEL
+        .dw     mv_help_label_3
+        .db     4, 12, MV_ATTR_TEXT
+        .dw     mv_help_label_4
+        .db     16, 12, MV_ATTR_TEXT
+        .dw     mv_help_label_5
+        .db     2, 17, MV_ATTR_TEXT
+        .dw     mv_help_label_6
+        .db     2, 19, MV_ATTR_TEXT
+        .dw     mv_help_label_7
+        .db     2, 22, MV_ATTR_LABEL
+        .dw     mv_help_label_8
+        .db     0xff
+mv_help_label_1:
+        .db     "FACE BOX", 0
+mv_help_label_2:
+        .db     "RETURN", 0
+mv_help_label_3:
+        .db     "STEP BACK", 0
+mv_help_label_4:
+        .db     "FILL BOTH", 0
+mv_help_label_5:
+        .db     "PAR=2* RUNES=3*", 0
+mv_help_label_6:
+        .db     "WASD WALK   SPACE RETRY", 0
+mv_help_label_7:
+        .db     "F STAGES   X CODE", 0
+mv_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+mv_help_diagram:
+; RETURN pulls the adjacent box onto the hero's former cell.
+        .db     2, 0x80 + 6, MV_ATTR_FLOOR, 1, MV_TILE_FLOOR
+        .db     4, 0x80 + 6, MV_ATTR_HERO, 1, MV_TILE_HERO + 12
+        .db     6, 0x80 + 6, MV_ATTR_BOX, 1, MV_TILE_BOX
+        .db     8, 0x80 + 6, MV_ATTR_FLOOR, 1, MV_TILE_FLOOR
+        .db     12, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     22, 0x80 + 6, MV_ATTR_HERO, 1, MV_TILE_HERO + 12
+        .db     24, 0x80 + 6, MV_ATTR_BOX, 1, MV_TILE_BOX
+        .db     26, 0x80 + 6, MV_ATTR_FLOOR, 2, MV_TILE_FLOOR, MV_TILE_FLOOR
+        .db     4, 0x80 + 10, MV_ATTR_BOX_IN, 2, MV_TILE_BOX, MV_TILE_BOX
+        .db     16, 0x80 + 10, MV_ATTR_RUNE, 1, MV_TILE_RUNE
         .db     0xff
 
 mv_txt_magnet:
@@ -615,26 +653,6 @@ mv_txt_start:
         .db     "RETURN : PLAY THE STAGE", 0
 mv_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-mv_help_1:
-        .db     "WASD : WALK AND FACE", 0
-mv_help_2:
-        .db     "RETURN : PULL THE FRONT BOX", 0
-mv_help_3:
-        .db     "FILL BOTH DIAMOND SOCKETS.", 0
-mv_help_4:
-        .db     "WALK OVER OPTIONAL RUNES.", 0
-mv_help_5:
-        .db     "PAR OR LESS = TWO STARS.", 0
-mv_help_6:
-        .db     "PLUS BOTH RUNES = THREE STARS.", 0
-mv_help_7:
-        .db     "OVER PAR = CLEAR / ONE STAR.", 0
-mv_help_8:
-        .db     "SPACE RETRY / F STAGE SELECT", 0
-mv_help_9:
-        .db     "X : PASSWORD (TITLE / MAP)", 0
-mv_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -686,7 +704,7 @@ mv_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -694,5 +712,11 @@ mv_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/ranked.inc"
+        .include "../../../sdk/ranked_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

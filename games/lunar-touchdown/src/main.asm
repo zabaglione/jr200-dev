@@ -16,6 +16,7 @@ GAME_STATE_END:     .equ    0x4680
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -90,7 +91,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    3
@@ -160,7 +161,7 @@ lt_act_speed:
         CLRA
         JSR     jr_port_sound
         LDAA    3
-        JSR     jr_test_animate
+        JSR     jr_live_animate
 lt_act_moved:
         LDAA    [LT_X]
         CMPA    [LT_OLD]
@@ -244,7 +245,7 @@ lt_tick_height:
         LDAA    1
         STAA    [LT_DESCENDING]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [LT_DESCENDING]
         LDAA    [LT_HEIGHT]
         CMPA    30
@@ -287,7 +288,7 @@ lt_tick_score:
         LDAA    1
         STAA    [LT_SPARK]
         LDAA    24
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [LT_SPARK]
         JMP     jr_port_win
 lt_tick_crash:
@@ -303,7 +304,7 @@ lt_tick_crash_show:
         LDX     lt_sfx_crash
         JSR     jr_sfx_play
         LDAA    8
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDX     [LT_MSG]
         JMP     jr_port_lose
 
@@ -334,6 +335,7 @@ lt_draw_sky:
         JSR     jr_gfx_putc
         BRA     lt_draw_sky
 lt_draw_ground:
+        JSR     jr_live_capture
         LDAA    LT_ATTR_GROUND
         STAA    [JR_RT_COLOR]
         CLRA
@@ -377,6 +379,7 @@ lt_draw_pad:
         BEQ     lt_draw_lander
         LDAA    [LT_MIDDLE]
 lt_draw_lander:
+        JSR     jr_live_capture
         LSRA
         STAA    [LT_DY]
         LDAA    LT_ATTR_LANDER
@@ -413,6 +416,7 @@ lt_draw_flame:
         JSR     jr_gfx_putc
         JSR     jr_gfx_putc
 lt_draw_panel:
+        JSR     jr_live_capture
         LDAA    LT_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    5
@@ -480,6 +484,11 @@ lt_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     lt_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -519,6 +528,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    LT_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     lt_help_diagram
+        JSR     jr_guide_draw
         LDX     lt_help_lines
         JMP     jr_gfx_lines
 
@@ -552,24 +563,35 @@ lt_title_lines:
 lt_help_lines:
         .db     8, 1, LT_ATTR_TITLE
         .dw     lt_txt_name
-        .db     1, 3, LT_ATTR_TEXT
-        .dw     lt_help_1
-        .db     1, 5, LT_ATTR_TEXT
-        .dw     lt_help_2
-        .db     1, 7, LT_ATTR_TEXT
-        .dw     lt_help_3
-        .db     1, 9, LT_ATTR_TEXT
-        .dw     lt_help_4
-        .db     1, 11, LT_ATTR_TEXT
-        .dw     lt_help_5
-        .db     1, 13, LT_ATTR_TEXT
-        .dw     lt_help_6
+        .db     3, 4, LT_ATTR_LABEL
+        .dw     lt_help_thrust
+        .db     20, 4, LT_ATTR_LABEL
+        .dw     lt_help_touchdown
         .db     1, 15, LT_ATTR_TEXT
-        .dw     lt_help_7
+        .dw     lt_help_steer
         .db     1, 17, LT_ATTR_TEXT
-        .dw     lt_help_8
-        .db     1, 21, LT_ATTR_LABEL
+        .dw     lt_help_speed
+        .db     1, 19, LT_ATTR_TEXT
+        .dw     lt_help_pads
+        .db     1, 20, LT_ATTR_TEXT
+        .dw     lt_help_wind
+        .db     1, 22, LT_ATTR_LABEL
         .dw     lt_help_back
+        .db     0xff
+
+lt_help_diagram:
+; Thrust to slow the descent and settle on the wide pad.
+        .db     4, 0x80 + 6, LT_ATTR_LANDER, 1, LT_TILE_LANDER
+        .db     4, 8, LT_ATTR_FLAME, 2, LT_CHAR_FLAME_BIG, LT_CHAR_FLAME_BIG
+        .db     2, 12, LT_ATTR_PAD, 6, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD
+        .db     12, 9, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 9, 0x86, 1, 0x06
+        .db     16, 8, 0x86, 1, 0x00
+        .db     16, 10, 0x80, 1, 0x06
+        .db     21, 0x80 + 10, LT_ATTR_LANDER, 1, LT_TILE_LANDER
+        .db     19, 12, LT_ATTR_PAD, 6, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD, LT_CHAR_PAD
+        .db     28, 12, LT_ATTR_NARROW, 2, LT_CHAR_PAD, LT_CHAR_PAD
+        .db     29, 11, LT_ATTR_NARROW, 1, LT_CHAR_STAR
         .db     0xff
 
 lt_txt_name:
@@ -594,24 +616,20 @@ lt_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 lt_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-lt_help_1:
-        .db     "A/D : HORIZONTAL CONTROL", 0
-lt_help_2:
-        .db     "W / RETURN : THRUST (-2 SPEED)", 0
-lt_help_3:
-        .db     "LAND WITH A SPEED OF 0 TO 2.", 0
-lt_help_4:
-        .db     "WIDE PAD: SAFE / * PAD: +10", 0
-lt_help_5:
-        .db     "KEEP FUEL FOR A HIGHER SCORE.", 0
-lt_help_6:
-        .db     "LATER SITES HAVE CROSSWINDS.", 0
-lt_help_7:
-        .db     "WATCH THE WIND ARROW CHANGE.", 0
-lt_help_8:
-        .db     "SPACE : RETRY THE SITE", 0
+lt_help_thrust:
+        .db     "THRUST", 0
+lt_help_touchdown:
+        .db     "TOUCHDOWN", 0
+lt_help_steer:
+        .db     "A/D STEER  W/RETURN THRUST", 0
+lt_help_speed:
+        .db     "SAFE LANDING: SPEED 0 TO 2", 0
+lt_help_pads:
+        .db     "WIDE PAD SAFE  /  * PAD BONUS", 0
+lt_help_wind:
+        .db     "LATER SITES ADD CROSSWIND", 0
 lt_help_back:
-        .db     "ANY KEY : TITLE", 0
+        .db     "SPACE RETRY   ANY KEY TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -666,6 +684,7 @@ lt_lose_bass:
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
         .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -674,5 +693,11 @@ lt_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

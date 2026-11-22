@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/tide-bridge/tests/model.py (upstream rules 1.6.1), not from the emulator. Each tide is solved with the fewest row/column changes from plan() (an exhaustive search of the 4096 toggle sets); synthetic-all-tides clears all three. Key gaps leave 60000 cycles per animation frame the model counts. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 122239,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000304887000000000030488700000000000304f00000000000038478000000ff8181ff8888ff80ff0101ff0909ff81"
           },
-          "framebuffer_sha256": "97dcc898b91522b1638f123f12e661c8e5e527792a53e6e1819a014bdf68a1f7",
+          "framebuffer_sha256": "f8e6eea787d59ea81e123e21e0a5a02e232ee6a13ca29c54fd0e20d84c6e5586",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "d90c57780f60891b38ad3c188f1d419d4a65cb1f409e77a277c69450eb2fdcd9",
+          "framebuffer_sha256": "6f998d0d88dd831bd48445c863156c860223aad4598e79fbf3b15607d4196b9a",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "f46c044aa705aa8afb9c5dcfb4232ea5a54e816f99e8aa46649b743d6cf80e99",
+          "framebuffer_sha256": "f742a8486d6db2e820771534e9ddea2d2b32587e0ae393af8ff86f4e00634598",
           "pcm": null,
           "cassette": null
         }
@@ -282,7 +283,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "ccbca6694c3f978f8f4465117e739e66bfe0cdfe25d2b9ca935501f239d8bb46",
+          "framebuffer_sha256": "d6b8b8651b9dfa60b5f076363b389c384ddd1d0b95bfb43e3f78919facf85b05",
           "pcm": null,
           "cassette": null
         }
@@ -416,7 +417,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "e9b4f0512306e4b8c12060ebbb18daffdf70957763bd9402eedaa640949a4acc",
+          "framebuffer_sha256": "f37aed9f3d7fc8cb3651a0ef6b73581f7a22869eb8c175c85b38050492127365",
           "pcm": null,
           "cassette": null
         }
@@ -598,7 +599,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "ede55dc83c7daf3f378bdeb6e6d17ec8005ab2ba9ad1eb4086afeca29a1079d8",
+          "framebuffer_sha256": "f4476bc5fe57b1aace09c2f4acac45b2582f4c4c590a40146d31d682d63c510e",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1031,7 +1032,7 @@
             "level": "00",
             "status": "54525920414741494e202d2052455455524e20544f2052455354415254"
           },
-          "framebuffer_sha256": "f43fb44beb31e4017ce63f4149e3a80f77deb242a2dd503640cf075f06f67aa6",
+          "framebuffer_sha256": "f80c0440e8e4c1202512f06b2bca48d7673df4b8a81de92d2306603028d0bc11",
           "pcm": null,
           "cassette": null
         }
@@ -2225,7 +2226,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "97dcc898b91522b1638f123f12e661c8e5e527792a53e6e1819a014bdf68a1f7",
+          "framebuffer_sha256": "f8e6eea787d59ea81e123e21e0a5a02e232ee6a13ca29c54fd0e20d84c6e5586",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -2269,7 +2270,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "f46c044aa705aa8afb9c5dcfb4232ea5a54e816f99e8aa46649b743d6cf80e99",
+          "framebuffer_sha256": "f742a8486d6db2e820771534e9ddea2d2b32587e0ae393af8ff86f4e00634598",
           "pcm": null,
           "cassette": {
             "state": 6,

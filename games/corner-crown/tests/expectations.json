@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "Memory expectations are computed by games/corner-crown/tests/model.py (upstream rules 1.5.1), not recorded from the emulator. synthetic-win replays a 30-move line found by search against the deterministic rival that takes all four corners and wins 39-25; synthetic-pass-lose is a random legal line with two player passes that loses 10-54. Gaps after RETURN scale with the discs the model says will turn. Framebuffer hashes fix the gallery images; stack-guard shows the stack stayed above 0x4f10.",
   "runtime": {
+    "startup_delay_cycles": 140620,
     "default_profile": "synthetic-opening",
     "profiles": [
       {
@@ -25,7 +26,7 @@
           "memory": {
             "pcg": "ff80808080808080ff0000000000000080808080808080800000000000000000ff80808080808081ff000000000080c08381808080808080e0c0800000000000"
           },
-          "framebuffer_sha256": "8bbd4fa5f7062d276557948480ce641662691dd2accde3ad962103b8710c1a88",
+          "framebuffer_sha256": "cb4ef5631bda45a9697f19fe5d2fe55cb1efaa1bd91e28609303c1b184abd1d8",
           "pcm": null,
           "cassette": null
         }
@@ -63,7 +64,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "33a3d679e64530f2262f510f529784ca3609998cf19ad1edf1bc12cca04d142c",
           "pcm": null,
           "cassette": null
         }
@@ -113,7 +114,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "2b2c281bdcd11f21879eea5f412c2f10d0af290a9a8b3c0b39e3dde8484026a6",
+          "framebuffer_sha256": "78a7aed80a56cc13c9897b933c17c6c8ef2805f2bb8eb02e880c5385ccb35423",
           "pcm": null,
           "cassette": null
         }
@@ -535,7 +536,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "c0342064e57b062175899abe43a882cb375a86959357962fca46f345d2d0dca3",
+          "framebuffer_sha256": "4285edaf7dd4b97a80b44d8209bcdbbae01c420617f825e6535be5309a75145f",
           "pcm": null,
           "cassette": null
         }
@@ -3753,7 +3754,7 @@
             "status": "434c454152202d2052455455524e20464f52204e455854205354414745",
             "stack-guard": "0000ffff0000ffff0000ffff0000ffff"
           },
-          "framebuffer_sha256": "57c46fcf7976bd7e993db9d8725eef4e8e999c78ef58e9a5b344906fb8ebb0d4",
+          "framebuffer_sha256": "2e3e172876c9478610dcb84fbf11e75159814ea239c88fcf14ddda72d292b67e",
           "pcm": null,
           "cassette": null
         }
@@ -8211,7 +8212,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "8bbd4fa5f7062d276557948480ce641662691dd2accde3ad962103b8710c1a88",
+          "framebuffer_sha256": "cb4ef5631bda45a9697f19fe5d2fe55cb1efaa1bd91e28609303c1b184abd1d8",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -8247,7 +8248,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "c0342064e57b062175899abe43a882cb375a86959357962fca46f345d2d0dca3",
+          "framebuffer_sha256": "4285edaf7dd4b97a80b44d8209bcdbbae01c420617f825e6535be5309a75145f",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -8285,7 +8286,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "57c46fcf7976bd7e993db9d8725eef4e8e999c78ef58e9a5b344906fb8ebb0d4",
+          "framebuffer_sha256": "2e3e172876c9478610dcb84fbf11e75159814ea239c88fcf14ddda72d292b67e",
           "pcm": null,
           "cassette": {
             "state": 6,

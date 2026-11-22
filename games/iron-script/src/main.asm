@@ -15,6 +15,8 @@
 JR_SHADOW:          .equ    0x4000
 JR_SAVE:            .equ    0x4600
 JR_RT:              .equ    0x5600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    is_input_policy
 GAME_STATE:         .equ    0x5640
 GAME_STATE_END:     .equ    0x56c0
 JR_AUDIO:           .equ    0x56c0
@@ -47,6 +49,7 @@ IS_SUB:             .equ    GAME_STATE + 8
 IS_NOTICE:          .equ    GAME_STATE + 9
 IS_BEAM:            .equ    GAME_STATE + 10
 IS_RUNNING:         .equ    GAME_STATE + 11
+IS_KEY_STOP:        .equ    0x7f
 IS_CURSOR:          .equ    GAME_STATE + 12
 IS_ACTIVE:          .equ    GAME_STATE + 13
 IS_B:               .equ    GAME_STATE + 14     ; the room (64)
@@ -67,6 +70,8 @@ IS_DY:              .equ    GAME_STATE + 105
 IS_DCODE:           .equ    GAME_STATE + 106
 IS_DQ:              .equ    GAME_STATE + 107
 IS_P:               .equ    GAME_STATE + 108    ; 2 bytes
+IS_STOP_REQUEST:    .equ    GAME_STATE + 110
+IS_DRAW_COL:        .equ    GAME_STATE + 111
 
 IS_TILE_FLOOR:      .equ    0x80
 IS_TILE_WALL:       .equ    0x84
@@ -77,6 +82,8 @@ IS_TILE_LASER:      .equ    0x94
 IS_CHAR_ARROW:      .equ    0x98        ; up, down, left, right
 IS_CHAR_DOT:        .equ    0x9c
 IS_CHAR_CURSOR:     .equ    0x9d
+IS_CHAR_FIRE:       .equ    0x9e
+IS_CHAR_LOOP:       .equ    0x9f
 IS_TILE_ROBOT:      .equ    0x00        ; + 4 * (facing - 1)
 IS_TILE_DOOR:       .equ    0x10        ; + 4 * (pose - 1)
 IS_ATTR_TEXT:       .equ    0x07
@@ -97,7 +104,7 @@ start:
         JSR     jr_test_init
         LDX     is_patterns
         LDAA    IS_TILE_FLOOR
-        LDAB    30
+        LDAB    32
         JSR     jr_pcg_load
         LDX     is_robot_patterns
         CLRA
@@ -175,6 +182,7 @@ is_reset_cell:
 
 ; A = reason: the run stops, the cursor goes to the failing slot.
 is_stop:
+        CLR     [IS_STOP_REQUEST]
         STAA    [IS_NOTICE]
         CLR     [IS_RUNNING]
         LDAA    [IS_LENGTH]
@@ -192,11 +200,49 @@ is_stop_cursor:
 game_raw_key:
         JMP     jr_test_raw_key
 
+; Tag RETURN while running so a stop delayed past the end of a program
+; cannot become a new start. Direction keys have no meaning while running.
+is_input_policy:
+        TST     [IS_RUNNING]
+        BEQ     is_input_default
+        CMPA    JR_KEY_CONFIRM
+        BNE     is_input_other
+        LDAB    1
+        STAB    [IS_STOP_REQUEST]
+        ; End the current hold on its next frame. Leave the zero-wait path alone.
+        TST     [JR_INPUT_EFFECT]
+        BEQ     is_input_stop_key
+        TST     [JR_PORT_FRAMES]
+        BEQ     is_input_stop_key
+        STAB    [JR_PORT_FRAMES]
+is_input_stop_key:
+        LDAA    IS_KEY_STOP
+        RTS
+is_input_other:
+        CMPA    JR_KEY_RIGHT
+        BHI     is_input_default
+        CLRA
+        RTS
+is_input_default:
+        JMP     jr_input_default_policy
+
+; The current command settles before the queued stop is dispatched.
+; Consecutive poses of that command can be skipped once a stop is requested.
+is_running_animate:
+        TST     [IS_STOP_REQUEST]
+        BNE     is_running_animate_done
+        JMP     jr_test_animate
+is_running_animate_done:
+        RTS
+
 game_act:
         TST     [IS_RUNNING]
         BEQ     is_act_edit
+        CMPA    IS_KEY_STOP
+        BEQ     is_act_stop
         CMPA    JR_KEY_CONFIRM
         BNE     is_act_done
+is_act_stop:
         LDAA    9
         JMP     is_stop
 is_act_edit:
@@ -315,7 +361,7 @@ is_shoot_open:
         LDAA    [IS_TARGET]
         STAA    [IS_BEAM]
         LDAA    3
-        JSR     jr_test_animate
+        JSR     is_running_animate
         LDAA    [IS_TARGET]
         JSR     is_cell
         LDAA    [X]
@@ -348,7 +394,7 @@ is_blink:
         INCA
         STAA    [IS_FLASH]
         LDAA    8
-        JSR     jr_test_animate
+        JSR     is_running_animate
         CLR     [IS_FLASH]
         RTS
 
@@ -430,7 +476,7 @@ is_tick_step:
         CLRA
         JSR     jr_port_sound
         LDAA    5
-        JSR     jr_test_animate
+        JSR     is_running_animate
         LDAA    [IS_POS]
         STAA    [IS_ORIGIN]
         BRA     is_tick_after
@@ -472,7 +518,7 @@ is_tick_door:
 is_tick_door_pose:
         STAA    [IS_DOOR_POSE]
         LDAA    5
-        JSR     jr_test_animate
+        JSR     is_running_animate
         INC     [IS_I]
         LDAA    [IS_I]
         CMPA    3
@@ -482,7 +528,7 @@ is_tick_wait:
         CLRA
         JSR     jr_port_sound
         LDAA    5
-        JSR     jr_test_animate
+        JSR     is_running_animate
 is_tick_after:
         TST     [IS_RUNNING]
         BNE     is_act_done_near486
@@ -552,48 +598,22 @@ is_laser_on:
 is_place:
         TAB
         ANDA    7
+        STAA    [IS_DRAW_COL]
         ASLA
+        ADDA    [IS_DRAW_COL]
+        ADDA    2
         LSRB
         LSRB
         LSRB
         ASLB
-        ADDB    3
+        ADDB    2
         RTS
 
 game_draw:
         LDAA    0x20
         LDAB    IS_ATTR_TEXT
         JSR     jr_gfx_fill
-        LDX     is_hud
-        JSR     jr_gfx_lines
-        LDAA    IS_ATTR_DIM
-        STAA    [JR_RT_COLOR]
-        LDX     is_frame_rows
-is_draw_frame:
-        LDAB    [X]
-        CMPB    0xff
-        BEQ     is_draw_side
-        STX     [IS_P]
-        LDAA    18
-        JSR     jr_gfx_at
-        LDX     is_txt_frame
-        JSR     jr_gfx_text
-        LDX     [IS_P]
-        INX
-        BRA     is_draw_frame
-is_draw_side:
-        LDAB    3
-is_draw_side_next:
-        LDAA    31
-        PSHB
-        JSR     jr_gfx_at
-        LDAA    0x3a
-        JSR     jr_gfx_putc
-        PULB
-        INCB
-        CMPB    19
-        BNE     is_draw_side_next
-        ; the room
+        ; The room is 24 columns wide. Walls continue across the cell seams.
         CLR     [IS_DI]
 is_draw_cell:
         LDAA    [IS_DI]
@@ -644,8 +664,21 @@ is_draw_put_at:
         JSR     jr_gfx_at
         LDAA    [IS_DCODE]
         JSR     jr_gfx_tile
-        ; an armored sentry carries a 2, an idle laser two dots
         LDAA    [IS_DQ]
+        CMPA    1
+        BNE     is_draw_sentry_mark
+        LDAA    IS_TILE_WALL
+        JSR     jr_gfx_putc
+        LDAA    [IS_DT]
+        ADDA    2
+        LDAB    [IS_DY]
+        INCB
+        JSR     jr_gfx_at
+        LDAA    IS_TILE_WALL + 2
+        JSR     jr_gfx_putc
+        BRA     is_draw_cell_next
+is_draw_sentry_mark:
+        ; An armored sentry carries a 2, an idle laser two dots.
         CMPA    8
         BNE     is_draw_idle_laser
         LDAA    IS_ATTR_WARN
@@ -714,66 +747,59 @@ is_draw_cell_near681:
         LDAA    0x2a
         JSR     jr_gfx_putc
 is_draw_panel:
-        LDAA    IS_ATTR_TEXT
-        STAA    [JR_RT_COLOR]
-        LDAA    23
-        LDAB    3
-        JSR     jr_gfx_at
-        LDAA    [IS_AMMO]
-        JSR     jr_gfx_dec2
-        LDAA    26
-        LDAB    9
-        JSR     jr_gfx_at
-        LDAA    [IS_LENGTH]
-        JSR     jr_gfx_dec2
-        LDAA    26
-        LDAB    20
-        JSR     jr_gfx_at
-        LDAA    [IS_STEPS]
-        JSR     jr_gfx_dec3
         LDAA    IS_ATTR_ICON
         STAA    [JR_RT_COLOR]
-        LDAA    29
-        LDAB    3
+        LDAA    27
+        LDAB    4
         JSR     jr_gfx_at
-        LDAA    [IS_FACING]
-        JSR     is_icon
+        LDAA    IS_CHAR_FIRE
         JSR     jr_gfx_putc
-        LDAA    IS_ATTR_TITLE
+        LDAA    IS_ATTR_TEXT
         STAA    [JR_RT_COLOR]
-        LDAA    23
-        LDAB    5
+        LDAA    [IS_AMMO]
+        JSR     jr_gfx_dec2
+        LDAA    27
+        CLRB
         JSR     jr_gfx_at
-        LDX     is_txt_lock
-        TST     [IS_GATE]
-        BEQ     is_draw_gate
-        LDX     is_txt_open
-is_draw_gate:
-        JSR     jr_gfx_text
-        LDAA    22
-        LDAB    7
+        LDAA    [JR_PORT_LEVEL]
+        INCA
+        JSR     jr_gfx_dec2
+        LDAA    0x2f
+        JSR     jr_gfx_putc
+        LDAA    24
+        JSR     jr_gfx_dec2
+        ; The preview shares the in-room laser and inactive dots.
+        LDAA    IS_ATTR_CURSOR
+        STAA    [JR_RT_COLOR]
+        LDAA    28
+        LDAB    9
         JSR     jr_gfx_at
         JSR     is_laser_on
-        LDX     is_txt_laser_on
-        BEQ     is_draw_laser
-        LDX     is_txt_laser_off
-is_draw_laser:
-        JSR     jr_gfx_text
-        ; the program: twelve slots, unused ones crossed out
+        BNE     is_draw_laser_idle
+        LDAA    IS_TILE_LASER
+        JSR     jr_gfx_tile
+        BRA     is_draw_panel_ready
+is_draw_laser_idle:
+        LDAA    IS_CHAR_DOT
+        JSR     jr_gfx_putc
+        JSR     jr_gfx_putc
+is_draw_panel_ready:
+        LDX     is_laser_caption
+        JSR     jr_gfx_lines
+        ; The twelve commands form one continuous strip beneath the room.
         CLR     [IS_DI]
 is_draw_slot:
         LDAA    IS_ATTR_ICON
         STAA    [JR_RT_COLOR]
         LDAA    [IS_DI]
         JSR     is_slot_place
-        INCA
         JSR     jr_gfx_at
         LDAA    [IS_DI]
         CMPA    [IS_LENGTH]
         BCS     is_draw_slot_icon
-        LDAA    IS_ATTR_DIM
+        LDAA    0x80
         STAA    [JR_RT_COLOR]
-        LDAA    0x58
+        LDAA    0x01
         BRA     is_draw_slot_put
 is_draw_slot_icon:
         JSR     is_slot
@@ -794,53 +820,39 @@ is_draw_current:
         BLS     is_draw_current_slot
         LDAA    11
 is_draw_current_slot:
-        STAA    [IS_DI]
         JSR     is_slot_place
+        INCB
         JSR     jr_gfx_at
-        LDAA    IS_ATTR_CURSOR
+        LDAA    0xb6
         STAA    [JR_RT_COLOR]
+        LDAA    0x36
+        JSR     jr_gfx_putc
+        TST     [IS_RUNNING]
+        BEQ     is_draw_notice
+        LDAA    0x44
+        STAA    [JR_RT_COLOR]
+        LDAA    28
+        LDAB    19
+        JSR     jr_gfx_at
         LDAA    IS_CHAR_CURSOR
         JSR     jr_gfx_putc
-        LDAA    IS_ATTR_TITLE
-        STAA    [JR_RT_COLOR]
-        LDAA    1
-        LDAB    20
-        JSR     jr_gfx_at
-        LDAA    [IS_DI]
-        JSR     is_slot
-        ASLA
-        ASLA
-        ASLA
-        LDX     is_names
-        JSR     jr_add_x_a
-        JSR     is_draw_chars8
-        ; the message row
-        LDAA    IS_ATTR_LABEL
-        STAA    [JR_RT_COLOR]
-        LDAA    1
-        LDAB    21
-        JSR     jr_gfx_at
-        TST     [IS_RUNNING]
-        BEQ     is_draw_message
-        TST     [IS_NOTICE]
-        BNE     is_draw_message
-        LDX     is_txt_executing
-        LDAA    [IS_PC]
-        JSR     is_slot
-        CMPA    7
-        BNE     is_draw_running
-        LDX     is_txt_replay
-is_draw_running:
-        JSR     jr_gfx_text
-        BRA     is_draw_demo
-is_draw_message:
+is_draw_notice:
+        ; Leave the message line empty until there is something to report.
         LDAA    [IS_NOTICE]
+        BEQ     is_draw_demo
         ASLA
         ASLA
         ASLA
         ASLA
         LDX     is_messages
         JSR     jr_add_x_a
+        STX     [IS_P]
+        LDAA    IS_ATTR_LABEL
+        STAA    [JR_RT_COLOR]
+        LDAA    2
+        LDAB    22
+        JSR     jr_gfx_at
+        LDX     [IS_P]
         JSR     is_draw_chars8
         JSR     is_draw_chars8
 is_draw_demo:
@@ -848,7 +860,7 @@ is_draw_demo:
         BEQ     is_draw_done
         LDAA    IS_ATTR_WARN
         STAA    [JR_RT_COLOR]
-        LDAA    27
+        LDAA    2
         CLRB
         JSR     jr_gfx_at
         LDX     is_txt_demo
@@ -871,36 +883,28 @@ is_draw_chars8_next:
         BNE     is_draw_chars8_next
         RTS
 
-; A = slot -> A = x of its "[", B = y.
+; A = slot -> A = x, B = row of its command.
 is_slot_place:
-        TAB
-        ANDA    3
-        STAA    [IS_T]
         ASLA
-        ADDA    [IS_T]
-        ADDA    18
-        LSRB
-        LSRB
-        STAB    [IS_T]
-        ASLB
-        ADDB    [IS_T]
-        ADDB    11
+        ADDA    2
+        LDAB    19
         RTS
 
-; A = command -> A = its icon code; the colour is set to match (the arrows
-; are user patterns, the letters and the dot come from the font).
+; A = command -> A = PCG icon, with its attribute.
 is_icon:
         LDX     is_icons
         JSR     jr_add_x_a
         LDAB    IS_ATTR_ICON
-        LDAA    [X]
-        BMI     is_icon_colour
-        LDAB    IS_ATTR_TITLE
-is_icon_colour:
         STAB    [JR_RT_COLOR]
+        LDAA    [X]
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     is_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -937,6 +941,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    IS_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     is_help_diagram
+        JSR     jr_guide_draw
         LDX     is_help_lines
         JMP     jr_gfx_lines
 
@@ -949,17 +955,13 @@ is_looks:
         .db     IS_TILE_DOOR, 0x44, IS_TILE_LASER, 0x42
 ; icons of the eight commands: wait, up, down, left, right, fire, use, replay
 is_icons:
-        .db     0x2e, IS_CHAR_ARROW, IS_CHAR_ARROW + 1, IS_CHAR_ARROW + 2
-        .db     IS_CHAR_ARROW + 3, 0x46, 0x55, 0x4c
-is_names:
-        .db     "WAIT    UP      DOWN    LEFT    RIGHT   FIRE    USE     LOOP X2 "
+        .db     IS_CHAR_DOT, IS_CHAR_ARROW, IS_CHAR_ARROW + 1, IS_CHAR_ARROW + 2
+        .db     IS_CHAR_ARROW + 3, IS_CHAR_FIRE, IS_TILE_SWITCH, IS_CHAR_LOOP
 is_messages:
         .db     "EDITING         WALL COLLISION  SENTRY COLLISIONDOOR IS LOCKED  "
         .db     "LASER HIT       NO AMMO LEFT    USE ON SWITCH   LOOP NEEDS TWO  "
         .db     "PROGRAM ENDED   STOPPED / EDIT  ARMOR DAMAGED   SENTRY DESTROYED"
         .db     "DOOR SWITCHED   "
-is_frame_rows:
-        .db     2, 8, 19, 0xff
 
 ; x, attribute, code, y
 is_title_tiles:
@@ -970,37 +972,9 @@ is_title_tiles:
         .db     20, 0x45, IS_TILE_TERMINAL, 3
         .db     0xff
 
-is_hud:
-        .db     1, 0, IS_ATTR_TITLE
-        .dw     is_txt_name
-        .db     1, 1, IS_ATTR_LABEL
-        .dw     is_txt_goal
-        .db     18, 3, IS_ATTR_LABEL
-        .dw     is_txt_ammo
-        .db     26, 3, IS_ATTR_LABEL
-        .dw     is_txt_dir
-        .db     18, 5, IS_ATTR_LABEL
-        .dw     is_txt_door
-        .db     18, 6, IS_ATTR_LABEL
+is_laser_caption:
+        .db     27, 8, IS_ATTR_LABEL
         .dw     is_txt_next_laser
-        .db     18, 9, IS_ATTR_LABEL
-        .dw     is_txt_program
-        .db     28, 9, IS_ATTR_LABEL
-        .dw     is_txt_of12
-        .db     18, 20, IS_ATTR_LABEL
-        .dw     is_txt_steps
-        .db     18, 11, IS_ATTR_DIM
-        .dw     is_txt_slots
-        .db     18, 14, IS_ATTR_DIM
-        .dw     is_txt_slots
-        .db     18, 17, IS_ATTR_DIM
-        .dw     is_txt_slots
-        .db     18, 10, IS_ATTR_DIM
-        .dw     is_txt_numbers_1
-        .db     18, 13, IS_ATTR_DIM
-        .dw     is_txt_numbers_2
-        .db     18, 16, IS_ATTR_DIM
-        .dw     is_txt_numbers_3
         .db     0xff
 is_title_lines:
         .db     10, 8, IS_ATTR_TITLE
@@ -1019,66 +993,61 @@ is_title_lines:
 is_help_lines:
         .db     10, 1, IS_ATTR_TITLE
         .dw     is_txt_name
-        .db     1, 3, IS_ATTR_TEXT
-        .dw     is_help_1
-        .db     1, 5, IS_ATTR_TEXT
-        .dw     is_help_2
-        .db     1, 7, IS_ATTR_TEXT
-        .dw     is_help_3
-        .db     1, 9, IS_ATTR_TEXT
-        .dw     is_help_4
-        .db     1, 11, IS_ATTR_TEXT
-        .dw     is_help_5
-        .db     1, 13, IS_ATTR_TEXT
-        .dw     is_help_6
-        .db     1, 15, IS_ATTR_TEXT
-        .dw     is_help_7
-        .db     1, 17, IS_ATTR_TEXT
-        .dw     is_help_8
-        .db     1, 21, IS_ATTR_LABEL
-        .dw     is_help_back
+        .db     2, 4, IS_ATTR_LABEL
+        .dw     is_help_label_1
+        .db     13, 4, IS_ATTR_LABEL
+        .dw     is_help_label_2
+        .db     23, 4, IS_ATTR_LABEL
+        .dw     is_help_label_3
+        .db     2, 13, IS_ATTR_TEXT
+        .dw     is_help_label_4
+        .db     2, 15, IS_ATTR_TEXT
+        .dw     is_help_label_5
+        .db     2, 17, IS_ATTR_TEXT
+        .dw     is_help_label_6
+        .db     2, 19, IS_ATTR_TEXT
+        .dw     is_help_label_7
+        .db     2, 22, IS_ATTR_LABEL
+        .dw     is_help_label_8
+        .db     0xff
+is_help_label_1:
+        .db     "EDIT", 0
+is_help_label_2:
+        .db     "RETURN", 0
+is_help_label_3:
+        .db     "GOAL", 0
+is_help_label_4:
+        .db     "A/D SLOT  W/S COMMAND", 0
+is_help_label_5:
+        .db     "F FIRE  U SWITCH  L REPLAY 2", 0
+is_help_label_6:
+        .db     "LASERS FLIP PER ACTION", 0
+is_help_label_7:
+        .db     "RETURN RUN/STOP  SPACE RESET", 0
+is_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+is_help_diagram:
+; One command strip (right, right, up) and the matching route to the terminal.
+        .db     2, 7, IS_ATTR_ICON, 3, IS_CHAR_ARROW + 3, IS_CHAR_ARROW + 3, IS_CHAR_ARROW
+        .db     2, 8, 0x80, 3, 0x36, 0x36, 0x36
+        .db     2, 0x80 + 9, IS_ATTR_ROBOT, 1, IS_TILE_ROBOT + 12
+        .db     6, 0x80 + 9, 0x45, 1, IS_TILE_TERMINAL
+        .db     12, 8, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     16, 8, 0x86, 1, 0x06
+        .db     15, 7, 0x86, 1, 0x00
+        .db     15, 9, 0x80, 1, 0x06
+        .db     21, 0x80 + 9, IS_ATTR_ROBOT, 1, IS_TILE_ROBOT + 12
+        .db     23, 0x80 + 9, 0x41, 2, IS_TILE_FLOOR, IS_TILE_FLOOR
+        .db     25, 0x80 + 7, 0x45, 1, IS_TILE_TERMINAL
+        .db     23, 11, IS_ATTR_ICON, 3, IS_CHAR_ARROW + 3, IS_CHAR_ARROW + 3, IS_CHAR_ARROW
+        .db     27, 0x80 + 7, 0x42, 1, IS_TILE_LASER
         .db     0xff
 
 is_txt_name:
         .db     "IRON SCRIPT", 0
-is_txt_goal:
-        .db     "GOAL: DIAMOND / 24 ROOMS", 0
-is_txt_ammo:
-        .db     "AMMO", 0
-is_txt_dir:
-        .db     "DIR", 0
-is_txt_door:
-        .db     "DOOR", 0
 is_txt_next_laser:
         .db     "NEXT", 0
-is_txt_program:
-        .db     "PROGRAM", 0
-is_txt_of12:
-        .db     "/12", 0
-is_txt_steps:
-        .db     "STEPS", 0
-is_txt_slots:
-        .db     "[ ][ ][ ][ ]", 0
-is_txt_numbers_1:
-        .db     " 1  2  3  4", 0
-is_txt_numbers_2:
-        .db     " 5  6  7  8", 0
-is_txt_numbers_3:
-        .db     " 9  A  B  C", 0
-is_txt_frame:
-        .db     "+------------+", 0
-is_txt_lock:
-        .db     "LOCK", 0
-is_txt_open:
-        .db     "OPEN", 0
-is_txt_laser_on:
-        .db     "LASER ON!", 0
-is_txt_laser_off:
-        .db     "LASER OFF", 0
-is_txt_executing:
-        .db     "EXECUTING", 0
-is_txt_replay:
-        .db     "REPLAY PAIR", 0
 is_txt_demo:
         .db     "DEMO", 0
 is_txt_tagline:
@@ -1091,24 +1060,6 @@ is_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 is_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-is_help_1:
-        .db     "A/D SLOT  W/S CHANGE COMMAND", 0
-is_help_2:
-        .db     "ARROWS MOVE / DOT WAITS", 0
-is_help_3:
-        .db     "F: FIRE AHEAD / U: USE SWITCH", 0
-is_help_4:
-        .db     "L: REPLAY PREVIOUS TWO ONCE", 0
-is_help_5:
-        .db     "LASERS FLIP AFTER EACH ACTION", 0
-is_help_6:
-        .db     "RETURN RUN/STOP; EDIT TO RETRY", 0
-is_help_7:
-        .db     "REACH THE DIAMOND TERMINAL.", 0
-is_help_8:
-        .db     "SPACE: CLEAR AND RESTART", 0
-is_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1161,7 +1112,7 @@ is_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1169,8 +1120,14 @@ is_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
         .include "selftest.inc"
         .include "rooms.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

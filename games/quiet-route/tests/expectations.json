@@ -2,6 +2,7 @@
   "schema_version": 2,
   "expected_entry_address": "0x1000",
   "runtime": {
+    "startup_delay_cycles": 121769,
     "default_profile": "synthetic-title",
     "profiles": [
       {
@@ -24,7 +25,27 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "fb018f3a5e80dbde1ce87473e6f845720644b3951917f54e82fa58d9ae5da6f8",
+          "framebuffer_sha256": "78e7eb695f7c409ab0adcadde0a738610c5b8939c2d1e9037392cc0415b1ce8b",
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-help",
+        "mode": "synthetic-injection",
+        "max_cycles": 1000000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 400000, "code": "0x77", "pressed": true},
+          {"kind": "key", "cycle": 450000, "code": "0x77", "pressed": false}
+        ],
+        "observations": [{"name": "mode", "address": "0x4620", "length": 1}],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {"mode": "05"},
+          "framebuffer_sha256": "85cc7d54896407c81eb75c800c4cec7c42eea97e06cc3b61f47f99975580ec23",
           "pcm": null,
           "cassette": null
         }
@@ -68,7 +89,7 @@
             "mode": "01",
             "state": "010101010101010101000000000003010100000000000001010100010101010101000000000000010101010101000101010000000000060101010101010101010909313104042a210000000002"
           },
-          "framebuffer_sha256": "41b97bdb008232f7b285a38a2e47bf9db6613ba31e7ba9541884ce0de73e1223",
+          "framebuffer_sha256": "97967c048e8c29033d464647fd3070811a78095ff8313f4d76c52ade056317b8",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +145,7 @@
             "mode": "01",
             "state": "010101010101010101000000000003010100000000000001010100010101010101000000000000010101010101000101010000000000060101010101010101010a0a3232040429210000000004"
           },
-          "framebuffer_sha256": "dc7b3d5874d827fb4ed726080fc92e1ee6646a48e654fc189c255770a2f4c502",
+          "framebuffer_sha256": "eda885f2ae313dbbe0a429dcd7a91112064ece380df0bb21e9c38095a2529228",
           "pcm": null,
           "cassette": null
         }
@@ -132,30 +153,30 @@
       {
         "profile": "synthetic-sound",
         "mode": "synthetic-injection",
-        "max_cycles": 5700000,
+        "max_cycles": 5578231,
         "return_address": "0x7ff0",
         "replay": [
           {
             "kind": "key",
-            "cycle": 400000,
+            "cycle": 278231,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 450000,
+            "cycle": 328231,
             "code": "0x0d",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 5500000,
+            "cycle": 5378231,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 5550000,
+            "cycle": 5428231,
             "code": "0x64",
             "pressed": false
           }
@@ -240,7 +261,7 @@
             "level": "00",
             "state": "0101010101010101010000000000030101000000000000010101000101010101010000000000000101010101010001010100000000000601010101010101010136363333040418210001000104"
           },
-          "framebuffer_sha256": "808e75e68a4750a1bf551ee1930d56255527183326bdcfbdbf175f08a022e356",
+          "framebuffer_sha256": "9b10f1b7cc1a407ccafd128a26aaf87bcc95fd1aba6fb147a4373d6eff927787",
           "pcm": null,
           "cassette": null
         }
@@ -304,7 +325,7 @@
             "level": "05",
             "state": "0101010101010101010000000000030101000000000000010101010101010001010000000000000101010101000101010100000000000601010101010101010136363636040416ff0001010104"
           },
-          "framebuffer_sha256": "691f1b09aa1fb32b48c5b6d108165f0083e7889a52b39b84249020cdd34e0065",
+          "framebuffer_sha256": "49f41e698762e5ccfd9263e12944054635f544980cdf133860396e45159627bc",
           "pcm": null,
           "cassette": null
         }
@@ -355,7 +376,7 @@
             "mode": "01",
             "state": "010101010101010101000000000003010100000000000001010100010101010101000000000000010101010101000101010000000000060101010101010101012121323201042bff0000010103"
           },
-          "framebuffer_sha256": "a01027c2e02c023062de178692bc26c47a269788ff4189a4a98e19960253901e",
+          "framebuffer_sha256": "a1ac762ba9b68a1030e9f4e772d3a96ecd52e471106e50e7470343f8c930baf4",
           "pcm": null,
           "cassette": null
         }
@@ -406,7 +427,7 @@
             "mode": "03",
             "state": "0101010101010101010000000000030101000000000000010101000101010101010000000000000101010101010001010100000000000601010101010101010125252525010321210000000104"
           },
-          "framebuffer_sha256": "7687b8202d220193153a5572cca473a981963b1836d2b3b446c66cdb5f1b93fe",
+          "framebuffer_sha256": "33bb8bc50840d879df8489953061e7112620b63c2965aea7f0f41998bdd1c71a",
           "pcm": null,
           "cassette": null
         }
@@ -457,7 +478,7 @@
             "mode": "03",
             "state": "0101010101010101010000000000030101000000000000010101000101010101010000000000000101010101010001010100000000000601010101010101010111113131030302210100000002"
           },
-          "framebuffer_sha256": "01255f9da6cce823b0cab0a3c54e826331078f63847c434aff2e336d68de9616",
+          "framebuffer_sha256": "6582023dd45f1ddb06c20aef46e9da5fa6e70073195814a16c084d27fc0ea763",
           "pcm": null,
           "cassette": null
         }
@@ -537,7 +558,7 @@
             "mode": "01",
             "state": "010101010101010101000000000003010100000000000001010100010101010101000000000000010101010101000101010000000000060101010101010101010a0a3232040429210000000004"
           },
-          "framebuffer_sha256": "dc7b3d5874d827fb4ed726080fc92e1ee6646a48e654fc189c255770a2f4c502",
+          "framebuffer_sha256": "eda885f2ae313dbbe0a429dcd7a91112064ece380df0bb21e9c38095a2529228",
           "pcm": null,
           "cassette": null
         }
@@ -629,7 +650,7 @@
             "mode": "01",
             "state": "010101010101010101000000000003010100000000000001010100010101010101000000000000010101010101000101010000000000060101010101010101010909313104042a210000000002"
           },
-          "framebuffer_sha256": "41b97bdb008232f7b285a38a2e47bf9db6613ba31e7ba9541884ce0de73e1223",
+          "framebuffer_sha256": "97967c048e8c29033d464647fd3070811a78095ff8313f4d76c52ade056317b8",
           "pcm": null,
           "cassette": null
         }
@@ -761,7 +782,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "fb018f3a5e80dbde1ce87473e6f845720644b3951917f54e82fa58d9ae5da6f8",
+          "framebuffer_sha256": "78e7eb695f7c409ab0adcadde0a738610c5b8939c2d1e9037392cc0415b1ce8b",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -811,7 +832,7 @@
             "mode": "01",
             "state": "010101010101010101000000000003010100000000000001010100010101010101000000000000010101010101000101010000000000060101010101010101010909313104042a210000000002"
           },
-          "framebuffer_sha256": "41b97bdb008232f7b285a38a2e47bf9db6613ba31e7ba9541884ce0de73e1223",
+          "framebuffer_sha256": "97967c048e8c29033d464647fd3070811a78095ff8313f4d76c52ade056317b8",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -869,7 +890,7 @@
             "level": "00",
             "state": "0101010101010101010000000000030101000000000000010101000101010101010000000000000101010101010001010100000000000601010101010101010136363333040418210001000104"
           },
-          "framebuffer_sha256": "808e75e68a4750a1bf551ee1930d56255527183326bdcfbdbf175f08a022e356",
+          "framebuffer_sha256": "9b10f1b7cc1a407ccafd128a26aaf87bcc95fd1aba6fb147a4373d6eff927787",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -921,7 +942,7 @@
             "mode": "03",
             "state": "0101010101010101010000000000030101000000000000010101000101010101010000000000000101010101010001010100000000000601010101010101010125252525010321210000000104"
           },
-          "framebuffer_sha256": "7687b8202d220193153a5572cca473a981963b1836d2b3b446c66cdb5f1b93fe",
+          "framebuffer_sha256": "33bb8bc50840d879df8489953061e7112620b63c2965aea7f0f41998bdd1c71a",
           "pcm": null,
           "cassette": {
             "state": 6,

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/fuse-box/tests/model.py (upstream rules 1.6.1), not from the emulator. Each panel is solved by switching on its generated target pattern; synthetic-all-panels clears all ten. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Flip replays leave 600000 cycles for the five-phase flip.",
   "runtime": {
+    "startup_delay_cycles": 129478,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "007f40404344444400fe0202c22222224444444340407f00222222c20202fe007fffffc3c7cfcfcffefffdc7e7f7f7f7cfcfcfc7c3ffff7ff7f7f7e7c7fdfffe000f00000304040400f00000c02020200404040300000f00202020c00000f0000303030303030303c0c0c0c0c0c0c0c00303030303030303c0c0c0c0c0c0c0c00f0f0f03070f0f0ff0f0f0c0e0f0f0f00f0f0f07030f0f0ff0f0f0e0c0f0f0f0"
           },
-          "framebuffer_sha256": "249569a7dac035e511385c4cf536df2bfd89ed65e947584987101d23984e9b78",
+          "framebuffer_sha256": "1e7aaa525c982540beedb26012ce82bc09cafdd76a77c36aa4fee03fd3e9f1dd",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "3969e391b5d87e646f0bc892693cd345880ef12f18c551f2e502d9d964842c5b",
+          "framebuffer_sha256": "08a7d36f2bef5b648290aa3b2acf6eed41a3e8a2305e2a116052753c76698776",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "39670a3c5f1233ccdaab24b3f3fb47a665bddae4d219c975ea250caff62f5284",
+          "framebuffer_sha256": "e670f4edc50ff2986fd34c84ad04b4004c7d2cc4b7feddf713f784d72b58ccdf",
           "pcm": null,
           "cassette": null
         }
@@ -670,7 +671,7 @@
             "col-clue-3": "07",
             "col-clue-4": "07"
           },
-          "framebuffer_sha256": "398d62f280dc9a488928872b5181a885dd1f013b8c26cba946f9eff6802ac9ff",
+          "framebuffer_sha256": "d4e04854ffc01d7365e8cd2ee2275b1e6fc55308171afb0ac7c9c7e9de13da83",
           "pcm": null,
           "cassette": null
         }
@@ -1212,7 +1213,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "4b72a025f2f8f85f596562c1574f84a8949161fe1344319ea3e2356450bb05cb",
+          "framebuffer_sha256": "c3406ac913973ba0e9ded8480af8cade2bab3343a8ac83887ee4f84eac1130a7",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -6369,7 +6370,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "249569a7dac035e511385c4cf536df2bfd89ed65e947584987101d23984e9b78",
+          "framebuffer_sha256": "1e7aaa525c982540beedb26012ce82bc09cafdd76a77c36aa4fee03fd3e9f1dd",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -6413,7 +6414,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "39670a3c5f1233ccdaab24b3f3fb47a665bddae4d219c975ea250caff62f5284",
+          "framebuffer_sha256": "e670f4edc50ff2986fd34c84ad04b4004c7d2cc4b7feddf713f784d72b58ccdf",
           "pcm": null,
           "cassette": {
             "state": 6,

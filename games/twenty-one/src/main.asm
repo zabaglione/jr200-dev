@@ -11,6 +11,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -77,6 +79,12 @@ TO_DC:              .equ    GAME_STATE + 134
 
 TO_TILE_SUIT:       .equ    0x80        ; + suit: spade, heart, diamond, club
 TO_TILE_BACK:       .equ    0x84
+TO_ICON_HIT:        .equ    0x85
+TO_ICON_STAND:      .equ    0x86
+TO_ICON_DOUBLE:     .equ    0x87
+TO_ICON_WIN:        .equ    0x88
+TO_ICON_BUST:       .equ    0x89
+TO_ICON_PUSH:       .equ    0x8a
 TO_ATTR_CARD:       .equ    0x38        ; black on a white card
 TO_ATTR_CARD_RED:   .equ    0x3a
 TO_ATTR_SUIT:       .equ    0x78
@@ -99,6 +107,10 @@ start:
         LDX     to_patterns
         LDAA    TO_TILE_SUIT
         LDAB    5
+        JSR     jr_pcg_load
+        LDX     to_action_patterns
+        LDAA    TO_ICON_HIT
+        LDAB    6
         JSR     jr_pcg_load
         JMP     jr_port_run
 
@@ -752,7 +764,7 @@ to_draw_coins_put:
 to_draw_round:
         ADDA    0x31
         JSR     jr_gfx_putc
-        ; the result, the dealer drawing, or the three choices
+        ; the result, the dealer drawing, or the three pictorial choices
         LDAA    [TO_RESULT]
         BNE     to_draw_result
         LDAA    [TO_CHOICE]
@@ -772,6 +784,26 @@ to_draw_result:
         JSR     jr_add_x_a
         LDX     [X]
         STX     [JR_RT_TABLE]
+        LDAA    [TO_DC]
+        DECA
+        LDX     to_result_icon
+        JSR     jr_add_x_a
+        LDAA    [X]
+        STAA    [TO_DI]
+        LDAA    TO_ATTR_SUIT
+        STAA    [JR_RT_COLOR]
+        LDAA    4
+        LDAB    20
+        JSR     jr_gfx_at
+        LDAA    [TO_DI]
+        JSR     jr_gfx_putc
+        ; Restore the result color for its brief readable label.
+        LDAA    [TO_DC]
+        DECA
+        LDX     to_result_attr
+        JSR     jr_add_x_a
+        LDAA    [X]
+        STAA    [JR_RT_COLOR]
         LDAA    6
         LDAB    20
         JSR     jr_gfx_at
@@ -784,50 +816,70 @@ to_draw_result:
         BRA     to_draw_result_amount
 to_draw_result_wager:
         CMPA    4
-        BCC     to_draw_done
+        BCC     to_draw_wager_value
+        RTS
+to_draw_wager_value:
         LDAA    [TO_WAGER]
 to_draw_result_amount:
         ADDA    0x30
         JMP     jr_gfx_putc
 to_draw_choices:
-        CLR     [TO_DI]
-to_draw_choice:
-        LDAB    TO_ATTR_TEXT
-        LDAA    [TO_DI]
-        CMPA    [TO_CHOICE]
-        BNE     to_draw_choice_colour
-        LDAB    TO_ATTR_PICK
-to_draw_choice_colour:
-        STAB    [JR_RT_COLOR]
-        LDAB    9
-        JSR     jr_mul8
-        ADDA    2
-        LDAB    20
+        ; Draw a card-plus, pause, and doubled-card icon with short labels.
+        LDAA    TO_ATTR_SUIT
+        STAA    [JR_RT_COLOR]
+        LDAA    5
+        LDAB    19
         JSR     jr_gfx_at
-        LDAA    [TO_DI]
-        ASLA
-        LDX     to_choice_text
-        JSR     jr_add_x_a
-        LDX     [X]
+        LDAA    TO_ICON_HIT
+        JSR     jr_gfx_putc
+        LDAA    15
+        LDAB    19
+        JSR     jr_gfx_at
+        LDAA    TO_ICON_STAND
+        JSR     jr_gfx_putc
+        LDAA    25
+        LDAB    19
+        JSR     jr_gfx_at
+        LDAA    TO_ICON_DOUBLE
+        JSR     jr_gfx_putc
+        LDAA    TO_ATTR_LABEL
+        STAA    [JR_RT_COLOR]
+        LDAA    3
+        LDAB    21
+        JSR     jr_gfx_at
+        LDX     to_txt_hit
         JSR     jr_gfx_text
-        INC     [TO_DI]
-        LDAA    [TO_DI]
-        CMPA    3
-        BNE     to_draw_choice
-        LDAA    TO_ATTR_PICK
+        LDAA    13
+        LDAB    21
+        JSR     jr_gfx_at
+        LDX     to_txt_stand
+        JSR     jr_gfx_text
+        LDAA    23
+        LDAB    21
+        JSR     jr_gfx_at
+        LDX     to_txt_double
+        JSR     jr_gfx_text
+        ; A high-contrast '>' stays visible on monochrome displays too.
+        LDAA    TO_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    [TO_CHOICE]
-        LDAB    9
+        LDAB    10
         JSR     jr_mul8
-        INCA
-        LDAB    20
+        ADDA    4
+        LDAB    19
         JSR     jr_gfx_at
         LDAA    0x3e
-        JMP     jr_gfx_putc
+        JSR     jr_gfx_putc
+        RTS
 to_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     to_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -863,6 +915,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    TO_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     to_help_diagram
+        JSR     jr_guide_draw
         LDX     to_help_lines
         JMP     jr_gfx_lines
 
@@ -870,10 +924,10 @@ game_draw_help:
 
 to_rank_letters:
         .db     "A23456789", 0x30, "JQK"
-to_choice_text:
-        .dw     to_txt_hit, to_txt_stand, to_txt_double
 to_result_text:
         .dw     to_txt_win, to_txt_bust, to_txt_dealer_wins, to_txt_push, to_txt_draws
+to_result_icon:
+        .db     TO_ICON_WIN, TO_ICON_BUST, TO_TILE_BACK, TO_ICON_PUSH, TO_TILE_BACK
 to_result_attr:
         .db     TO_ATTR_GOOD, TO_ATTR_BAD, TO_ATTR_BAD, 0x05, TO_ATTR_PICK
 
@@ -891,10 +945,6 @@ to_hud:
         .dw     to_txt_player
         .db     21, 2, TO_ATTR_LABEL
         .dw     to_txt_dealer
-        .db     0, 16, TO_ATTR_LABEL
-        .dw     to_txt_total
-        .db     19, 16, TO_ATTR_LABEL
-        .dw     to_txt_total
         .db     0, 18, TO_ATTR_LABEL
         .dw     to_txt_coins
         .db     22, 18, TO_ATTR_LABEL
@@ -913,28 +963,55 @@ to_title_lines:
         .dw     to_txt_credit
         .db     0xff
 to_help_lines:
-        .db     11, 2, TO_ATTR_TITLE
+        .db     11, 1, TO_ATTR_TITLE
         .dw     to_txt_name
-        .db     1, 4, TO_ATTR_TEXT
-        .dw     to_help_1
-        .db     1, 6, TO_ATTR_TEXT
-        .dw     to_help_2
-        .db     1, 8, TO_ATTR_TEXT
-        .dw     to_help_3
-        .db     1, 10, TO_ATTR_TEXT
-        .dw     to_help_4
-        .db     1, 12, TO_ATTR_TEXT
-        .dw     to_help_5
-        .db     1, 14, TO_ATTR_TEXT
-        .dw     to_help_6
-        .db     1, 16, TO_ATTR_TEXT
-        .dw     to_help_7
-        .db     1, 18, TO_ATTR_TEXT
-        .dw     to_help_8
-        .db     1, 20, TO_ATTR_TEXT
-        .dw     to_help_9
-        .db     1, 22, TO_ATTR_LABEL
-        .dw     to_help_back
+        .db     2, 4, TO_ATTR_LABEL
+        .dw     to_help_label_1
+        .db     18, 4, TO_ATTR_LABEL
+        .dw     to_help_label_2
+        .db     2, 13, TO_ATTR_TEXT
+        .dw     to_help_label_3
+        .db     2, 15, TO_ATTR_TEXT
+        .dw     to_help_label_4
+        .db     2, 17, TO_ATTR_TEXT
+        .dw     to_help_label_5
+        .db     2, 19, TO_ATTR_TEXT
+        .dw     to_help_label_6
+        .db     2, 21, TO_ATTR_TEXT
+        .dw     to_help_label_7
+        .db     2, 23, TO_ATTR_LABEL
+        .dw     to_help_label_8
+        .db     0xff
+to_help_label_1:
+        .db     "DEALER", 0
+to_help_label_2:
+        .db     "NATURAL 21", 0
+to_help_label_3:
+        .db     "A/D HIT  STAND  DOUBLE", 0
+to_help_label_4:
+        .db     "RETURN CONFIRM   ACE 1 / 11", 0
+to_help_label_5:
+        .db     "DOUBLE: BET 4, 1 CARD, STAND", 0
+to_help_label_6:
+        .db     "12 COINS AFTER 7 HANDS", 0
+to_help_label_7:
+        .db     "SPACE RETRY  CTRL+C BASIC", 0
+to_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+to_help_diagram:
+; The dealer's hidden card and a natural ace plus king worth three coins.
+        .db     2, 6, TO_ATTR_CARD, 2, 0x39, 0x20
+        .db     2, 7, TO_ATTR_SUIT, 1, TO_TILE_SUIT
+        .db     4, 6, TO_ATTR_BACK, 2, TO_TILE_BACK, TO_TILE_BACK
+        .db     4, 7, TO_ATTR_BACK, 2, TO_TILE_BACK, TO_TILE_BACK
+        .db     18, 6, TO_ATTR_CARD_RED, 2, 0x41, 0x20
+        .db     18, 7, TO_ATTR_SUIT_RED, 1, TO_TILE_SUIT + 1
+        .db     21, 6, TO_ATTR_CARD, 2, 0x4b, 0x20
+        .db     21, 7, TO_ATTR_SUIT, 1, TO_TILE_SUIT + 3
+        .db     18, 9, 0x07, 5, 0x31, 0x31, 0x2b, 0x31, 0x30
+        .db     25, 7, TO_ATTR_TITLE, 2, 0x2b, 0x33
+        .db     25, 8, 0xb6, 3, 0x00, 0x00, 0x00
         .db     0xff
 
 to_txt_name:
@@ -943,8 +1020,6 @@ to_txt_player:
         .db     "PLAYER", 0
 to_txt_dealer:
         .db     "DEALER", 0
-to_txt_total:
-        .db     "TOTAL", 0
 to_txt_coins:
         .db     "COINS", 0
 to_txt_hand:
@@ -979,26 +1054,6 @@ to_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 to_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-to_help_1:
-        .db     "A/D : HIT / STAND / DOUBLE", 0
-to_help_2:
-        .db     "RETURN : CONFIRM THE CHOICE", 0
-to_help_3:
-        .db     "ACE IS 1 OR 11 / FACES ARE 10.", 0
-to_help_4:
-        .db     "DEALER KEEPS ONE CARD HIDDEN.", 0
-to_help_5:
-        .db     "DOUBLE: BET 4, DRAW ONE, STAND.", 0
-to_help_6:
-        .db     "NATURAL 21 PAYS THREE COINS.", 0
-to_help_7:
-        .db     "FINISH SEVEN HANDS WITH 12.", 0
-to_help_8:
-        .db     "A SHUFFLED 52-CARD DECK.", 0
-to_help_9:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-to_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1052,7 +1107,7 @@ to_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1060,5 +1115,11 @@ to_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

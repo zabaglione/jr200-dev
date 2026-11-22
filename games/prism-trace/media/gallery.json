@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。光源、鏡、受光器をつなぐ光",
-      "sha256": "6c189d58c714823f5a1553ea8b49feb3515840cf6088769fd77328f5ee3f3f89",
-      "framebuffer_sha256": "d1158139b198e391a81af954ccdeaa4609b7f3c930c549239de0043d841f7784"
+      "sha256": "808a59394ca05e2d49fbdcd6256e4685edb9c23140f968476679f65b086bde20",
+      "framebuffer_sha256": "37da5d529ef993893e0b3065a6a1800be18a6c02bbc48cbbe1ce5f0bac24443e"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-turns",
       "role": "play",
       "caption": "3枚回して光が伸びた途中",
-      "sha256": "cab13f17532093628de2eba9a0d8f4b0aa4b08eefed1dfc5cb791c8f55ecccd6",
-      "framebuffer_sha256": "11ee52cddcbb635d7e1099d1f5dc60d7c78b66cad1246a2ed0cc627b0bfabd6e"
+      "sha256": "a7d75c5d8853d25121238d9c73eb3500ca225ae93980d9b369caf462312a9dd7",
+      "framebuffer_sha256": "9be75d3e49a2e36f274533c93c2fe9b0c9029986560d90f2144169842eb0fdb0"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "光が受光器に届いたクリア",
-      "sha256": "db4726be849d9bcab262717a600b5763afacbffa7e87c2dacf9e402969cca6d7",
-      "framebuffer_sha256": "cb6b93781d1c008a2362cab605d3118bb4765fd9426faccc6550b4752dc094e0"
+      "sha256": "7d9185f6126697532d2b861cd036c103f2d6fe3684f307451bdfde3c5698e45e",
+      "framebuffer_sha256": "e0bd476ba935bf5c3cf6039fb1b27392368f2a46cc8ef279f34ec07386ff910b"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 7.8,
-    "frames": 233,
-    "frames_sha256": "dccd45249cd059207bab61755502e299aa621005646fed3bff90e1ce290c32e6",
-    "pcm_sha256": "1c00ecdf3267d85b5fd6f8c1e5b72d53545c2ac28ec7a4f2a91e04007c1b4802",
-    "sha256": "bb6e355891219199e22e1c3be0da82d812e514e9456406750a4e53fa0b2bd4d0",
+    "seconds": 7.9,
+    "frames": 236,
+    "frames_sha256": "bd2868036a4bf856bd17b4f2b6f37b2b74ba563d07b75b80caf6176b47c1ef15",
+    "pcm_sha256": "cda16ab99d2d4ea57b93e62f4dd44e2f7e48f8583e538203dea5377f43be8446",
+    "sha256": "f5fbb7af07b9883e7c422721d3e353c42ced0aa6a660a924e71e894608252de4",
     "caption": "5枚の鏡を回して光を受光器へ届けるまで"
   }
 }

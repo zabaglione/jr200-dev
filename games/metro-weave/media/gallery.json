@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "fc627bc0214a579a0d891484e3d41cc39aba3cedc4d9139f46a179ee94375282",
-      "framebuffer_sha256": "0a92c7c3281a7ea27c5ea7eae51b865cf5bfd816911d712b255ca06e9166a996"
+      "sha256": "76cc7090e19fe330c0400dc0039a6890ba74bde3d82528875a48a23ba1c9ff46",
+      "framebuffer_sha256": "b80b900bb8bd145712cddd6e6094e3dccc955f2a4b56e8d308b381070eb879bd"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで分岐を切り替える場面",
-      "sha256": "1c9deb5d66766099757a31cf0967e331a29248818446c5a8894ec1dc5748150f",
-      "framebuffer_sha256": "cfa553fcd71426381a451c2c3eb2b0ea8e09094b67bbe320eb23af7151105c9a"
+      "sha256": "a562ee06ea37e75565dbd5e71609c20de95580c086f46bd3adce28d8cf724eec",
+      "framebuffer_sha256": "da0a315c37646a55ee54fa540332bb578e1624e215a8f9380ae4847a968d9233"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "8本を届けて金メダルで1つ目の勤務を終える",
-      "sha256": "08ece3baef92dca6a722e0e0d6f1c88f591e9509acb4852dd6107586c30fe5d6",
-      "framebuffer_sha256": "251ba8733275a595c53b745731d7da791d89ef89d03018b0cc1f77a498080ef9"
+      "sha256": "61a2795df5fffb395156eeadfc1439b010102068225dc706ee91276a3d06c2e9",
+      "framebuffer_sha256": "c3ebac829f71a76037ea5abfa6ce921e1d4dc62c29bfb9c02d83a3ea647ef177"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 24.7,
-    "frames": 741,
-    "frames_sha256": "c00a8ff88132811acefe4a19d9aac2d54e6130c15717cf171d9b571e55a34112",
-    "pcm_sha256": "a51b6596a423664aa85b16129b305ac4638a1e65d34f92ef14c80d8958c94138",
-    "sha256": "6b85161481d2c8e3784b4098bee3bac6caa9e6c2bc4688c147f955b2cf250f87",
+    "seconds": 24.8,
+    "frames": 744,
+    "frames_sha256": "a136fcfbfb82bd936fa4b6c2d96128ab051c7f025d9d805b76a0fd1e99c172c6",
+    "pcm_sha256": "bb48bee4e4cb67389f5e6ff093d6e37564f0a3bad29e6401b480ef6de321c0b1",
+    "sha256": "d7cc2a1cc68f2d056f1e76b4beda14f9b1fbae40eed84e0aa2da9edcf66d2103",
     "caption": "1つ目の勤務の自動デモ（8本を正しい駅へ）"
   }
 }

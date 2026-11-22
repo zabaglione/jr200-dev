@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "tidal-nets",
   "title": "TIDAL NETS",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Read the tide and cast fine or wide nets to meet the catch quota in nine casts.",
   "genre": "management",
   "license": "MIT",

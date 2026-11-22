@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -577,6 +579,11 @@ cb_draw_at:
         JMP     jr_gfx_putc
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     cb_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -612,6 +619,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    CB_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     cb_help_diagram
+        JSR     jr_guide_draw
         LDX     cb_help_lines
         JMP     jr_gfx_lines
 
@@ -683,26 +692,51 @@ cb_title_lines:
         .dw     cb_txt_credit
         .db     0xff
 cb_help_lines:
-        .db     9, 2, CB_ATTR_TITLE
+        .db     9, 1, CB_ATTR_TITLE
         .dw     cb_txt_name
-        .db     1, 5, CB_ATTR_TEXT
-        .dw     cb_help_1
-        .db     1, 7, CB_ATTR_TEXT
-        .dw     cb_help_2
-        .db     1, 9, CB_ATTR_TEXT
-        .dw     cb_help_3
-        .db     1, 11, CB_ATTR_TEXT
-        .dw     cb_help_4
-        .db     1, 13, CB_ATTR_TEXT
-        .dw     cb_help_5
-        .db     1, 15, CB_ATTR_TEXT
-        .dw     cb_help_6
-        .db     1, 17, CB_ATTR_TEXT
-        .dw     cb_help_7
-        .db     1, 19, CB_ATTR_TEXT
-        .dw     cb_help_8
-        .db     1, 21, CB_ATTR_LABEL
-        .dw     cb_help_back
+        .db     2, 4, CB_ATTR_LABEL
+        .dw     cb_help_label_1
+        .db     19, 4, CB_ATTR_LABEL
+        .dw     cb_help_label_2
+        .db     2, 14, CB_ATTR_TEXT
+        .dw     cb_help_label_3
+        .db     2, 16, CB_ATTR_TEXT
+        .dw     cb_help_label_4
+        .db     2, 18, CB_ATTR_TEXT
+        .dw     cb_help_label_5
+        .db     2, 20, CB_ATTR_TEXT
+        .dw     cb_help_label_6
+        .db     2, 22, CB_ATTR_LABEL
+        .dw     cb_help_label_7
+        .db     0xff
+cb_help_label_1:
+        .db     "CENTER", 0
+cb_help_label_2:
+        .db     "OUTER HOLD", 0
+cb_help_label_3:
+        .db     "A/D CRANE   RETURN DROP", 0
+cb_help_label_4:
+        .db     "OUTER: FARE X2    LEAN X3", 0
+cb_help_label_5:
+        .db     "LOAD 12 WITHOUT TIPPING", 0
+cb_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+cb_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+cb_help_diagram:
+; Dropping a crate farther from the center tips the deck.
+        .db     6, 0x80 + 6, CB_ATTR_HOOK, 1, CB_TILE_HOOK
+        .db     5, 0x80 + 9, 0x46, 2, CB_TILE_CRATE, CB_TILE_CRATE
+        .db     2, 11, 0xa4, 10, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24
+        .db     6, 12, 0x87, 1, 0x07
+        .db     25, 0x80 + 6, CB_ATTR_HOOK, 1, CB_TILE_HOOK
+        .db     25, 0x80 + 9, 0x46, 1, CB_TILE_CRATE
+        .db     19, 10, 0x80, 3, 0x24, 0x24, 0x24
+        .db     22, 10, 0xa0, 1, 0x04
+        .db     23, 11, 0xa4, 3, 0x24, 0x24, 0x24
+        .db     26, 11, 0xa0, 1, 0x04
+        .db     27, 12, 0x80, 3, 0x24, 0x24, 0x24
         .db     0xff
 
 cb_txt_name:
@@ -739,24 +773,6 @@ cb_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 cb_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-cb_help_1:
-        .db     "A/D : CRANE  RETURN : DROP", 0
-cb_help_2:
-        .db     "OUTER HOLDS: DOUBLE FARE,", 0
-cb_help_3:
-        .db     "BUT THREE TIMES THE TORQUE.", 0
-cb_help_4:
-        .db     "NEXT TWO CRATES ARE SHOWN.", 0
-cb_help_5:
-        .db     "WIND ADDS TO THE PORT LEAN.", 0
-cb_help_6:
-        .db     "LOAD TWELVE WITHOUT TIPPING.", 0
-cb_help_7:
-        .db     "SIX VOYAGES, TIGHTER LIMITS.", 0
-cb_help_8:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-cb_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -810,7 +826,7 @@ cb_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -818,5 +834,11 @@ cb_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

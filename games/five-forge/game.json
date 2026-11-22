@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "five-forge",
   "title": "FIVE FORGE",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Make five in a row on an 8x8 board against a rival that blocks and builds its own threats.",
   "genre": "tabletop",
   "license": "MIT",

@@ -1,8 +1,9 @@
 {
   "schema_version": 2,
   "expected_entry_address": "0x1000",
-  "notes": "State expectations come from games/gate-runner/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six courses with their input scripts (held A/D included); synthetic-demo-clear plays course 1 with the same script at normal speed; synthetic-no-input-loss runs straight and falls into the pits; synthetic-hold-right holds D until the runner stops at column 28. Timed key replays only observe values that do not depend on tick timing. Replays start at 1.3M cycles because the MCU scan start-up drains the ROM-less font transfer. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
+  "notes": "State expectations come from games/gate-runner/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six courses with their input scripts (held A/D included); synthetic-demo-clear plays course 1 with the same script at normal speed; synthetic-no-input-loss runs straight and falls into the pits; synthetic-hold-right holds D until the runner stops at column 28. Timed key replays only observe values that do not depend on tick timing. Replays start at 1.3M cycles because the MCU scan start-up drains the ROM-less font transfer. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-start and local-rom-play sample the fully drawn opening board.",
   "runtime": {
+    "startup_delay_cycles": 119763,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0306060c0c181830c06060303018180c000000cccc000000ff92ff49ff92ff49ff0055aa55aa55aaffaaff242400000010386cc66c38100000000000007eff7e010302010f172707c0e0e0c0e0d0c8c407060c1830600000c0c0603010080c0003070703070b132380c04080f0e8e4e00303060c08103000e06030180c060000010302412f170707c0e0e0c1e6d8c0c0070c181000000000c06030100000000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e",
+          "framebuffer_sha256": "3ade51dd9ee5f086bb1c47731799092643254c450efa6769fbe7cb74dfbdedfb",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "131ea4a9ed5bfe0e34db0e11a4ddf0ebf45f5c277447368628fc7e255acebbe2",
+          "framebuffer_sha256": "5c4428417f2313574cdff3408056b5e74ca99f7201c5f7ec831fa373f9601a19",
           "pcm": null,
           "cassette": null
         }
@@ -82,7 +83,7 @@
       {
         "profile": "synthetic-start",
         "mode": "synthetic-injection",
-        "max_cycles": 1380000,
+        "max_cycles": 1404000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "df5e6debf72851402b545d31e927a2f14d392d87f4a24b0993d1d35333d7b28d",
+          "framebuffer_sha256": "0c04051c175053802ca75744e79399dfca4740dad3773391f618afbb446ae37d",
           "pcm": null,
           "cassette": null
         }
@@ -242,7 +243,7 @@
             "level": "00",
             "status": "46454c4c20494e544f2054484520504954"
           },
-          "framebuffer_sha256": "5e5e41b3ccef20d6aff1fc81a5ed479036497a5f52a35d82c4a7205ecbfeabaf",
+          "framebuffer_sha256": "e19c07b03950c59b6b72805a773a9769726e526e0e5c7a5fb57134d8d4e5bf63",
           "pcm": null,
           "cassette": null
         }
@@ -392,7 +393,7 @@
       {
         "profile": "synthetic-demo-play",
         "mode": "synthetic-injection",
-        "max_cycles": 13250000,
+        "max_cycles": 13580000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -414,7 +415,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "630f43651dc9724aa70b5486a66d7611f2b4a442b5107030f4b0351ac5d2c30b",
+          "framebuffer_sha256": "ed840c3976edd31f1d2182226d83b0fd1222a0a7f721925866cf1b8d899f5b9c",
           "pcm": null,
           "cassette": null
         }
@@ -464,7 +465,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "9b2f7bf375b39f81fb8df621fa60e11f9fd41babba98503be9c27a229dc57629",
+          "framebuffer_sha256": "f9587e4aa9716f159d5d62397835bfc1e8c7eb101ecabb572501d09e35038de9",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -613,7 +614,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e",
+          "framebuffer_sha256": "3ade51dd9ee5f086bb1c47731799092643254c450efa6769fbe7cb74dfbdedfb",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -625,7 +626,7 @@
       {
         "profile": "local-rom-play",
         "mode": "rom-cassette",
-        "max_cycles": 124630000,
+        "max_cycles": 124665000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -657,7 +658,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "6243981ac7f71caf18012e032f4dfceb555b69316e32132e390949b2bf325932",
+          "framebuffer_sha256": "9af131abedd96b830ab1c50e0ad1f500bdf84c09819e8d3e90a0c6da21cf3a21",
           "pcm": null,
           "cassette": {
             "state": 6,

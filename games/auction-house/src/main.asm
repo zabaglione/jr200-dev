@@ -10,6 +10,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -55,6 +57,8 @@ AH_PHASE_APPRAISED: .equ    6
 AH_TILE_GAVEL:      .equ    0x80
 AH_TILE_VASE:       .equ    0x84
 AH_TILE_COINS:      .equ    0x88
+AH_ICON_INSPECT:    .equ    0x8c
+AH_ICON_PASS:       .equ    0x8d
 AH_ATTR_GAVEL:      .equ    0x47
 AH_ATTR_VASE:       .equ    0x45        ; cyan lot
 AH_ATTR_COINS:      .equ    0x46        ; yellow coins
@@ -76,6 +80,10 @@ start:
         LDX     ah_patterns
         LDAA    AH_TILE_GAVEL
         LDAB    12
+        JSR     jr_pcg_load
+        LDX     ah_symbol_patterns
+        LDAA    AH_ICON_INSPECT
+        LDAB    2
         JSR     jr_pcg_load
         JMP     jr_port_run
 
@@ -403,25 +411,56 @@ ah_draw_cash:
         JSR     jr_gfx_at
         LDAA    [AH_CASH]
         JSR     jr_gfx_dec2
-        ; the four choices, the selected one in yellow with a '^' below
+        ; draw pictorial choices; a white marker shows selection without color
+        LDAA    AH_ATTR_COINS
+        STAA    [JR_RT_COLOR]
+        LDAA    2
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AH_TILE_COINS
+        JSR     jr_gfx_tile
+        LDAA    8
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AH_TILE_COINS
+        JSR     jr_gfx_tile
+        LDAA    10
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AH_TILE_COINS
+        JSR     jr_gfx_tile
+        LDAA    12
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AH_TILE_COINS
+        JSR     jr_gfx_tile
+        LDAA    AH_ATTR_COINS
+        STAA    [JR_RT_COLOR]
+        LDAA    20
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AH_ICON_INSPECT
+        JSR     jr_gfx_putc
+        LDAA    AH_ATTR_GAVEL
+        STAA    [JR_RT_COLOR]
+        LDAA    28
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    AH_ICON_PASS
+        JSR     jr_gfx_putc
+        LDAA    AH_ATTR_TEXT
+        STAA    [JR_RT_COLOR]
         CLR     [AH_DI]
 ah_draw_choice:
-        LDAB    AH_ATTR_TEXT
         LDAA    [AH_DI]
-        CMPA    [AH_CHOICE]
-        BNE     ah_draw_choice_colour
-        LDAB    AH_ATTR_PICK
-ah_draw_choice_colour:
-        STAB    [JR_RT_COLOR]
-        ASLA
-        ASLA
-        ASLA
+        LDAB    8
+        JSR     jr_mul8
         INCA
-        LDAB    19
+        LDAB    20
         JSR     jr_gfx_at
         LDAA    [AH_DI]
         ASLA
-        LDX     ah_choice_text
+        LDX     ah_choice_labels
         JSR     jr_add_x_a
         LDX     [X]
         JSR     jr_gfx_text
@@ -429,26 +468,69 @@ ah_draw_choice_colour:
         LDAA    [AH_DI]
         CMPA    4
         BNE     ah_draw_choice
-        LDAA    AH_ATTR_PICK
+        ; The marker is a plain glyph, separate from the icon's attribute.
+        LDAA    AH_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    [AH_CHOICE]
-        ASLA
-        ASLA
-        ASLA
-        INCA
-        LDAB    20
+        LDX     ah_choice_marker_x
+        JSR     jr_add_x_a
+        LDAA    [X]
+        LDAB    18
         JSR     jr_gfx_at
-        LDAA    0x5e
+        LDAA    0x3e
         JSR     jr_gfx_putc
         ; what just happened at the table
         LDAA    [AH_PHASE]
-        BEQ     ah_draw_done
+        BNE     ah_draw_phase
+        RTS
+ah_draw_phase:
         DECA
         LDX     ah_phase_colours
         JSR     jr_add_x_a
         LDAA    [X]
         STAA    [JR_RT_COLOR]
+        ; A pictogram labels the status; only the small inspect/pass symbols
+        ; use one character, while table actions use the existing 2x2 art.
+        LDAA    [AH_PHASE]
+        DECA
+        LDX     ah_phase_icons
+        JSR     jr_add_x_a
+        LDAA    [X]
+        STAA    [AH_DI]
+        CMPA    AH_ICON_INSPECT
+        BEQ     ah_draw_phase_symbol
+        CMPA    AH_ICON_PASS
+        BEQ     ah_draw_phase_symbol
+        CMPA    AH_TILE_GAVEL
+        BNE     ah_draw_phase_coin_attr
+        LDAA    AH_ATTR_GAVEL
+        BRA     ah_draw_phase_icon_attr
+ah_draw_phase_coin_attr:
+        LDAA    AH_ATTR_COINS
+ah_draw_phase_icon_attr:
+        STAA    [JR_RT_COLOR]
         LDAA    1
+        LDAB    14
+        JSR     jr_gfx_at
+        LDAA    [AH_DI]
+        JSR     jr_gfx_tile
+        BRA     ah_draw_phase_text
+ah_draw_phase_symbol:
+        LDAA    AH_ATTR_COINS
+        STAA    [JR_RT_COLOR]
+        LDAA    2
+        LDAB    15
+        JSR     jr_gfx_at
+        LDAA    [AH_DI]
+        JSR     jr_gfx_putc
+ah_draw_phase_text:
+        LDAA    [AH_PHASE]
+        DECA
+        LDX     ah_phase_colours
+        JSR     jr_add_x_a
+        LDAA    [X]
+        STAA    [JR_RT_COLOR]
+        LDAA    4
         LDAB    15
         JSR     jr_gfx_at
         LDAA    [AH_PHASE]
@@ -461,7 +543,7 @@ ah_draw_choice_colour:
         LDAA    [AH_PHASE]
         CMPA    AH_PHASE_SOLD
         BNE     ah_draw_done
-        LDAA    13
+        LDAA    10
         LDAB    15
         JSR     jr_gfx_at
         LDAA    [AH_VALUE]
@@ -470,6 +552,11 @@ ah_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     ah_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -503,6 +590,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    AH_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     ah_help_diagram
+        JSR     jr_guide_draw
         LDX     ah_help_lines
         JMP     jr_gfx_lines
 
@@ -512,8 +601,13 @@ ah_lots:
         .db     24, 22, 26, 14, 4, 18, 16, 22, 26, 8, 30, 26, 32, 22, 6
         .db     16, 14, 20, 22, 4, 28, 24, 30, 18, 6, 20, 18, 24, 22, 8
 
-ah_choice_text:
+ah_choice_labels:
         .dw     ah_txt_bid2, ah_txt_bid6, ah_txt_inspect, ah_txt_pass
+ah_choice_marker_x:
+        .db     0, 7, 18, 26
+ah_phase_icons:
+        .db     AH_TILE_GAVEL, AH_TILE_GAVEL, AH_TILE_GAVEL
+        .db     AH_ICON_PASS, AH_TILE_COINS, AH_ICON_INSPECT
 ah_phase_text:
         .dw     ah_txt_your_bid, ah_txt_rival, ah_txt_sold, ah_txt_passed
         .dw     ah_txt_no_cash, ah_txt_appraised
@@ -549,34 +643,61 @@ ah_title_lines:
         .dw     ah_txt_credit
         .db     0xff
 ah_help_lines:
-        .db     9, 2, AH_ATTR_TITLE
+        .db     9, 1, AH_ATTR_TITLE
         .dw     ah_txt_name
-        .db     1, 5, AH_ATTR_TEXT
-        .dw     ah_help_1
-        .db     1, 7, AH_ATTR_TEXT
-        .dw     ah_help_2
-        .db     1, 9, AH_ATTR_TEXT
-        .dw     ah_help_3
-        .db     1, 11, AH_ATTR_TEXT
-        .dw     ah_help_4
-        .db     1, 13, AH_ATTR_TEXT
-        .dw     ah_help_5
-        .db     1, 15, AH_ATTR_TEXT
-        .dw     ah_help_6
-        .db     1, 17, AH_ATTR_TEXT
-        .dw     ah_help_7
-        .db     1, 19, AH_ATTR_TEXT
-        .dw     ah_help_8
-        .db     1, 21, AH_ATTR_LABEL
-        .dw     ah_help_back
+        .db     4, 4, AH_ATTR_LABEL
+        .dw     ah_help_label_1
+        .db     13, 4, AH_ATTR_LABEL
+        .dw     ah_help_label_2
+        .db     24, 4, AH_ATTR_LABEL
+        .dw     ah_help_label_3
+        .db     2, 13, AH_ATTR_TEXT
+        .dw     ah_help_label_4
+        .db     2, 15, AH_ATTR_TEXT
+        .dw     ah_help_label_5
+        .db     2, 17, AH_ATTR_TEXT
+        .dw     ah_help_label_6
+        .db     2, 19, AH_ATTR_TEXT
+        .dw     ah_help_label_7
+        .db     2, 22, AH_ATTR_LABEL
+        .dw     ah_help_label_8
+        .db     0xff
+ah_help_label_1:
+        .db     "BID", 0
+ah_help_label_2:
+        .db     "JUMP BID", 0
+ah_help_label_3:
+        .db     "INSPECT", 0
+ah_help_label_4:
+        .db     "A/D CHOICE  RETURN CONFIRM", 0
+ah_help_label_5:
+        .db     "JUMP BID PRESSURES RIVAL", 0
+ah_help_label_6:
+        .db     "PASS BEFORE YOU OVERPAY", 0
+ah_help_label_7:
+        .db     "SPACE RETRY  CTRL+C BASIC", 0
+ah_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+ah_help_diagram:
+; One lot, three price choices. The inspection spends a coin to reveal value.
+        .db     14, 0x80 + 2, AH_ATTR_VASE, 1, AH_TILE_VASE
+        .db     4, 0x80 + 6, AH_ATTR_COINS, 1, AH_TILE_COINS
+        .db     14, 0x80 + 6, AH_ATTR_COINS, 3, AH_TILE_COINS, AH_TILE_COINS, AH_TILE_COINS
+        .db     25, 0x80 + 6, AH_ATTR_COINS, 1, AH_TILE_COINS
+        .db     4, 9, AH_ATTR_TITLE, 2, 0x2b, 0x32
+        .db     16, 9, AH_ATTR_TITLE, 2, 0x2b, 0x36
+        .db     25, 9, AH_ATTR_LABEL, 2, 0x2d, 0x31
+        .db     23, 10, 0xa4, 7, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24
+        .db     24, 11, AH_ATTR_TEXT, 5, 0x56, 0x41, 0x4c, 0x55, 0x45
         .db     0xff
 
 ah_txt_name:
         .db     "AUCTION HOUSE", 0
 ah_txt_market:
-        .db     "MARKET", 0
+        .db     "MKT", 0
 ah_txt_appraisal:
-        .db     "APPRAISAL", 0
+        .db     "VALUE", 0
 ah_txt_bid:
         .db     "BID", 0
 ah_txt_cash:
@@ -588,11 +709,11 @@ ah_txt_lot:
 ah_txt_table:
         .db     "===============", 0
 ah_txt_bid2:
-        .db     "BID +2", 0
+        .db     "+2", 0
 ah_txt_bid6:
-        .db     "BID +6", 0
+        .db     "+6", 0
 ah_txt_inspect:
-        .db     "INSPECT", 0
+        .db     "LOOK", 0
 ah_txt_pass:
         .db     "PASS", 0
 ah_txt_your_bid:
@@ -600,7 +721,7 @@ ah_txt_your_bid:
 ah_txt_rival:
         .db     "RIVAL +2", 0
 ah_txt_sold:
-        .db     "SOLD! VALUE", 0
+        .db     "SOLD", 0
 ah_txt_passed:
         .db     "LOT PASSED", 0
 ah_txt_no_cash:
@@ -617,24 +738,6 @@ ah_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 ah_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-ah_help_1:
-        .db     "A/D : CHOICE  RETURN : CONFIRM", 0
-ah_help_2:
-        .db     "BID +2 OR JUMP BID +6.", 0
-ah_help_3:
-        .db     "JUMP BIDS PRESSURE THE RIVAL.", 0
-ah_help_4:
-        .db     "INSPECT COSTS ONE COIN.", 0
-ah_help_5:
-        .db     "INSPECTION REVEALS EXACT VALUE.", 0
-ah_help_6:
-        .db     "PASS BEFORE YOU OVERPAY.", 0
-ah_help_7:
-        .db     "VALUES CHANGE EACH AUCTION.", 0
-ah_help_8:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-ah_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -690,7 +793,7 @@ ah_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -698,5 +801,11 @@ ah_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

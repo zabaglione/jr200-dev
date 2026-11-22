@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/word-foundry/tests/model.py (upstream rules 2.0.0), not from the emulator. Each ladder is the breadth-first shortest route through the via word; its length equals the upstream PAR, and synthetic-all-ladders clears all 16. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Replays leave 900000 cycles after a change and 1600000 after the via sparkle.",
   "runtime": {
+    "startup_delay_cycles": 122825,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000101001039000000808000089c1301000101000000c88000808000000000201109000030c30004889000000cc3c330000009112000c30c0000908804008040000000000080010200000000000180000000000040800100000000000201"
           },
-          "framebuffer_sha256": "e70e6c517297670bd98b92d6a6d3aabdbd317e5c7fe8f6a6ecda7d37b98f9350",
+          "framebuffer_sha256": "8d60124db5772a7c81866c9f845a2afaa00439eb9cc6351563e7d4fd79e14125",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "96e02204d819c35c92ea607f4b61530afbf32fb65983209270f3464443882614",
+          "framebuffer_sha256": "6b6d4d8f63427ae29875d704a6ccd4374f50d2da63cadae1a83cd8744534bb07",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "f458c040d4a7286a365f708e53db0a223cac4d242255c890c17e6c2557ba2ce5",
+          "framebuffer_sha256": "4e74cd693a6b239d2a6c8215ad68ee41d5ae72419bf21ea9d08e4c65c607f253",
           "pcm": null,
           "cassette": null
         }
@@ -466,7 +467,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "85c98e14e32d8e9d356954017f7877d0a5d133bf01eff62c78217bd3e4b2fe86",
+          "framebuffer_sha256": "e078da41e8486496521fad9ae405cf88f05f1f9846e5bdbb627239f65b4dfb95",
           "pcm": null,
           "cassette": null
         }
@@ -684,7 +685,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "8d19f140e9d85546b2dadee2635f652e9d4a86fd42f1c0442aacf2bf15be8d85",
+          "framebuffer_sha256": "b3f5ae9aef89f2ba9361df1af595c02722853f2e74eea0205b90308b88f86c9e",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1081,7 +1082,7 @@
             "level": "00",
             "status": "574f5244204c41444445522052414e204f5554204f46205354455053"
           },
-          "framebuffer_sha256": "6f4d8a27cbd3437cd58062e26ca18cb0f9286f63cfe5106611696b1716bc18e5",
+          "framebuffer_sha256": "422cef7dd961cf86e6aea48a19cc25fabd301869d403220417532353a02d9dc6",
           "pcm": null,
           "cassette": null
         }
@@ -5947,7 +5948,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "e70e6c517297670bd98b92d6a6d3aabdbd317e5c7fe8f6a6ecda7d37b98f9350",
+          "framebuffer_sha256": "8d60124db5772a7c81866c9f845a2afaa00439eb9cc6351563e7d4fd79e14125",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -5991,7 +5992,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "f458c040d4a7286a365f708e53db0a223cac4d242255c890c17e6c2557ba2ce5",
+          "framebuffer_sha256": "4e74cd693a6b239d2a6c8215ad68ee41d5ae72419bf21ea9d08e4c65c607f253",
           "pcm": null,
           "cassette": {
             "state": 6,

@@ -11,6 +11,8 @@ import unittest
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+from png_rgba import decode_rgba
+from test_gallery import gallery_expectations_snapshot
 from wiki.generate import (WikiError, apply_files, render_pages,
                            require_git_worktree, sync_plan)
 
@@ -38,6 +40,18 @@ def development_games():
 
 
 DEVELOPMENT = development_games()
+
+
+def bind_fixture_gallery_receipts(project):
+    """Bind the fixture's copied receipts to its own replay expectations."""
+    receipts = list((project / 'media/receipts').glob('*.json'))
+    if not receipts:
+        return
+    digest = hashlib.sha256((project / 'tests/expectations.json').read_bytes()).hexdigest()
+    for path in receipts:
+        receipt = json.loads(path.read_text(encoding='utf-8'))
+        receipt['expectations_sha256'] = digest
+        path.write_text(json.dumps(receipt) + '\n', encoding='utf-8')
 
 
 def make_cjr(payload=b'\x01\x39', start=0x1000):
@@ -74,15 +88,28 @@ class WikiFixture:
         self.metadata_path.write_text(json.dumps(self.metadata) + '\n', encoding='utf-8')
         self.artifact = make_cjr()
         self.artifact_sha256 = hashlib.sha256(self.artifact).hexdigest()
-        self.expectations_sha256 = hashlib.sha256(
-            (self.root / 'games/side-catch/tests/expectations.json').read_bytes()
-        ).hexdigest()
+        gallery_path = self.root / 'games/side-catch/media/gallery.json'
+        gallery = json.loads(gallery_path.read_text(encoding='utf-8'))
+        title_scene = next(scene for scene in gallery['scenes']
+                           if scene['role'] == 'title')
+        self.screenshot_profile = title_scene['profile']
         screenshot = self.root / 'games/side-catch/media/screenshot.png'
-        self.screenshot_sha256 = hashlib.sha256(screenshot.read_bytes()).hexdigest()
-        self.framebuffer_sha256 = json.loads((ROOT / 'games/catalog.json').read_text())[
-            'games'][0]['wiki']['screenshot']['framebuffer_sha256']
+        screenshot_bytes = screenshot.read_bytes()
+        width, height, pixels = decode_rgba(screenshot_bytes)
+        if (width, height) != (320, 224):
+            raise AssertionError('fixture title capture must be 320x224')
+        self.screenshot_sha256 = hashlib.sha256(screenshot_bytes).hexdigest()
+        self.framebuffer_sha256 = hashlib.sha256(pixels).hexdigest()
+        expectations_path = self.root / 'games/side-catch/tests/expectations.json'
+        expectations = json.loads(expectations_path.read_text(encoding='utf-8'))
+        profiles = {profile['profile']: profile
+                    for profile in expectations['runtime']['profiles']}
+        for scene in gallery['scenes']:
+            profiles[scene['profile']]['expect']['framebuffer_sha256'] = (
+                scene['framebuffer_sha256'])
+        expectations_path.write_text(json.dumps(expectations) + '\n', encoding='utf-8')
+        self.expectations_sha256 = hashlib.sha256(expectations_path.read_bytes()).hexdigest()
         self.version = self.metadata['version']
-        self.screenshot_profile = 'local-rom-title'
         self.package = (self.root / 'games/side-catch/build/package/'
                         f'side-catch-{self.version}.zip')
         self.catalog = {
@@ -111,7 +138,15 @@ class WikiFixture:
         for name in DEVELOPMENT:
             shutil.copytree(ROOT / 'games' / name, self.root / 'games' / name,
                             ignore=shutil.ignore_patterns('build', '__pycache__'))
-            metadata_path = self.root / 'games' / name / 'game.json'
+            project = self.root / 'games' / name
+            if name in ('lumen-cross', 'relic-dive'):
+                # These draft fixtures use each fixed gallery from its release.
+                gallery = ROOT / 'games' / name / 'media/gallery.json'
+                (project / 'tests/expectations.json').write_bytes(
+                    gallery_expectations_snapshot(gallery))
+            else:
+                bind_fixture_gallery_receipts(project)
+            metadata_path = project / 'game.json'
             metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
             metadata['release']['status'] = 'draft'
             metadata['release']['publication'] = 'not-published'
@@ -248,6 +283,12 @@ class WikiGenerationTests(unittest.TestCase):
                           'media/side-catch-title.png', 'media/side-catch-goal.png',
                           'media/side-catch-play.png', 'media/side-catch-goal.webm']))
         page = files['Game-side-catch.md'].decode('utf-8')
+        all_games = files['All-Games.md'].decode('utf-8')
+        self.assertIn('## タイトル画面', all_games)
+        self.assertIn('[作品情報を見る](#user-content-作品情報)', all_games)
+        self.assertIn('<a href="Game-side-catch"><img src="media/side-catch-title.png" '
+                      'alt="SIDE CATCHのタイトル画面" width="320"><br>SIDE CATCH</a>', all_games)
+        self.assertIn('</a></td>\n<td></td>\n<td></td>\n</tr>', all_games)
         self.assertIn('非公開の候補版プレビュー', page)
         self.assertIn('media/side-catch-title.png', page)
         self.assertIn('通常MLOAD/USRで実行', page)
@@ -284,6 +325,13 @@ class WikiGenerationTests(unittest.TestCase):
         files, _ = render_pages(self.fixture.root, None, True)
         self.assertEqual(files['media/side-catch.png'],
                          (project / 'media/gameplay.png').read_bytes())
+
+    def test_all_games_keeps_game_information_without_a_title_image(self):
+        (self.fixture.root / 'games/side-catch/media/gallery.json').unlink()
+        files, _ = render_pages(self.fixture.root, None, True)
+        all_games = files['All-Games.md'].decode('utf-8')
+        self.assertNotIn('## タイトル画面', all_games)
+        self.assertIn('| [SIDE CATCH](Game-side-catch) |', all_games)
 
     def test_candidate_rejects_unsafe_capture_path(self):
         self.fixture.catalog['games'][0]['wiki']['screenshot']['file'] = (
@@ -366,6 +414,7 @@ class WikiGenerationTests(unittest.TestCase):
             render_pages(self.fixture.root, None, True)
 
     def test_published_page_requires_clean_source_ancestry(self):
+        self.fixture.metadata['license'] = 'MIT'
         self.fixture.metadata['release']['status'] = 'verified'
         self.fixture.metadata['release']['publication'] = 'published'
         self.fixture.metadata_path.write_text(
@@ -378,6 +427,12 @@ class WikiGenerationTests(unittest.TestCase):
             'v0.1.0/side-catch-0.1.0.zip')
         self.fixture.write_catalog()
         project = self.fixture.root / 'games/side-catch'
+        (project / 'LICENSE').write_bytes((ROOT / 'games/relic-dive/LICENSE').read_bytes())
+        sdk_inputs = json.loads((project / 'build.json').read_text(encoding='utf-8'))[
+            'inputs']['sdk']
+        notice = project / 'THIRD_PARTY_NOTICES.md'
+        notices_at_release = 'BSD-3-Clause\n' + '\n'.join(sdk_inputs) + '\n'
+        notice.write_text(notices_at_release, encoding='utf-8')
         gallery_path = project / 'media/gallery.json'
         gallery = json.loads(gallery_path.read_text(encoding='utf-8'))
         gallery['capture']['artifact_sha256'] = self.fixture.artifact_sha256
@@ -394,13 +449,24 @@ class WikiGenerationTests(unittest.TestCase):
         source_commit = subprocess.check_output(
             ['git', 'rev-parse', 'HEAD'], cwd=self.fixture.root, text=True).strip()
         self.fixture.write_package(ready=True, source_commit=source_commit)
-        subprocess.check_call(['git', 'add', 'games/catalog.json'], cwd=self.fixture.root)
+        notice.write_text(notices_at_release + 'Development notice update\n', encoding='utf-8')
+        subprocess.check_call(
+            ['git', 'add', 'games/catalog.json', 'games/side-catch/THIRD_PARTY_NOTICES.md'],
+            cwd=self.fixture.root)
         subprocess.check_call(
             ['git', '-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
              'commit', '-m', 'catalog hash'], cwd=self.fixture.root,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         current_commit = subprocess.check_output(
             ['git', 'rev-parse', 'HEAD'], cwd=self.fixture.root, text=True).strip()
+        fixed_archive = self.fixture.package.read_bytes()
+        fixed_hash = item['package']['sha256']
+        self.fixture.write_package(ready=True, source_commit=source_commit)
+        with self.assertRaisesRegex(WikiError, 'package license or notice mismatch'):
+            render_pages(self.fixture.root, None, False, expected_commit=current_commit)
+        self.fixture.package.write_bytes(fixed_archive)
+        item['package']['sha256'] = fixed_hash
+        self.fixture.write_catalog()
         expectations_path = project / 'tests/expectations.json'
         expectations = json.loads(expectations_path.read_text(encoding='utf-8'))
         for profile in expectations['runtime']['profiles']:
@@ -415,6 +481,7 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertTrue(games[0]['publish'])
         self.assertIn('検証済みの公開ゲームを作品一覧から選べます',
                       files['Home.md'].decode('utf-8'))
+
         item['wiki']['play_url'] = (
             'https://zabaglione.github.io/jr200-web-emulator/?game=side-catch')
         self.fixture.write_catalog()
@@ -558,6 +625,11 @@ class SevenGamePreviewTests(unittest.TestCase):
         self.assertTrue(set(BASE_PAGES) <= set(files))
         home = files['Home.md'].decode('utf-8')
         all_games = files['All-Games.md'].decode('utf-8')
+        gallery_rows = re.findall(r'<tr>\n(.*?)\n</tr>', all_games, re.DOTALL)
+        self.assertTrue(all(row.count('<td') == 3 for row in gallery_rows))
+        self.assertEqual([slug for row in gallery_rows
+                          for slug in re.findall(r'<a href="Game-([^"]+)"', row)],
+                         [item['id'] for item in games])
         for game, genre in {**DEVELOPMENT, 'side-catch': 'Genre-Action'}.items():
             page = files[f'Game-{game}.md'].decode('utf-8')
             self.assertIn(f'](Game-{game})', home)

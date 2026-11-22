@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。水面、橋板、主人公、門",
-      "sha256": "dc08f1166fb3f2241010dfa13e859bf86ce46b2bfacb0981315d0e94b32e2dab",
-      "framebuffer_sha256": "97dcc898b91522b1638f123f12e661c8e5e527792a53e6e1819a014bdf68a1f7"
+      "sha256": "819b9d8640805ac43ac3fc0769d57bd9b73f605b344512e58ad8ea660089454c",
+      "framebuffer_sha256": "f8e6eea787d59ea81e123e21e0a5a02e232ee6a13ca29c54fd0e20d84c6e5586"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-changes",
       "role": "play",
       "caption": "3本の行を反転した後、5行目を選んだ場面",
-      "sha256": "bc4a5845d0131d4abe66582b3e51fdda42f179f757c71369d16175a45cac0f6c",
-      "framebuffer_sha256": "e9b4f0512306e4b8c12060ebbb18daffdf70957763bd9402eedaa640949a4acc"
+      "sha256": "8c5cc4f3a10f73ee7c0636ba098bd8d4b9d7a5984a364904f0ca3642760a7ab4",
+      "framebuffer_sha256": "f37aed9f3d7fc8cb3651a0ef6b73581f7a22869eb8c175c85b38050492127365"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "道がつながり、主人公が門に着いた1面目のクリア",
-      "sha256": "c839d781bc2bf1ecd6018454123b84c6e29192775578d1fdd0dcedd4fb8b35f8",
-      "framebuffer_sha256": "ede55dc83c7daf3f378bdeb6e6d17ec8005ab2ba9ad1eb4086afeca29a1079d8"
+      "sha256": "ae29b426e403eb212b61268b5bae9d4e8b77fe7d78ba7321605683a6c7b834dd",
+      "framebuffer_sha256": "f4476bc5fe57b1aace09c2f4acac45b2582f4c4c590a40146d31d682d63c510e"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 5.5,
-    "frames": 166,
-    "frames_sha256": "40f00c96e3ec2c7363c27c79c4238f80a8ace59bf1ce59e57b1ee5bc0f3d47a7",
-    "pcm_sha256": "3d1848cffaa961bb9d76703f1b7715fa5db5d1b79bd9057ac29af0105faf829b",
-    "sha256": "5c4b46ebe0c48c9f21fcd43266bb9b0486c81e10d582c286fb19d015ba03978c",
+    "seconds": 5.6,
+    "frames": 169,
+    "frames_sha256": "37cf977ee639680e44d85218ef59bebce388c1dc8dd005494f3f2eed9a5c7b07",
+    "pcm_sha256": "dc913d39e7e42c01dad4d84e46c0a638a52ff9d165c8df1e2d8cba1f7d8d2902",
+    "sha256": "0c5d82e8961bd2a45ed1af85192baa9e184950f66da228ca56fc05187a3c5d6d",
     "caption": "1面目で4本の行・列を反転し、主人公が門まで歩くまで"
   }
 }

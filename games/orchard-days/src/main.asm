@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -67,6 +69,10 @@ OD_TILE_BERRY:      .equ    0x8c
 OD_TILE_TREE:       .equ    0x90
 OD_TILE_DROP:       .equ    0x94
 OD_TILE_APPLE:      .equ    0x98
+OD_CHAR_BERRIES:    .equ    0x9c
+OD_CHAR_APPLE:      .equ    0x9d
+OD_CHAR_WAIT:       .equ    0x9e
+OD_CHAR_WELL:       .equ    0x9f
 OD_ATTR_SOIL:       .equ    0x42        ; red furrows
 OD_ATTR_GREEN:      .equ    0x44
 OD_ATTR_BERRY:      .equ    0x63        ; magenta berries on green
@@ -88,7 +94,7 @@ start:
         JSR     jr_font_install
         LDX     od_patterns
         LDAA    OD_TILE_SOIL
-        LDAB    28
+        LDAB    32
         JSR     jr_pcg_load
         JMP     jr_port_run
 
@@ -461,6 +467,8 @@ game_draw:
         JSR     jr_gfx_fill
         LDX     od_hud
         JSR     jr_gfx_lines
+        LDX     od_play_icons
+        JSR     jr_guide_draw
         LDAA    OD_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    28
@@ -514,19 +522,19 @@ od_draw_tile:
         JSR     jr_gfx_at
         LDAA    [OD_DCODE]
         JSR     jr_gfx_tile
-        ; A (apple) or B (berry) and the growths left
+        ; Crop silhouette and remaining growth steps
         LDAA    [OD_DI]
         LDX     OD_B
         JSR     jr_add_x_a
         LDAA    [X]
         BEQ     od_draw_plot_next
         STAA    [OD_DCODE]
-        LDAA    0x03
-        LDAB    0x42
+        LDAA    0x43
+        LDAB    OD_CHAR_BERRIES
         TST     [OD_DCROP]
         BEQ     od_draw_kind
-        LDAA    0x02
-        LDAB    0x41
+        LDAA    0x42
+        LDAB    OD_CHAR_APPLE
 od_draw_kind:
         STAA    [JR_RT_COLOR]
         STAB    [OD_DATTR]
@@ -564,7 +572,7 @@ od_draw_tool_cursor:
         ASLA
         ASLA
         ASLA
-        LDAB    18
+        LDAB    17
 od_draw_cursor:
         JSR     jr_gfx_at
         LDAA    0x3e
@@ -576,7 +584,10 @@ od_draw_cursor:
         INCA
         LDAB    18
         JSR     jr_gfx_at
-        LDAA    0x5e
+        LDAA    0xb6
+        STAA    [JR_RT_COLOR]
+        LDAA    0x36
+        JSR     jr_gfx_putc
         JSR     jr_gfx_putc
         ; seeds, water, fruit and the next rain
         LDAA    OD_ATTR_PICK
@@ -694,6 +705,11 @@ od_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     od_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -729,6 +745,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    OD_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     od_help_diagram
+        JSR     jr_guide_draw
         LDX     od_help_lines
         JMP     jr_gfx_lines
 
@@ -749,21 +767,25 @@ od_title_tiles:
         .db     22, OD_ATTR_DROP, OD_TILE_DROP, 3
         .db     0xff
 
+; The bottom row shows crops, a day passing, and the well.
+od_play_icons:
+        .db     21, 0x80 + 4, OD_ATTR_GREEN, 1, OD_TILE_SPROUT
+        .db     21, 0x80 + 7, OD_ATTR_DROP, 1, OD_TILE_DROP
+        .db     19, 10, 0x43, 1, OD_CHAR_BERRIES
+        .db     1, 0x80 + 16, OD_ATTR_BERRY, 1, OD_TILE_BERRY
+        .db     9, 0x80 + 16, OD_ATTR_APPLE, 1, OD_TILE_APPLE
+        .db     17, 17, 0x47, 1, OD_CHAR_WAIT
+        .db     25, 17, 0x45, 1, OD_CHAR_WELL
+        .db     27, 17, 0x05, 2, 0x2b, 0x33
+        .db     0xff
+
 od_hud:
         .db     1, 0, OD_ATTR_TITLE
         .dw     od_txt_name
         .db     21, 0, OD_ATTR_LABEL
         .dw     od_txt_season
-        .db     19, 3, OD_ATTR_LABEL
-        .dw     od_txt_seeds
-        .db     19, 6, OD_ATTR_LABEL
-        .dw     od_txt_water
-        .db     19, 9, OD_ATTR_LABEL
-        .dw     od_txt_fruit
         .db     19, 12, OD_ATTR_LABEL
         .dw     od_txt_rain
-        .db     1, 17, OD_ATTR_TEXT
-        .dw     od_txt_tools
         .db     1, 20, OD_ATTR_LABEL
         .dw     od_txt_day
         .db     0xff
@@ -780,44 +802,71 @@ od_title_lines:
         .dw     od_txt_credit
         .db     0xff
 od_help_lines:
-        .db     10, 2, OD_ATTR_TITLE
+        .db     10, 1, OD_ATTR_TITLE
         .dw     od_txt_name
-        .db     1, 4, OD_ATTR_TEXT
-        .dw     od_help_1
-        .db     1, 6, OD_ATTR_TEXT
-        .dw     od_help_2
-        .db     1, 8, OD_ATTR_TEXT
-        .dw     od_help_3
-        .db     1, 10, OD_ATTR_TEXT
-        .dw     od_help_4
-        .db     1, 12, OD_ATTR_TEXT
-        .dw     od_help_5
-        .db     1, 14, OD_ATTR_TEXT
-        .dw     od_help_6
-        .db     1, 16, OD_ATTR_TEXT
-        .dw     od_help_7
-        .db     1, 18, OD_ATTR_TEXT
-        .dw     od_help_8
-        .db     1, 20, OD_ATTR_TEXT
-        .dw     od_help_9
-        .db     1, 22, OD_ATTR_LABEL
-        .dw     od_help_back
+        .db     2, 4, OD_ATTR_LABEL
+        .dw     od_help_label_1
+        .db     10, 4, OD_ATTR_LABEL
+        .dw     od_help_label_2
+        .db     24, 4, OD_ATTR_LABEL
+        .dw     od_help_label_3
+        .db     2, 13, OD_ATTR_TEXT
+        .dw     od_help_label_4
+        .db     2, 15, OD_ATTR_TEXT
+        .dw     od_help_label_5
+        .db     2, 17, OD_ATTR_TEXT
+        .dw     od_help_label_6
+        .db     2, 19, OD_ATTR_TEXT
+        .dw     od_help_label_7
+        .db     2, 21, OD_ATTR_TEXT
+        .dw     od_help_label_8
+        .db     2, 23, OD_ATTR_LABEL
+        .dw     od_help_label_9
+        .db     0xff
+od_help_label_1:
+        .db     "PLANT", 0
+od_help_label_2:
+        .db     "WATER", 0
+od_help_label_3:
+        .db     "PICK", 0
+od_help_label_4:
+        .db     "BERRY 2 GROWTHS > 3 FRUIT", 0
+od_help_label_5:
+        .db     "APPLE 4 GROWTHS > 7 FRUIT", 0
+od_help_label_6:
+        .db     "WASD SELECT  RETURN USE TOOL", 0
+od_help_label_7:
+        .db     "WELL +3 WATER  /  28 DAYS", 0
+od_help_label_8:
+        .db     "SPACE RETRY  CTRL+C BASIC", 0
+od_help_label_9:
+        .db     "ANY KEY TO TITLE", 0
+
+od_help_diagram:
+; A soil plot becomes a plant and then two distinct crops.
+        .db     2, 0x80 + 6, OD_ATTR_SOIL, 1, OD_TILE_SOIL
+        .db     10, 0x80 + 6, OD_ATTR_GREEN, 1, OD_TILE_SPROUT
+        .db     12, 0x80 + 6, OD_ATTR_DROP, 1, OD_TILE_DROP
+        .db     24, 0x80 + 6, OD_ATTR_BERRY, 1, OD_TILE_BERRY
+        .db     27, 0x80 + 6, OD_ATTR_APPLE, 1, OD_TILE_APPLE
+        .db     5, 7, 0xad, 3, 0x2d, 0x2d, 0x2d
+        .db     8, 7, 0x85, 1, 0x05
+        .db     7, 6, 0x85, 1, 0x00
+        .db     7, 8, 0x80, 1, 0x05
+        .db     16, 7, 0xad, 5, 0x2d, 0x2d, 0x2d, 0x2d, 0x2d
+        .db     21, 7, 0x85, 1, 0x05
+        .db     20, 6, 0x85, 1, 0x00
+        .db     20, 8, 0x80, 1, 0x05
+        .db     24, 9, OD_ATTR_PICK, 1, 0x33
+        .db     27, 9, OD_ATTR_PICK, 1, 0x37
         .db     0xff
 
 od_txt_name:
         .db     "ORCHARD DAYS", 0
 od_txt_season:
         .db     "SEASON", 0
-od_txt_seeds:
-        .db     "SEEDS", 0
-od_txt_water:
-        .db     "WATER", 0
-od_txt_fruit:
-        .db     "FRUIT", 0
 od_txt_rain:
         .db     "RAIN IN", 0
-od_txt_tools:
-        .db     "BERRY   APPLE   WAIT    WELL", 0
 od_txt_day:
         .db     "DAY   /28", 0
 od_txt_harvest:
@@ -836,26 +885,6 @@ od_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 od_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-od_help_1:
-        .db     "WASD : SELECT PLOT OR TOOL ROW", 0
-od_help_2:
-        .db     "RETURN : PLANT / WATER / PICK", 0
-od_help_3:
-        .db     "BERRY: TWO GROWTHS, THREE FRUIT", 0
-od_help_4:
-        .db     "APPLE: 4 GROWTHS, 7 FRUIT", 0
-od_help_5:
-        .db     "WELL: SPEND A DAY FOR +3 WATER", 0
-od_help_6:
-        .db     "RAIN GROWS ALL AND FILLS WATER.", 0
-od_help_7:
-        .db     "MEET THE QUOTA WITHIN 28 DAYS.", 0
-od_help_8:
-        .db     "A/B: CROP / NUMBER: GROWTH LEFT", 0
-od_help_9:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-od_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -908,7 +937,7 @@ od_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -916,5 +945,11 @@ od_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

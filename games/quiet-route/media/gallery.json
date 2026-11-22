@@ -7,8 +7,8 @@
       "profile": "local-rom-title",
       "role": "title",
       "caption": "所有ROM/FONTで通常MLOAD/USR後のタイトル画面（画面全体・無加工）",
-      "sha256": "f5dc46aba5f2e4e54526208bcda473ef5607c5e274861eb8293e07fa5d83261a",
-      "framebuffer_sha256": "fb018f3a5e80dbde1ce87473e6f845720644b3951917f54e82fa58d9ae5da6f8"
+      "sha256": "09defe1c2195c2d01a62bb12633770e2b4e987199b9d07d006da347c2e35f8dc",
+      "framebuffer_sha256": "78e7eb695f7c409ab0adcadde0a738610c5b8939c2d1e9037392cc0415b1ce8b"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "local-rom-play",
       "role": "play",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、1経路目の開始画面（画面全体・無加工）",
-      "sha256": "d4509753acead63672850e1880aa48c626564a1b5a55a4c6667f5c86ef0fa065",
-      "framebuffer_sha256": "41b97bdb008232f7b285a38a2e47bf9db6613ba31e7ba9541884ce0de73e1223"
+      "sha256": "fb3470089421b32ec383d53c07f944831c44d1df412cf8c3c111edfaec2963d0",
+      "framebuffer_sha256": "97967c048e8c29033d464647fd3070811a78095ff8313f4d76c52ade056317b8"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "local-rom-goal",
       "role": "goal",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、1経路目の機密取得と脱出（画面全体・無加工）",
-      "sha256": "06cf463eae70324e5d95bfea33af1c69885fd31c6cee506bfd162a94240a5d84",
-      "framebuffer_sha256": "808e75e68a4750a1bf551ee1930d56255527183326bdcfbdbf175f08a022e356"
+      "sha256": "c3c9f55f3973c285c08125b6850f680312ad34767f31f5ae8c83b64599346eee",
+      "framebuffer_sha256": "9b10f1b7cc1a407ccafd128a26aaf87bcc95fd1aba6fb147a4373d6eff927787"
     }
   ],
   "video": {
@@ -35,18 +35,18 @@
     "fps": 30,
     "speed": 4.0,
     "seconds": 15.2,
-    "frames": 1827,
-    "frames_sha256": "683383108fc17bdfdbf94ffa09e6ca8b41e4adb287112091703b84162e704057",
-    "pcm_sha256": "b4254e6a267c138c00d93cb8c43deb72ed87799d25327604bec4cc8564fb2f05",
-    "sha256": "d0fed30e7afa59e9c1841b871ef783bb9b38970d3d44b50118b5f3f8e249fd51",
+    "frames": 1830,
+    "frames_sha256": "d29d211c5b567b58144849953dfd6b8b93061c0aad0cb3082fb9facfd114e5b4",
+    "pcm_sha256": "bcbcf1b6897f9bacb7668e2e45f241c0f0442b64cc8a519e941833503ef35d32",
+    "sha256": "e4ac5e1b3169f8878c8405bcd8598afe433c25641da2f005b8c6d3798ea2a9d3",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、機密取得と1経路目の脱出までを音付きで記録（画面全体・無加工）",
     "mode": "rom-cassette",
-    "artifact_sha256": "f8f89697a5ed0e255c4ff3f392b216853ec82d2306deb48287f90446229bf574",
+    "artifact_sha256": "5e5da9c2af7fa34d91360d700992f69b1fa60f2c6b72959e0d44be1883c794a4",
     "start_cycle": 83500000
   },
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "f8f89697a5ed0e255c4ff3f392b216853ec82d2306deb48287f90446229bf574",
+    "artifact_sha256": "5e5da9c2af7fa34d91360d700992f69b1fa60f2c6b72959e0d44be1883c794a4",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }

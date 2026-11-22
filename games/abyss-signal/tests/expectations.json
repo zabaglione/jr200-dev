@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/abyss-signal/tests/model.py, whose advance() is the upstream model.py (jr100dev games/abyss_signal 1.6.1) and whose panel, photo and questions follow upstream src/main.asm, not from the emulator. synthetic-survey plays the upstream replay.py route (sonar at each leg, the shortest route to each site, record from the panel, then home): 117 actions. Key gaps leave 650000 cycles per action and 1650000 for a sonar sweep (a move or a drift also draws its half-cell frame). synthetic-title, synthetic-survey and synthetic-lost require a PCM peak of 21000. The local-rom profiles load the CJR with MLOAD from the owned ROM, type A=USR($1000) at cycle 110000000 and replay the synthetic keys 113700000 cycles later; they need owned ROM/FONT.",
   "runtime": {
+    "startup_delay_cycles": 134108,
     "default_profile": "synthetic-survey",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "00000001010f3f7f00000080c0f0fcfe7e3f0f00000000007efcf000000000000f3970f0e0c0e0f1f0fc7f3f3f7ffffffefcf8fc7e3f0f003f1f0f1f3efcf00000010204091224490080402090482492241209040201000024489020408000000020110b073f6d9f000488d0e0fcb6fe6d3f070b11200000b6fce0d0880400008000000008000000000080000000080080000000080000000000800000000800000030180c060c18000030180c060c1830000000000000003000000000000000ffffffffffffffff003c7effff7e3c001818181818181818000000ffff0000002810281028102810"
           },
-          "framebuffer_sha256": "03879e3eb9a487d1b50ca47db495e544ade0d00cbc36b52d0e3a14f006379295",
+          "framebuffer_sha256": "8aba2cabe4e5607ddfc80d24b29015590b493aaeb58ee7f55d3ca119d5f6ccb1",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "84200d183a21654ac000e14fcccd2ff3e3b33f38a6d0016819eb5e13bf85ea43",
+          "framebuffer_sha256": "7b41c5ae08c402bd77ac59e26c828208734c841e90f52f7efcb25fc2d3f54993",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "3a442a8861f563646ccf1d77043f92877dc8250a191b3a191e09f8f7a2362550",
+          "framebuffer_sha256": "a2eae7702592a1b38bc1e069ae106e8a6cb334bc17484a58e8f7da61739d6f55",
           "pcm": null,
           "cassette": null
         }
@@ -454,7 +455,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "b6296eb37fa88c3a726465264742b45de55aa1a3c777aa6c8e756953bca02452",
+          "framebuffer_sha256": "9648db22fa6bac11089851b8ea6e536f44212cb7b71786eb88752cb508fdfc50",
           "pcm": null,
           "cassette": null
         }
@@ -736,7 +737,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "1a73cd6c565fd888229db62afdc0d62239d3673161411a709d09c0aa52ce6b9e",
+          "framebuffer_sha256": "e2da28b1fd082f568fedddd6cdba44c0a80aa6d65a5f11786361b878767b1d3d",
           "pcm": null,
           "cassette": null
         }
@@ -1210,7 +1211,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "8a87ec6c65e43b95a00ebb7fb223cf94014aefce601c71ac2b072a71dfdd2994",
+          "framebuffer_sha256": "964090c73071826e9f561959152cfaa8e7785118dbec0cf8b0ec6f09a2b2fd20",
           "pcm": null,
           "cassette": null
         }
@@ -2844,7 +2845,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "98f08ddff34d2a4ab625f76cc47743b65aefb164c6e3b6d7f988542d6ed0c0af",
+          "framebuffer_sha256": "50cd78353f7f65b7415911ee1eae664abf125c3c939ea3fe3a8b25a5359870af",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -2983,7 +2984,7 @@
             "mode": "03",
             "level": "00"
           },
-          "framebuffer_sha256": "24350d67898383ceb28dc37aaeb3e11fb7b544f598a4c1987c46a080bd544809",
+          "framebuffer_sha256": "504748a7634316ea071f5db962db9c88365c337e6d0a5ab90f7963f89d64f4fa",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -3314,7 +3315,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "8aba2cabe4e5607ddfc80d24b29015590b493aaeb58ee7f55d3ca119d5f6ccb1",
           "pcm": null,
           "cassette": {
             "state": 6,

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/metro-weave/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. Upstream entropy() is the song position when a shift starts; replays that start a shift read that origin (state byte 1) and the model predicts everything else from it; the self test and the demo use origin 0. synthetic-self-test runs every fixture of tests/selftest.py and plays all three shifts with their input scripts; synthetic-demo-clear plays shift 1 with the same script at normal speed; synthetic-no-input-loss never touches the points and loses three hearts. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 131107,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -29,9 +30,9 @@
           "pc": null,
           "memory": {
             "mode": "00",
-            "pcg": "003f405b5b407f5f00fc026d6d02fefa2476000000000000246e000000000000ff80818284878484ff01814121e121218080808080ff20200101010101ff0404ff80878487848487ff01c121c12121c18080808080ff20200101010101ff0404ff80838484848483ff01c121010121c18080808080ff20200101010101ff04040000aaff00ffaa0080c06030180c060380c0603f00ff0000003c427e423c0000003c524a463c0000001018fe1810000010101010fe7c3810003c7e7e3c000000003c42423c00000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
+            "pcg": "003f405b5b407f5f00fc026d6d02fefa2476000000000000246e000000000000ff81828484828180ff814121214181018080808080ff20200101010101ff0404ff818284888f8080ff01814121e101018080808080ff20200101010101ff0404ff87848484848780ffe121212121e1018080808080ff20200101010101ff04040000aaff00ffaa0080c06030180c060380c0603f00ff0000003c427e423c0000003c524a463c0000001018fe1810000010101010fe7c3810003c7e7e3c000000003c42423c00000000182442422418000010284482fe0000007e424242427e007e4224181824427e00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "0a92c7c3281a7ea27c5ea7eae51b865cf5bfd816911d712b255ca06e9166a996",
+          "framebuffer_sha256": "b80b900bb8bd145712cddd6e6094e3dccc955f2a4b56e8d308b381070eb879bd",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "d1071508461bfe5b2ea934dd0b2bfd5ad50edd19759f6f04ad66965f8f6a4a61",
+          "framebuffer_sha256": "63c5b754aa11d43b730e0cdff4903cc2b01ebb973bab6583f760c84dd84f46c3",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "c4baf05bb8f854da54a282dca4c77b3aac68ab636f1919165e80b50bcd968567",
+          "framebuffer_sha256": "2d444ac8ad1af8544651bfbbbe70c644b9fcd977e0d5f41fa539baf9e7aa4728",
           "pcm": null,
           "cassette": null
         }
@@ -242,7 +243,7 @@
             "level": "00",
             "status": "57524f4e4720504c4154464f524d"
           },
-          "framebuffer_sha256": "1882a1aa66eda3dcedf9effdf539c22e1bb5cf2c6c7caf1f875755e6fc9ccdad",
+          "framebuffer_sha256": "cef1651c02da1063931513f6abad228bf08f2738cc33c97b584873d833f6a115",
           "pcm": null,
           "cassette": null
         }
@@ -392,7 +393,7 @@
       {
         "profile": "synthetic-demo-play",
         "mode": "synthetic-injection",
-        "max_cycles": 16500000,
+        "max_cycles": 16864500,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -414,7 +415,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "cfa553fcd71426381a451c2c3eb2b0ea8e09094b67bbe320eb23af7151105c9a",
+          "framebuffer_sha256": "da0a315c37646a55ee54fa540332bb578e1624e215a8f9380ae4847a968d9233",
           "pcm": null,
           "cassette": null
         }
@@ -464,7 +465,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "251ba8733275a595c53b745731d7da791d89ef89d03018b0cc1f77a498080ef9",
+          "framebuffer_sha256": "c3ebac829f71a76037ea5abfa6ce921e1d4dc62c29bfb9c02d83a3ea647ef177",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -613,7 +614,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "0a92c7c3281a7ea27c5ea7eae51b865cf5bfd816911d712b255ca06e9166a996",
+          "framebuffer_sha256": "b80b900bb8bd145712cddd6e6094e3dccc955f2a4b56e8d308b381070eb879bd",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -657,7 +658,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "26dd8d8267b7be9d3f262af0aa0bdbddebca473caa3e860362e61529b80d6915",
+          "framebuffer_sha256": "af45f4050c8f33debba86062cb17ce6b092cbeda19798a6818beb5c305e37b23",
           "pcm": null,
           "cassette": {
             "state": 6,

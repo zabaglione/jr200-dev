@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/mirror-relic/tests/model.py (upstream rules 3.0.0), not from the emulator. Each hall is played with the breadth-first shortest solution from tests/model.py; synthetic-all-halls clears all six. X is the counterclockwise turn (sdk/keys_ext.inc, action 7). synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Walks leave 700000 cycles and turns 1500000 for the flight and relic sparkle.",
   "runtime": {
+    "startup_delay_cycles": 133270,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000001000000000000000000000000000000000000000000000000ff80bfa0afa8a8a8ff01fd05f3131313a8a8afa0bf80ff001313f303fe01ff00"
           },
-          "framebuffer_sha256": "ab5ce9fbefe20f54236f3c421ab6f5ee1f7ddf56c126a3a977ac6477121e614d",
+          "framebuffer_sha256": "56e917d1ae60fe8aeb5467cea35609e03b0036d0a075ac6bf668e1619efe979a",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "5e730ddf55bf96494a7d5aeab837254138cd5a58afc15b20f7984d02c7b8e1a8",
+          "framebuffer_sha256": "20ae0ff6b3375b909b8d6c7e9a99f3106d766baf91ee0434b335288dcc1f924b",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "28b1a163647bafd7dd4000e204fc2551b7fc7d4123d2aeab57067df909bbe53a",
+          "framebuffer_sha256": "4f26b78d15bd5e148e8db49afe219f2d1a125935d5ae22db987414c6659dd555",
           "pcm": null,
           "cassette": null
         }
@@ -514,7 +515,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "08ec3f321955f49a3aba8227b80b5ae9282cac885684404a66c7ad0150f087c2",
+          "framebuffer_sha256": "0740e67c27d01acb065da57639f31ed71978a2ea96e2f88d14210f5593cce1f3",
           "pcm": null,
           "cassette": null
         }
@@ -744,7 +745,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "03645ae43e759e1c3e2ee8afefe5fb603bb13607b35f0b93d93db691329b6362",
+          "framebuffer_sha256": "e6aad2bf13e0d8e88dda8cd364c55926e01cfb717093715432ce8597731945fa",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1045,7 +1046,7 @@
             "level": "00",
             "status": "5457454e545920524f544154494f4e53204245464f52452045584954"
           },
-          "framebuffer_sha256": "dacc0e840953ea698c1c4c6173e5a5f6c197d72152cbf5a09e7fa089f7010cbe",
+          "framebuffer_sha256": "daa06456ebe37e9441895bd572df7c9dfde21d2d65ea9f9648da6826285c37e1",
           "pcm": null,
           "cassette": null
         }
@@ -3187,7 +3188,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "ab5ce9fbefe20f54236f3c421ab6f5ee1f7ddf56c126a3a977ac6477121e614d",
+          "framebuffer_sha256": "56e917d1ae60fe8aeb5467cea35609e03b0036d0a075ac6bf668e1619efe979a",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -3231,7 +3232,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "28b1a163647bafd7dd4000e204fc2551b7fc7d4123d2aeab57067df909bbe53a",
+          "framebuffer_sha256": "4f26b78d15bd5e148e8db49afe219f2d1a125935d5ae22db987414c6659dd555",
           "pcm": null,
           "cassette": {
             "state": 6,

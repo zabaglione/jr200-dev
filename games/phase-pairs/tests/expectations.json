@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/phase-pairs/tests/model.py (upstream rules 1.6.1), not from the emulator. Each round replays the pairs in upstream solutions.json; synthetic-all-rounds clears all ten boards from upstream levels.json. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 132965,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "003cffc3c3c3c3c3c3c3c3c3c3ff3c0000000303030303030303030303030000003c3f030303033ffcc0c0c0c0fc3c00003c3f030303033f3f030303033f3c000000c3c3c3c3c3ff3f03030303030000003cfcc0c0c0c0fc3f030303033f3c00003cfcc0c0c0c0fcffc3c3c3c3ff3c00003c3f03030303030303030303030000003cffc3c3c3c3ffffc3c3c3c3ff3c00003cffc3c3c3c3ff3f030303033f3c00"
           },
-          "framebuffer_sha256": "e7664aa3ab32f5a7ec7567fd26feade6576c26ea1789a1e6da5c304defa9c876",
+          "framebuffer_sha256": "6683188b6c0ae2ef5e44f59839eddfe5fa00c7702945007e7fd56e76c70d7cc6",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "a997ac820910a715d699e8735b7916769b46b016799c9a2a23e5482ee76ce7d3",
+          "framebuffer_sha256": "be6833cc1052f9ead9a9836374a90ae028ab73ff90e574be2ddd65f673753bba",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "fa828d08dfda6db40d61fa953c72deea10df86f53c0eb5ad0740dfb78557c2ef",
+          "framebuffer_sha256": "fb7d8663669ea2c61dff451361982c80edf03037b088698ea3f2b6fb1994638c",
           "pcm": null,
           "cassette": null
         }
@@ -320,7 +321,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "5830c5f938098eee15d9514a0f910699716fb7c827ff1fdd3ca9db756cb9cb34",
+          "framebuffer_sha256": "be2ad9064dae0a1f9454add87f74c6dd3411aff6925138b46a5eedff8634f132",
           "pcm": null,
           "cassette": null
         }
@@ -454,7 +455,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "bedae72f3b2810a63058d0bcf1747aa2504502cfea10dbdcc63a71c1828f028b",
+          "framebuffer_sha256": "a21b1fb069366fcb612922e085d33ab5d2e40771067f85b95c69681298091047",
           "pcm": null,
           "cassette": null
         }
@@ -1214,7 +1215,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "7c9574f50aa7749be4748c2f611d41b1a5e8c5b9cce6b7145adc3f763d8d58df",
+          "framebuffer_sha256": "53fcd1a8115d5af91e8a974b8cea54987b1be7aa7fb75a6a6f8b7efc94cd0f6b",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1419,7 +1420,7 @@
             "level": "00",
             "status": "54525920414741494e202d2052455455524e20544f2052455354415254"
           },
-          "framebuffer_sha256": "2f492e004bad32acaab6194e4f191d4f40229867066a0fbe981505d598ff21b2",
+          "framebuffer_sha256": "513aaeb834bb2502a4225453ae5b419e7d773311484669de23609f6683d68354",
           "pcm": null,
           "cassette": null
         }
@@ -6777,7 +6778,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "e7664aa3ab32f5a7ec7567fd26feade6576c26ea1789a1e6da5c304defa9c876",
+          "framebuffer_sha256": "6683188b6c0ae2ef5e44f59839eddfe5fa00c7702945007e7fd56e76c70d7cc6",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -6821,7 +6822,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "fa828d08dfda6db40d61fa953c72deea10df86f53c0eb5ad0740dfb78557c2ef",
+          "framebuffer_sha256": "fb7d8663669ea2c61dff451361982c80edf03037b088698ea3f2b6fb1994638c",
           "pcm": null,
           "cassette": {
             "state": 6,

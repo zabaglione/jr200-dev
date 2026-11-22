@@ -10,9 +10,11 @@
         .filename.jr "CHRONO-BREACH"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x6000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x46c0
 JR_AUDIO:           .equ    0x46c0
@@ -1032,6 +1034,11 @@ cb_draw_panel_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     cb_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -1067,6 +1074,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    CB_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     cb_help_diagram
+        JSR     jr_guide_draw
         LDX     cb_help_lines
         JMP     jr_gfx_lines
 
@@ -1142,30 +1151,39 @@ cb_title_lines:
 cb_help_lines:
         .db     9, 1, CB_ATTR_TITLE
         .dw     cb_txt_name
-        .db     1, 3, CB_ATTR_TEXT
-        .dw     cb_help_1
-        .db     1, 4, CB_ATTR_TEXT
-        .dw     cb_help_2
-        .db     1, 6, CB_ATTR_TEXT
-        .dw     cb_help_3
-        .db     1, 7, CB_ATTR_TEXT
-        .dw     cb_help_4
-        .db     1, 9, CB_ATTR_TEXT
-        .dw     cb_help_5
-        .db     1, 10, CB_ATTR_TEXT
-        .dw     cb_help_6
-        .db     1, 12, CB_ATTR_TEXT
-        .dw     cb_help_7
-        .db     1, 13, CB_ATTR_TEXT
-        .dw     cb_help_8
-        .db     1, 15, CB_ATTR_TEXT
-        .dw     cb_help_9
-        .db     1, 16, CB_ATTR_TEXT
-        .dw     cb_help_10
-        .db     1, 18, CB_ATTR_TEXT
-        .dw     cb_help_11
-        .db     8, 21, CB_ATTR_LABEL
+        .db     4, 13, CB_ATTR_TEXT
+        .dw     cb_help_move
+        .db     4, 14, CB_ATTR_TEXT
+        .dw     cb_help_shot
+        .db     4, 15, CB_ATTR_TEXT
+        .dw     cb_help_strike
+        .db     4, 17, CB_ATTR_TEXT
+        .dw     cb_help_turn
+        .db     4, 18, CB_ATTR_TEXT
+        .dw     cb_help_goal
+        .db     4, 20, CB_ATTR_TEXT
+        .dw     cb_help_menu
+        .db     9, 22, CB_ATTR_LABEL
         .dw     cb_help_back
+        .db     0xff
+
+cb_help_diagram:
+; A bolt crosses a guard lane; clearing guards opens the exit.
+        .db     2, 0x80 + 5, CB_ATTR_WALL, 4, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL
+        .db     2, 0x80 + 9, CB_ATTR_WALL, 4, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL
+        .db     3, 0x80 + 7, CB_ATTR_AGENT, 1, CB_TILE_AGENT
+        .db     5, 0x80 + 7, CB_ATTR_BOLT, 1, CB_TILE_BOLT
+        .db     7, 7, CB_ATTR_RAY, 2, CB_CHAR_RAY, CB_CHAR_RAY
+        .db     10, 0x80 + 7, CB_ATTR_GUARD, 1, CB_TILE_GUARD + 8
+        .db     12, 0x80 + 7, CB_ATTR_SHUT, 1, CB_TILE_SHUT
+        .db     14, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     19, 7, 0x86, 1, 0x06
+        .db     18, 6, 0x86, 1, 0x00
+        .db     18, 8, 0x80, 1, 0x06
+        .db     22, 0x80 + 5, CB_ATTR_WALL, 4, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL
+        .db     22, 0x80 + 9, CB_ATTR_WALL, 4, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL, CB_TILE_WALL
+        .db     23, 0x80 + 7, CB_ATTR_AGENT, 1, CB_TILE_AGENT
+        .db     28, 0x80 + 7, CB_ATTR_OPEN, 1, CB_TILE_OPEN
         .db     0xff
 
 cb_txt_name:
@@ -1216,28 +1234,18 @@ cb_txt_howto:
         .db     "OTHER KEY : HOW TO PLAY", 0
 cb_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-cb_help_1:
-        .db     "W/A/S/D: ONE CELL. EACH MOVE,", 0
-cb_help_2:
-        .db     "SHOT OR WAIT MOVES THE BOLTS.", 0
-cb_help_3:
-        .db     "GUARDS FIRE EVERY THIRD ACT.", 0
-cb_help_4:
-        .db     "RED MARKS SHOW THEIR LINES.", 0
-cb_help_5:
-        .db     "STEP ONTO A GUARD TO STRIKE.", 0
-cb_help_6:
-        .db     "F: SHOOT 4 CELLS. X: WAIT.", 0
-cb_help_7:
-        .db     "RETURN/SPACE: MENU, A/D AIM", 0
-cb_help_8:
-        .db     "(FIRE WAIT RESET TITLE BACK).", 0
-cb_help_9:
-        .db     "BOLTS HIT GUARDS TOO. CLEAR", 0
-cb_help_10:
-        .db     "ALL GUARDS, THEN THE EXIT.", 0
-cb_help_11:
-        .db     "WITHIN TARGET ACTS: ACE.", 0
+cb_help_move:
+        .db     "WASD MOVE   A/D AIM", 0
+cb_help_shot:
+        .db     "F: 4-CELL SHOT   X: WAIT", 0
+cb_help_strike:
+        .db     "STEP INTO FOE: STRIKE", 0
+cb_help_turn:
+        .db     "MOVE/SHOT/WAIT = 1 TURN", 0
+cb_help_goal:
+        .db     "CLEAR GUARDS / EXIT OPENS", 0
+cb_help_menu:
+        .db     "RETURN/SPACE: MENU", 0
 cb_help_back:
         .db     "ANY KEY : TITLE", 0
 
@@ -1300,7 +1308,8 @@ cb_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1308,5 +1317,10 @@ cb_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

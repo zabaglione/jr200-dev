@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "549d5c3a948e1679496088e44aff3b391e7f99b5c0c1c69511b2a08afd92caae",
-      "framebuffer_sha256": "03b750e465d258a2857e1495ddc5b007961693a3f44950c9e5b14ba1f4ee67de"
+      "sha256": "b8252551f058b258ff715575d805716a136674092e385b7e3f2dd09f3a7c8902",
+      "framebuffer_sha256": "7fb7892d5389773e55093548311bd0c93bdb374108cc38eaa5d3a2101910b7ba"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで降下中の着陸船",
-      "sha256": "2841d2aec3104bb33640e01498c37b3c2f48c19c5c4625b8a272e6b5a4a4b984",
-      "framebuffer_sha256": "cf6aef1e3f9a897f0f91d4afd9c8562aa503340c9b034935ba556c5e856f9eca"
+      "sha256": "c311b062675eee08a75a5420f9a937591db0da72bd04fc3d4c2069b059efbf62",
+      "framebuffer_sha256": "8d149fd5b89bfbd68b466fd12ff455cbec1bc0c279284dae860a33247107ddd6"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "広い台に着陸して1つ目の着陸地をクリア",
-      "sha256": "4fef3bd3e6ffa8a546c4ef92de4c185ee1f882ea082c746196e988bdb80cd8e7",
-      "framebuffer_sha256": "408ba55b1979fce5cf1fd798c7bbcb9758adfb6c3da7ccaca246a88746795abb"
+      "sha256": "c45a806379a3f159ab5c2394bcc726c467d0491363e2c930dab52d483139d66f",
+      "framebuffer_sha256": "42a0ede7e4d364cff54e5989b85b916560a34732d69584151876ca08c266f546"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 5.6,
-    "frames": 169,
-    "frames_sha256": "702fe267544889e94c67fa37ea97ca48704a81736302b628b47f5a91d81cf04a",
-    "pcm_sha256": "cddd47b460001fcb4d4881da496e147d3e5b60676448987fbbddd51379b7db76",
-    "sha256": "9373ae2bfcfc01008e7bb5165dd04732fcfe421b987ddc5c1571216d7226b6a7",
+    "seconds": 5.7,
+    "frames": 172,
+    "frames_sha256": "9cc10fd8d799e9232bdebdc71af0e815194159b561471f98f9b471c8086d3171",
+    "pcm_sha256": "be2fe5ae3b696d3b4dc68ccdfbf371bc125776f47e9f0d1317cd06322b11227f",
+    "sha256": "bc3c75416c42666fb849a03cd7e040095c64da94174cc82834dba9e525e26198",
     "caption": "1つ目の着陸地の自動デモ（広い台に着陸）"
   }
 }

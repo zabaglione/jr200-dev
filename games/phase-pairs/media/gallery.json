@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。3と7、4と6の札",
-      "sha256": "162da5e054c59300384b6f355d81700c4edaf94714632a2ffc08edc02b384d76",
-      "framebuffer_sha256": "e7664aa3ab32f5a7ec7567fd26feade6576c26ea1789a1e6da5c304defa9c876"
+      "sha256": "1328802d5224d194cc2228ad573b4be8a9a8f072d3972a5c1ca05cfb4566e05b",
+      "framebuffer_sha256": "6683188b6c0ae2ef5e44f59839eddfe5fa00c7702945007e7fd56e76c70d7cc6"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-two-pairs",
       "role": "play",
       "caption": "2組を消した後の盤",
-      "sha256": "9779189c67be7df1425e842c099b06f4b1683abba5d4e39ba6335c262338597e",
-      "framebuffer_sha256": "bedae72f3b2810a63058d0bcf1747aa2504502cfea10dbdcc63a71c1828f028b"
+      "sha256": "8168a187f5a7cd927875205cacfd047e950915ade015a0c708b40ced9d42c45d",
+      "framebuffer_sha256": "a21b1fb069366fcb612922e085d33ab5d2e40771067f85b95c69681298091047"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "16個すべてを消した1面目のクリア",
-      "sha256": "d0bedf79d6145b22b8ca4f1fc9449b5e03c6bce57aaa9fb83b41c75950d92a86",
-      "framebuffer_sha256": "7c9574f50aa7749be4748c2f611d41b1a5e8c5b9cce6b7145adc3f763d8d58df"
+      "sha256": "0b04e98c2e7b073987659161d415a0d03a4d2516bb213782ff5b4c9750cb794f",
+      "framebuffer_sha256": "53fcd1a8115d5af91e8a974b8cea54987b1be7aa7fb75a6a6f8b7efc94cd0f6b"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 17.8,
-    "frames": 534,
-    "frames_sha256": "fe23314b403b6f2f94437318ff608bdbce6abbce26c97ca88d1b97f615b76be3",
-    "pcm_sha256": "7030007be192667d8464673932f0145d799af4aab1bb1758d70d34cbcc7befd2",
-    "sha256": "a879709a332555e5546ec9b760441528e906ba13403f45ffa2d9409b1987460f",
+    "seconds": 17.9,
+    "frames": 537,
+    "frames_sha256": "a04e44f7268e50f57043f831a18b42e4884ed1e763dd783e3ef748a004fd085d",
+    "pcm_sha256": "903c1888760cfc7d7313713c89cdf0ced1f43c732294f17e9c149f06dd5a3082",
+    "sha256": "85dd5b82a4ee3086171931fb52072ee2298cf931cb9ce206947fc5a13af84746",
     "caption": "1面目の8組を消してクリアするまで"
   }
 }

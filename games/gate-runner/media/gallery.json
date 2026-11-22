@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "0ab5dccf4586fd1d1dbbbe8f473846057df77c4aa24281e9ed7772da7d7b0ddd",
-      "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e"
+      "sha256": "5062f211b0bbc1074748fd51b272729698c92d835767862ae15f87d4c1765bca",
+      "framebuffer_sha256": "3ade51dd9ee5f086bb1c47731799092643254c450efa6769fbe7cb74dfbdedfb"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで門へ走る場面",
-      "sha256": "bd70831da2affe7ef7781b22581be7583a502d70c3b56173c2784ad9e8476455",
-      "framebuffer_sha256": "630f43651dc9724aa70b5486a66d7611f2b4a442b5107030f4b0351ac5d2c30b"
+      "sha256": "403e2cd1b9e1fa094f4cd82311c39d6d9d89cb5332f5b92e650fe279896d604e",
+      "framebuffer_sha256": "ed840c3976edd31f1d2182226d83b0fd1222a0a7f721925866cf1b8d899f5b9c"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "9つの門を越えて金の走りで1つ目のコースをクリア",
-      "sha256": "613e17af326152860a198889dd0e40075c6c9ee061db04b7a2d76181bba23a87",
-      "framebuffer_sha256": "9b2f7bf375b39f81fb8df621fa60e11f9fd41babba98503be9c27a229dc57629"
+      "sha256": "bc83216cb1d3931045853c7baf6e749912926fa717542d5932727f14db23c016",
+      "framebuffer_sha256": "f9587e4aa9716f159d5d62397835bfc1e8c7eb101ecabb572501d09e35038de9"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 19.1,
-    "frames": 573,
-    "frames_sha256": "7217d5e928b5f93ee63197f371c85cf527875fd46bf05fc63c0a8d1615215a67",
-    "pcm_sha256": "d7a16fd7685db510a0d37f433a686ac41363076cd9c1b8e9656eb8a00f132e48",
-    "sha256": "bf310951316fe665a7da157747967d4dcf73ca695d4d904ce4b1a671c779877e",
+    "seconds": 19.2,
+    "frames": 575,
+    "frames_sha256": "dcdbc84b084365b054b99acccd75c625f768de2ab24f21a77320f79b0a8457cb",
+    "pcm_sha256": "1635ff36796936f145d4a1a3112b2996c0191da5fe211c64fb426a3841d5c947",
+    "sha256": "febe38ed7b6b48d62ea0c2cdc8b0979cd17f97fffd2ed76ce3666f012b198409",
     "caption": "1つ目のコースの自動デモ（9つの門を越え、結晶をすべて取る）"
   }
 }

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/compass-rose/tests/model.py (upstream rules 3.0.0), not from the emulator. Each site is reached by the shortest path around the rocks from path(); synthetic-all-sites digs up all ten relics. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together).",
   "runtime": {
+    "startup_delay_cycles": 127415,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "002000020040000400200002000800800020000040000008000400800022000000001818000000000000000000c0c0001818000000000000000000c0c000000000071c306040c08300e0381e0f0703018783c060380f0000810101030ef800000001030603030f1b0080c060c0c0f0d8"
           },
-          "framebuffer_sha256": "4f92bb2b7f4c0530cc87c068ad521afb5c4314a0cef1647fefb6988dc542845a",
+          "framebuffer_sha256": "cf6cfa1aae1b9c86a71a27577a3528a205d11e12e5568cc06964863d3f85f6a9",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "952d010913710ae18cbc6a34358812d0004a5378cc44634d11f4d6ca0e6a09fd",
+          "framebuffer_sha256": "dc99888e7a8e8d3a322825343a92e026fe1332fd61f8f3c25a4678697b688009",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "5f99b022f57bd7cedb3bf8bc6f70898f2e01fb5a6efc3fe68c39d128061322ab",
+          "framebuffer_sha256": "4bbed6d59c55357ec5ad8539de550076a5a92490e88f3b6a0871e6a066cb2838",
           "pcm": null,
           "cassette": null
         }
@@ -222,7 +223,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "c854e857e66ae4be9f98e6c05279686da4ea74cbb7a63e075c5e175d8885a89b",
+          "framebuffer_sha256": "9f599d6c9d6918587cead2dd4f451016f527c67156550e51a64b9373321a84e3",
           "pcm": null,
           "cassette": null
         }
@@ -490,7 +491,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "43df75aaf5fdd958e69074da81fb29976a68b753718269159694c205115518a8",
+          "framebuffer_sha256": "7676429e27624de8e9bfbe9d8802077da29ed54d36d39a87bd33d3907c54ce2a",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -587,7 +588,7 @@
             "level": "00",
             "status": "4e4f20444947532052454d41494e"
           },
-          "framebuffer_sha256": "70697b364cc0db258e4a684a86355508f6acc06bb7d7f3c6d552f58aa58939cc",
+          "framebuffer_sha256": "654a44de523a23eb9163f4ebc87e7df6ce06fe8daabf94c7821e7c0e3aeee125",
           "pcm": null,
           "cassette": null
         }
@@ -2811,7 +2812,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "4f92bb2b7f4c0530cc87c068ad521afb5c4314a0cef1647fefb6988dc542845a",
+          "framebuffer_sha256": "cf6cfa1aae1b9c86a71a27577a3528a205d11e12e5568cc06964863d3f85f6a9",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -2855,7 +2856,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "5f99b022f57bd7cedb3bf8bc6f70898f2e01fb5a6efc3fe68c39d128061322ab",
+          "framebuffer_sha256": "4bbed6d59c55357ec5ad8539de550076a5a92490e88f3b6a0871e6a066cb2838",
           "pcm": null,
           "cassette": {
             "state": 6,

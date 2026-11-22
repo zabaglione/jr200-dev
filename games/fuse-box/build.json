@@ -23,7 +23,8 @@
   "inputs": {
     "assembly": [
       "src/art.inc",
-      "src/main.asm"
+      "src/main.asm",
+      "src/title_art.inc"
     ],
     "sdk": [
       "sdk/audio.inc",
@@ -31,14 +32,19 @@
       "sdk/font.inc",
       "sdk/font_data.inc",
       "sdk/frame.inc",
-      "sdk/gfx.inc",
+      "sdk/gfx_buffered.inc",
+      "sdk/gfx_runtime.inc",
+      "sdk/guide.inc",
       "sdk/jr200.inc",
       "sdk/keys.inc",
       "sdk/math.inc",
       "sdk/pcg.inc",
-      "sdk/port.inc",
+      "sdk/port_buffered.inc",
+      "sdk/port_input.inc",
+      "sdk/port_runtime.inc",
       "sdk/session.inc",
-      "sdk/sound.inc"
+      "sdk/sound.inc",
+      "sdk/title_art.inc"
     ],
     "assets": []
   },

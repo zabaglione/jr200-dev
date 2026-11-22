@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。フラスコ、盤、毒、注文の星",
-      "sha256": "8d0f5e68edda632408f106083e595ae79a3ff64d59d2eeb7df015cbac5419b64",
-      "framebuffer_sha256": "f88738ba17443dfdb69d04e9b28419ee9dc9ea58e79b5b9d378f0cc820e78b4d"
+      "sha256": "c00e4d5633babcd0fdc6809862de004e53e62396a7d2a9d0162fec0eafec7e10",
+      "framebuffer_sha256": "d6b682b4cf2f87e19753516e553196826feb82f0e389730d29e8eb0b3bc02e19"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-dose",
       "role": "play",
       "caption": "1回注いで薬が動いた場面",
-      "sha256": "57cf20790e965f1ad076824e3c10cf862fcc79d54ec6af7581cd6acf2a4a337b",
-      "framebuffer_sha256": "23bb68069689b5040b515df9c6770c4e2eb28c4772625fe5d7901a12c328ed57"
+      "sha256": "3744aec568cab743ac9e96e9cb155dd8d2a1d30aa182d21e84c2bcccdf34fdab",
+      "framebuffer_sha256": "e26008af4d809f97ca4f175ff1168a440f875b73c3e224ef7f8e9f8f1ddee839"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "薬が注文の星に着いた1注文目のクリア",
-      "sha256": "320daa6d7a27a3bd616a74624de58faa0ee3b4d7d84ef26f3ab919154d4e35fc",
-      "framebuffer_sha256": "fca7579c4b5d8f1621849cba26ab4da40f6457fec02514a21a272452713f04e9"
+      "sha256": "aecef8d787546a122397f27efaa71962615ff6023a8fe1eb80d6660e77e8393e",
+      "framebuffer_sha256": "5a9706c249f6a171744943c4e5d6049ef7428fc3e62799554b5c498abd1e2ce6"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 4.2,
-    "frames": 127,
-    "frames_sha256": "c4036c9298c3fe0685f3bad48085ee5d2a31ae10c82f79058bde88a99ac6e293",
-    "pcm_sha256": "91efcc0af8ac9ed27ccfb9776befd81dafadfa05ce1232f815af9da040dfbb88",
-    "sha256": "7f20091484c632ca6fbcec2eab420a2cd81332ae3b95d45326a2b057e2d51f10",
+    "seconds": 4.3,
+    "frames": 130,
+    "frames_sha256": "fa9e00c2183da3b93f6c77281bc49df879b072926fe9f864f5ff54945ee2455e",
+    "pcm_sha256": "e4500d33483039308ad8cedbd96455a51a753f3b6474f6b588f10b3a81c72acc",
+    "sha256": "b08b15a23909550f4c344af17280521d6f65cd9a4b77b5a3b9803e2d4d9b85c3",
     "caption": "1注文目で2種類の材料を注ぎ、薬を星へ届けるまで"
   }
 }

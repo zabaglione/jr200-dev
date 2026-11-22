@@ -26,109 +26,109 @@ SUPPORTED_LICENSES = {'BSD-3-Clause', 'MIT'}
 # video or changing its bytes requires a new content/provenance review.
 REVIEWED_GALLERY_VIDEOS = {
     'games/side-catch/media/goal.webm':
-        '6737e0b01cf8813519a613f0e48081e16db13199d6893b3e0cf1b5db39327ff7',
+        '1fbc637d7bf2018808cb41902829122632200407598706dc9a4176c3c7e516e3',
     'games/relic-dive/media/goal.webm':
         '5cb2930519bad2efb482fb0e028935129623f8ca47b09dfb729b361c2f577232',
     'games/lumen-cross/media/goal.webm':
-        'e3ce1c7d3104bfab628984bc1110b01dc45168d259dbf6ea78ba0f5b723cbb13',
+        '3d713af507f8678bfd8e63bff602c51e70017aef4148389174cf81fae8c975c4',
     'games/corner-crown/media/goal.webm':
-        '58d69d6d4c4a70489246b313f88190061584d649960ae3abfc8c27d9fb614f32',
+        '1fe267048eedc9f70fe986c728af7dc5fc9f31fc1de9fe3c7bcdbcd6afea46f5',
     'games/circuit-works/media/goal.webm':
-        '74608f22e6a260433f1314af25aad883aca0b64e8573cfd3cdb10f811d609223',
+        '78765893821522b370d6a2e2cced86cb60e1d0d59a4d12968d93079df16d1a4b',
     'games/hearth-zero/media/goal.webm':
-        'a6f46d240e1030d4d182579a9d8a0f775dd94a9ff47ef63b2bf98bc76f66a3c9',
+        'c9e8dc04da44395ce5adaf015396e972787693c4900d91faaaaaabb6437c729a',
     'games/brick-pulse/media/goal.webm':
-        'f288f5c24b133b403b01640c628725a122f8694e19c517b05d29dfa5d6e0ccf8',
+        'b7a5081f9242bb48a35c631bbbd3f941a5acb2c54d4cb85b81eda4e076297fb5',
     'games/abyss-signal/media/goal.webm':
-        '3ab3f8f3580697bec87d39172e495f0dae4d4daab76e9feace168efe4ace9278',
+        '9ecb41740abf5c8b69620a2d92953b767983cb33b219416777410e09819ca695',
     'games/auction-house/media/goal.webm':
-        'c65205053ef36b2707266a48cd8b248fe6c9fcf19c736e1aa4f56c5aea8793ec',
+        'a95ed2a6fbb316d8886d0422c03766d39943d6bb7ba2c5283a66c26e79efcb23',
     'games/cargo-balance/media/goal.webm':
-        'cf04b241ba837d0b146a38ae06952a05711172b19281fcccb90562ac34de089e',
+        'c9792d1f3cdeaefe6dbda14ee681322f4f2015e2f5e7945ea2ae5d36e104c539',
     'games/chain-suit/media/goal.webm':
-        '5da65349065c17f621fb7ffffc7af55bab4020c37dbbf122d148d62b8a5565bd',
+        '7b13320cf2e2c6950549537799f286fb96df817d33092af7182875c7f7e5e4ea',
     'games/chrono-breach/media/goal.webm':
-        '0ec9e527f96d7f7d7483cfe6590b81b651aba33ebf7a086ad827aa3d51efa3d3',
+        'd7bc3985618f5166e10a5cf1b29ba943aca48d9407d012ae5614a0d96c78ddc8',
     'games/compass-rose/media/goal.webm':
-        'ee22fdebb8f24880e1bb65dd2e46caf39ed46e49799635fe8b4f3b356edd551d',
+        '8fec9abb15fd3bba0d2279e57c23da4149947f6692653cedf5d1fb47e30f8913',
     'games/dice-relic/media/goal.webm':
-        '6fb636e9d4a3bf04651f99548783be43eb3bcd8ee11e6234794c5401a1eab491',
+        '3a2e1a46472f9bb5f0cc4b7e39bed9b511f10114d9fad98c5fba7cd8a0eaa868',
     'games/echo-parry/media/goal.webm':
-        'd96d02d3575cd6f8f9e0898c9f62f16e2a34837b93d3a76198968736690ee61d',
+        '54c7cc7f95dae973ecd385d5ed785e32f915ebd18c8bae81416fb11de6dd5e3b',
     'games/five-forge/media/goal.webm':
-        'ed6b6fe1631647156f96fc13d6603a63e7907b0546b7bf1453474055f356fdf8',
+        '9a1b825880c93deab33b111c6c08b2a42327bb4722d9c348419e9c31f16b1bba',
     'games/frost-steps/media/goal.webm':
-        'c6b9185bfdeb65badd35f62fc9f7fbd74c1430a7fa5c6f93554909d92702aadb',
+        'ffcdd753cac448aacd1ee22318cfcac7e7a009b549bd7d60eac0b61439ff5948',
     'games/fuse-box/media/goal.webm':
-        '096ee0b506eed7670b53fe4d093f39fb8d68e3da5a333ede40ddbbbe5976f235',
+        '9f523c5ef890fd1f7b057c48d91f796a107cd077ae25e86672b42021c8d50232',
     'games/gate-runner/media/goal.webm':
-        'bf310951316fe665a7da157747967d4dcf73ca695d4d904ce4b1a671c779877e',
+        'febe38ed7b6b48d62ea0c2cdc8b0979cd17f97fffd2ed76ce3666f012b198409',
     'games/glyph-shift/media/goal.webm':
-        'b5b4b923c12251ca04c6947c07061d6c151945b28e5973db4245db75bbd37634',
+        'b3088e1ed5b978fb897eb3e0874c70063eab95edfa5b1ae188c0528376b23f3e',
     'games/gravity-well/media/goal.webm':
-        '4a3ee535bc30da0db5921f74347cc3eb9dcda6c5fcaf0684a94dfd785bdfd72d',
+        '6b3a39736e39fb3efac9a7246cc343421b3b58b4509c7484f0aeb9c394f9dfdc',
     'games/iron-script/media/goal.webm':
-        '1cada940c8674897d51f1904fce0efad689e1ac421ceb09ac528b6c5e234d46d',
+        '00efded33bf647573043a8c8362b51f25c7c2fc64335e8e64057203784869557',
     'games/loop-ten/media/goal.webm':
-        'baf76ce820c291b7d17e5a320b5e229224073d90189a5c110d709a059745702b',
+        '7ac1cfa8709d8dc410da2fe1898e363b22645b018ac35e79664005c453b17047',
     'games/lunar-touchdown/media/goal.webm':
-        '9373ae2bfcfc01008e7bb5165dd04732fcfe421b987ddc5c1571216d7226b6a7',
+        'bc3c75416c42666fb849a03cd7e040095c64da94174cc82834dba9e525e26198',
     'games/magnet-vault/media/goal.webm':
-        'fff73b5f0e5dd97718152715091a830f0c0cbff4076f769ac6e58b9e3a949310',
+        'b7e1e18ec4a2d1c32933b5e60e7151cdaadc96b0c077a0badcba4c5e47e9c1e3',
     'games/memory-mosaic/media/goal.webm':
-        '05dab94115e01943292a94b365b95eebc4e58d78a3fbf766bc5742e070bfd2ab',
+        'ffb213a5fc0f25d642901f99c3321c4365724b034b4ea76ea859fc2131d720ea',
     'games/metro-weave/media/goal.webm':
-        '6b85161481d2c8e3784b4098bee3bac6caa9e6c2bc4688c147f955b2cf250f87',
+        'd7cc2a1cc68f2d056f1e76b4beda14f9b1fbae40eed84e0aa2da9edcf66d2103',
     'games/mirror-relic/media/goal.webm':
-        '85c62d86924b5a77367cd2907e6fd8702c7a415f70c2d473914b93b5e5fa0e64',
+        '874754fff45bb538f1ea55dbe9b30f0efb1c9275dbe5fa1f1f011cf6f8c37f92',
     'games/night-swarm/media/goal.webm':
-        '0384651508e166b0763e603dc0a3d8d81dc1223bc49cb68789cd0979e14e133c',
+        '6b6813b5cc0573e70076f58792953cfe149aa0a10eba0d31529449fb94e63641',
     'games/number-vault/media/goal.webm':
-        '819b7c30eb669f82a4f992b965676981fc3d6e4f19fc0a30ba22b38e3333bfba',
+        'b56768b0f4dcae294b9b69c84d9b3d6b7d4838fc71ade43e4d995a7b2be3375c',
     'games/orbit-dodge/media/goal.webm':
-        'f91730d42b28aa73d54c6e943307b82e6fd7fe857b1a4d477e6a153026553468',
+        'f98ba2f6acd2f52bcebcbcf9f344ccfd76c7df2a755436c0050b53f99abaff69',
     'games/orbit-draft/media/goal.webm':
-        '88cdb5cd80cf98030e4dfbfd83e6a1f86cf9e24ec11fbe2fa7f7e45eb13e8c0e',
+        '547a7da9652e5b66598fa7de6b8acbce675b0d7081ca2a03bc13993921813e02',
     'games/orchard-days/media/goal.webm':
-        'c76157602c6a4ef1bd424eaa5c446f6998242835024d7e5e2f849ced4082420c',
+        '95217d49a1df5a5db7c6d7907edac02bb60e715e8b2126a3dbac0eefd6c82188',
     'games/peg-garden/media/goal.webm':
-        '761f0dbe0d9f0fa9dcc4bb3b38b1b9552812dbcc9dac5c3fefd64ec3160fffd1',
+        'd10b9bd182da23bf12a82ff2f6656fea5f583250d02f8dbb46a29638eca93a90',
     'games/pendulum-port/media/goal.webm':
-        '4be19d9891fcb9159e787e744869e39b040f06d53038ae6688f57404daffb531',
+        'cec61a03c1f02a5e9cdc138d74a57befdbd9403a38da338a75a32c4a016551b8',
     'games/phase-pairs/media/goal.webm':
-        'a879709a332555e5546ec9b760441528e906ba13403f45ffa2d9409b1987460f',
+        '85dd5b82a4ee3086171931fb52072ee2298cf931cb9ce206947fc5a13af84746',
     'games/potion-path/media/goal.webm':
-        '7f20091484c632ca6fbcec2eab420a2cd81332ae3b95d45326a2b057e2d51f10',
+        'b08b15a23909550f4c344af17280521d6f65cd9a4b77b5a3b9803e2d4d9b85c3',
     'games/prism-trace/media/goal.webm':
-        'bb6e355891219199e22e1c3be0da82d812e514e9456406750a4e53fa0b2bd4d0',
+        'f5fbb7af07b9883e7c422721d3e353c42ced0aa6a660a924e71e894608252de4',
     'games/quiet-route/media/goal.webm':
-        'd0fed30e7afa59e9c1841b871ef783bb9b38970d3d44b50118b5f3f8e249fd51',
+        'e4ac5e1b3169f8878c8405bcd8598afe433c25641da2f005b8c6d3798ea2a9d3',
     'games/ribbon-snake/media/goal.webm':
-        '848c63cedaa2fbc57ec2890602c85be03e3dcc07e0f1137fb1a0ff455eea554d',
+        '5ff5e94d2a83aca2ee8fa58df0d2277161e4b43113c519e8332b608931c444af',
     'games/ruin-lexicon/media/goal.webm':
-        '8125687fccd95f65299b31b99a68ff924f49190ab01a9a2fccb3385efd7650da',
+        'cfd34f9dc71589ffdea8567438040d37603ad58d25cf02fe2c7103783eafa581',
     'games/sand-rescue/media/goal.webm':
-        'c6b81b1b68c9fcc4caf491bd243d524f768674fa3930d9a87c7b297c760220f2',
+        '80bbf9072bf7c763ce620bd7a2ee2c1d10160a85566d8d4426aceb74fe5aff00',
     'games/seed-merge/media/goal.webm':
-        '27c77aec18b29267a56db3a9b2897d5f25459bb0defdf421b0ddbd895d97549a',
+        'efc79e7024d5e3cc1a741bbc210071f1f79d815190ca7c8cc603b88ceee54628',
     'games/shadow-archive/media/goal.webm':
-        '0799fbf6e49d2adbded5e26178794c947188ccf86ea4a5b0c16ab8ab89e3898a',
+        '00756929d73f1b91385e57d8f351c54527a6fb89a6a801860846a1a7d77f642b',
     'games/sigil-deck/media/goal.webm':
-        '2b73cb76091717fb51d47760567ed9f5bca52624bd62ccbb1ecbe2523ca6fc8a',
+        'c175cd4e839fda9f365a9e10953579290f984470c17a5e6f16467aa46aa16e06',
     'games/star-lance/media/goal.webm':
-        '9ac19d881a1766e73e9e4832f4b719e3715cef84c35852068d1bdee6b58eeff3',
+        '14bef4d068beb5f2d85676af715dc3afbb09ae4d81fa766dbb08189f391f762c',
     'games/stone-balance/media/goal.webm':
-        '1754b175771311e50b766a68d6be3dcd2f7d8158d398d6faf683954c6339ab7b',
+        '14a4364249ffd9a9c4279ff4c8535a8719480c707cf6daa91086868e0e8e1230',
     'games/tidal-nets/media/goal.webm':
-        '270c1a2136d2c50ac90a5de345fd020e120c8f183ccd002985e73e1a5541dc99',
+        '7a6aca1bdebb5511ed5b76cab781a8e5a2393fd30532932f65123cff95e41bd2',
     'games/tide-bridge/media/goal.webm':
-        '5c4b46ebe0c48c9f21fcd43266bb9b0486c81e10d582c286fb19d015ba03978c',
+        '0c5d82e8961bd2a45ed1af85192baa9e184950f66da228ca56fc05187a3c5d6d',
     'games/trace-blade/media/goal.webm':
-        'cce278ac5d788748150665bf88be83d4485866584c6465b119db73c02310a6a7',
+        '25fe4f453e12973ec0cb894517a6ce5c3071179f814c45010f363226f33d29d2',
     'games/twenty-one/media/goal.webm':
-        '99b898f598baabb92728807613bbf25255f674c5cfe3d2aea573c72475169c06',
+        '145658aedbab630c2610030fc005380cc50b1c95e73adcf7c04c79130abdf1ef',
     'games/word-foundry/media/goal.webm':
-        '8a058c27764145c6b4814cc881dfc552e0e9d950f26ae59281f6a953e53f4dd2',
+        '5e73f450b0f22c1753dcb7bdd5bb8a6a1722535578902fb154582da09e67b2f6',
 }
 FORBIDDEN_SUFFIXES = {'.bin', '.cas', '.cjr', '.key', '.p12', '.pem', '.pfx',
                       '.rom', '.tap', '.wav', '.zip'}

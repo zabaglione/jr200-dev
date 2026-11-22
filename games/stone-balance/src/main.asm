@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -513,6 +515,11 @@ sb_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     sb_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -545,6 +552,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    SB_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     sb_help_diagram
+        JSR     jr_guide_draw
         LDX     sb_help_lines
         JMP     jr_gfx_lines
 
@@ -598,24 +607,50 @@ sb_title_lines:
         .dw     sb_txt_credit
         .db     0xff
 sb_help_lines:
-        .db     9, 2, SB_ATTR_TITLE
+        .db     9, 1, SB_ATTR_TITLE
         .dw     sb_txt_name
-        .db     1, 5, SB_ATTR_TEXT
-        .dw     sb_help_1
-        .db     1, 7, SB_ATTR_TEXT
-        .dw     sb_help_2
-        .db     1, 9, SB_ATTR_TEXT
-        .dw     sb_help_3
-        .db     1, 11, SB_ATTR_TEXT
-        .dw     sb_help_4
-        .db     1, 13, SB_ATTR_TEXT
-        .dw     sb_help_5
-        .db     1, 15, SB_ATTR_TEXT
-        .dw     sb_help_6
-        .db     1, 17, SB_ATTR_TEXT
-        .dw     sb_help_7
-        .db     1, 20, SB_ATTR_LABEL
-        .dw     sb_help_back
+        .db     2, 4, SB_ATTR_LABEL
+        .dw     sb_help_label_1
+        .db     22, 4, SB_ATTR_LABEL
+        .dw     sb_help_label_2
+        .db     2, 14, SB_ATTR_TEXT
+        .dw     sb_help_label_3
+        .db     2, 16, SB_ATTR_TEXT
+        .dw     sb_help_label_4
+        .db     2, 18, SB_ATTR_TEXT
+        .dw     sb_help_label_5
+        .db     2, 20, SB_ATTR_TEXT
+        .dw     sb_help_label_6
+        .db     2, 22, SB_ATTR_LABEL
+        .dw     sb_help_label_7
+        .db     0xff
+sb_help_label_1:
+        .db     "TAKE 2", 0
+sb_help_label_2:
+        .db     "ONE LEFT", 0
+sb_help_label_3:
+        .db     "W/S PILE   A/D TAKE 1-3", 0
+sb_help_label_4:
+        .db     "RETURN TAKE MARKED STONES", 0
+sb_help_label_5:
+        .db     "LAST: WINS 1-5  /  LOSES 6-10", 0
+sb_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+sb_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+sb_help_diagram:
+; Two marked stones are removed from the chosen pile.
+        .db     3, 0x80 + 6, SB_ATTR_MARK, 1, SB_TILE_STONE
+        .db     3, 0x80 + 8, SB_ATTR_MARK, 1, SB_TILE_STONE
+        .db     3, 0x80 + 10, SB_ATTR_STONE, 1, SB_TILE_STONE
+        .db     3, 0x80 + 12, SB_ATTR_SHELF_ON, 1, SB_TILE_SHELF
+        .db     12, 8, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 8, 0x86, 1, 0x06
+        .db     16, 7, 0x86, 1, 0x00
+        .db     16, 9, 0x80, 1, 0x06
+        .db     24, 0x80 + 10, SB_ATTR_STONE, 1, SB_TILE_STONE
+        .db     24, 0x80 + 12, SB_ATTR_SHELF, 1, SB_TILE_SHELF
         .db     0xff
 
 sb_txt_name:
@@ -646,22 +681,6 @@ sb_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 sb_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-sb_help_1:
-        .db     "W/S : PILE   A/D : TAKE 1-3", 0
-sb_help_2:
-        .db     "RETURN : REMOVE YELLOW STONES", 0
-sb_help_3:
-        .db     "THE RIVAL LOOKS FOR A WIN.", 0
-sb_help_4:
-        .db     "STAGES 1-5: LAST STONE WINS.", 0
-sb_help_5:
-        .db     "STAGES 6-10: IT LOSES.", 0
-sb_help_6:
-        .db     "READ THE RULE ABOVE THE PILES.", 0
-sb_help_7:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-sb_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -712,7 +731,7 @@ sb_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -720,5 +739,11 @@ sb_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

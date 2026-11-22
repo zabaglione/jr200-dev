@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。3つの山の石",
-      "sha256": "1b007b720f792f0721445a2d6d9d4a90441493aca4afd296b8d40f32034140e4",
-      "framebuffer_sha256": "80e5ff358ffd88801f03b880df3589ffc9e079ecdacf410c5df5521693e73277"
+      "sha256": "97b1f1dac023a5b25e5ca0668b40183a60d197defff721b15134b4706130fd12",
+      "framebuffer_sha256": "30de6058afe71e53d94ebe4ba000cf9791e09a4c18e3bfee440f7564f3cf20ae"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-move",
       "role": "play",
       "caption": "左の山から2個取り、ライバルが1個取った後",
-      "sha256": "570e1003f30be30565c3977bc52d13020dd7069dd81a5cbf6007769ff620e53f",
-      "framebuffer_sha256": "7c8676e888c70c804bef84ab208cc8d174292fc1c1a5d98fc8f64edb9b0cb9e6"
+      "sha256": "c219ed17c6d5907128bdb40ca766be9b8214b593bf83ca32dfb19177ef0fb1cd",
+      "framebuffer_sha256": "7e4fe2e946024c57b0c8ce58ac06bef566f1b1987695b95f78b21b27c7209751"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "最後の石を取って1面クリア",
-      "sha256": "4ccea50c81c3ecdb75331b2dc5820a27d01dd2aa235ff300521ec4ddb7602070",
-      "framebuffer_sha256": "a84f2de535d1235cb863ebad000433eb8407ed2c16ba21c88227d9bfb4708248"
+      "sha256": "c75e32033a15b7fff8cf8fdf1be188d9c24eb858a31b6bcc6e39bcb5ad41cd65",
+      "framebuffer_sha256": "50ed184301fcd02a7577e4cda09af6fcc14636c6deb4ded9676864b646737200"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 13.9,
-    "frames": 417,
-    "frames_sha256": "b2bcedf49610b7753bab8f0360f234d0ac86353555808a7a9b84f78c662ccbdc",
-    "pcm_sha256": "897c32e84e80e887365578cb699b7d7890cfda1301fbb853431cb4546b8b1dab",
-    "sha256": "1754b175771311e50b766a68d6be3dcd2f7d8158d398d6faf683954c6339ab7b",
+    "seconds": 14.0,
+    "frames": 420,
+    "frames_sha256": "a0e6120968091bef06f9ce9dede92471cd64cfa4823504afcf55751e214869d6",
+    "pcm_sha256": "4461fc066d2c56e6cbcf5bbbdf05de1af1af213b102e781f00da1f9b1a29deae",
+    "sha256": "14a4364249ffd9a9c4279ff4c8535a8719480c707cf6daa91086868e0e8e1230",
     "caption": "1面で5手を指し、最後の石を取ってクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

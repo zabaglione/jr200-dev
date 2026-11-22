@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/ruin-lexicon/tests/model.py (upstream rules 2.1.0), not from the emulator. Each inscription is deciphered by solve(), which reads only the three sums and the A/D order (every upstream inscription has exactly one answer); synthetic-all-ruins clears all twenty. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 130741,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "ff7f3f1212121212fffefc484848484812121212123f7fff4848484848fcfeff0f3f604643414741f0fc0662c282e28242444840603f00004222120206fc0000"
           },
-          "framebuffer_sha256": "9973c9c4a46ceb4329ed1f44e110d1f054b627b8e1c3a5f6a88dc20159432524",
+          "framebuffer_sha256": "5955db772e3a7da9ffe81d5251200030c1773a3eea04a14785c8b434686e51f5",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "7cb503c7c6f763fbdb0cd94081b5645e837ca5a9c236bd015e67d74f5d8e74e7",
+          "framebuffer_sha256": "11ed9860f37957fc1024f596ec80e9e2ca23b73eafe549e0fb00500cbcdaf37f",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "e654a32c8bb8536b298027488d4993e1b440c24877849d01598bf17368fe61dc",
+          "framebuffer_sha256": "61da43a7ae80695d106f6bd22d7fcfafa176fe51a9d2410419d49577c104bf40",
           "pcm": null,
           "cassette": null
         }
@@ -380,7 +381,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "9386e7f06d072f5755bf927f6c668e3deda284bd3523c44336007154ef726411",
+          "framebuffer_sha256": "334b7f1c2563161ab02cd3d517d0673e4f952afaa856f4a665c51e18207f379a",
           "pcm": null,
           "cassette": null
         }
@@ -526,7 +527,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "54255400b7d14a43c573917380995ffa89488ae571aeb5dcd28b0196c141c4f3",
+          "framebuffer_sha256": "75be9ccfcb9e125429f7c8b83b93c5c0d86d09b890f502e92f888075b859c660",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -647,7 +648,7 @@
             "level": "00",
             "status": "464956452044494354494f4e41524945532052454a4543544544"
           },
-          "framebuffer_sha256": "482ddcad33564d30520124a5af950d656c1a8f7ce17eb1f3ff2cc845fb3a3bcf",
+          "framebuffer_sha256": "c510c095ab7424a1770fd39143ac6980b075a357426db6904883d53dc6dc7ab6",
           "pcm": null,
           "cassette": null
         }
@@ -3257,7 +3258,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "9973c9c4a46ceb4329ed1f44e110d1f054b627b8e1c3a5f6a88dc20159432524",
+          "framebuffer_sha256": "5955db772e3a7da9ffe81d5251200030c1773a3eea04a14785c8b434686e51f5",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -3301,7 +3302,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "e654a32c8bb8536b298027488d4993e1b440c24877849d01598bf17368fe61dc",
+          "framebuffer_sha256": "61da43a7ae80695d106f6bd22d7fcfafa176fe51a9d2410419d49577c104bf40",
           "pcm": null,
           "cassette": {
             "state": 6,

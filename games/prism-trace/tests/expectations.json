@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/prism-trace/tests/model.py (upstream rules 1.6.1), not from the emulator. The mirrors to turn come from plan(), the smallest set that reaches the receiver (no smaller set does, so no earlier turn wins). Key gaps leave 60000 cycles per animation frame of the traced beam. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 133059,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000001000000000000008000000000000000000000000000000000000000000000ffff000000000000ffffffff000000000000ffff0000000000000303030303030303c0c0c0c0c0c0c0c00303030303030303c0c0c0c0c0c0c0c0030303030303ffffc0c0c0c0c0c0ffffffff030303030303ffffc0c0c0c0c0c0"
           },
-          "framebuffer_sha256": "d1158139b198e391a81af954ccdeaa4609b7f3c930c549239de0043d841f7784",
+          "framebuffer_sha256": "37da5d529ef993893e0b3065a6a1800be18a6c02bbc48cbbe1ce5f0bac24443e",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "6e98bf5f4d6519d64c03979287270558485ced2fc8b4be37ee7bf434dc1b659b",
+          "framebuffer_sha256": "7d854dce8f7ddc496cf2208368bc92b22e8079e4c91d9dc2be3cd814ba9d5514",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "397cc261e3210bff480d0901233bb11415ecb87bf9fa893058d503443526f764",
+          "framebuffer_sha256": "9ac29bfc7499ef2ab40eb2277a26919202b38bc772baada7735c00d1f905a19d",
           "pcm": null,
           "cassette": null
         }
@@ -500,7 +501,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "11ee52cddcbb635d7e1099d1f5dc60d7c78b66cad1246a2ed0cc627b0bfabd6e",
+          "framebuffer_sha256": "9be75d3e49a2e36f274533c93c2fe9b0c9029986560d90f2144169842eb0fdb0",
           "pcm": null,
           "cassette": null
         }
@@ -912,7 +913,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "cb6b93781d1c008a2362cab605d3118bb4765fd9426faccc6550b4752dc094e0",
+          "framebuffer_sha256": "e0bd476ba935bf5c3cf6039fb1b27392368f2a46cc8ef279f34ec07386ff910b",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1509,7 +1510,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "d1158139b198e391a81af954ccdeaa4609b7f3c930c549239de0043d841f7784",
+          "framebuffer_sha256": "37da5d529ef993893e0b3065a6a1800be18a6c02bbc48cbbe1ce5f0bac24443e",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -1553,7 +1554,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "397cc261e3210bff480d0901233bb11415ecb87bf9fa893058d503443526f764",
+          "framebuffer_sha256": "9ac29bfc7499ef2ab40eb2277a26919202b38bc772baada7735c00d1f905a19d",
           "pcm": null,
           "cassette": {
             "state": 6,

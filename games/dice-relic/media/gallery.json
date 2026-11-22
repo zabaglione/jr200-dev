@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "cb9376de91c04192787412306f8d700068b2d8994be37a19ed9ef32481105b7c",
-      "framebuffer_sha256": "7eaf31278ba7af8da03d8cca1a145426fca33b56c13e6b50affaa04828f33ed8"
+      "sha256": "a7202725d7ffdee92230a8af3acc0b1e799306e70f3a3fe5ae1df17abd02fa3d",
+      "framebuffer_sha256": "4fd11c47f53be51c46320186de20ef6ffa848669a55a0f1d9cad42bacd2f7a18"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-attack",
       "role": "play",
       "caption": "攻撃に使ったダイスと、使用済みダイスの拒否",
-      "sha256": "bfc7db04671af1f7aacce64d36b5cab82b561ecb2103216d8c70fd525598e49b",
-      "framebuffer_sha256": "49f726110f195612995160afce54c5de6987c796e2afdc5fadfa900648f86191"
+      "sha256": "d510ecba3ecc977f4f05807f8562621933b48c2e2239826c7507b96631a7d091",
+      "framebuffer_sha256": "a067da2dc183f59388cf430c41c1919dd7fc22d2442bb8e9af8aeb7c81a507e2"
     },
     {
       "id": "workshop",
@@ -25,8 +25,8 @@
       "profile": "synthetic-workshop",
       "role": "play",
       "caption": "工房で面を鍛えた後の画面",
-      "sha256": "08a3b0bb26a59556d829d6a002cdeddf0e20d29689903ae3350b8916aab6e02a",
-      "framebuffer_sha256": "b961f36bbb24842a76e8e247e016022beceaa267e6bc8d080bfd99972e06396f"
+      "sha256": "bc4715b2435fdf51f51903197e3948b49990238dc0b5f3b0e4a63877f8cc2d3c",
+      "framebuffer_sha256": "fa211a325182aba7d103f19bd98794878c23dc30c1b0f8f781b5ef0863013f97"
     },
     {
       "id": "goal",
@@ -34,8 +34,8 @@
       "profile": "synthetic-first-victory",
       "role": "goal",
       "caption": "最初の守護者を倒して工房へ入る",
-      "sha256": "0736a52a365b55ce3e9f480b4e9e6d495f3e3636404fbd6cfc064fdd0e548ea5",
-      "framebuffer_sha256": "ce56a1f674b943ed0897a4d4ca6e658871f418d3577ab9cc1f21038fc3df8db4"
+      "sha256": "03e373108f2acc67acc9c46e275cd1adb5396e054cf6bc206399f537d181662a",
+      "framebuffer_sha256": "7cb109a54b38ae1c042e5fc7fb96fc8d7a8b86e7f987b71ca8465a2b0ab6bf85"
     }
   ],
   "video": {
@@ -43,11 +43,11 @@
     "profile": "synthetic-first-victory",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 8.3,
-    "frames": 249,
-    "frames_sha256": "1120e334ed60337cfa6034432a7f6eaad0775813a485c2a5ed0bad3965931454",
-    "pcm_sha256": "98f0bb450993508eb50de843b618f5ee8c72edd58cda687e854210571d026dfc",
-    "sha256": "6fb636e9d4a3bf04651f99548783be43eb3bcd8ee11e6234794c5401a1eab491",
+    "seconds": 8.4,
+    "frames": 252,
+    "frames_sha256": "298e48b8645c5ce2ef31ea1a21ded143ed231ba9fb706d99514dd9b715bc21ad",
+    "pcm_sha256": "1ba6b92e2792c23dce4d902cdb1b58f3f3d79a54e28dbf694ca3e8c87c00ba25",
+    "sha256": "3a2e1a46472f9bb5f0cc4b7e39bed9b511f10114d9fad98c5fba7cd8a0eaa868",
     "caption": "最初の守護者DUST IMPを倒して工房へ入るまで（等速）"
   }
 }

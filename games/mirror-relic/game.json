@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "mirror-relic",
   "title": "MIRROR RELIC",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Walk and mirror-turn through a quartered hall, collecting relics in their phase, then exit.",
   "genre": "exploration",
   "license": "MIT",

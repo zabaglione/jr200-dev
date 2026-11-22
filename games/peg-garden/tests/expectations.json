@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/peg-garden/tests/model.py (upstream rules 1.5.1), not from the emulator. synthetic-clear plays a 15-jump solution that leaves five pegs. synthetic-title and synthetic-clear require a PCM peak of 21000: the title song and the clear jingle sound on channels F, D and C at once. The exit profile checks that BASIC resources are restored and all three channels are silent.",
   "runtime": {
+    "startup_delay_cycles": 131331,
     "default_profile": "synthetic-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "000000071820274f000000e01804e4f24f27201807000000f2e40418e0000000000f304c4281808000e0180402824223908c4360390f0000130f9f7efcf0000000030f1c38383f3f00c0f0f87c7cfcfc1f0f0f1f3f1f0000f8f0f0f8fcf80000ff838f9cb8b8bfbfffc1f1f97d7dfdfd9f8f8f9fbf9f80fff9f1f1f9fdf901ff"
           },
-          "framebuffer_sha256": "066403ed8adf3b01dd85a6c58a8f60070a69566ab80ab3f965f26517eda45d53",
+          "framebuffer_sha256": "c669dbd0461985c2630ea2bc7b2d802a6684a9a9e841a81b0dbd81d51c5144c3",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "66b37092a837dadae1822f0f30a26bfc0a3b613d85f6a132ecaabc3e99520f51",
+          "framebuffer_sha256": "c0bb44279b2c12b60e4c2fa06b78dc944d08f95c564a42cad4ed8bb72301215d",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "93c6884a3375f4a3f3cc4b96422dd0a59f47869b8bfea48dd0d1f240338f0ac2",
+          "framebuffer_sha256": "9b7a831bd5e8e6bd5c64a45a4f82b214a13cc8f6197d414c072f8b66fc19e251",
           "pcm": null,
           "cassette": null
         }
@@ -550,7 +551,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "4be9311e8493012929e07a27ce88921112a9bf3810a145ddf5c25357a0542b1a",
+          "framebuffer_sha256": "747d03fb0798d2cc594f914d9c8cdac18a66a3e1736eb55b4271f3e5d8604697",
           "pcm": null,
           "cassette": null
         }
@@ -2270,7 +2271,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "715c890f14294b97723958b599ac44c61351ff0106825294023a6a26a75bbead",
+          "framebuffer_sha256": "659b48266803c0a1f89de37303083982baebe4ae1619c57328dd90092db00b43",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -4093,7 +4094,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "066403ed8adf3b01dd85a6c58a8f60070a69566ab80ab3f965f26517eda45d53",
+          "framebuffer_sha256": "c669dbd0461985c2630ea2bc7b2d802a6684a9a9e841a81b0dbd81d51c5144c3",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -4137,7 +4138,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "93c6884a3375f4a3f3cc4b96422dd0a59f47869b8bfea48dd0d1f240338f0ac2",
+          "framebuffer_sha256": "9b7a831bd5e8e6bd5c64a45a4f82b214a13cc8f6197d414c072f8b66fc19e251",
           "pcm": null,
           "cassette": {
             "state": 6,

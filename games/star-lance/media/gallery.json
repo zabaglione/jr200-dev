@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "b5adff9cdaa3114c2a56228b8eba23e815ef2406c53907f11708678f6cc6a306",
-      "framebuffer_sha256": "22a7ea70a3570270cac6227714bf83608e0be7c39bfa971a38aa81d977922021"
+      "sha256": "6c8186ae4423bdcd7d3068963b09565d72ab4b359e294f1761c1967162008443",
+      "framebuffer_sha256": "f5031bea227a689005545099454efd854fe940a05930829bcac55ff06c536ca9"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで艦隊を撃つ場面",
-      "sha256": "ad474847f6d7c1222f366212aabbf149ea91e7bef5e9c4edbd3c9d913d21786f",
-      "framebuffer_sha256": "fc1a8c02eca098f69e7bd64359fa1674f9234ae3c04b3e19d37c18bf219227b0"
+      "sha256": "1e3ed1da78cd2743e1428bae72bc861e264048a5430200e0b11a5e63a8f00054",
+      "framebuffer_sha256": "e4f4b1c662d232389557796f3fa0c57a6546ddd4fa30f517e91130b4a591b619"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "18隻を撃ち落として1つ目の波をクリア",
-      "sha256": "373c0efe35b45a40cb1ccc2611fa8c9b1ed10994bec3b7b005a63ff56a46a00c",
-      "framebuffer_sha256": "e9bf9cdaf5a2ac9d2f9d7af1ff66e9aa4fe90d037e6392ffc6dfbfcd205cd30b"
+      "sha256": "ffb2b63a4312c5e926d670b5854153eb3ab54551dfa03fdd676ff235c3f8bb22",
+      "framebuffer_sha256": "923bed4bf8b8cc579298ebd25ebf6d2e2596d926af82167752ad62888e75a893"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 19.1,
-    "frames": 573,
-    "frames_sha256": "044dc781d902115d28b67f5c3646ab92cb4412b859653e17cce7938f958123bc",
-    "pcm_sha256": "726c8933a19e6c0c0d5d13bd7b503c6356424998e527efbc725da8aa51233437",
-    "sha256": "9ac19d881a1766e73e9e4832f4b719e3715cef84c35852068d1bdee6b58eeff3",
+    "seconds": 19.3,
+    "frames": 578,
+    "frames_sha256": "9bf8afed3d07b5f656234d0b19ad36c78be9adbcb0c127e10ae61ba6e1845fe8",
+    "pcm_sha256": "dd77dc168745e9352be47fa737b66df2155a338c17664332a227efd1cf35d7bf",
+    "sha256": "14bef4d068beb5f2d85676af715dc3afbb09ae4d81fa766dbb08189f391f762c",
     "caption": "1つ目の波の自動デモ（18隻を撃ち落とす）"
   }
 }

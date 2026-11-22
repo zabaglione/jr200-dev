@@ -4,7 +4,7 @@
 
 `tools/wiki/generate.py` は、固定済みの作品packageを検査してWiki用fileを生成します。
 このtool自身はclone、commit、push、Release作成、repositoryのvisibility変更を行いません。
-公開カタログは52作品です。新たな45作品の0.1.0は固定ZIP、CJR単体、起動支援リンクを掲載します。
+公開カタログは52作品です。タイトル画と外周色を更新した51作品のパッチ版を含め、固定ZIP、CJR単体、起動支援リンクを掲載します。
 7作品は `verified`／公開指定の固定版となり、公開Releaseにclean-source ZIPを登録しました。
 Pagesの配信・所有ROM/FONTによる実起動を確認後、Wikiに7作品ページと媒体を同期しました。
 開発リポジトリのpublic化後、Releaseの7 ZIPとWikiの22ページ・35媒体を匿名取得して固定値と照合しました。
@@ -21,7 +21,7 @@ Pagesの配信・所有ROM/FONTによる実起動を確認後、Wikiに7作品�
 | --- | --- |
 | `Home` | 入口、6ジャンルと公開件数、公開／候補版／開発中を分けた作品カード |
 | `_Sidebar` | 全ページ共通のナビゲーション |
-| `All-Games` | タイトル順の一覧 |
+| `All-Games` | タイトル画面を1行に3作品ずつ並べたギャラリーと作品情報。画像から作品ページを開ける |
 | `Genre-Puzzle`ほか6ページ | `tools/wiki/genres.json`のジャンル説明と作品カード。公開作品がなければ「公開作品準備中」 |
 | `Game-<slug>` | パンくず、状態・版・ライセンス、遊ぶ、画面（全scene）、動画、READMEの各節、版と検証、ソース |
 | `Controls` | 共通の注意と、各READMEの「操作」節をそのまま並べた作品別の表 |

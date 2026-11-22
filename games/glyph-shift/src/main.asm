@@ -8,9 +8,11 @@
         .filename.jr "GLYPH-SHIFT"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x4800
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    0x4e00
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -412,6 +414,11 @@ gs_draw_rule:
         JMP     jr_rank_hud
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     gs_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -447,6 +454,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    GS_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     gs_help_diagram
+        JSR     jr_guide_draw
         LDX     gs_help_lines
         JMP     jr_gfx_lines
 
@@ -499,26 +508,56 @@ gs_title_lines:
 gs_help_lines:
         .db     10, 1, GS_ATTR_TITLE
         .dw     game_title_text
-        .db     1, 3, GS_ATTR_TEXT
-        .dw     gs_help_1
-        .db     1, 5, GS_ATTR_TEXT
-        .dw     gs_help_2
-        .db     1, 7, GS_ATTR_TEXT
-        .dw     gs_help_3
-        .db     1, 9, GS_ATTR_TEXT
-        .dw     gs_help_4
-        .db     1, 11, GS_ATTR_TEXT
-        .dw     gs_help_5
-        .db     1, 13, GS_ATTR_TEXT
-        .dw     gs_help_6
-        .db     1, 15, GS_ATTR_TEXT
-        .dw     gs_help_7
-        .db     1, 17, GS_ATTR_TEXT
-        .dw     gs_help_8
-        .db     1, 19, GS_ATTR_TEXT
-        .dw     gs_help_9
-        .db     1, 21, GS_ATTR_LABEL
-        .dw     gs_help_back
+        .db     2, 4, GS_ATTR_LABEL
+        .dw     gs_help_label_1
+        .db     12, 5, GS_ATTR_TEXT
+        .dw     gs_help_label_2
+        .db     22, 4, GS_ATTR_LABEL
+        .dw     gs_help_label_3
+        .db     4, 12, GS_ATTR_TEXT
+        .dw     gs_help_label_4
+        .db     16, 12, GS_ATTR_TEXT
+        .dw     gs_help_label_5
+        .db     2, 17, GS_ATTR_TEXT
+        .dw     gs_help_label_6
+        .db     2, 19, GS_ATTR_TEXT
+        .dw     gs_help_label_7
+        .db     2, 22, GS_ATTR_LABEL
+        .dw     gs_help_label_8
+        .db     0xff
+gs_help_label_1:
+        .db     "BOX WALL", 0
+gs_help_label_2:
+        .db     "RETURN", 0
+gs_help_label_3:
+        .db     "FOE WALL", 0
+gs_help_label_4:
+        .db     "REACH GATE", 0
+gs_help_label_5:
+        .db     "PAR=2* RUNES=3*", 0
+gs_help_label_6:
+        .db     "WASD WALK   SPACE RETRY", 0
+gs_help_label_7:
+        .db     "F STAGES   X CODE", 0
+gs_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+gs_help_diagram:
+; The same tiles trade solid and passable states.
+        .db     2, 0x80 + 6, GS_ATTR_HERO, 1, GS_TILE_HERO + 12
+        .db     4, 0x80 + 6, GS_ATTR_BOX_WALL, 1, GS_TILE_BOX
+        .db     6, 0x80 + 6, GS_ATTR_OPEN, 1, GS_TILE_FOE
+        .db     8, 0x80 + 6, GS_ATTR_GATE, 1, GS_TILE_GATE
+        .db     12, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     22, 0x80 + 6, GS_ATTR_HERO, 1, GS_TILE_HERO + 12
+        .db     24, 0x80 + 6, GS_ATTR_OPEN, 1, GS_TILE_BOX
+        .db     26, 0x80 + 6, GS_ATTR_FOE_WALL, 1, GS_TILE_FOE
+        .db     28, 0x80 + 6, GS_ATTR_GATE, 1, GS_TILE_GATE
+        .db     4, 0x80 + 10, GS_ATTR_GATE, 1, GS_TILE_GATE
+        .db     16, 0x80 + 10, GS_ATTR_RUNE, 1, GS_TILE_RUNE
         .db     0xff
 
 gs_txt_table:
@@ -535,26 +574,6 @@ gs_txt_start:
         .db     "RETURN : PLAY THE STAGE", 0
 gs_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-gs_help_1:
-        .db     "WASD : MOVE", 0
-gs_help_2:
-        .db     "RETURN : SWAP THE WALL RULE", 0
-gs_help_3:
-        .db     "REACH THE DIAMOND GATE.", 0
-gs_help_4:
-        .db     "WALK OVER OPTIONAL RUNES.", 0
-gs_help_5:
-        .db     "PAR OR LESS = TWO STARS.", 0
-gs_help_6:
-        .db     "PLUS BOTH RUNES = THREE STARS.", 0
-gs_help_7:
-        .db     "OVER PAR = CLEAR / ONE STAR.", 0
-gs_help_8:
-        .db     "SPACE RETRY / F STAGE SELECT", 0
-gs_help_9:
-        .db     "X : PASSWORD (TITLE / MAP)", 0
-gs_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -606,7 +625,7 @@ gs_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -614,5 +633,11 @@ gs_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/ranked.inc"
+        .include "../../../sdk/ranked_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

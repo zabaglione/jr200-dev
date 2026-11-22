@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。入と切のヒューズと切り替え中の形",
-      "sha256": "819539ab7d8506bf42aa75bd2c835b12b9676ea6aaa5c58486adad4c2d3431cf",
-      "framebuffer_sha256": "249569a7dac035e511385c4cf536df2bfd89ed65e947584987101d23984e9b78"
+      "sha256": "5f2692b7cd81b87db4ba92cdd4b2a9b20996cbfdc860fc0a8f0a6bdf18b560a0",
+      "framebuffer_sha256": "1e7aaa525c982540beedb26012ce82bc09cafdd76a77c36aa4fee03fd3e9f1dd"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-partial",
       "role": "play",
       "caption": "1面で4個のスイッチを入れた途中。合った行と列の数字が緑に反転",
-      "sha256": "a9652d2c54986ffdb84f42c4af060023d32b3bac3e80edc38584e2cb64d0dc38",
-      "framebuffer_sha256": "398d62f280dc9a488928872b5181a885dd1f013b8c26cba946f9eff6802ac9ff"
+      "sha256": "9028f55e8c1f37d30d5298593c95a3226b6f89121d50c334fe36286155afdbbe",
+      "framebuffer_sha256": "d4e04854ffc01d7365e8cd2ee2275b1e6fc55308171afb0ac7c9c7e9de13da83"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "すべての行と列の個数がそろって1面クリア",
-      "sha256": "53215bfe5bae46b2564fcd8940df5daca6430a7e59a121007cf502af6fc5a2bf",
-      "framebuffer_sha256": "4b72a025f2f8f85f596562c1574f84a8949161fe1344319ea3e2356450bb05cb"
+      "sha256": "859adcac0200c4f26b6a3f1c42561b1fc78b9c9cbc83eb11b55f824718e5b6ee",
+      "framebuffer_sha256": "c3406ac913973ba0e9ded8480af8cade2bab3343a8ac83887ee4f84eac1130a7"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 8.9,
-    "frames": 266,
-    "frames_sha256": "98762d33722b1184ea03933ee72a5e000bedd834f5c9b35db002eca75dfc1bd6",
-    "pcm_sha256": "196b8759254339ea3366781074c8ea5a5ccb230d85fe358eb121d36321bd9e69",
-    "sha256": "096ee0b506eed7670b53fe4d093f39fb8d68e3da5a333ede40ddbbbe5976f235",
+    "seconds": 9.0,
+    "frames": 269,
+    "frames_sha256": "b119ce79705bcf56c1185d234ef2ad066f69640e565352cec11713af2f210778",
+    "pcm_sha256": "5ce5f46ea5ab8ef3da770881c1f2b1a45822c3d0991c10a8f559509c75fde7f0",
+    "sha256": "9f523c5ef890fd1f7b057c48d91f796a107cd077ae25e86672b42021c8d50232",
     "caption": "1面の開始から10個のスイッチを入れてクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

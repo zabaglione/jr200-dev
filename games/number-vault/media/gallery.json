@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。金庫の扉",
-      "sha256": "f5b885c1eccdc3796e188430d30040ed9608f2f25adaabb82cac456095473f2d",
-      "framebuffer_sha256": "4761dea9b95822fc2776d4992c1f05555ab793d27bd119b216b25cf57ba58ac2"
+      "sha256": "b109ad56fae35d44f78d8643b6b5df28f52745a70b51f65b198cb467dffd649f",
+      "framebuffer_sha256": "0d67b4048a5d078a0a3fe0b29c0c47416db7ac5c3a9be8bc28ffeefac74749cb"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-history",
       "role": "play",
       "caption": "2回試した記録。EXACTとNEARが右に並ぶ",
-      "sha256": "b88d39b8ace9071a4755989a119083d457bfbc46617b542395afa5ca77e60fac",
-      "framebuffer_sha256": "79fcbfd462f2ba29849c368515b5d19fdad53388a55550bd2a38c720c1e73c32"
+      "sha256": "e417bd21ac36a5af63835025acd44cfe7bf35d82542077f181aaa58e4b51427e",
+      "framebuffer_sha256": "4270b167442dc03d0f290473720b41433d1030d5d83745aa7d4ff34bfa9669c4"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "4桁が合って扉が開き、1面クリア",
-      "sha256": "bc40fdb1fb375c708a98db78163d7e97ba27e2e4b42b33daa73aca70d8ff355c",
-      "framebuffer_sha256": "cc8ac571327dfdff25ecb7ed2311aabbc513964af08e96bd728e981277686dbb"
+      "sha256": "1b2dd091a5fee2df5d3ec887f1c64cfb1f4045e7254084a460debcc13f5f559f",
+      "framebuffer_sha256": "8172f5958b92aa56fded5a0a59d702415ab0e5ff9165ec1af1121796f8ad7985"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 9.4,
-    "frames": 283,
-    "frames_sha256": "04377f93ffe5bb191b3dc6d9276f8d6052a0e94b978c483fb73f303289876083",
-    "pcm_sha256": "0cfedc0e39db395adb7d905373eb32c75b89152224dfdc2ff38d86048fc56de8",
-    "sha256": "819b7c30eb669f82a4f992b965676981fc3d6e4f19fc0a30ba22b38e3333bfba",
+    "seconds": 9.5,
+    "frames": 286,
+    "frames_sha256": "819caf8454cb1e4d29ac4517e7fd0e5bd11f4da4bb190542d99cf91e1b199f2c",
+    "pcm_sha256": "25134ae1c693d7e09803641d5a25907ae76987ade4fb026c250eb24b156d05ce",
+    "sha256": "b56768b0f4dcae294b9b69c84d9b3d6b7d4838fc71ade43e4d995a7b2be3375c",
     "caption": "1面で矛盾しない番号を順に試し、扉を開けて3声のジングルが鳴るまで（音付き）"
   }
 }

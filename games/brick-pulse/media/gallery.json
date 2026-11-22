@@ -2,7 +2,7 @@
   "schema_version": 3,
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
+    "artifact_sha256": "ae07f2ca6aec7c77d19a09f2c70c53f6e357f55097a7530e9d8674953cb00c3c",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   },
@@ -13,8 +13,8 @@
       "profile": "local-rom-title",
       "role": "title",
       "caption": "所有ROM/FONTの通常MLOAD/USR後のタイトル画面（無加工）",
-      "sha256": "d43eabb5f0a62e043c4c1e7e6e743ee6df0e08347c0bdb42562894109d6fd237",
-      "framebuffer_sha256": "522a33ee65f292454b706965810528c4f2499aa67a64bcd24a8216460db5517f"
+      "sha256": "120ad6d706e0f591a88adf5f7ea2ac763c40986aaa1b4aeb2b70817d9ae5aecd",
+      "framebuffer_sha256": "c268bd039071bf974403b36bdb138f6d56eaf62ca65396d5eafd80ce4242894d"
     },
     {
       "id": "play",
@@ -22,8 +22,8 @@
       "profile": "local-rom-hold-left-release",
       "role": "play",
       "caption": "所有ROM/FONTで第1面を実行し、A/Dの保持と離上を試した場面（無加工）",
-      "sha256": "4228069bd3075afb2cf2d7196c7498b1244f0989e5e48b875fac8be291a55cbb",
-      "framebuffer_sha256": "6bcdbfcca0d3a5ff37e45abaf3aaccd73e797f51fbab4076eda4743432f5e4a8"
+      "sha256": "6cbcc50556bed9e9591696cbee3a153a8a2c11c43e453048f362fcdad9fef7b8",
+      "framebuffer_sha256": "0c96fb9430c7110f51af0a11f3c975dad7a439832f19e7fa03e56ff2243e381a"
     },
     {
       "id": "clear",
@@ -31,23 +31,23 @@
       "profile": "local-rom-demo-clear",
       "role": "goal",
       "caption": "所有ROM/FONTの自動デモで第1面をクリアした場面（無加工）",
-      "sha256": "0675c8828031d6fc66da2580bbbe93c168120605d1c5b680f3f8684fc68b595e",
-      "framebuffer_sha256": "1f07fb681485097bb2c933f400ac8268882fcecd45b623834601302e8b68848b"
+      "sha256": "94a7ef643e8ada9099236cd9a9a05f56c1495eb2862178bb9abf0056714c24cb",
+      "framebuffer_sha256": "60176f7f5443513d327343faadf29fe852cd00064b382a7c22fbc8ee67eb46bd"
     }
   ],
   "video": {
     "file": "goal.webm",
     "profile": "local-rom-demo-clear",
     "mode": "rom-cassette",
-    "artifact_sha256": "ed27d003afab3adda49d722514bed00ffe10575cac8cfc0f9bcfb34e15f86972",
-    "start_cycle": 83500000,
+    "artifact_sha256": "ae07f2ca6aec7c77d19a09f2c70c53f6e357f55097a7530e9d8674953cb00c3c",
+    "start_cycle": 118500000,
     "fps": 30,
     "speed": 1.0,
     "seconds": 45.4,
     "frames": 1361,
-    "frames_sha256": "f70b15e49f84730649557d0af7b10325bfcd0716de3f874fb14837de53dc9da0",
-    "pcm_sha256": "315568d9e91c1d284b8b68ff7eaeda44ab796c515d0478f7bdf4e5bc8f67266c",
-    "sha256": "f288f5c24b133b403b01640c628725a122f8694e19c517b05d29dfa5d6e0ccf8",
+    "frames_sha256": "58276da2a10fbd07161ab7535ead6aca18019a94898b5342089ead42811ef913",
+    "pcm_sha256": "96c5d037f094adbf1fd7bcfc4fb39402b85c9c00bda078b9c179298b89ef29e1",
+    "sha256": "b7a5081f9242bb48a35c631bbbd3f941a5acb2c54d4cb85b81eda4e076297fb5",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、Pで第1面を自動デモクリアするまで（等速、実ゲームPCM、無加工）"
   }
 }

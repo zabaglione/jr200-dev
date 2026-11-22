@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "dice-relic",
   "title": "DICE RELIC",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Roll three dice and assign each to attack, guard or heal through nine guardians, forging stronger faces with the spoils.",
   "genre": "tabletop",
   "license": "MIT",

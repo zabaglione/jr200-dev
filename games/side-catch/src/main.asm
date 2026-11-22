@@ -18,7 +18,10 @@ GAME_TEXT_DESTINATION:  .equ    0x2008
 GAME_CELL_LEFT:         .equ    0xc28e
 GAME_CELL_CENTER:       .equ    0xc28f
 GAME_CELL_RIGHT:        .equ    0xc290
-GAME_TITLE_CELL:        .equ    0xc14a
+GAME_GUIDE_LEFT:        .equ    GAME_CELL_LEFT + 32
+GAME_GUIDE_CENTER:      .equ    GAME_CELL_CENTER + 32
+GAME_GUIDE_RIGHT:       .equ    GAME_CELL_RIGHT + 32
+GAME_TITLE_CELL:        .equ    0xc30a
 GAME_PROMPT_CELL:       .equ    0xc384
 GAME_RESULT_CELL:       .equ    0xc344
 GAME_RESULT_DIGITS:     .equ    0xc34b
@@ -90,7 +93,8 @@ game_error:
         JMP     jr_session_leave
 
 game_setup_round:
-        JSR     jr_screen_clear
+        LDX     game_title_art
+        JSR     jr_title_draw
         LDX     game_title
         STX     [GAME_TEXT_SOURCE]
         LDX     GAME_TITLE_CELL
@@ -110,11 +114,24 @@ game_setup_target:
         LDAA    0x01
         LDAB    GAME_TARGET_ATTR
         JSR     jr_screen_put
+        ; Show the catch direction just below the PCG playfield.
+        LDX     GAME_GUIDE_CENTER
+        LDAA    0x36
+        LDAB    0xb6
+        JSR     jr_screen_put
         LDAA    [GAME_ROUND]
         BEQ     game_prompt_right
+        LDX     GAME_GUIDE_LEFT
+        LDAA    0x30
+        LDAB    0xb0
+        JSR     jr_screen_put
         LDX     game_prompt_left
         BRA     game_prompt_ready
 game_prompt_right:
+        LDX     GAME_GUIDE_RIGHT
+        LDAA    0x06
+        LDAB    0x86
+        JSR     jr_screen_put
         LDX     game_prompt_right_text
 game_prompt_ready:
         STX     [GAME_TEXT_SOURCE]
@@ -209,9 +226,9 @@ game_copy_text_done:
 game_title:
         .db     "SIDE CATCH", 0
 game_prompt_right_text:
-        .db     "D CATCH   Q QUIT", 0
+        .db     "D   Q QUIT", 0
 game_prompt_left:
-        .db     "A CATCH   Q QUIT", 0
+        .db     "A   Q QUIT", 0
 game_result:
         .db     "CAUGHT 000 R RESTART", 0
 
@@ -230,3 +247,8 @@ return_probe:
         .include "../../../sdk/session.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR200_SCREEN_CODES
+JR_TITLE_ATTRIBUTES: .equ   JR200_SCREEN_ATTRIBUTES
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

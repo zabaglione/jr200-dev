@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。ペグが隣のペグを飛び越える図",
-      "sha256": "5988a6a4b96b2f5daf1e816d13f88cc3ed22f2566546f9b110dbbc5b7b663307",
-      "framebuffer_sha256": "066403ed8adf3b01dd85a6c58a8f60070a69566ab80ab3f965f26517eda45d53"
+      "sha256": "a4fe61b7313f69c7f0f38dc5e72dc14c64ecac92713793322f4611576c9f3bde",
+      "framebuffer_sha256": "c669dbd0461985c2630ea2bc7b2d802a6684a9a9e841a81b0dbd81d51c5144c3"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-jump",
       "role": "play",
       "caption": "最初の1手。上の石が中央の穴へ飛び込み、間の石が消えた",
-      "sha256": "346bda1182e426319928006fc9dd3f77da230bb3c7c9e2efa407c7eb2caf60e9",
-      "framebuffer_sha256": "4be9311e8493012929e07a27ce88921112a9bf3810a145ddf5c25357a0542b1a"
+      "sha256": "190262cb63ff0ece4975e4700152d52c77b3ab46ff8294af908ca012b2637dc6",
+      "framebuffer_sha256": "747d03fb0798d2cc594f914d9c8cdac18a66a3e1736eb55b4271f3e5d8604697"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-clear",
       "role": "goal",
       "caption": "15回飛び越して残り5個でクリア",
-      "sha256": "d8a5e6cf230b9caff165e3a6dfbe4721512893ee6e6d2459cdaf3b293f4972e5",
-      "framebuffer_sha256": "715c890f14294b97723958b599ac44c61351ff0106825294023a6a26a75bbead"
+      "sha256": "8e3bc09d2b27e435766eea8ba72292a080be8271fd726a3e42d3cb5aaa0ce906",
+      "framebuffer_sha256": "659b48266803c0a1f89de37303083982baebe4ae1619c57328dd90092db00b43"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 16.6,
-    "frames": 498,
-    "frames_sha256": "82083bc3a8a4f386c8bf063f5045d7bb6a1369f111fdc06ef723d2b30e8c1281",
-    "pcm_sha256": "efe0371b6a5f6fd4715206b6bf0417cf5a214552c2a344cccb0f4e89bfdd8c5f",
-    "sha256": "761f0dbe0d9f0fa9dcc4bb3b38b1b9552812dbcc9dac5c3fefd64ec3160fffd1",
+    "seconds": 16.7,
+    "frames": 501,
+    "frames_sha256": "471a6a1a9ed64066d9abf43cf757eb98c65bc6afc5bc0e74554df48a98571af4",
+    "pcm_sha256": "e004f6ef3cc2c1b052c2ec52569e1e6d05af555a529c635d8444948877b67bbe",
+    "sha256": "d10b9bd182da23bf12a82ff2f6656fea5f583250d02f8dbb46a29638eca93a90",
     "caption": "開始から15回の飛び越しでクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

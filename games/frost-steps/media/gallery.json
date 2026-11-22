@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。氷、滑る人、クリスタル、ルーン、壁",
-      "sha256": "72edbad95e5c6a4aab6af068a8e23867267a40c05a1007dfdeb1577b5038b5aa",
-      "framebuffer_sha256": "c8112cdcfbf8ca040925ca6faf136a250593d0528a8fba9d0e67b34c46abd16d"
+      "sha256": "9480a7dd3861691632ac105c5df85ebed69ba6e9adcb59677894beba1ce63087",
+      "framebuffer_sha256": "15deb1fc0cdad34bb3f529d83feb0fb64f1a33a57236eca0e101cc9865fb685a"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-map",
       "role": "play",
       "caption": "40部屋のステージマップと星の記録",
-      "sha256": "9f8778d3530e4c18926870d0513de421ed20596d941eb4902790131dd5a40c70",
-      "framebuffer_sha256": "f62f651ea7b28407480fd0094d409ef82d763da2e1155625b50cfdd6d9b12fd4"
+      "sha256": "22ae6aa8070e56254811a93847c917abea2a3e30651e056487c5a5edc896c94b",
+      "framebuffer_sha256": "a20d33b65b97d2901a284456decb3a2f036e28e24e4c485ff262bb338259a96d"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "星3つで1部屋目をクリア",
-      "sha256": "6f3c9c7b36e3c2ef83cabe15439fbbd7c89247e1cab20943368eebe40bdf8ff3",
-      "framebuffer_sha256": "b4dcce57a2854055a81c9ee539f5a2d7d1f0f0bde46d35b2a413bb3e8f057545"
+      "sha256": "e88261653852db6163590a7d8dd9958aa079e077ded441da3ba9b9d2145956f6",
+      "framebuffer_sha256": "d70615c1953ec6ebd9444b3e7f14056135e941dd690add375c655c9ee2e0ab75"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 2.9,
-    "frames": 88,
-    "frames_sha256": "b109fe7343140cc2c97725cbbaebe01653ef39a2a4c40fba73c5dbadccafdfd1",
-    "pcm_sha256": "3130071c37e7f6ce511fe8f5133fe928a6bdaa4a9eec37a1222cf67ac6f5fe02",
-    "sha256": "c6b9185bfdeb65badd35f62fc9f7fbd74c1430a7fa5c6f93554909d92702aadb",
+    "seconds": 3.0,
+    "frames": 90,
+    "frames_sha256": "b669a2eb86cf3de896338128d2aee0cb4e98f2d59b306b8891fc09e898f1d2c3",
+    "pcm_sha256": "1ce25b2ec58cb7101a0f383e3771bc2db552c7f66a9ed901d9b5f80dd587feb6",
+    "sha256": "ffcdd753cac448aacd1ee22318cfcac7e7a009b549bd7d60eac0b61439ff5948",
     "caption": "1部屋目で両方のルーンを拾い、PAR以内でクリスタルを集めるまで"
   }
 }

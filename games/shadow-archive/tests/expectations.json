@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/shadow-archive/tests/model.py (upstream rules 2.1.0), not from the emulator. Each case opens the fewest files that leave only the culprit (two in every case, the GOLD rating) and accuses; synthetic-all-cases closes all 12. The loss message is shortened to fit the status row. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together).",
   "runtime": {
+    "startup_delay_cycles": 130249,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0f0f3f0007081014f0f0fc00e01008281011080700000000088810e0000000000000000007083f1600000000e010fc681011080700000000088810e0000000000f0f3f0007083f16f0f0fc00e010fc681011080700000000088810e000000000"
           },
-          "framebuffer_sha256": "cd901de2bbeb150f982d268b0d8ad13e5ecffb8b86b729ef10563ca6463591d4",
+          "framebuffer_sha256": "4f35b086e9f7750c4ca4db70330c58c1e76095e1f24f4202b8390ed31893bd39",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "4d49a1ec2352267f4924952c0007da91a7a1c4ee514896476e67d199b92ddb2a",
+          "framebuffer_sha256": "8845dd043f6fe274e481fa7853a235cda47d8c706a9aa0feb52c8c625fc298da",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "19770ea2ee387691f7ce703624f962949945552573e17c21bd374ef156c9bc76",
+          "framebuffer_sha256": "d6fd5229d83f1e4b99b5661e1685aa6445fc40f1485631de694dd8faa7a45d59",
           "pcm": null,
           "cassette": null
         }
@@ -380,7 +381,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "0e62dacc1f25043cf9b9345f3eeaad6a83a4735c28b3756df1bbf7ff8ae6a777",
+          "framebuffer_sha256": "ed2553639f056145d363c0193fb3ca4b8d926dc10fecfa8d653373786188cd0d",
           "pcm": null,
           "cassette": null
         }
@@ -520,7 +521,7 @@
             "level": "00",
             "rating": "474f4c4420444554454354495645"
           },
-          "framebuffer_sha256": "57ea233aeb85e0410382a82376bff09beb73cdb55c69672dc1ee1494fdf6cf9d",
+          "framebuffer_sha256": "8ea8ddf34cd1c8bfdc6c765fc5fde1edfab28b1b68bcb168c93e1a8e610a9620",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -677,7 +678,7 @@
             "level": "00",
             "status": "544845205355535045435420444f4553204e4f5420464954"
           },
-          "framebuffer_sha256": "05ae362c554ff14efb2cc76d38b11458083413d1c8d067418c12a510629048b9",
+          "framebuffer_sha256": "b0b381d3f3cf9718277a0eac22aef390abeebfe170f347e8a7dd08ef1a05c976",
           "pcm": null,
           "cassette": null
         }
@@ -2459,7 +2460,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "cd901de2bbeb150f982d268b0d8ad13e5ecffb8b86b729ef10563ca6463591d4",
+          "framebuffer_sha256": "4f35b086e9f7750c4ca4db70330c58c1e76095e1f24f4202b8390ed31893bd39",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -2503,7 +2504,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "19770ea2ee387691f7ce703624f962949945552573e17c21bd374ef156c9bc76",
+          "framebuffer_sha256": "d6fd5229d83f1e4b99b5661e1685aa6445fc40f1485631de694dd8faa7a45d59",
           "pcm": null,
           "cassette": {
             "state": 6,

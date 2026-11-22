@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/dice-relic/tests/model.py, whose combat, prices and PRNG are upstream model.py (jr100dev games/dice_relic 1.7.1) and whose selection, workshop and menu follow upstream src/main.asm, not from the emulator. The PRNG seed is the title song position when RETURN starts the game; every replay starts with RETURN at the same cycle, and the model starts from the seed the emulator took (state byte 10). synthetic-nine-battles plays upstream replay.py's policy through all nine battles and the workshop. A defeat cannot be reached by replay (healing or guarding with every die outlasts every guardian); tests/test_dice_relic.py checks it on the model. Key gaps leave 42000 cycles per effect frame and 750000 per roll. synthetic-title and synthetic-nine-battles require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 127374,
     "default_profile": "synthetic-nine-battles",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "3f40808080808080ff00000000000000fc0201010101010180808080808080800101010101010101808080808080403f00000000000000ff01010101010102fc071f3b333f1f0a3fe0f8dcccfcf850fc7fdf9f1c1c3c7c00fefbf938383c3e00557f3f1f1d1f0f3faafefcf8b8f8f0fc7effbf3f1e1c3c7c7efdfdfc78383c3e030707030f17270780c0c080e0d0c8c40606060e00000000c2c0c0e000000000000f10272828282400f008e4141414241209040201000000489020408000000000183c7e7e3c180010105438fe385410003c5a52525a3c00006cfefe7c381000"
           },
-          "framebuffer_sha256": "7eaf31278ba7af8da03d8cca1a145426fca33b56c13e6b50affaa04828f33ed8",
+          "framebuffer_sha256": "4fd11c47f53be51c46320186de20ef6ffa848669a55a0f1d9cad42bacd2f7a18",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "54426782db13b591ec7612ef3c146e6fabe2607927007283b845f86a860a0bb8",
+          "framebuffer_sha256": "1eabf6447e93043306043759d0d46ba99dedb38b5ab227430397ebebdc25834b",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "9859cb169c4426b9ee0b1c9ae503ac3e01b12b7329c0e79ab90e164b3c64b21e",
+          "framebuffer_sha256": "02f7202a19583fa16140c49312773c8b25948c48ad15f68201ba2e83c5e91ebd",
           "pcm": null,
           "cassette": null
         }
@@ -344,7 +345,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "49f726110f195612995160afce54c5de6987c796e2afdc5fadfa900648f86191",
+          "framebuffer_sha256": "a067da2dc183f59388cf430c41c1919dd7fc22d2442bb8e9af8aeb7c81a507e2",
           "pcm": null,
           "cassette": null
         }
@@ -784,7 +785,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "ce56a1f674b943ed0897a4d4ca6e658871f418d3577ab9cc1f21038fc3df8db4",
+          "framebuffer_sha256": "7cb109a54b38ae1c042e5fc7fb96fc8d7a8b86e7f987b71ca8465a2b0ab6bf85",
           "pcm": null,
           "cassette": null
         }
@@ -1062,7 +1063,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "b961f36bbb24842a76e8e247e016022beceaa267e6bc8d080bfd99972e06396f",
+          "framebuffer_sha256": "fa211a325182aba7d103f19bd98794878c23dc30c1b0f8f781b5ef0863013f97",
           "pcm": null,
           "cassette": null
         }
@@ -4700,7 +4701,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "2d355f4e45ce7e0a27675c48f851a8914ffaa986ca0996f47e878af9cf4aaa59",
+          "framebuffer_sha256": "57b347c4ce1097e48c7a7ba8cd791da0fc8801e5b6d23b390c02c4536fc69df5",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -4861,7 +4862,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "7eaf31278ba7af8da03d8cca1a145426fca33b56c13e6b50affaa04828f33ed8",
+          "framebuffer_sha256": "4fd11c47f53be51c46320186de20ef6ffa848669a55a0f1d9cad42bacd2f7a18",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -4905,7 +4906,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "cc6a95c5715ec03e55ee344000b6e427f9f81904efd3e8ed811fe7d2b7b4518a",
+          "framebuffer_sha256": "7be8b4aff129d01c02383fae6fd6543fca542763a78bed71a2d3f3b3aeda6043",
           "pcm": null,
           "cassette": {
             "state": 6,

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/glyph-shift/tests/model.py (upstream rules 1.6.1) and tests/ranked_model.py (upstream ranked campaign runtime and password), not from the emulator; best is the per-stage rating table at 0x4760. Stages replay upstream solutions.json (three stars) and the challenges.json clear route (two stars); synthetic-glyphs-1-20 and synthetic-glyphs-21-40 (resumed by password) rate all forty stages. synthetic-password types a code made by the model and restores stage 13 and its ratings. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 121860,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -37,7 +38,7 @@
             "pcg": "0000000000000001000000000000008000000000000000000000000000000000ff8181ffe0e0ff81ff8181ff6060ff8181ffe0e0ff8181ff81ff6060ff8181ff0f30434489929495f00cc222914929a9959492894443300fa929499122c20cf0ff80bfa0afa8abaaff01fd05f515d555aaaba8afa0bf80ff55d515f505fd01ff",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "afd66aeea296fac9e494298c1cfcfb671c953a7100563972f7d5b88786d5d3d4",
+          "framebuffer_sha256": "4ae613e9ba1e77c7eb9e95a77b1c356b059a5b91b702b4295d82d0d148f03e72",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -86,7 +87,7 @@
             "mode": "05",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "9c965121a6c3ba0213e7e76d9eb9c8635040ed63b12d074d6462684d06e00cc7",
+          "framebuffer_sha256": "1fe02f5b04760808e54e06d9315abf9b149bdade6bf508bf056dbb3bb683751e",
           "pcm": null,
           "cassette": null
         }
@@ -142,7 +143,7 @@
             "level": "00",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "70374dd7945f35b2155a607edcbabcac6fa37c352f3a44f9fad6d76020d01eeb",
+          "framebuffer_sha256": "1d628d29a70188c638d683be3f99a0e80d64d3e885da579c3815b4c40ce82569",
           "pcm": null,
           "cassette": null
         }
@@ -222,7 +223,7 @@
             "level": "00",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "d09a474b98b892eb483835ba2fa77bbfb7c4df298c0ca957920beb8e2f1daa90",
+          "framebuffer_sha256": "4dcd61bdc94455eec42a9ceaae3c1b5e9cb31a62ad7d6c28418740873a613a76",
           "pcm": null,
           "cassette": null
         }
@@ -374,7 +375,7 @@
             "level": "00",
             "best": "03000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "e114069f27b5f13874d70582617640f986f9a95de74ecd744815ce161bdddae6",
+          "framebuffer_sha256": "980602bb6b2e1f0584d56cfb0eb4b8b8b55a304f13f3d4262cc58d774247bba0",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -613,7 +614,7 @@
             "level": "00",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "906bf560a545f6edee6580c172a307758e5808371f7b6a0e5e4ca70a616c1174",
+          "framebuffer_sha256": "42bb99965549b352b4c5bb64075b52055226778710c7917d122d6e3728488be9",
           "pcm": null,
           "cassette": null
         }
@@ -1047,7 +1048,7 @@
             "level": "00",
             "best": "03000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "ed34fe27ddb12b6edbc8e15586e394d2f758396f5953c04a2744fcfda6e9b1ed",
+          "framebuffer_sha256": "26b21a69a86f9d4aab92d7cf8daef9b463a195f7fccb472c1e55e8d4d720cd00",
           "pcm": null,
           "cassette": null
         }
@@ -1169,7 +1170,7 @@
             "level": "00",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "d324bbbe93c966767e4839c24747b4be73eb79c2ce984ab131a8431a372366fd",
+          "framebuffer_sha256": "38ec2fe1543b9406bf273c3db55f538d61f67a46683acd8e745fc364cb80b37b",
           "pcm": null,
           "cassette": null
         }
@@ -12031,7 +12032,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "afd66aeea296fac9e494298c1cfcfb671c953a7100563972f7d5b88786d5d3d4",
+          "framebuffer_sha256": "4ae613e9ba1e77c7eb9e95a77b1c356b059a5b91b702b4295d82d0d148f03e72",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -12075,7 +12076,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "70374dd7945f35b2155a607edcbabcac6fa37c352f3a44f9fad6d76020d01eeb",
+          "framebuffer_sha256": "1d628d29a70188c638d683be3f99a0e80d64d3e885da579c3815b4c40ce82569",
           "pcm": null,
           "cassette": {
             "state": 6,

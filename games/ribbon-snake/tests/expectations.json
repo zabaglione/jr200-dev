@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/ribbon-snake/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six gardens with their input scripts; synthetic-demo-clear plays garden 1 with the same script at normal speed. synthetic-turn sends D during the first glide and W before the next step, then checks that the ribbon moved right and consumed the buffered turn. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 125910,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "000000000000000100000000000000800000000000000000000000000000000000030c112241408600c03088448202098986404728100f00150902028c70f000000001030c10262800800060980402022820201008060100020202040830c00000001f204c52524c0000f804324a4a324c52524c201f0000324a4a3204f8000000030c1026294a4600c030086494526240404344402020200202c2220204040420202040444340400404040222c20202464a2926100c0300625294640830c00000030c1026294b4400f8070000102020444b2926100c0300202010000007f800001fe0000008040400c030086494d2220404080000e01f0022d294640830c000"
           },
-          "framebuffer_sha256": "359b03e5e8517bd628dc97f2995c0668c83de2b2ef7e2f3df8330fba8b389b95",
+          "framebuffer_sha256": "d6d6f5a8c9c6bc67f387461361b4849c33fd359186446c8622195ff6225d9fe5",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "7318aca89120bfae01f28d031d56ae0407be063209631d90cc4e547a5d86ff97",
+          "framebuffer_sha256": "eb40871213bfbf4a052aaf28d46becaaf32a00d39f5bd0091175c53a4fbcf6c7",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "58fc91a8802d44ce172cfb33b06604090fea9e0f459db1952cf85549b7ea8031",
+          "framebuffer_sha256": "77e2a38b920325d0ac05fb696a48c6e0995a2f55109db6776da0f394a61126d3",
           "pcm": null,
           "cassette": null
         }
@@ -266,7 +267,7 @@
             "level": "00",
             "status": "544845204845414420484954205448452045444745"
           },
-          "framebuffer_sha256": "23887593dfc7348ab9d7e54f8beff52552f712c176b202de52052f536ed599c6",
+          "framebuffer_sha256": "dcdfeac481a92891a0492e7e4f038520e0febcfe28a90d25aada707dd94dd177",
           "pcm": null,
           "cassette": null
         }
@@ -438,7 +439,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "3052924bfef38d423965d51af75fa7f75e1b931b2c4b7670df6e1cf596daa2c0",
+          "framebuffer_sha256": "e926e2fbfd5f8d6ca1655e2e58a5d2c6f02df1495a676793200ef921cd698dfa",
           "pcm": null,
           "cassette": null
         }
@@ -488,7 +489,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "7bd4d8cdce32052f47834f5a0dc0b73425d29e4a9ef50800484a7c4ee83eccc7",
+          "framebuffer_sha256": "016de59a42543c9459b4d2ff63a76ba24ade9e692f5dbd107c8bb2b2820b7fdb",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -637,7 +638,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "359b03e5e8517bd628dc97f2995c0668c83de2b2ef7e2f3df8330fba8b389b95",
+          "framebuffer_sha256": "d6d6f5a8c9c6bc67f387461361b4849c33fd359186446c8622195ff6225d9fe5",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -681,7 +682,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "58fc91a8802d44ce172cfb33b06604090fea9e0f459db1952cf85549b7ea8031",
+          "framebuffer_sha256": "77e2a38b920325d0ac05fb696a48c6e0995a2f55109db6776da0f394a61126d3",
           "pcm": null,
           "cassette": {
             "state": 6,

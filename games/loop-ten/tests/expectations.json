@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/loop-ten/tests/model.py, which follows the upstream JR-100 assembly (jr100dev games/loop_ten 1.6.1, no Python rules module), and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays the whole twelve-chamber escape with its input script (upstream replay.py routes); synthetic-demo-clear plays the same script at normal speed. Timed key replays (walk, hold, rewind, time-out) only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 130751,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000002000000000000004000000000000000000000000000000000ffc0a09f90909090ff0305f909090909909090909fa0c0ff09090909f90503ff03070507030f1717c0e0a0e0c0f0e8e80f0606060e001f00f06060607000f800ffaaaaaaffaaaaaaffabababffabababaaffaaaaaaaaff00abffababababff000001020409122448008040209048241248241209040201001224489020408000000103070e1d3b770080c0e070b8dcee773b1d0e07030100eedcb870e0c080000021217373fb00000008089c9cef000021217373fb00000008089c9cef000000000708112121414100e01088848482fa4040202010080700020204040810e000"
           },
-          "framebuffer_sha256": "3d5e7d5fe3dde543328b038e0e8e172bebb55f036b97c48540e8cf8d54523c1d",
+          "framebuffer_sha256": "74913235d03b39c344ea69a8f706834a366647c96b69fc6bed7bcc041725d710",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "82b8a9b3fe9fafa9dad736132b1ab374399a21e2bdbaa2c6c097354f54a51755",
+          "framebuffer_sha256": "edfe2b468da9c11115d72a87379219c08789fe361433b22c619a06fc82b56a24",
           "pcm": null,
           "cassette": null
         }
@@ -136,7 +137,7 @@
             "loops": "01",
             "flags": "0000"
           },
-          "framebuffer_sha256": "1327cf8a227d092f7e822d6d14ad7ea20ab68264c1dc02bf94515fb4e367a616",
+          "framebuffer_sha256": "b0410a6f1a088294c4acf3c330f487848f85e29d5b54209c0fbbe26014c16842",
           "pcm": null,
           "cassette": null
         }
@@ -532,7 +533,7 @@
       {
         "profile": "synthetic-demo-play",
         "mode": "synthetic-injection",
-        "max_cycles": 15133333,
+        "max_cycles": 15273666,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -554,7 +555,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "1d9053a16241ade800789523d66c6e163103aabe892c8d5a6ba7817512a919a8",
+          "framebuffer_sha256": "eac2d9c4e377060d5d380f488f1b0d2bcf384bc7047cca0fd6940ddc1bfad199",
           "pcm": null,
           "cassette": null
         }
@@ -604,7 +605,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "7443398c46f050aba629c84761bc2640a39dc54a4c2d4d4a7ff0a001f7ed8532",
+          "framebuffer_sha256": "fd858b869827347fcc14895fec0d3ac7bfc17f651007aa5654ffb41e497b428d",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -753,7 +754,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "3d5e7d5fe3dde543328b038e0e8e172bebb55f036b97c48540e8cf8d54523c1d",
+          "framebuffer_sha256": "74913235d03b39c344ea69a8f706834a366647c96b69fc6bed7bcc041725d710",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -797,7 +798,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "1327cf8a227d092f7e822d6d14ad7ea20ab68264c1dc02bf94515fb4e367a616",
+          "framebuffer_sha256": "b0410a6f1a088294c4acf3c330f487848f85e29d5b54209c0fbbe26014c16842",
           "pcm": null,
           "cassette": {
             "state": 6,

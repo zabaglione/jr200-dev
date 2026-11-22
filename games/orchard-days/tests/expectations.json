@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/orchard-days/tests/model.py (upstream rules 2.0.0), not from the emulator. Each season follows the greedy plan from best_plan(); synthetic-all-seasons meets all three quotas. Key gaps leave 60000 cycles per animation frame the model counts. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together).",
   "runtime": {
+    "startup_delay_cycles": 129283,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000000000000000000000000000000220088ff00000000220088ff0000000000000000000000000000000000060301010100ff0060c080808000ff00000000000c063300000000003060cc1d050101010100ffb8a08080808000ff0000071f3b7b7fed0000e0f8dcdefeb7"
           },
-          "framebuffer_sha256": "db3c61030649e2bc0d138e8f7207451d639e83af547c9c63f1eadf16427c25f8",
+          "framebuffer_sha256": "88a54fe09535d7290de9c98dc06bab630455383c23aa8d2b28cd2ebdc0943869",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -74,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "0b41747369f76cdd11d6997e74371782dce5d7177fc64c74258a59e81db5f9a0",
+          "framebuffer_sha256": "3745f2e246ab5dfcf2648ad5d2e301f34f3f0b68f0ff1e239ef11382906367f5",
           "pcm": null,
           "cassette": null
         }
@@ -124,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "285c538812f9d447bcb7569cfde9d814bf6174816d9074ee52efd341847edcdd",
+          "framebuffer_sha256": "36f3a110473ee96d0dfb344af523fb5227f1023318805349bce92cb51403cbaa",
           "pcm": null,
           "cassette": null
         }
@@ -764,7 +765,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "175f0d754b63814d4769d0b1e90c0d51184e0c15d5a9217c9b5179d73c525462",
+          "framebuffer_sha256": "8f6c8807b24e0a00c8329f9950e339e3691a8f1fafa48e1f15c95d4caaeac522",
           "pcm": null,
           "cassette": null
         }
@@ -1162,7 +1163,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "c6ea1748a2f3bc220a27a2300d3f9b31c4bf6be6928214c5e91c5f5c3c0778cf",
+          "framebuffer_sha256": "2d956524315dd8f63a215579ea3b178e4a400b8654eabc19797d2b4197e59302",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -1631,7 +1632,7 @@
             "level": "00",
             "status": "54484520534541534f4e20454e4445442042454c4f572051554f5441"
           },
-          "framebuffer_sha256": "563ef97aba598f6b5b880d1334aed91f6b40cca37394673999c277f4cbe180c6",
+          "framebuffer_sha256": "9c599040ae17c83d8d1b19703d3421bcbc0f49852a7f608e925a97d636579920",
           "pcm": null,
           "cassette": null
         }
@@ -4399,7 +4400,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "db3c61030649e2bc0d138e8f7207451d639e83af547c9c63f1eadf16427c25f8",
+          "framebuffer_sha256": "88a54fe09535d7290de9c98dc06bab630455383c23aa8d2b28cd2ebdc0943869",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -4443,7 +4444,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "285c538812f9d447bcb7569cfde9d814bf6174816d9074ee52efd341847edcdd",
+          "framebuffer_sha256": "36f3a110473ee96d0dfb344af523fb5227f1023318805349bce92cb51403cbaa",
           "pcm": null,
           "cassette": {
             "state": 6,

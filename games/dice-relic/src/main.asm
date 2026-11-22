@@ -12,6 +12,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x46a0
 JR_AUDIO:           .equ    0x46c0
@@ -88,6 +90,10 @@ DR_CHAR_BOLT:       .equ    0x98
 DR_CHAR_SPARK:      .equ    0x99
 DR_CHAR_COIN:       .equ    0x9a
 DR_CHAR_HEART:      .equ    0x9b
+DR_CHAR_SWORD:      .equ    0x9c
+DR_CHAR_SHIELD:     .equ    0x9d
+DR_CHAR_REROLL:     .equ    0x9e
+DR_CHAR_HAMMER:     .equ    0x9f
 DR_ATTR_DIE:        .equ    0x47
 DR_ATTR_PICKED:     .equ    0x46
 DR_ATTR_SPENT:      .equ    0x41
@@ -114,15 +120,17 @@ start:
         JSR     jr_font_install
         LDX     dr_patterns
         LDAA    DR_CHAR_BOX
-        LDAB    28
+        LDAB    32
         JSR     jr_pcg_load
         JMP     jr_port_run
 
 ; ---------------------------------------------------------------- rules
 
-; NEW_GAME: the seed is the title song's position (upstream: its timer).
+; NEW_GAME: keep the original seed for each point in the title melody,
+; independent of the link address of the notes.
 game_init:
         LDAA    [JR_AU_VOICE + 1]
+        ADDA    (0x3f - dr_title_melody) & 0xff
         EORA    [JR_AU_VOICE + 2]
         ORAA    1
         STAA    [DR_SEED]
@@ -629,6 +637,8 @@ game_draw:
 dr_draw_battle:
         LDX     dr_battle_lines
         JSR     jr_gfx_lines
+        LDX     dr_battle_icons
+        JSR     jr_guide_draw
         LDAA    DR_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    28
@@ -706,6 +716,17 @@ dr_draw_die:
         JSR     jr_gfx_at
         LDAA    [DR_TURN]
         JSR     jr_gfx_dec3
+        ; W/S moves the underline across the visible role icons.
+        LDAA    0xb6
+        STAA    [JR_RT_COLOR]
+        LDAA    [DR_CHOICE]
+        LDAB    6
+        JSR     jr_mul8
+        ADDA    6
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    0x36
+        JSR     jr_gfx_putc
         JSR     dr_draw_event
         JMP     dr_draw_error
 
@@ -888,12 +909,14 @@ dr_draw_die_role:
         JSR     jr_gfx_at
         PULA
         JSR     jr_gfx_putc
-        LDX     dr_role_names
+        LDX     dr_role_icons
         LDAA    [DR_DV]
         ASLA
         JSR     jr_add_x_a
-        LDX     [X]
-        JMP     jr_gfx_text
+        LDAB    [X + 1]
+        STAB    [JR_RT_COLOR]
+        LDAA    [X]
+        JMP     jr_gfx_putc
 dr_draw_die_done:
         RTS
 
@@ -936,7 +959,7 @@ dr_draw_event:
         LDAA    DR_ATTR_TITLE
         STAA    [JR_RT_COLOR]
         LDAA    1
-        LDAB    18
+        LDAB    19
         JSR     jr_gfx_at
         LDX     dr_event_names - 2
         LDAA    [DR_EV_KIND]
@@ -1064,11 +1087,11 @@ dr_draw_face_colour:
         ADDA    0x30
         JSR     jr_gfx_putc
         ; the services
-        LDX     dr_service_lines
-        JSR     jr_gfx_lines
+        LDX     dr_service_icons
+        JSR     jr_guide_draw
         LDAA    [DR_SUB]
         CMPA    DR_SUB_MENU
-        BNE     dr_draw_shop_hint
+        BNE     dr_draw_workshop_done
         LDAA    DR_ATTR_PICK
         STAA    [JR_RT_COLOR]
         LDX     dr_service_marks
@@ -1079,15 +1102,15 @@ dr_draw_face_colour:
         JSR     jr_gfx_at
         LDAA    0x3e
         JSR     jr_gfx_putc
-        LDX     dr_menu_hint_lines
-        BRA     dr_draw_shop_lines
-dr_draw_shop_hint:
-        LDX     dr_shop_hint_lines
-dr_draw_shop_lines:
-        JSR     jr_gfx_lines
+dr_draw_workshop_done:
         JMP     dr_draw_error
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     dr_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -1129,6 +1152,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    DR_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     dr_help_diagram
+        JSR     jr_guide_draw
         LDX     dr_help_lines
         JMP     jr_gfx_lines
 
@@ -1168,10 +1193,26 @@ dr_effect_frames:
 dr_event_names:
         .dw     dr_txt_ev_attack, dr_txt_ev_attack, dr_txt_ev_guard, dr_txt_ev_heal, dr_txt_ev_strike
         .dw     dr_txt_ev_blocked, dr_txt_ev_damage, dr_txt_ev_victory, dr_txt_ev_reward, dr_txt_ev_defeat
-dr_role_names:
-        .dw     dr_role_attack, dr_role_guard, dr_role_heal, dr_role_reroll
+dr_role_icons:
+        .db     DR_CHAR_SWORD, DR_ATTR_BOLT
+        .db     DR_CHAR_SHIELD, DR_ATTR_SHIELD
+        .db     DR_CHAR_HEART, DR_ATTR_HEART
+        .db     DR_CHAR_REROLL, DR_ATTR_PICKED
 dr_service_marks:
-        .db     1, 10, 18, 24
+        .db     1, 9, 17, 25
+
+dr_battle_icons:
+        .db     1, 3, DR_ATTR_HEART, 1, DR_CHAR_HEART
+        .db     1, 4, DR_ATTR_BOLT, 1, DR_CHAR_SWORD
+        .db     22, 3, DR_ATTR_HEART, 1, DR_CHAR_HEART
+        .db     22, 4, DR_ATTR_SHIELD, 1, DR_CHAR_SHIELD
+        .db     22, 5, DR_ATTR_COIN, 1, DR_CHAR_COIN
+        .db     1, 16, DR_ATTR_PICKED, 1, DR_CHAR_REROLL
+        .db     6, 17, DR_ATTR_BOLT, 1, DR_CHAR_SWORD
+        .db     12, 17, DR_ATTR_SHIELD, 1, DR_CHAR_SHIELD
+        .db     18, 17, DR_ATTR_HEART, 1, DR_CHAR_HEART
+        .db     24, 17, DR_ATTR_PICKED, 1, DR_CHAR_REROLL
+        .db     0xff
 
 dr_battle_lines:
         .db     1, 0, DR_ATTR_TITLE
@@ -1180,26 +1221,12 @@ dr_battle_lines:
         .dw     dr_txt_battle
         .db     29, 0, DR_ATTR_DIM
         .dw     dr_txt_of9
-        .db     1, 3, DR_ATTR_LABEL
-        .dw     dr_txt_hp
-        .db     1, 4, DR_ATTR_LABEL
-        .dw     dr_txt_next
         .db     22, 2, DR_ATTR_TITLE
         .dw     dr_txt_you
-        .db     22, 3, DR_ATTR_LABEL
-        .dw     dr_txt_hp
         .db     27, 3, DR_ATTR_DIM
         .dw     dr_txt_max
-        .db     22, 4, DR_ATTR_LABEL
-        .dw     dr_txt_guard
-        .db     22, 5, DR_ATTR_LABEL
-        .dw     dr_txt_gold
-        .db     1, 16, DR_ATTR_LABEL
-        .dw     dr_txt_reroll
         .db     22, 16, DR_ATTR_LABEL
         .dw     dr_txt_turn
-        .db     1, 21, DR_ATTR_DIM
-        .dw     dr_txt_battle_keys
         .db     0xff
 dr_workshop_lines:
         .db     1, 0, DR_ATTR_TITLE
@@ -1215,17 +1242,15 @@ dr_workshop_lines:
         .db     21, 3, DR_ATTR_LABEL
         .dw     dr_txt_die3
         .db     0xff
-dr_service_lines:
-        .db     2, 18, DR_ATTR_TEXT
-        .dw     dr_txt_services
-        .db     0xff
-dr_shop_hint_lines:
-        .db     1, 21, DR_ATTR_DIM
-        .dw     dr_txt_shop_keys
-        .db     0xff
-dr_menu_hint_lines:
-        .db     1, 21, DR_ATTR_DIM
-        .dw     dr_txt_menu_keys
+dr_service_icons:
+        .db     2, 18, DR_ATTR_BOLT, 1, DR_CHAR_HAMMER
+        .db     3, 18, DR_ATTR_TEXT, 4, 0x2b, 0x32, 0x2f, 0x33
+        .db     7, 18, DR_ATTR_COIN, 1, DR_CHAR_COIN
+        .db     10, 18, DR_ATTR_HEART, 1, DR_CHAR_HEART
+        .db     11, 18, DR_ATTR_TEXT, 4, 0x2b, 0x36, 0x2f, 0x32
+        .db     15, 18, DR_ATTR_COIN, 1, DR_CHAR_COIN
+        .db     18, 18, DR_ATTR_LABEL, 1, 0x3e
+        .db     26, 18, DR_ATTR_DIM, 1, 0x3c
         .db     0xff
 dr_title_lines:
         .db     10, 8, DR_ATTR_TITLE
@@ -1242,30 +1267,57 @@ dr_title_lines:
 dr_help_lines:
         .db     11, 1, DR_ATTR_TITLE
         .dw     dr_txt_name
-        .db     1, 3, DR_ATTR_TEXT
-        .dw     dr_help_1
-        .db     1, 4, DR_ATTR_TEXT
-        .dw     dr_help_2
-        .db     1, 6, DR_ATTR_TEXT
-        .dw     dr_help_3
-        .db     1, 7, DR_ATTR_TEXT
-        .dw     dr_help_4
-        .db     1, 9, DR_ATTR_TEXT
-        .dw     dr_help_5
-        .db     1, 10, DR_ATTR_TEXT
-        .dw     dr_help_6
-        .db     1, 12, DR_ATTR_TEXT
-        .dw     dr_help_7
-        .db     1, 13, DR_ATTR_TEXT
-        .dw     dr_help_8
-        .db     1, 15, DR_ATTR_TEXT
-        .dw     dr_help_9
-        .db     1, 16, DR_ATTR_TEXT
-        .dw     dr_help_10
-        .db     1, 18, DR_ATTR_TEXT
-        .dw     dr_help_11
-        .db     8, 21, DR_ATTR_LABEL
-        .dw     dr_help_back
+        .db     2, 4, DR_ATTR_LABEL
+        .dw     dr_help_label_1
+        .db     12, 4, DR_ATTR_LABEL
+        .dw     dr_help_label_2
+        .db     24, 4, DR_ATTR_LABEL
+        .dw     dr_help_label_3
+        .db     2, 12, DR_ATTR_TEXT
+        .dw     dr_help_label_4
+        .db     2, 14, DR_ATTR_TEXT
+        .dw     dr_help_label_5
+        .db     2, 16, DR_ATTR_TEXT
+        .dw     dr_help_label_6
+        .db     2, 18, DR_ATTR_TEXT
+        .dw     dr_help_label_7
+        .db     2, 20, DR_ATTR_TEXT
+        .dw     dr_help_label_8
+        .db     2, 22, DR_ATTR_LABEL
+        .dw     dr_help_label_9
+        .db     0xff
+dr_help_label_1:
+        .db     "ATTACK", 0
+dr_help_label_2:
+        .db     "GUARD", 0
+dr_help_label_3:
+        .db     "HEAL", 0
+dr_help_label_4:
+        .db     "A/D DIE  W/S ROLE  RETURN USE", 0
+dr_help_label_5:
+        .db     "REROLL 1 UNUSED DIE / TURN", 0
+dr_help_label_6:
+        .db     "3 DICE > FOE STRIKES (+2 / 4)", 0
+dr_help_label_7:
+        .db     "WIN +2 HP +3 GOLD   ESC BASIC", 0
+dr_help_label_8:
+        .db     "SHOP: +2 FACE 3G / +6 HP 2G", 0
+dr_help_label_9:
+        .db     "ANY KEY TO TITLE", 0
+
+dr_help_diagram:
+; Show the results of assigning one die to each role.
+        .db     2, 0x80 + 6, DR_ATTR_HERO, 1, DR_TILE_HERO
+        .db     4, 7, DR_ATTR_BOLT, 2, DR_CHAR_BOLT, DR_CHAR_SPARK
+        .db     6, 0x80 + 6, DR_ATTR_HIT, 1, DR_TILE_GUARDIAN
+        .db     12, 0x80 + 6, DR_ATTR_SHIELD, 1, DR_TILE_SHIELD
+        .db     14, 7, DR_ATTR_BOLT, 2, DR_CHAR_SPARK, DR_CHAR_BOLT
+        .db     16, 0x80 + 6, DR_ATTR_HIT, 1, DR_TILE_GUARDIAN
+        .db     24, 0x80 + 6, DR_ATTR_HERO, 1, DR_TILE_HERO
+        .db     26, 7, DR_ATTR_HEART, 3, DR_CHAR_HEART, DR_CHAR_HEART, DR_CHAR_HEART
+        .db     3, 9, 0x80, 1, 0x36
+        .db     13, 9, 0x80, 1, 0x2d
+        .db     25, 9, 0x80, 1, 0x12
         .db     0xff
 
 dr_txt_name:
@@ -1278,20 +1330,12 @@ dr_txt_hp:
         .db     "HP", 0
 dr_txt_max:
         .db     "/42", 0
-dr_txt_next:
-        .db     "NEXT", 0
 dr_txt_you:
         .db     "YOU", 0
-dr_txt_guard:
-        .db     "GUARD", 0
 dr_txt_gold:
         .db     "GOLD", 0
-dr_txt_reroll:
-        .db     "REROLL", 0
 dr_txt_turn:
         .db     "TURN", 0
-dr_txt_battle_keys:
-        .db     "A/D DIE  W/S ROLE  RETURN USE", 0
 dr_txt_workshop:
         .db     "WORKSHOP", 0
 dr_txt_die1:
@@ -1300,26 +1344,12 @@ dr_txt_die2:
         .db     "DIE 2", 0
 dr_txt_die3:
         .db     "DIE 3", 0
-dr_txt_services:
-        .db     "FORGE 3G HEAL 2G NEXT  BACK", 0
-dr_txt_shop_keys:
-        .db     "A/D DIE W/S FACE RETURN MENU", 0
-dr_txt_menu_keys:
-        .db     "A/D PICK RETURN OK SPACE BACK", 0
 dr_txt_arrow:
         .db     " > ", 0
 dr_txt_refused:
         .db     "NOT POSSIBLE", 0
 dr_txt_defeat:
         .db     "DEFEATED BY THE GUARDIAN", 0
-dr_role_attack:
-        .db     "ATTACK", 0
-dr_role_guard:
-        .db     "GUARD", 0
-dr_role_heal:
-        .db     "HEAL", 0
-dr_role_reroll:
-        .db     "REROLL", 0
 dr_txt_ev_attack:
         .db     "ATTACK", 0
 dr_txt_ev_guard:
@@ -1346,30 +1376,6 @@ dr_txt_howto:
         .db     "OTHER KEY : HOW TO PLAY", 0
 dr_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-dr_help_1:
-        .db     "A/D PICKS A DIE, W/S A ROLE,", 0
-dr_help_2:
-        .db     "RETURN USES IT (ONCE A TURN).", 0
-dr_help_3:
-        .db     "ATTACK HITS, GUARD BLOCKS THE", 0
-dr_help_4:
-        .db     "NEXT ATTACK, HEAL ADDS HP.", 0
-dr_help_5:
-        .db     "REROLL: ONE UNUSED DIE A TURN.", 0
-dr_help_6:
-        .db     "AFTER THE THIRD DIE IT STRIKES.", 0
-dr_help_7:
-        .db     "EVERY 4TH TURN IT HITS +2.", 0
-dr_help_8:
-        .db     "A WIN: HP +2, GOLD +3.", 0
-dr_help_9:
-        .db     "WORKSHOP: FORGE A FACE +2 (3G,", 0
-dr_help_10:
-        .db     "UP TO 9) OR HEAL 6 HP (2G).", 0
-dr_help_11:
-        .db     "NINE GUARDIANS. ESC: BASIC.", 0
-dr_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1445,7 +1451,7 @@ dr_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1453,5 +1459,11 @@ dr_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "6901d9a8769a765307b9ae3fefa318e34524779ace3aa481e691920c754bade5",
-      "framebuffer_sha256": "72da7900b1f65aeb2fae1b381da830376dd69350141e3484dd75bcb5618015ef"
+      "sha256": "d31c53ecb833de2089ad01256605f8d90d1e409df7ed2c2dd26bcd3360674c30",
+      "framebuffer_sha256": "f727a612d59aaabd6caa87a3a683e5f4826236e18550ab1442f672eca60e871d"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-cut-play",
       "role": "play",
       "caption": "計画した経路を刀が走り、標的を斬る場面",
-      "sha256": "0f7832b209760364d63b2cef022e24cefaee1fb46c7c08ed925d41a176610178",
-      "framebuffer_sha256": "89a8b4e17bf3b9dee77cb4c2bf8e4700de3682658bacb6779fd96befa7c60e69"
+      "sha256": "062fe0041ee40ee733a8192df1006869b10a1c7eebc9ea6cce22f6ae986e87e0",
+      "framebuffer_sha256": "08ecdce2c1b08778cb59aeff9d1b0a8be5815abecfb487e3cc4f9763419cfba1"
     },
     {
       "id": "plan",
@@ -25,8 +25,8 @@
       "profile": "synthetic-plan",
       "role": "play",
       "caption": "経路を計画している場面（通った標的に四隅の印）",
-      "sha256": "d765b6b327d468b0400555b8e597313503252d10bae3f02b37a01c3c12d2f0c6",
-      "framebuffer_sha256": "4d1ad137bca9895c907c053eccf112b73e1c130042f0b162b6aaf15f52585181"
+      "sha256": "050f625a55cf9c037ccd94e5a3fc760fdaee524ddfb3c0845c0cbd7aff0563c7",
+      "framebuffer_sha256": "b0e573b36200102d318196a061c6af4fc7ce071b90842a12250a6f39456d5c73"
     },
     {
       "id": "clear",
@@ -34,8 +34,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "全標的を斬って1つ目の部屋を突破する",
-      "sha256": "fd2a2c1006906ae73a6fb60f727aedc01c8ac88cecc55e6440beccdc640941f4",
-      "framebuffer_sha256": "59f4f62400b7032e4aba95e1365c3f9db3ac44c23c37b01a82099547c939b86e"
+      "sha256": "3d2c8e045baa7af34859a77fe1b451745db2e4f3ebdd790ea4ee7e282836c5c1",
+      "framebuffer_sha256": "feb21d61be716be70dfff982c4a68f0180e0e3d659a21d3ddf4eb149b1bdaf9f"
     }
   ],
   "video": {
@@ -43,11 +43,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 5.0,
-    "frames": 149,
-    "frames_sha256": "4a2becb7cb07b7ab2272a02c4522898e16933fcdac16ef20ddaab474760766e0",
-    "pcm_sha256": "60e5ee1672fd8a20ee2cabafbc7938bed23e434d0b3a5bd5847481a5de6af2d4",
-    "sha256": "cce278ac5d788748150665bf88be83d4485866584c6465b119db73c02310a6a7",
+    "seconds": 5.1,
+    "frames": 152,
+    "frames_sha256": "f3156fec1d924b4d4e76834ff4b220d22e3f76fe82759b3a0c90e1c5b2278862",
+    "pcm_sha256": "1cc85dec30766f3d64ed2c2a2998a0ed0ce0fb57f79f421dc0a4b5c5ba3a586d",
+    "sha256": "25fe4f453e12973ec0cb894517a6ce5c3071179f814c45010f363226f33d29d2",
     "caption": "1つ目の部屋の経路を計画して斬る（等速）"
   }
 }

@@ -14,7 +14,7 @@
     {"name": "session-stack", "kind": "data", "start": "0x4f00", "end": "0x4fff"}
   ],
   "inputs": {
-    "assembly": ["src/glyphs.inc", "src/main.asm"],
+    "assembly": ["src/glyphs.inc", "src/main.asm", "src/title_art.inc"],
     "sdk": [
       "sdk/font.inc",
       "sdk/font_data.inc",
@@ -23,7 +23,8 @@
       "sdk/screen.inc",
       "sdk/session.inc",
       "sdk/sound.inc",
-      "sdk/timing.inc"
+      "sdk/timing.inc",
+      "sdk/title_art.inc"
     ],
     "assets": []
   },

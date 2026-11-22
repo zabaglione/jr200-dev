@@ -24,7 +24,8 @@
     "assembly": [
       "src/art.inc",
       "src/main.asm",
-      "src/selftest.inc"
+      "src/selftest.inc",
+      "src/title_art.inc"
     ],
     "sdk": [
       "sdk/audio.inc",
@@ -33,15 +34,20 @@
       "sdk/font_data.inc",
       "sdk/frame.inc",
       "sdk/gfx.inc",
+      "sdk/gfx_runtime.inc",
+      "sdk/guide.inc",
       "sdk/jr200.inc",
       "sdk/keys.inc",
       "sdk/keyscan.inc",
+      "sdk/live_input.inc",
       "sdk/math.inc",
       "sdk/pcg.inc",
       "sdk/port.inc",
+      "sdk/port_runtime.inc",
       "sdk/selftest.inc",
       "sdk/session.inc",
-      "sdk/sound.inc"
+      "sdk/sound.inc",
+      "sdk/title_art.inc"
     ],
     "assets": []
   },

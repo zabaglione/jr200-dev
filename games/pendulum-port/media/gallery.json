@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "25812c126b3978bd6bb7a068b63baba3352ca4f5d271be9aafa37c1189e686b6",
-      "framebuffer_sha256": "5624910503e09fd6538b7f3c627278fc7962f9e0ff6d0145b51376670fb123ec"
+      "sha256": "752ef1659eb6066cedef1090b874ee4d2500df13b941909f4364aaef76fbdc11",
+      "framebuffer_sha256": "d8037464920bf11b9b6012a2210d85bc5bcc5aae83d8e76296a127d883ee23f7"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで振り子が揺れる場面",
-      "sha256": "a6b96e5adb0511d5ddd7b8b5d1e6c2434ea0cb991d616baf5e145310671aeaa7",
-      "framebuffer_sha256": "a28f035a1d4f5d9bcfcbd05b905bc1bb874f440785880e0ee58fce02baf83742"
+      "sha256": "438acd168ad21910fd6cc69ec8059c27861f563d9f8841e5e9d189236b74ea1e",
+      "framebuffer_sha256": "4ba1a16c639823900787f925a2c233993518aa3726012ee180e3f84993ca43c6"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "6回目の着地で1つ目の航路をクリア",
-      "sha256": "92be8c32ee66b7d59ec300ebf1505a1c451292727696e6ec7153888c02d8c944",
-      "framebuffer_sha256": "806072ff0a86b5989df01b950ab9a7439c6c86d008fdf5d25af4cdc0334ee904"
+      "sha256": "6dbf8729ed592b197a2697c7a0a25653fb098faf4295337357622f0879885780",
+      "framebuffer_sha256": "90a1963c97653056edf313497299113ad1471409eabcd4e5ad8143f01e1fd275"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 7.9,
-    "frames": 237,
-    "frames_sha256": "f7884ab6d8a32c12e49fb9be79b42e1f658f7a0137947e52bf2086bc0dfa4326",
-    "pcm_sha256": "ba4f72195a2d996e17861bade00614f3c2af88a90ee0e05ed2558d9c350ea539",
-    "sha256": "4be19d9891fcb9159e787e744869e39b040f06d53038ae6688f57404daffb531",
+    "seconds": 8.0,
+    "frames": 240,
+    "frames_sha256": "b85eb4b7514494fb93ffb3c39eb716dc3e6069be79decbfa0c8d63c1d32a9224",
+    "pcm_sha256": "5715c726f4f68cffceeaf0c242133ffc35a2355af3879cdbf6f960f3c90dcb60",
+    "sha256": "cec61a03c1f02a5e9cdc138d74a57befdbd9403a38da338a75a32c4a016551b8",
     "caption": "1つ目の航路の自動デモ（6回着地してクリア）"
   }
 }

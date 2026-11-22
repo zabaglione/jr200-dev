@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "69ccdab5ed1af1b826412a1113a2f9fc100ea2612c6ea88a46460ebbf4fc3ae5",
-      "framebuffer_sha256": "addb86dff9ef9de8ccc9698e484f7a79d5575e942c00568299eff675ff47f78f"
+      "sha256": "84e38ec7bdbf1ba46847faf252d268da6a7f574567bdf6a3ec5db43b5febfbfa",
+      "framebuffer_sha256": "b54b8b184e305fcc7faf15ffb7d0c6f12682d55e377d99461ef8a49f16307b22"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで群れを迎え撃つ場面",
-      "sha256": "9f0728fca5fc7437331f3057229172ecbf68ea7dd4cb345c0337e10d3cd013cc",
-      "framebuffer_sha256": "6884fd67919396218d8f7f132f49a908c55eed5bad5eb2bae3ab5660f48acbdd"
+      "sha256": "362ce4f6b7dde33fd8426ec2f724fdf408d680869a971c9b73daecfe5cb72736",
+      "framebuffer_sha256": "241fe09c4740738820cb905b666da80cbd552fe1a74ca49b370be526295b8756"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "12体を倒して1つ目の波をクリア",
-      "sha256": "12f183bb3d111534c3aaf34f568f57b9695ea9897e160010313d94ff2238755e",
-      "framebuffer_sha256": "c558447a61f704801b56c4d74f2ec62230bfc5298615c538dd9de75f8ed97cef"
+      "sha256": "1207e7d0e4228afedc45efdacca4a0e2d38b6a1f5546540025b15e780a21215e",
+      "framebuffer_sha256": "4af56280f8427155c5df85ce54acac3530e87b78f7a34eb22d71c1a9206e4549"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 16.8,
-    "frames": 505,
-    "frames_sha256": "9bb1eeff81d9c4df2dcbe9f91811d43c678d9128ea7e0254334592ed040b314e",
-    "pcm_sha256": "0a9ed78a72445b754d40eabc306b8a60d18d8999d43ff37a2cc9e2331c7976b0",
-    "sha256": "0384651508e166b0763e603dc0a3d8d81dc1223bc49cb68789cd0979e14e133c",
+    "seconds": 17.1,
+    "frames": 513,
+    "frames_sha256": "3a1d80f4b9ec9a46c5e601f52094e5c68bf5ec6adb640556243d3e034cd34a23",
+    "pcm_sha256": "5bb200a5638aa691e04081b26860d2883b695bdfcd4f5d6ef2f7fb3ca6431320",
+    "sha256": "6b6813b5cc0573e70076f58792953cfe149aa0a10eba0d31529449fb94e63641",
     "caption": "1つ目の波の自動デモ（12体を倒して夜明け）"
   }
 }

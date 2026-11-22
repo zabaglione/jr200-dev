@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "Memory expectations are computed by games/hearth-zero/tests/model.py (upstream rules 2.1.0), not recorded from the emulator. synthetic-all-waves survives all three cold waves (twelve nights each); the loss profiles end by cold and by hunger. synthetic-night only fixes a mid-night gallery frame. Replays leave 2.9M cycles for each day. stack-guard shows the stack stayed above 0x4f10.",
   "runtime": {
+    "startup_delay_cycles": 124599,
     "default_profile": "synthetic-first-wave",
     "profiles": [
       {
@@ -25,7 +26,7 @@
           "memory": {
             "pcg1": "00003f409ca2aaa20000f804020202029c403f003f403f000204f800f804f80000000718244442400000e018889442027f40403f00000000fe0202fc0000000001030307070f1f3900008088ccdcf8fc307070783f1f0700fc7c3c7cfcf8e000ff8181ff1010ff81ff0101ff1010ff0181ff1010ff8181ff01ff1010ff0101ff"
           },
-          "framebuffer_sha256": "fca6b63a8f6abfe75a66d5c7fd8c451f11600db33ebef9388b06ed4e7818e765",
+          "framebuffer_sha256": "0e3754e3ef4caa5953a1032b7873f769d981b6b536ac890a44578dce0076fc5c",
           "pcm": null,
           "cassette": null
         }
@@ -63,7 +64,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "c430a3ed998f5c71fb4b602e9911922e81c433e08747c32296a9f4a7638bafbe",
           "pcm": null,
           "cassette": null
         }
@@ -127,7 +128,7 @@
       {
         "profile": "synthetic-night",
         "mode": "synthetic-injection",
-        "max_cycles": 2120000,
+        "max_cycles": 2158600,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -173,7 +174,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "d171b7502ee48a192307d8c05c817ba6703e6b77e74a1bb95b3a9fe149af7d51",
+          "framebuffer_sha256": "f2376c03d1a03399abc72885bfe7d91152daae7f090da10b7ea7044e5f286ea7",
           "pcm": null,
           "cassette": null
         }
@@ -349,7 +350,7 @@
           },
           {
             "name": "notice",
-            "address": "0xc3a1",
+            "address": "0xc3c1",
             "length": 21
           }
         ],
@@ -501,7 +502,7 @@
           },
           {
             "name": "notice",
-            "address": "0xc3a1",
+            "address": "0xc3c1",
             "length": 24
           }
         ],
@@ -1785,7 +1786,7 @@
             "level": "00",
             "status": "434c454152202d2052455455524e20464f52204e455854205354414745"
           },
-          "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48",
+          "framebuffer_sha256": "7668357431116ba43dc17f1fdcb840d4620d2e50bf42804ff8b6ffd2be258fa9",
           "pcm": null,
           "cassette": null
         }
@@ -2953,7 +2954,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "fca6b63a8f6abfe75a66d5c7fd8c451f11600db33ebef9388b06ed4e7818e765",
+          "framebuffer_sha256": "0e3754e3ef4caa5953a1032b7873f769d981b6b536ac890a44578dce0076fc5c",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -2989,7 +2990,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "76949a071500fe6869b58c128b0b96380526f59926753570e8d602bdbe023208",
+          "framebuffer_sha256": "c2f8e05da0275f23e98d013f0e61209683657d28efc30d81ca8388687371ad69",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -3027,7 +3028,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48",
+          "framebuffer_sha256": "7668357431116ba43dc17f1fdcb840d4620d2e50bf42804ff8b6ffd2be258fa9",
           "pcm": null,
           "cassette": {
             "state": 6,
