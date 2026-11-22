@@ -45,9 +45,9 @@
     "speed": 1.0,
     "seconds": 8.3,
     "frames": 249,
-    "frames_sha256": "74cee5a7eab3fffe5eba5e457d92a7f0b61a36e781f3f26e857cdd2bfecdd721",
-    "pcm_sha256": "f18369a78766769d2c196ed91e8df6a03ae6604d526694473ca625b87ebf8cac",
-    "sha256": "e8cbf9725627d0882f114b6ad30c82df814fb3cddd2567d5a73fb559a57855bb",
+    "frames_sha256": "1120e334ed60337cfa6034432a7f6eaad0775813a485c2a5ed0bad3965931454",
+    "pcm_sha256": "98f0bb450993508eb50de843b618f5ee8c72edd58cda687e854210571d026dfc",
+    "sha256": "6fb636e9d4a3bf04651f99548783be43eb3bcd8ee11e6234794c5401a1eab491",
     "caption": "最初の守護者DUST IMPを倒して工房へ入るまで（等速）"
   }
 }

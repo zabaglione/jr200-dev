@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 18.6,
     "frames": 557,
-    "frames_sha256": "1e1ee8b40b5a1728302e51adca13a1034203a041c262dede1428f56b55edd714",
-    "pcm_sha256": "44604088ebacc80de540a156433c9222efa5c767257e336ba4147305dcbcbf54",
-    "sha256": "3b194903c2bbbb0fb8f818914b36abd9bc838e2ea9a9e83eb049a3649cf2442f",
+    "frames_sha256": "7d33fa872bcbfb24cd9c1e93df9334d7115f846240e8aeb6706ca3aac15c1a23",
+    "pcm_sha256": "99385d5edd7e2748222a368c08969bd631035fddda9bac6791c21a3463af8298",
+    "sha256": "05dab94115e01943292a94b365b95eebc4e58d78a3fbf766bc5742e070bfd2ab",
     "caption": "1面で8組をそろえてクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

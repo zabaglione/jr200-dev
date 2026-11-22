@@ -50,7 +50,8 @@ catalogで指定した代表画像、`media/gallery.json`、`tools/wiki/genres.j
 - `gallery.json`の各画像のPNG SHA-256、320×224の画素hash、対応profileの期待framebuffer hash、
   動画のSHA-256とWebM形式。ROM撮影の場合はCJRと、ゲームが設置するASCII自作字形sourceの
   hashも固定します（画面上の全字形の由来を示すものではありません）。
-  schema 3では`media/receipts/`に保存した実行reportと、CJR・現在の期待値・画面hash・通常カセット経路も照合します。
+  schema 3では`media/receipts/`に保存した実行reportと、CJR・期待値・画面hash・通常カセット経路も照合します。
+  公開済みの版は固定ZIP内の実行report、開発中の版は現在の`tests/expectations.json`を参照します。
   古い版の画像が残っていれば停止します
 - ジャンルが`genres.json`にあること。catalog外の作品は`draft`／`not-published`に限ります
 - 生成した全ページのリンク：Wiki内ページ、`media/`、リポジトリ内file（`blob/main`・`tree/main`の

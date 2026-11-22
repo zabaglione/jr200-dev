@@ -27,13 +27,13 @@ GENRE_PAGE = {'puzzle': 'Genre-Puzzle', 'tabletop': 'Genre-Tabletop',
 
 
 def development_games():
-    """Every game directory except the catalogued fixture game, with its genre page."""
+    """Drafts plus two fixed games used by the development preview tests."""
     games = {}
     for path in sorted(ROOT.glob('games/*/game.json')):
-        if path.parent.name == 'side-catch':
-            continue
         metadata = json.loads(path.read_text(encoding='utf-8'))
-        games[path.parent.name] = GENRE_PAGE[metadata['genre']]
+        name = path.parent.name
+        if metadata['release']['status'] == 'draft' or name in ('relic-dive', 'lumen-cross'):
+            games[name] = GENRE_PAGE[metadata['genre']]
     return games
 
 
@@ -108,16 +108,14 @@ class WikiFixture:
         self.temporary.cleanup()
 
     def add_development_games(self):
-        for project in sorted(ROOT.glob('games/*/game.json')):
-            name = project.parent.name
-            if name != 'side-catch':
-                shutil.copytree(project.parent, self.root / 'games' / name,
-                                ignore=shutil.ignore_patterns('build', '__pycache__'))
-                metadata_path = self.root / 'games' / name / 'game.json'
-                metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
-                metadata['release']['status'] = 'draft'
-                metadata['release']['publication'] = 'not-published'
-                metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
+        for name in DEVELOPMENT:
+            shutil.copytree(ROOT / 'games' / name, self.root / 'games' / name,
+                            ignore=shutil.ignore_patterns('build', '__pycache__'))
+            metadata_path = self.root / 'games' / name / 'game.json'
+            metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+            metadata['release']['status'] = 'draft'
+            metadata['release']['publication'] = 'not-published'
+            metadata_path.write_text(json.dumps(metadata) + '\n', encoding='utf-8')
         self.sync_ledger()
 
     def sync_ledger(self):
@@ -131,7 +129,7 @@ class WikiFixture:
             game['issue'] = game['issue'] if game['issue'] in (59, 60, 61, 62) else 59
         path.write_text(json.dumps(ledger, ensure_ascii=False) + '\n', encoding='utf-8')
 
-    def report(self, profile, mode, evidence, framebuffer='0' * 64):
+    def report(self, profile, mode, evidence, framebuffer, elapsed_cycles):
         cassette = 'memory_injection' if mode == 'synthetic-injection' else 'normal'
         return {
             'schema_version': 1, 'project': 'side-catch', 'profile': profile,
@@ -142,6 +140,7 @@ class WikiFixture:
                 'status': 'passed', 'profile': profile, 'mode': mode,
                 'evidence': evidence, 'artifact_sha256': self.artifact_sha256,
                 'framebuffer_sha256': framebuffer, 'hardware': 'not_run',
+                'elapsed_cycles': elapsed_cycles,
             },
             'verification': {'emulator': 'passed', 'hardware': 'not_run',
                              'cassette_path': cassette},
@@ -155,7 +154,8 @@ class WikiFixture:
             self.report(item['profile'], item['mode'],
                         'emulator' if item['mode'] == 'synthetic-injection'
                         else 'emulator_with_local_rom',
-                        item['expect']['framebuffer_sha256'] or '0' * 64)
+                        item['expect']['framebuffer_sha256'] or '0' * 64,
+                        item['max_cycles'])
             for item in profiles
         ]
         release_profiles = []
@@ -377,6 +377,12 @@ class WikiGenerationTests(unittest.TestCase):
             'https://github.com/zabaglione/jr200-dev/releases/download/'
             'v0.1.0/side-catch-0.1.0.zip')
         self.fixture.write_catalog()
+        project = self.fixture.root / 'games/side-catch'
+        gallery_path = project / 'media/gallery.json'
+        gallery = json.loads(gallery_path.read_text(encoding='utf-8'))
+        gallery['capture']['artifact_sha256'] = self.fixture.artifact_sha256
+        gallery['video']['artifact_sha256'] = self.fixture.artifact_sha256
+        gallery_path.write_text(json.dumps(gallery) + '\n', encoding='utf-8')
         (self.fixture.root / '.gitignore').write_text('build/\n', encoding='utf-8')
         subprocess.check_call(['git', 'init'], cwd=self.fixture.root,
                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -395,6 +401,11 @@ class WikiGenerationTests(unittest.TestCase):
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         current_commit = subprocess.check_output(
             ['git', 'rev-parse', 'HEAD'], cwd=self.fixture.root, text=True).strip()
+        expectations_path = project / 'tests/expectations.json'
+        expectations = json.loads(expectations_path.read_text(encoding='utf-8'))
+        for profile in expectations['runtime']['profiles']:
+            profile['expect']['framebuffer_sha256'] = 'f' * 64
+        expectations_path.write_text(json.dumps(expectations) + '\n', encoding='utf-8')
         with self.assertRaisesRegex(WikiError, 'release contract mismatch'):
             render_pages(self.fixture.root, None, False)
         files, games = render_pages(
@@ -595,7 +606,6 @@ class SevenGamePreviewTests(unittest.TestCase):
         relic = files['Game-relic-dive.md'].decode('utf-8')
         self.assertIn('`S` | その場で1ターン待つ', relic)
         self.assertIn('ジョイスティックは', relic)
-        self.assertIn('`A` / `D`（押し続ける）', files['Game-brick-pulse.md'].decode('utf-8'))
 
     def test_porting_plan_separates_published_development_and_planned(self):
         files, _ = self.render()

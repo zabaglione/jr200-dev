@@ -144,7 +144,8 @@ def expected_spdx(root: Path, relative: str) -> str:
 
 
 def gallery_video_paths(root: Path, paths: list[str],
-                        report: dict[str, Any]) -> set[str]:
+                        report: dict[str, Any],
+                        fixed_packages: dict[str, dict[str, Any]]) -> set[str]:
     """Identify gallery-matched videos without treating them as provenance proof."""
     inventory = set(paths)
     matched = set()
@@ -158,7 +159,7 @@ def gallery_video_paths(root: Path, paths: list[str],
             report['blocks'].append(f'symlinked gallery directory: {label}')
             continue
         try:
-            gallery = load_gallery(project)
+            gallery = load_gallery(project, fixed_package=fixed_packages.get(project.name))
         except WikiError:
             report['blocks'].append(f'invalid gallery contract: {label}')
             continue
@@ -174,8 +175,9 @@ def gallery_video_paths(root: Path, paths: list[str],
     return matched
 
 
-def inspect_candidate_files(root: Path, paths: list[str], report: dict[str, Any]) -> None:
-    gallery_videos = gallery_video_paths(root, paths, report)
+def inspect_candidate_files(root: Path, paths: list[str], report: dict[str, Any],
+                            fixed_packages: dict[str, dict[str, Any]] | None = None) -> None:
+    gallery_videos = gallery_video_paths(root, paths, report, fixed_packages or {})
     for relative in paths:
         path = root / relative
         if path.is_symlink() or not path.is_file():
@@ -260,10 +262,13 @@ def inspect_history(root: Path, report: dict[str, Any]) -> None:
     report['scope']['history_text_blobs'] = inspected
 
 
-def inspect_packages(root: Path, report: dict[str, Any]) -> None:
+def inspect_packages(root: Path, report: dict[str, Any]) -> dict[str, dict[str, Any]]:
     packages = []
+    fixed_packages = {}
     for entry in catalog_entries(root):
         package = load_package(root, entry, None, require_release_ready=False)
+        if entry['wiki']['publish']:
+            fixed_packages[entry['id']] = package
         release = package['release']
         path = package['path']
         license_id = project_license(root, entry['project'])
@@ -295,6 +300,7 @@ def inspect_packages(root: Path, report: dict[str, Any]) -> None:
                          'release_ready': release['release_ready'],
                          'hardware': release['verification']['hardware']})
     report['scope']['packages'] = packages
+    return fixed_packages
 
 
 def audit(root: Path) -> dict[str, Any]:
@@ -326,9 +332,9 @@ def audit(root: Path) -> dict[str, Any]:
         configured_email = ''
     if not configured_email.lower().endswith('@users.noreply.github.com'):
         report['blocks'].append('future GitHub commit identity is not configured as noreply')
-    inspect_candidate_files(root, paths, report)
+    fixed_packages = inspect_packages(root, report)
+    inspect_candidate_files(root, paths, report, fixed_packages)
     inspect_history(root, report)
-    inspect_packages(root, report)
     emulator = json.loads((root / 'emulator.lock.json').read_text(encoding='utf-8'))
     if emulator.get('source', {}).get('availability') != 'release':
         report['publication_gates'].append('fixed emulator runner release asset is unavailable')

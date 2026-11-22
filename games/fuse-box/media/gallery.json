@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 8.9,
     "frames": 266,
-    "frames_sha256": "7bf5403c11c9437a7b54acf6b890ab62c21abf21116e4973008280f4b1434b23",
-    "pcm_sha256": "0e4090080774fbf39bd81fd573ede7a631a60cece87dc0b7864299b5021846c3",
-    "sha256": "94e4c784ed351b3961a364cfd359e77cccdd79a840bb610631fb3094bd6fa834",
+    "frames_sha256": "98762d33722b1184ea03933ee72a5e000bedd834f5c9b35db002eca75dfc1bd6",
+    "pcm_sha256": "196b8759254339ea3366781074c8ea5a5ccb230d85fe358eb121d36321bd9e69",
+    "sha256": "096ee0b506eed7670b53fe4d093f39fb8d68e3da5a333ede40ddbbbe5976f235",
     "caption": "1面の開始から10個のスイッチを入れてクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

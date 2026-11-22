@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 16.8,
     "frames": 505,
-    "frames_sha256": "8a91145c980eb3b79eb36fff51a4bd9c16f2afd701595dba6b11d2cfb5159005",
-    "pcm_sha256": "70d33ca3c12440bcd6ef1fac1e6fb80365c699e4e32f5898eef0b54ba0468bfa",
-    "sha256": "6dc092340358f42ded5fa796fb752d9dcf9ae9a84c6ca8f92d637311bf811500",
+    "frames_sha256": "9bb1eeff81d9c4df2dcbe9f91811d43c678d9128ea7e0254334592ed040b314e",
+    "pcm_sha256": "0a9ed78a72445b754d40eabc306b8a60d18d8999d43ff37a2cc9e2331c7976b0",
+    "sha256": "0384651508e166b0763e603dc0a3d8d81dc1223bc49cb68789cd0979e14e133c",
     "caption": "1つ目の波の自動デモ（12体を倒して夜明け）"
   }
 }

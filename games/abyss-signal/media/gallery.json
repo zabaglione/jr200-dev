@@ -42,12 +42,12 @@
     "file": "goal.webm",
     "profile": "synthetic-survey",
     "fps": 30,
-    "speed": 1.0,
+    "speed": 2.0,
     "seconds": 34.5,
-    "frames": 1034,
-    "frames_sha256": "6a3598436177c1167ebaeef6b8c0d2d0cdb9faf5904431228067216febf43eff",
-    "pcm_sha256": "c2b6fbd37d54ae08a19a5498f8f973a43e84887ebefb0bb64281c70e7344545e",
-    "sha256": "40f14fad07652d13787685c4d6aacd782ff9a318e7a1b60560c2dc8f6333dea5",
-    "caption": "5地点を記録して基地へ帰還する（117行動、等速）"
+    "frames": 2069,
+    "frames_sha256": "0982b9d14256e28e30d14ffafee365d108c8d0f67456e8b1e702ea6a3509a2b4",
+    "pcm_sha256": "21efbeb4650b5075c5af92d079aa40c6a6b5cc7ebbb35779173b2f2f615767bc",
+    "sha256": "3ab3f8f3580697bec87d39172e495f0dae4d4daab76e9feace168efe4ace9278",
+    "caption": "5地点を記録して基地へ帰還する（117行動、2倍速）"
   }
 }

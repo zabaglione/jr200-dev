@@ -47,6 +47,8 @@ class GalleryTests(unittest.TestCase):
                 self.assertIn('video', gallery)
 
     def test_scene_files_match_hashes_and_replay_framebuffers(self):
+        catalog = json.loads((ROOT / 'games/catalog.json').read_text())
+        fixed = {item['id']: item for item in catalog['games'] if item['wiki']['publish']}
         for path in galleries():
             project = path.parents[1]
             gallery = json.loads(path.read_text(encoding='utf-8'))
@@ -61,14 +63,24 @@ class GalleryTests(unittest.TestCase):
                 source = ROOT / provenance['glyph_source']
                 self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(),
                                  provenance['glyph_source_sha256'])
-                catalog = json.loads((ROOT / 'games/catalog.json').read_text())
-                game = next((item for item in catalog['games']
-                             if item['id'] == project.name), None)
+                game = fixed.get(project.name)
                 if game is not None:
                     self.assertEqual(provenance['artifact_sha256'],
                                      game['artifact_sha256'])
                 else:
                     self.assertRegex(provenance['artifact_sha256'], r'^[0-9a-f]{64}$')
+                if game is not None and gallery['schema_version'] == 3:
+                    for scene in gallery['scenes']:
+                        name = scene['profile']
+                        receipt = json.loads(
+                            (path.parent / 'receipts' / f'{name}.json').read_text())
+                        self.assertEqual(receipt['artifact_sha256'], game['artifact_sha256'])
+                        result = receipt['result']
+                        profiles[name] = {
+                            'mode': result['mode'],
+                            'max_cycles': result['elapsed_cycles'],
+                            'expect': {'framebuffer_sha256': result['framebuffer_sha256']},
+                        }
             for scene in gallery['scenes']:
                 with self.subTest(game=project.name, scene=scene['id']):
                     image = path.parent / scene['file']

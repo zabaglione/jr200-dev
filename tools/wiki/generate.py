@@ -455,6 +455,7 @@ def load_package(root: Path, entry: dict[str, Any], packages: Path | None,
         raise WikiError(f'{entry["id"]}: package release contract mismatch')
     return {
         'release': release,
+        'reports': reports,
         'readme': (entry['_project'] / 'README.md').read_text(encoding='utf-8'),
         'path': path,
     }
@@ -512,7 +513,8 @@ def runtime_profiles(project: Path, *, max_bytes: int | None = None) -> dict[str
         raise WikiError(f'{project.name}: invalid runtime expectations') from exc
 
 
-def load_gallery(project: Path) -> dict[str, Any] | None:
+def load_gallery(project: Path, *,
+                 fixed_package: dict[str, Any] | None = None) -> dict[str, Any] | None:
     """Verified scenes and video tied to fixed runtime profiles."""
     path = project / 'media/gallery.json'
     if not path.exists():
@@ -520,7 +522,17 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
     if path.is_symlink():
         raise WikiError(f'{project.name}: gallery manifest is a symlink')
     value = read_json(path, 'gallery manifest', max_bytes=MAX_GALLERY_BYTES)
-    profiles = runtime_profiles(project, max_bytes=MAX_GALLERY_BYTES)
+    if fixed_package is None:
+        profiles = runtime_profiles(project, max_bytes=MAX_GALLERY_BYTES)
+    else:
+        profiles = {
+            name: {
+                'mode': report['mode'],
+                'max_cycles': report['result'].get('elapsed_cycles'),
+                'expect': {'framebuffer_sha256': report['result'].get('framebuffer_sha256')},
+            }
+            for name, report in fixed_package['reports'].items()
+        }
     if (not isinstance(value, dict) or value.get('schema_version') not in (1, 2, 3)
             or not set(value) <= {'schema_version', 'capture', 'scenes', 'video'}
             or not isinstance(value.get('scenes'), list) or not value['scenes']):
@@ -540,7 +552,9 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
                 or not source.is_file()
                 or sha256_file(source) != capture['glyph_source_sha256']
                 or not isinstance(capture['artifact_sha256'], str)
-                or HEX64.fullmatch(capture['artifact_sha256']) is None):
+                or HEX64.fullmatch(capture['artifact_sha256']) is None
+                or (fixed_package is not None and capture['artifact_sha256']
+                    != fixed_package['release']['artifact']['sha256'])):
             raise WikiError(f'{project.name}: invalid ROM capture provenance')
         capture_mode = 'rom-cassette'
 
@@ -606,6 +620,7 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
                 video['mode'] != capture_mode
                 or video['artifact_sha256'] != capture['artifact_sha256']
                 or not isinstance(video['start_cycle'], int)
+                or type(profile['max_cycles']) is not int
                 or not 0 < video['start_cycle'] < profile['max_cycles']):
             raise WikiError(f'{project.name}: invalid ROM video provenance')
         data = media(video['file'], 'webm')
@@ -613,7 +628,10 @@ def load_gallery(project: Path) -> dict[str, Any] | None:
             raise WikiError(f'{project.name}: gallery video hash mismatch')
         video = {**video, 'bytes': data}
     if value['schema_version'] == 3:
-        expectations_hash = sha256_file(project / 'tests/expectations.json')
+        expectations_hash = (
+            sha256_file(project / 'tests/expectations.json') if fixed_package is None
+            else fixed_package['release']['source']['expectations_sha256']
+        )
         framebuffers = {scene['profile']: scene['framebuffer_sha256'] for scene in scenes}
         if video is not None and video['profile'] not in framebuffers:
             raise WikiError(f'{project.name}: video lacks a captured scene receipt')
@@ -998,7 +1016,9 @@ def render_pages(root: Path, packages: Path | None,
             root, entry, packages, require_release_ready=entry['wiki']['publish'],
             expected_commit=expected_commit)
         entry['_readme'] = entry['_package']['readme']
-        entry['_gallery'] = load_gallery(entry['_project'])
+        entry['_gallery'] = load_gallery(
+            entry['_project'],
+            fixed_package=entry['_package'] if entry['wiki']['publish'] else None)
         entry['_thumbnail'] = entry['_screenshot']
         entry['_thumbnail_scene'] = None
     listed = listed_development(root, {item['id'] for item in catalog})
