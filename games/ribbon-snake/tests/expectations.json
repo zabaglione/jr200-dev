@@ -211,7 +211,7 @@
             "head": "11",
             "queued": "00"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "16888db4503af77926ad322b7373d9a91026c53374038a367711e7861c8132ef",
           "pcm": null,
           "cassette": null
         }

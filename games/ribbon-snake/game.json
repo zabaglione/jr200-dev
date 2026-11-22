@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "ribbon-snake",
   "title": "RIBBON SNAKE",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "summary": "Steer a growing ribbon through six rocky gardens, braking to thread narrow routes.",
   "genre": "action",
   "license": "MIT",
