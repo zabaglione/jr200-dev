@@ -168,6 +168,1086 @@
           "profile": "local-rom-hold-left-release"
         }
       }
+    },
+    {
+      "id": "abyss-signal",
+      "project": "games/abyss-signal",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "exploration",
+      "artifact_sha256": "5e5344a286642d6ad248885aad694ad43ceb5fe9ff053f3e9c017b4c2f94c70c",
+      "package": {
+        "file": "abyss-signal-0.1.0.zip",
+        "sha256": "80e2251961f535cf016b68c5a9fa98a078ec25f4bd03f3851fe47c2436e17482",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/abyss-signal-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "abyss-signal",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=abyss-signal&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "0b59c5fdaa9b579e91cfa2d2f2355c68ead59171b143794bfba375e5b9bbbe58",
+          "framebuffer_sha256": "1a73cd6c565fd888229db62afdc0d62239d3673161411a709d09c0aa52ce6b9e",
+          "profile": "synthetic-sonar"
+        }
+      }
+    },
+    {
+      "id": "auction-house",
+      "project": "games/auction-house",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "management",
+      "artifact_sha256": "5c710b2224b5ae1d589cf001b9ceb9e5ea4308a3d978e76e19983e8cf7ddc653",
+      "package": {
+        "file": "auction-house-0.1.0.zip",
+        "sha256": "e13d6c98346baef572536cc2f04b1d93bd7c8ca4414a9fcf99ea4ee7468b0d96",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/auction-house-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "auction-house",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=auction-house&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "e91b7393550a5b8086accce2ed8de256d3e3fd9c30370e6f6ac0f64d4fee0fc4",
+          "framebuffer_sha256": "0035e2a6e77576494a9b76b6af5d8ea75e1bcd434057d720775b2055a6d9966c",
+          "profile": "synthetic-inspect"
+        }
+      }
+    },
+    {
+      "id": "cargo-balance",
+      "project": "games/cargo-balance",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "management",
+      "artifact_sha256": "074f77f10b16354e469db6096785433832406cf0e46b2f2dfa233416185998c3",
+      "package": {
+        "file": "cargo-balance-0.1.0.zip",
+        "sha256": "a2d40c318432cb34c58db3e4fb79eb522c8b13ce53e9195107b4a692a8738eb5",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/cargo-balance-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "cargo-balance",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=cargo-balance&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "ce91b743a030eb5b27bff326005e3debae61fd2f86c338636b71dba168eedc7f",
+          "framebuffer_sha256": "2bd85f2782cca8dfdaabcc5666ffa3e1b89e68f7cb8084a938a3fe1858d19a02",
+          "profile": "synthetic-first-load"
+        }
+      }
+    },
+    {
+      "id": "chain-suit",
+      "project": "games/chain-suit",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "267735c4d1d15ca99e8cc8a5be1a9f0a045df4141c2f5ad636e87d0ccdc4b5f4",
+      "package": {
+        "file": "chain-suit-0.1.0.zip",
+        "sha256": "ebcb29b95738eb3dabc5fea2f2ac30a811737591db07f8b93198cee8ae693e74",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/chain-suit-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "chain-suit",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=chain-suit&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "617b118b067a31ac4154def64b399f9dc65595104c94274822100b14c846147a",
+          "framebuffer_sha256": "1fe4e0b6c8730b4db1cd23fc25150146829c714ec692823e1d1ffa8b6920113e",
+          "profile": "synthetic-redraw"
+        }
+      }
+    },
+    {
+      "id": "chrono-breach",
+      "project": "games/chrono-breach",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tactics",
+      "artifact_sha256": "87f662f87d1544a261820f37be08792f321230a1fb419b3e6d19f286288fae50",
+      "package": {
+        "file": "chrono-breach-0.1.0.zip",
+        "sha256": "48983f4b8825b0b3c86089c567db5165a4a9d50c1c9e7678608fc58f0192e4c6",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/chrono-breach-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "chrono-breach",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=chrono-breach&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "988ea3d39201b15a5c0274a141fd5c6c50951d675cab53cb90a1e8894c138c28",
+          "framebuffer_sha256": "477fe960cca786e881df59728831a45810f743d8f141ef0449f237098d1b7b06",
+          "profile": "synthetic-first-kill"
+        }
+      }
+    },
+    {
+      "id": "compass-rose",
+      "project": "games/compass-rose",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "exploration",
+      "artifact_sha256": "b80d56e9675cc83fbfe39c96f41d605033731b064fb895108f243cba13d92a04",
+      "package": {
+        "file": "compass-rose-0.1.0.zip",
+        "sha256": "ac911ecc8312e47f8152dfbc4582f9ed0e9a6444fd6f20df9f00166b5dbb9ec0",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/compass-rose-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "compass-rose",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=compass-rose&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "6458f08ab93be520539f3f0422f860ddd5b8455a8a8b8d0cda66c1750ce15579",
+          "framebuffer_sha256": "c854e857e66ae4be9f98e6c05279686da4ea74cbb7a63e075c5e175d8885a89b",
+          "profile": "synthetic-survey"
+        }
+      }
+    },
+    {
+      "id": "dice-relic",
+      "project": "games/dice-relic",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "21e30ccc8ce70ed4fc1bc7644d050b042bbbdb0bf91adc8648a98f08409986fd",
+      "package": {
+        "file": "dice-relic-0.1.0.zip",
+        "sha256": "8ab2c3d2776a07317cb8f74ed6c19aa69e732ab4420ddbbd52d875aba7871bae",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/dice-relic-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "dice-relic",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=dice-relic&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "bfc7db04671af1f7aacce64d36b5cab82b561ecb2103216d8c70fd525598e49b",
+          "framebuffer_sha256": "49f726110f195612995160afce54c5de6987c796e2afdc5fadfa900648f86191",
+          "profile": "synthetic-attack"
+        }
+      }
+    },
+    {
+      "id": "echo-parry",
+      "project": "games/echo-parry",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "77bf62a0e99f8cb047cc1df34563067cc3fefceb891095261c2f29a4ad54f6e3",
+      "package": {
+        "file": "echo-parry-0.1.0.zip",
+        "sha256": "69ecb660de51e0012972621c40eda52bdb02e3b16660d3221968c6eebf636532",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/echo-parry-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "echo-parry",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=echo-parry&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "b0a759362fb7418da78e6c813fad6a1375a09c1ecb99847f15bf7a090907f7c8",
+          "framebuffer_sha256": "f4915634b9af076823d828a65a9041e43dd9748a6eaed352fdadb98120dbf7c9",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "five-forge",
+      "project": "games/five-forge",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "a0002d227154b40035c9c283a149d304555102d3837dd9d0c9be4be4f04628c7",
+      "package": {
+        "file": "five-forge-0.1.0.zip",
+        "sha256": "fc77686c738d47cb8d65a3fb902d069f8024c20dd13b31e4b028e7f1001b495a",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/five-forge-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "five-forge",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=five-forge&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "6fb4662943ab50ee546f6d6d53b89c6fa6b3099b462ed176e7716b5a0e18c528",
+          "framebuffer_sha256": "ef584d5f384c9a64add32e3462a55bbaeb2883c2a15ffc67b9dcb4d7bc22b68c",
+          "profile": "synthetic-first-moves"
+        }
+      }
+    },
+    {
+      "id": "frost-steps",
+      "project": "games/frost-steps",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "7472e7a1596a81080318e4f8e9a50e51be03c5fe40ce0cdd70603ed115d70689",
+      "package": {
+        "file": "frost-steps-0.1.0.zip",
+        "sha256": "39fed351c43f5248d86127a95821a05d1fccc72869f25dd78b3bd36d52e79c04",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/frost-steps-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "frost-steps",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=frost-steps&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "9f8778d3530e4c18926870d0513de421ed20596d941eb4902790131dd5a40c70",
+          "framebuffer_sha256": "f62f651ea7b28407480fd0094d409ef82d763da2e1155625b50cfdd6d9b12fd4",
+          "profile": "synthetic-map"
+        }
+      }
+    },
+    {
+      "id": "fuse-box",
+      "project": "games/fuse-box",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "42fa53a2367527ed1efa250b0f9cecb0f653ce53575cbaabd73da03be8112644",
+      "package": {
+        "file": "fuse-box-0.1.0.zip",
+        "sha256": "c8fe35ea040128311297ff7b29b5589b72861dbef507ab66c22a8de6de9f4084",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/fuse-box-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "fuse-box",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=fuse-box&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "a9652d2c54986ffdb84f42c4af060023d32b3bac3e80edc38584e2cb64d0dc38",
+          "framebuffer_sha256": "398d62f280dc9a488928872b5181a885dd1f013b8c26cba946f9eff6802ac9ff",
+          "profile": "synthetic-partial"
+        }
+      }
+    },
+    {
+      "id": "gate-runner",
+      "project": "games/gate-runner",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "6a909e8b42ed3f151afa6ab809a582fe3247209947d814e6d418a3d75a94cbf8",
+      "package": {
+        "file": "gate-runner-0.1.0.zip",
+        "sha256": "c349aa958aabf8d1f21b4d49273fcf3d36324269c13b2be535fe72d90cd26f91",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/gate-runner-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "gate-runner",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=gate-runner&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "bd70831da2affe7ef7781b22581be7583a502d70c3b56173c2784ad9e8476455",
+          "framebuffer_sha256": "630f43651dc9724aa70b5486a66d7611f2b4a442b5107030f4b0351ac5d2c30b",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "glyph-shift",
+      "project": "games/glyph-shift",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "d281983f6669844db0e2d5d3254bb9f9a0ab0695cbd912c9c5f234e2c98bf873",
+      "package": {
+        "file": "glyph-shift-0.1.0.zip",
+        "sha256": "57293ccd7e4e1d92f6a7a93e23317ca8889f6b46ccbdb4cae385bf52faf29fdf",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/glyph-shift-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "glyph-shift",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=glyph-shift&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "9dd45517ae657ed9f4ed4c9cb04ec88c0e8b8d22a019d58ad293d8e2a83e8691",
+          "framebuffer_sha256": "d09a474b98b892eb483835ba2fa77bbfb7c4df298c0ca957920beb8e2f1daa90",
+          "profile": "synthetic-slides"
+        }
+      }
+    },
+    {
+      "id": "gravity-well",
+      "project": "games/gravity-well",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "1637c4abfdfa11feaf5d86b4fc05168a2d6be871a9b8c057c7a009effc8d5c3a",
+      "package": {
+        "file": "gravity-well-0.1.0.zip",
+        "sha256": "3f8e4a67f1c3241160fcfd0cdc56f5ce0ef5fd6d70dc03c75f09c926dc0b4010",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/gravity-well-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "gravity-well",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=gravity-well&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "ff72ff6c93eb1fe22cbb773f389a0556e9f1910591443ad58d229433ec695222",
+          "framebuffer_sha256": "d349621be4dc9573b0761088932a87c232f9ad0c3f8aa0518f8de738c7869d2d",
+          "profile": "synthetic-roll"
+        }
+      }
+    },
+    {
+      "id": "iron-script",
+      "project": "games/iron-script",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tactics",
+      "artifact_sha256": "90125c5f56abb7e699865e5da93055ca49423493b00ea24b3313f5742b551035",
+      "package": {
+        "file": "iron-script-0.1.0.zip",
+        "sha256": "3d6380ed499079f9181f97299c0abe0b0890b2db837bb86ad18d9e5dfd7a3515",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/iron-script-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "iron-script",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=iron-script&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "3d80384bbb99c59254df121650321a6c80e71c5bc7c587d6ad282970fd4ed8eb",
+          "framebuffer_sha256": "f53c305cefcb36539c8593b285d07dcf04f69e5bd7d0828886c31d9b6664f8b1",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "loop-ten",
+      "project": "games/loop-ten",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "exploration",
+      "artifact_sha256": "794b9c79d777b1c015bb5c6c4d5685eee5ff6925f13bf97c48cb61660a8682e1",
+      "package": {
+        "file": "loop-ten-0.1.0.zip",
+        "sha256": "2ff427fd016f5444c80944df18b573e52c993fa85968008097fc53533c70b7f5",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/loop-ten-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "loop-ten",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=loop-ten&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "40170a7ac938f04461335a3841ed8a9add00cfa8f2fa9c693ce473eee19516e9",
+          "framebuffer_sha256": "1d9053a16241ade800789523d66c6e163103aabe892c8d5a6ba7817512a919a8",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "lunar-touchdown",
+      "project": "games/lunar-touchdown",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "13da9b60d160434652aa7b2ae66313c7855f922643675538d451b806f38d1d67",
+      "package": {
+        "file": "lunar-touchdown-0.1.0.zip",
+        "sha256": "739b44ea62e536ce7e4ca1b7611296db45a13f7ac0f6467de4da84dccfea4608",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/lunar-touchdown-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "lunar-touchdown",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=lunar-touchdown&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "2841d2aec3104bb33640e01498c37b3c2f48c19c5c4625b8a272e6b5a4a4b984",
+          "framebuffer_sha256": "cf6aef1e3f9a897f0f91d4afd9c8562aa503340c9b034935ba556c5e856f9eca",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "magnet-vault",
+      "project": "games/magnet-vault",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "f9c8f6c4170eaad13bd9799108f61ec8c1160ea326f421660132124b0a8af5c8",
+      "package": {
+        "file": "magnet-vault-0.1.0.zip",
+        "sha256": "c45b282c7f31c80867f0e7282276b92745332fdc109a9d75bf0ea20dda615b35",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/magnet-vault-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "magnet-vault",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=magnet-vault&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "20dc2af92acd6771c6f4a09c8c8f2354a8faf864ca8ae5f498b35ab90fb61c9f",
+          "framebuffer_sha256": "bb22ecc902ce4891856630d4d2c1a25034db5440daac0663686061088935ae50",
+          "profile": "synthetic-pull"
+        }
+      }
+    },
+    {
+      "id": "memory-mosaic",
+      "project": "games/memory-mosaic",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "7cf519ba27739a471a0909085272cc01098efba9b3232372c71cda5ef49c1b8a",
+      "package": {
+        "file": "memory-mosaic-0.1.0.zip",
+        "sha256": "5ceb3d2ac7efcd2af5877c9ade5079ca72120a4de55da1d08b5041b6ead640f9",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/memory-mosaic-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "memory-mosaic",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=memory-mosaic&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "7d216d8b7d6fa830ccf060c676a4a64cf48efb901f857940e04ebd8836e6f768",
+          "framebuffer_sha256": "8f95f61e44aa321a549c3da14a4d96b701ab04f59f70ac6b6fda848b303f6efd",
+          "profile": "synthetic-match"
+        }
+      }
+    },
+    {
+      "id": "metro-weave",
+      "project": "games/metro-weave",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tactics",
+      "artifact_sha256": "41401e6fb286d8845c82a8a63556b9052cc1275655dd9501933a09d4f10ba954",
+      "package": {
+        "file": "metro-weave-0.1.0.zip",
+        "sha256": "707f349fada616b6e7fa59f2aa1d61a7d5fc2d27749c6d308fa2463857d22675",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/metro-weave-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "metro-weave",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=metro-weave&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "1c9deb5d66766099757a31cf0967e331a29248818446c5a8894ec1dc5748150f",
+          "framebuffer_sha256": "cfa553fcd71426381a451c2c3eb2b0ea8e09094b67bbe320eb23af7151105c9a",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "mirror-relic",
+      "project": "games/mirror-relic",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "exploration",
+      "artifact_sha256": "ff301c4ef9e342438093b2d24d85f38c08a93bcc0b3c62b98f71e75130f82f05",
+      "package": {
+        "file": "mirror-relic-0.1.0.zip",
+        "sha256": "49a1978d5a0135bc8523856dd3d38987df7e166bb93f051d86db683031058624",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/mirror-relic-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "mirror-relic",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=mirror-relic&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "8893381cf4aa7ab704e0fe6502070d304a779d3bdc37b4cc1ba76b303b840467",
+          "framebuffer_sha256": "08ec3f321955f49a3aba8227b80b5ae9282cac885684404a66c7ad0150f087c2",
+          "profile": "synthetic-first-relic"
+        }
+      }
+    },
+    {
+      "id": "night-swarm",
+      "project": "games/night-swarm",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "de7242be9242c799bf16e4a31c346515349f615c88b5767d46c75e58c9e0cf16",
+      "package": {
+        "file": "night-swarm-0.1.0.zip",
+        "sha256": "907b4c48313dbcc660a99a3adca18949b923c13dfacdf8c9bf07723cff37500a",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/night-swarm-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "night-swarm",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=night-swarm&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "9f0728fca5fc7437331f3057229172ecbf68ea7dd4cb345c0337e10d3cd013cc",
+          "framebuffer_sha256": "6884fd67919396218d8f7f132f49a908c55eed5bad5eb2bae3ab5660f48acbdd",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "number-vault",
+      "project": "games/number-vault",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "41b262a5ddebbe2b54886ff04db7accdb957db69a7b244ed2f1f5d2cc73f1881",
+      "package": {
+        "file": "number-vault-0.1.0.zip",
+        "sha256": "e2c31e40d2b0b1366a5d257fba29a21f5b84c5901632991dd055b07c5d66e8f4",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/number-vault-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "number-vault",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=number-vault&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "b88d39b8ace9071a4755989a119083d457bfbc46617b542395afa5ca77e60fac",
+          "framebuffer_sha256": "79fcbfd462f2ba29849c368515b5d19fdad53388a55550bd2a38c720c1e73c32",
+          "profile": "synthetic-history"
+        }
+      }
+    },
+    {
+      "id": "orbit-dodge",
+      "project": "games/orbit-dodge",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "a181c01969bbc4c0b9eb00a68544057c6fc149042a1b4a260b6cb6196670ac43",
+      "package": {
+        "file": "orbit-dodge-0.1.0.zip",
+        "sha256": "fe61df53f5e1a86dcfa2ad9653b833eeaa20c41e2af1f3b3e06acf6323103ef9",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/orbit-dodge-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "orbit-dodge",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=orbit-dodge&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "776c6c594fb65248a9abc5cd7a48da8397924c4be0edef8ed67859939203fb23",
+          "framebuffer_sha256": "d100e130088175522811f9ffd3380de0cfce3be28fb674da597aca4c57ff8afb",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "orbit-draft",
+      "project": "games/orbit-draft",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "d130b79e4486490cf2658a5838fd05b607cb4f06d9c975092bb9ca0d56ead070",
+      "package": {
+        "file": "orbit-draft-0.1.0.zip",
+        "sha256": "1f87571c392f1050a527d4cfab5c4b9355058440945db05956214298babd028d",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/orbit-draft-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "orbit-draft",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=orbit-draft&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "63175b4952b6effbb90833694870cdfe7c0e8535a2cb43322b477f14087f0190",
+          "framebuffer_sha256": "95ccf6bfb04750f98fec37f8f27427e421b72e7ae4a1002717491150f4ebe3f7",
+          "profile": "synthetic-first-moves"
+        }
+      }
+    },
+    {
+      "id": "orchard-days",
+      "project": "games/orchard-days",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "management",
+      "artifact_sha256": "9fd2aa23f9f69d459bafa19cc545a116de026db379529603086079ba1ceba3c4",
+      "package": {
+        "file": "orchard-days-0.1.0.zip",
+        "sha256": "326e786997a4f21fb9a521933948196afe910325d7f2feae9263fc66ae17a28b",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/orchard-days-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "orchard-days",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=orchard-days&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "a70ce41279d3a9389b935fabf4027fe7e0a0c81edd2681799798e95294ec82e4",
+          "framebuffer_sha256": "175f0d754b63814d4769d0b1e90c0d51184e0c15d5a9217c9b5179d73c525462",
+          "profile": "synthetic-field"
+        }
+      }
+    },
+    {
+      "id": "peg-garden",
+      "project": "games/peg-garden",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "ccad0100acae6ce128110911157a5eef6d555a5d8ae699954e9ce2760e1ad1d0",
+      "package": {
+        "file": "peg-garden-0.1.0.zip",
+        "sha256": "446c3da790bbda6ce9df8470f03092b1bbbae2d87b6cc68dede11d76a73f13a8",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/peg-garden-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "peg-garden",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=peg-garden&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "346bda1182e426319928006fc9dd3f77da230bb3c7c9e2efa407c7eb2caf60e9",
+          "framebuffer_sha256": "4be9311e8493012929e07a27ce88921112a9bf3810a145ddf5c25357a0542b1a",
+          "profile": "synthetic-first-jump"
+        }
+      }
+    },
+    {
+      "id": "pendulum-port",
+      "project": "games/pendulum-port",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "274885990b17909519a4e545711f1c97b8279d9741fd00998d33cb702b0c0c6c",
+      "package": {
+        "file": "pendulum-port-0.1.0.zip",
+        "sha256": "65c67d2e32361e632872ee3fd87c4c1da4eb61729c8cf2fe0a5c27da49760b68",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/pendulum-port-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "pendulum-port",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=pendulum-port&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "a6b96e5adb0511d5ddd7b8b5d1e6c2434ea0cb991d616baf5e145310671aeaa7",
+          "framebuffer_sha256": "a28f035a1d4f5d9bcfcbd05b905bc1bb874f440785880e0ee58fce02baf83742",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "phase-pairs",
+      "project": "games/phase-pairs",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "93cf4bc488d3d41175fd5caad3ea6f76af69cc885d45b116d46a860afa2d5ef0",
+      "package": {
+        "file": "phase-pairs-0.1.0.zip",
+        "sha256": "545e236af7067de2ce8b19ed7a1d72290eef736c12b31fc16930d4a90458139c",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/phase-pairs-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "phase-pairs",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=phase-pairs&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "9779189c67be7df1425e842c099b06f4b1683abba5d4e39ba6335c262338597e",
+          "framebuffer_sha256": "bedae72f3b2810a63058d0bcf1747aa2504502cfea10dbdcc63a71c1828f028b",
+          "profile": "synthetic-two-pairs"
+        }
+      }
+    },
+    {
+      "id": "potion-path",
+      "project": "games/potion-path",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "management",
+      "artifact_sha256": "f637da392a7f7af7da7cf38b99c8011b18e7a5484ec6da4cf5c2e72f15b9528f",
+      "package": {
+        "file": "potion-path-0.1.0.zip",
+        "sha256": "6cc230f7263294ed4f04b4b5386715ec04e3427d14ace635c0e60828fa214dc5",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/potion-path-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "potion-path",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=potion-path&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "57cf20790e965f1ad076824e3c10cf862fcc79d54ec6af7581cd6acf2a4a337b",
+          "framebuffer_sha256": "23bb68069689b5040b515df9c6770c4e2eb28c4772625fe5d7901a12c328ed57",
+          "profile": "synthetic-first-dose"
+        }
+      }
+    },
+    {
+      "id": "prism-trace",
+      "project": "games/prism-trace",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "63636f604f08773a8cff8ac7647f48ced0db9b85aa8337ab072da7efd13bfc15",
+      "package": {
+        "file": "prism-trace-0.1.0.zip",
+        "sha256": "46d84d4053b1db005dd654321c3905b37296f92d7fdf083e4e357426d342a50a",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/prism-trace-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "prism-trace",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=prism-trace&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "cab13f17532093628de2eba9a0d8f4b0aa4b08eefed1dfc5cb791c8f55ecccd6",
+          "framebuffer_sha256": "11ee52cddcbb635d7e1099d1f5dc60d7c78b66cad1246a2ed0cc627b0bfabd6e",
+          "profile": "synthetic-first-turns"
+        }
+      }
+    },
+    {
+      "id": "quiet-route",
+      "project": "games/quiet-route",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "exploration",
+      "artifact_sha256": "f8f89697a5ed0e255c4ff3f392b216853ec82d2306deb48287f90446229bf574",
+      "package": {
+        "file": "quiet-route-0.1.0.zip",
+        "sha256": "bbe29dc05f58c03ffb011a46439159e2d7188c3ab3db7c6ef4d974fe803a0aae",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/quiet-route-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "quiet-route",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=quiet-route&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "d4509753acead63672850e1880aa48c626564a1b5a55a4c6667f5c86ef0fa065",
+          "framebuffer_sha256": "41b97bdb008232f7b285a38a2e47bf9db6613ba31e7ba9541884ce0de73e1223",
+          "profile": "local-rom-play"
+        }
+      }
+    },
+    {
+      "id": "ribbon-snake",
+      "project": "games/ribbon-snake",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "91acb859ab23bb39e4854a4cf8f673b19f8dec55409897aae020c58bed87633d",
+      "package": {
+        "file": "ribbon-snake-0.1.0.zip",
+        "sha256": "385f287467cedaeec5f7c58a666323fb908e945fc8f6cc35ae783967c4bfd5e1",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/ribbon-snake-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "ribbon-snake",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=ribbon-snake&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "d286434dc92c31928b2e2337deaa90ac9d00c9383452cea2414d5d7c04ab221e",
+          "framebuffer_sha256": "3052924bfef38d423965d51af75fa7f75e1b931b2c4b7670df6e1cf596daa2c0",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "ruin-lexicon",
+      "project": "games/ruin-lexicon",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "exploration",
+      "artifact_sha256": "5427ac931ae8a5ee54ebc92f754d0a004cc9f7b0b07b1028fd12bc05400468be",
+      "package": {
+        "file": "ruin-lexicon-0.1.0.zip",
+        "sha256": "20c67c0af01a7b462bf369aa03116aaaedd196e69b79ab11269bd4785d8a22b4",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/ruin-lexicon-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "ruin-lexicon",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=ruin-lexicon&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "908af5270ee47d42487c080f59e63db715351544ab93881e0c285e6bce6701e2",
+          "framebuffer_sha256": "9386e7f06d072f5755bf927f6c668e3deda284bd3523c44336007154ef726411",
+          "profile": "synthetic-wrong-try"
+        }
+      }
+    },
+    {
+      "id": "sand-rescue",
+      "project": "games/sand-rescue",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tactics",
+      "artifact_sha256": "ee8544b769df5ed9ad42d631ce6a0925330c576f52890b538b9ce40b6643368d",
+      "package": {
+        "file": "sand-rescue-0.1.0.zip",
+        "sha256": "b08207c6bf686d886821a75efd9b98958481c01d18a5910ccf5723b86735c935",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/sand-rescue-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "sand-rescue",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=sand-rescue&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "3502b79094f5e5df6e179ad9ad6fe906435c1c6199ceea42203d9b91fdeacb46",
+          "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "seed-merge",
+      "project": "games/seed-merge",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "79497def55904a480333db39554a8f7147472f3ae72751e67ff08f6ccdaede44",
+      "package": {
+        "file": "seed-merge-0.1.0.zip",
+        "sha256": "004dd6f2402e97c239f2663c36ea1a1f6e47524e1a03d0c82b87922dc326fb79",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/seed-merge-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "seed-merge",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=seed-merge&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "6c3b2b1c413d00e4dbef156494c53beb99edba36d37a9806a822b227ce3837d8",
+          "framebuffer_sha256": "25db86d7cde926f1461469dd4367bdff8e932a3535472ae910a40663c607be5c",
+          "profile": "local-rom-play"
+        }
+      }
+    },
+    {
+      "id": "shadow-archive",
+      "project": "games/shadow-archive",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "exploration",
+      "artifact_sha256": "3539c47ee6caf0ebe87b38ba63dbd78cc23a3f2f0547c8bf8deaf3979ed8689c",
+      "package": {
+        "file": "shadow-archive-0.1.0.zip",
+        "sha256": "a7431860ed8be42ae3889a94ccc549aada55781fd25864767d598fb6a5fbac56",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/shadow-archive-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "shadow-archive",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=shadow-archive&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "ccc21e16b0191df4e281e626ba4c382f9d1aa326191e45f3ee907a5686439dcb",
+          "framebuffer_sha256": "0e62dacc1f25043cf9b9345f3eeaad6a83a4735c28b3756df1bbf7ff8ae6a777",
+          "profile": "synthetic-files"
+        }
+      }
+    },
+    {
+      "id": "sigil-deck",
+      "project": "games/sigil-deck",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "9a0c990fa32d0d0c4c92c2f4b1077c02a020cd43ba351e9df485df35e014f17c",
+      "package": {
+        "file": "sigil-deck-0.1.0.zip",
+        "sha256": "4c431c1b3ece26f58cac61f5ede53e8ac47666e568a1e09d1880e71cc81dd214",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/sigil-deck-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "sigil-deck",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=sigil-deck&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "81e987d5d5f1f295efcb47c8f892e48bf10b5368389b619f368dcea11edf7a51",
+          "framebuffer_sha256": "31deb853b5f20a1f22dccf808bea39006f57a04c84333db626a192b10dbe6ec9",
+          "profile": "synthetic-strike"
+        }
+      }
+    },
+    {
+      "id": "star-lance",
+      "project": "games/star-lance",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "action",
+      "artifact_sha256": "d11120711eb72ca10623c6f3a5f9e7885e2974397346e53f503a70ebcba58f8a",
+      "package": {
+        "file": "star-lance-0.1.0.zip",
+        "sha256": "9226a1dd73a4c06a136c80ade07da33f46162a9df7c7fb0953500f16ee926075",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/star-lance-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "star-lance",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=star-lance&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "ad474847f6d7c1222f366212aabbf149ea91e7bef5e9c4edbd3c9d913d21786f",
+          "framebuffer_sha256": "fc1a8c02eca098f69e7bd64359fa1674f9234ae3c04b3e19d37c18bf219227b0",
+          "profile": "synthetic-demo-play"
+        }
+      }
+    },
+    {
+      "id": "stone-balance",
+      "project": "games/stone-balance",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "5c4b304073510d0acebc66c9ed6753bff6eaed964a31ebf1f4d59e4d1052009a",
+      "package": {
+        "file": "stone-balance-0.1.0.zip",
+        "sha256": "16fb7418102dfadb029aef02a1b1249b30207b3e2549802a01f1156227fc78a9",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/stone-balance-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "stone-balance",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=stone-balance&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "570e1003f30be30565c3977bc52d13020dd7069dd81a5cbf6007769ff620e53f",
+          "framebuffer_sha256": "7c8676e888c70c804bef84ab208cc8d174292fc1c1a5d98fc8f64edb9b0cb9e6",
+          "profile": "synthetic-first-move"
+        }
+      }
+    },
+    {
+      "id": "tidal-nets",
+      "project": "games/tidal-nets",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "management",
+      "artifact_sha256": "75a46f287d4e132dddf3513fac8b610bef9cb33c370150539f4a0bff9abaabbb",
+      "package": {
+        "file": "tidal-nets-0.1.0.zip",
+        "sha256": "7c03c7426f32e6881bdc5d0634242a9bb667ac91c85de46ecf1b6b11f00420ec",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/tidal-nets-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "tidal-nets",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=tidal-nets&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "1976da0d16e4fb45553267f9993f7f83c3ec57effa138088abb6a5f99c070ea3",
+          "framebuffer_sha256": "835455f321f554bac1f428b4cd95034ea65d93c4fdb6e6f0e5d07a1fa39c80c5",
+          "profile": "synthetic-first-catch"
+        }
+      }
+    },
+    {
+      "id": "tide-bridge",
+      "project": "games/tide-bridge",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "3bd9a98dc61e8f83b417f0884f03366d92e495636165bc491dbef6b83cbd1dd0",
+      "package": {
+        "file": "tide-bridge-0.1.0.zip",
+        "sha256": "606eff5365e6b28312f749b48b86ae36aaf0efcd272f0de22b6c6d5a08c03418",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/tide-bridge-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "tide-bridge",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=tide-bridge&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "bc4a5845d0131d4abe66582b3e51fdda42f179f757c71369d16175a45cac0f6c",
+          "framebuffer_sha256": "e9b4f0512306e4b8c12060ebbb18daffdf70957763bd9402eedaa640949a4acc",
+          "profile": "synthetic-first-changes"
+        }
+      }
+    },
+    {
+      "id": "trace-blade",
+      "project": "games/trace-blade",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "76e8c94cd9fa8e3ad05f6b55832d1159cd84681ec77b96f9d497593a90b61fe4",
+      "package": {
+        "file": "trace-blade-0.1.0.zip",
+        "sha256": "e9728d18649da54e446498c47cdcef2b2b2e7779b8627ae6fdf28ea8b5a96969",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/trace-blade-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "trace-blade",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=trace-blade&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "0f7832b209760364d63b2cef022e24cefaee1fb46c7c08ed925d41a176610178",
+          "framebuffer_sha256": "89a8b4e17bf3b9dee77cb4c2bf8e4700de3682658bacb6779fd96befa7c60e69",
+          "profile": "synthetic-cut-play"
+        }
+      }
+    },
+    {
+      "id": "twenty-one",
+      "project": "games/twenty-one",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "tabletop",
+      "artifact_sha256": "4dd3fd4dd3dc147bb3119c0a01ad82c35cb59c548d8fa0dad6bf28bad3381a69",
+      "package": {
+        "file": "twenty-one-0.1.0.zip",
+        "sha256": "64ac4bdf37cf5b845979a6a824e6b0d3f210a9c90f9afa840ee60bdbb93d8cee",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/twenty-one-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "twenty-one",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=twenty-one&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "a821cbcd28aadf65c6fccc7f4f781e387058a7800ea0362a2e4edda8dc2d30fe",
+          "framebuffer_sha256": "5c029a030e6a1e1274224e8d8caad8e57cc916c92c9b276abf697780335e2afa",
+          "profile": "synthetic-first-hands"
+        }
+      }
+    },
+    {
+      "id": "word-foundry",
+      "project": "games/word-foundry",
+      "status": "verified",
+      "version": "0.1.0",
+      "genre": "puzzle",
+      "artifact_sha256": "108ab38ffbdaf809d30d40cd0245f99f0749826d65ea2e40f72bf43d0300f726",
+      "package": {
+        "file": "word-foundry-0.1.0.zip",
+        "sha256": "e7318843eec1a03a80ae130716dde5ef217fb52cb22726e085de63c9a7fe32bf",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-ports-2026-11-22/word-foundry-0.1.0.zip"
+      },
+      "wiki": {
+        "slug": "word-foundry",
+        "publish": true,
+        "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=word-foundry&launch=1",
+        "screenshot": {
+          "file": "media/play.png",
+          "sha256": "aba331c1886495440e741c8ccf0eead88de5842fb9f39a476437523cb285b236",
+          "framebuffer_sha256": "85c98e14e32d8e9d356954017f7877d0a5d133bf01eff62c78217bd3e4b2fe86",
+          "profile": "synthetic-via"
+        }
+      }
     }
   ]
 }
