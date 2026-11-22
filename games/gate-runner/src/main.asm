@@ -834,6 +834,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    GR_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     gr_help_diagram
+        JSR     jr_guide_draw
         LDX     gr_help_lines
         JMP     jr_gfx_lines
 
@@ -890,27 +892,52 @@ gr_title_lines:
         .db     0xff
 gr_help_lines:
         .db     10, 1, GR_ATTR_TITLE
-        .dw     gr_txt_name
-        .db     1, 3, GR_ATTR_TEXT
-        .dw     gr_help_1
-        .db     1, 5, GR_ATTR_TEXT
-        .dw     gr_help_2
-        .db     1, 7, GR_ATTR_TEXT
-        .dw     gr_help_3
-        .db     1, 9, GR_ATTR_TEXT
-        .dw     gr_help_4
-        .db     1, 11, GR_ATTR_TEXT
-        .dw     gr_help_5
-        .db     1, 13, GR_ATTR_TEXT
-        .dw     gr_help_6
-        .db     1, 15, GR_ATTR_TEXT
-        .dw     gr_help_7
-        .db     1, 17, GR_ATTR_TEXT
-        .dw     gr_help_8
-        .db     1, 19, GR_ATTR_TEXT
-        .dw     gr_help_9
-        .db     1, 21, GR_ATTR_LABEL
-        .dw     gr_help_back
+        .dw     gr_help_label_0
+        .db     2, 4, GR_ATTR_LABEL
+        .dw     gr_help_label_1
+        .db     20, 4, GR_ATTR_LABEL
+        .dw     gr_help_label_2
+        .db     2, 14, GR_ATTR_TEXT
+        .dw     gr_help_label_3
+        .db     2, 16, GR_ATTR_TEXT
+        .dw     gr_help_label_4
+        .db     2, 18, GR_ATTR_TEXT
+        .dw     gr_help_label_5
+        .db     2, 20, GR_ATTR_TEXT
+        .dw     gr_help_label_6
+        .db     2, 22, GR_ATTR_LABEL
+        .dw     gr_help_label_7
+        .db     0xff
+gr_help_label_0:
+        .db     "GATE RUNNER", 0
+gr_help_label_1:
+        .db     "JUMP PIT", 0
+gr_help_label_2:
+        .db     "UNDER BEAM", 0
+gr_help_label_3:
+        .db     "HOLD A/D RUN   W/RETURN JUMP", 0
+gr_help_label_4:
+        .db     "GO AROUND WALLS   TAKE GEMS", 0
+gr_help_label_5:
+        .db     "3 HITS END RUN   GOLD MISS <3", 0
+gr_help_label_6:
+        .db     "SPACE RETRY", 0
+gr_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+gr_help_diagram:
+; Jump across a gap, but stay on the ground under a low beam.
+        .db     2, 11, GR_ATTR_STRIPE, 3, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE
+        .db     5, 11, GR_ATTR_PIT, 4, GR_CHAR_PIT, GR_CHAR_PIT, GR_CHAR_PIT, GR_CHAR_PIT
+        .db     9, 11, GR_ATTR_STRIPE, 3, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE
+        .db     5, 0x80 + 7, GR_ATTR_RUNNER, 1, GR_TILE_RUNNER + 8
+        .db     8, 8, GR_ATTR_JEWEL, 1, GR_CHAR_JEWEL
+        .db     14, 8, 0x86, 1, 0x06
+        .db     15, 7, 0x80, 1, 0x36
+        .db     16, 8, 0xb0, 1, 0x30
+        .db     20, 11, GR_ATTR_STRIPE, 9, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE, GR_CHAR_STRIPE
+        .db     21, 7, GR_ATTR_BEAM, 6, GR_CHAR_BEAM, GR_CHAR_BEAM, GR_CHAR_BEAM, GR_CHAR_BEAM, GR_CHAR_BEAM, GR_CHAR_BEAM
+        .db     23, 0x80 + 9, GR_ATTR_RUNNER, 1, GR_TILE_RUNNER
         .db     0xff
 
 gr_txt_name:
@@ -953,26 +980,6 @@ gr_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 gr_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-gr_help_1:
-        .db     "A/D: MOVE ONE STEP. HOLD: RUN.", 0
-gr_help_2:
-        .db     "W/RETURN: JUMP. LAND TO REPEAT.", 0
-gr_help_3:
-        .db     "WALLS: MOVE AROUND THEM.", 0
-gr_help_4:
-        .db     "PITS: JUMP. FULL WIDTH TOO!", 0
-gr_help_5:
-        .db     "LOW BEAMS: STAY ON THE GROUND.", 0
-gr_help_6:
-        .db     "CRYSTALS: TAKE THE RISKY ROUTE.", 0
-gr_help_7:
-        .db     "6 COURSES. THREE HITS END RUN.", 0
-gr_help_8:
-        .db     "GOLD: MISS AT MOST 2 CRYSTALS.", 0
-gr_help_9:
-        .db     "SPACE : RETRY THE COURSE", 0
-gr_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1042,4 +1049,5 @@ gr_lose_bass:
         .include "../../../sdk/port.inc"
         .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

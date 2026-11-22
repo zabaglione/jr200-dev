@@ -14,6 +14,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x46a0
 JR_AUDIO:           .equ    0x46c0
@@ -71,7 +73,7 @@ MW_DY:              .equ    GAME_STATE + 72
 MW_MSG:             .equ    GAME_STATE + 73     ; 2 bytes
 
 MW_TILE_TRAIN:      .equ    0x80
-MW_TILE_STATION:    .equ    0x84        ; A, B, C 4 codes apart
+MW_TILE_STATION:    .equ    0x84        ; circle, triangle, square
 MW_CHAR_TRACK:      .equ    0x90
 MW_CHAR_DIAGONAL:   .equ    0x91
 MW_CHAR_JOIN:       .equ    0x92
@@ -80,6 +82,8 @@ MW_CHAR_RIGHT:      .equ    0x95
 MW_CHAR_DOWN:       .equ    0x96
 MW_CHAR_LAMP_ON:    .equ    0x97
 MW_CHAR_LAMP_OFF:   .equ    0x98
+MW_CHAR_ROUTE:      .equ    0x99        ; circle, triangle, square
+MW_CHAR_WAIT:       .equ    0x9c
 MW_ATTR_TRACK:      .equ    0x45
 MW_ATTR_TRAIN:      .equ    0x47
 MW_ATTR_EXPRESS:    .equ    0x42
@@ -103,7 +107,7 @@ start:
         JSR     jr_test_init
         LDX     mw_patterns
         LDAA    MW_TILE_TRAIN
-        LDAB    25
+        LDAB    29
         JSR     jr_pcg_load
         JMP     jr_port_run
 
@@ -785,14 +789,14 @@ mw_draw_station_colour:
         JSR     jr_add_x_a
         TST     [X]
         BEQ     mw_draw_station_goal
-        LDAA    MW_ATTR_WARN
+        LDAA    MW_ATTR_EXPRESS
         STAA    [JR_RT_COLOR]
-        LDAA    24
+        LDAA    27
         LDAB    [MW_DY]
         SUBB    2
         JSR     jr_gfx_at
-        LDX     mw_txt_busy
-        JSR     jr_gfx_text
+        LDAA    MW_CHAR_WAIT
+        JSR     jr_gfx_putc
 mw_draw_station_goal:
         JSR     mw_goal_bit
         BEQ     mw_draw_station_next
@@ -876,15 +880,12 @@ mw_draw_train_colour:
         JSR     jr_gfx_putc
         LDX     [MW_MSG]
         LDAA    [X + 9]
-        ADDA    0x41
-        JSR     jr_gfx_putc
+        JSR     mw_put_route
         LDAA    0x20
         JSR     jr_gfx_putc
         LDX     [MW_MSG]
         TST     [X + 15]
         BNE     mw_draw_train_express
-        LDX     mw_txt_reg
-        JSR     jr_gfx_text
         BRA     mw_draw_train_next
 mw_draw_train_express:
         ; margin = deadline - distance to the platform (0 when late)
@@ -945,7 +946,7 @@ mw_draw_chain:
         JSR     jr_gfx_at
         LDAA    [MW_QUOTA]
         JSR     jr_gfx_dec2
-        ; the next three destinations (dashes past the eighth train)
+        ; The departure queue uses the same shapes as the stations.
         CLR     [MW_DI]
 mw_draw_deck:
         LDAA    [MW_DI]
@@ -955,17 +956,18 @@ mw_draw_deck:
         JSR     jr_gfx_at
         LDAA    [MW_ISSUED]
         ADDA    [MW_DI]
-        LDAB    0x2d
         CMPA    8
-        BCC     mw_draw_deck_letter
+        BCC     mw_draw_deck_end
         LDX     MW_C + 16
         LDAA    [MW_DI]
         JSR     jr_add_x_a
-        LDAB    [X]
-        ADDB    0x41
-mw_draw_deck_letter:
-        TBA
+        LDAA    [X]
+        JSR     mw_put_route
+        BRA     mw_draw_deck_next
+mw_draw_deck_end:
+        LDAA    0x2d
         JSR     jr_gfx_putc
+mw_draw_deck_next:
         INC     [MW_DI]
         LDAA    [MW_DI]
         CMPA    3
@@ -1043,15 +1045,23 @@ mw_goal_bit_test:
         ANDA    1
         RTS
 
-; [MW_MSG] = train: its number and destination letter at the cursor.
+; [MW_MSG] = train: its number and destination symbol at the cursor.
 mw_train_label:
         LDAA    [MW_DI]
         ADDA    0x31
         JSR     jr_gfx_putc
         LDX     [MW_MSG]
         LDAA    [X + 9]
-        ADDA    0x41
-        JMP     jr_gfx_putc
+mw_put_route:
+        ADDA    MW_CHAR_ROUTE
+        LDAB    [JR_RT_COLOR]
+        PSHB
+        LDAB    MW_ATTR_LAMP
+        STAB    [JR_RT_COLOR]
+        JSR     jr_gfx_putc
+        PULB
+        STAB    [JR_RT_COLOR]
+        RTS
 
 game_draw_title:
         LDX     mw_title_song
@@ -1096,6 +1106,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    MW_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     mw_help_diagram
+        JSR     jr_guide_draw
         LDX     mw_help_lines
         JMP     jr_gfx_lines
 
@@ -1137,26 +1149,48 @@ mw_title_lines:
 mw_help_lines:
         .db     10, 1, MW_ATTR_TITLE
         .dw     mw_txt_name
-        .db     1, 3, MW_ATTR_TEXT
-        .dw     mw_help_1
-        .db     1, 5, MW_ATTR_TEXT
-        .dw     mw_help_2
-        .db     1, 7, MW_ATTR_TEXT
-        .dw     mw_help_3
-        .db     1, 9, MW_ATTR_TEXT
-        .dw     mw_help_4
-        .db     1, 11, MW_ATTR_TEXT
-        .dw     mw_help_5
-        .db     1, 13, MW_ATTR_TEXT
-        .dw     mw_help_6
-        .db     1, 15, MW_ATTR_TEXT
-        .dw     mw_help_7
-        .db     1, 17, MW_ATTR_TEXT
-        .dw     mw_help_8
-        .db     1, 19, MW_ATTR_TEXT
-        .dw     mw_help_9
-        .db     1, 21, MW_ATTR_LABEL
-        .dw     mw_help_back
+        .db     2, 4, MW_ATTR_LABEL
+        .dw     mw_help_label_1
+        .db     23, 4, MW_ATTR_LABEL
+        .dw     mw_help_label_2
+        .db     2, 13, MW_ATTR_TEXT
+        .dw     mw_help_label_3
+        .db     2, 15, MW_ATTR_TEXT
+        .dw     mw_help_label_4
+        .db     2, 17, MW_ATTR_TEXT
+        .dw     mw_help_label_5
+        .db     2, 19, MW_ATTR_TEXT
+        .dw     mw_help_label_6
+        .db     2, 22, MW_ATTR_LABEL
+        .dw     mw_help_label_7
+        .db     0xff
+mw_help_label_1:
+        .db     "D SWITCH", 0
+mw_help_label_2:
+        .db     "TRIANGLE", 0
+mw_help_label_3:
+        .db     "MATCH TRAIN AND STATION", 0
+mw_help_label_4:
+        .db     "W/S POINT  D SWITCH  A STOP/GO", 0
+mw_help_label_5:
+        .db     "RETURN EXPRESS  SPACE RETRY", 0
+mw_help_label_6:
+        .db     "BUSY: WAIT  /  WRONG: -1 HP", 0
+mw_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+mw_help_diagram:
+; The marked train follows the lower branch to the matching sign.
+        .db     2, 0x80 + 7, MW_ATTR_TRAIN, 1, MW_TILE_TRAIN
+        .db     3, 7, MW_ATTR_LAMP, 1, MW_CHAR_ROUTE + 1
+        .db     4, 8, MW_ATTR_TRACK, 3, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK
+        .db     7, 8, MW_ATTR_POINT, 1, MW_CHAR_POINT + 1
+        .db     8, 8, MW_ATTR_TRACK, 4, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK
+        .db     9, 9, MW_ATTR_TRACK, 1, MW_CHAR_DIAGONAL
+        .db     10, 10, MW_ATTR_TRACK, 11, MW_CHAR_JOIN, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK, MW_CHAR_TRACK
+        .db     21, 10, MW_ATTR_POINT, 1, MW_CHAR_RIGHT
+        .db     22, 0x80 + 9, MW_ATTR_LIT, 1, MW_TILE_STATION + 4
+        .db     22, 0x80 + 7, MW_ATTR_STATION, 1, MW_TILE_STATION
         .db     0xff
 
 mw_txt_name:
@@ -1175,10 +1209,6 @@ mw_txt_stop:
         .db     "STOP", 0
 mw_txt_go:
         .db     "GO", 0
-mw_txt_busy:
-        .db     "BUSY", 0
-mw_txt_reg:
-        .db     "REG", 0
 mw_txt_delivered:
         .db     "DELIVERED +", 0
 mw_txt_chain:
@@ -1213,26 +1243,6 @@ mw_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 mw_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-mw_help_1:
-        .db     "W/S: SELECT POINT 1 OR 2.", 0
-mw_help_2:
-        .db     "D: SWITCH TRACK. A: STOP/GO.", 0
-mw_help_3:
-        .db     "RETURN: SEND AN EXPRESS.", 0
-mw_help_4:
-        .db     "MATCH TRAIN AND STATION LETTERS", 0
-mw_help_5:
-        .db     "BUSY: WAIT FOR UNLOADING.", 0
-mw_help_6:
-        .db     "REG 2PTS / EXPRESS 4PTS / X3", 0
-mw_help_7:
-        .db     "LATE/WRONG: -1 HP, CHAIN LOST.", 0
-mw_help_8:
-        .db     "8 TRAINS: TARGET 24 / 30 / 36.", 0
-mw_help_9:
-        .db     "SILVER:44 / GOLD:60 POINTS.", 0
-mw_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1288,7 +1298,7 @@ mw_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1296,6 +1306,7 @@ mw_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

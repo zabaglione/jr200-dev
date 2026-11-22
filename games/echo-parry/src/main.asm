@@ -565,6 +565,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    EP_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     ep_help_diagram
+        JSR     jr_guide_draw
         LDX     ep_help_lines
         JMP     jr_gfx_lines
 
@@ -604,25 +606,53 @@ ep_title_lines:
         .db     0xff
 ep_help_lines:
         .db     11, 1, EP_ATTR_TITLE
-        .dw     ep_txt_name
-        .db     1, 3, EP_ATTR_TEXT
-        .dw     ep_help_1
-        .db     1, 5, EP_ATTR_TEXT
-        .dw     ep_help_2
-        .db     1, 7, EP_ATTR_TEXT
-        .dw     ep_help_3
-        .db     1, 9, EP_ATTR_TEXT
-        .dw     ep_help_4
-        .db     1, 11, EP_ATTR_TEXT
-        .dw     ep_help_5
-        .db     1, 13, EP_ATTR_TEXT
-        .dw     ep_help_6
-        .db     1, 15, EP_ATTR_TEXT
-        .dw     ep_help_7
-        .db     1, 17, EP_ATTR_TEXT
-        .dw     ep_help_8
-        .db     1, 21, EP_ATTR_LABEL
-        .dw     ep_help_back
+        .dw     ep_help_label_0
+        .db     2, 4, EP_ATTR_LABEL
+        .dw     ep_help_label_1
+        .db     18, 4, EP_ATTR_LABEL
+        .dw     ep_help_label_2
+        .db     2, 14, EP_ATTR_TEXT
+        .dw     ep_help_label_3
+        .db     2, 16, EP_ATTR_TEXT
+        .dw     ep_help_label_4
+        .db     2, 18, EP_ATTR_TEXT
+        .dw     ep_help_label_5
+        .db     2, 20, EP_ATTR_TEXT
+        .dw     ep_help_label_6
+        .db     2, 22, EP_ATTR_LABEL
+        .dw     ep_help_label_7
+        .db     0xff
+ep_help_label_0:
+        .db     "ECHO PARRY", 0
+ep_help_label_1:
+        .db     "W HIGH", 0
+ep_help_label_2:
+        .db     "S LOW", 0
+ep_help_label_3:
+        .db     "MATCH THE WEAPON HEIGHT", 0
+ep_help_label_4:
+        .db     "RETURN PARRY DURING SWING", 0
+ep_help_label_5:
+        .db     "A STEP BACK  /  NO COUNTER", 0
+ep_help_label_6:
+        .db     "4 HEARTS  SPACE RETRY", 0
+ep_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+ep_help_diagram:
+; The same opponents shown on the two guard lanes.
+        .db     2, 0x80 + 6, EP_ATTR_HERO, 1, EP_TILE_HERO
+        .db     6, 0x80 + 6, EP_ATTR_KNIGHT, 1, EP_TILE_KNIGHT
+        .db     4, 6, EP_ATTR_SLASH, 2, EP_CHAR_SLASH, EP_CHAR_SLASH
+        .db     2, 9, EP_ATTR_FLOOR, 6, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR
+        .db     18, 0x80 + 8, EP_ATTR_HERO, 1, EP_TILE_HERO
+        .db     22, 0x80 + 8, EP_ATTR_KNIGHT, 1, EP_TILE_KNIGHT
+        .db     20, 9, EP_ATTR_SLASH, 2, EP_CHAR_SLASH, EP_CHAR_SLASH
+        .db     18, 11, EP_ATTR_FLOOR, 6, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR
+        .db     10, 6, 0x96, 1, 0x16
+        .db     10, 8, 0x80, 1, 0x36
+        .db     26, 6, 0x80, 1, 0x36
+        .db     26, 8, 0x96, 1, 0x16
         .db     0xff
 
 ep_txt_name:
@@ -667,24 +697,6 @@ ep_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 ep_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-ep_help_1:
-        .db     "W : HIGH GUARD / S : LOW GUARD", 0
-ep_help_2:
-        .db     "RETURN : PARRY DURING ATTACK", 0
-ep_help_3:
-        .db     "A : STEP BACK, NO COUNTER", 0
-ep_help_4:
-        .db     "LATE PARRY OR THIRD CHAIN: +2", 0
-ep_help_5:
-        .db     "WATCH THE WEAPON AFTER A FEINT.", 0
-ep_help_6:
-        .db     "SIX KNIGHTS USE NEW RHYTHMS.", 0
-ep_help_7:
-        .db     "FOUR HEARTS FOR EACH DUEL.", 0
-ep_help_8:
-        .db     "SPACE : RETRY THE DUEL", 0
-ep_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -751,4 +763,5 @@ ep_lose_bass:
         .include "../../../sdk/port.inc"
         .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

@@ -11,12 +11,12 @@
       "name": "program",
       "kind": "code",
       "start": "0x1000",
-      "end": "0x2fff"
+      "end": "0x35ff"
     },
     {
       "name": "runtime",
       "kind": "data",
-      "start": "0x3000",
+      "start": "0x3600",
       "end": "0x4fff"
     }
   ],
@@ -31,12 +31,16 @@
       "sdk/font.inc",
       "sdk/font_data.inc",
       "sdk/frame.inc",
-      "sdk/gfx.inc",
+      "sdk/gfx_buffered.inc",
+      "sdk/gfx_runtime.inc",
+      "sdk/guide.inc",
       "sdk/jr200.inc",
       "sdk/keys_ext.inc",
       "sdk/math.inc",
       "sdk/pcg.inc",
-      "sdk/ranked.inc",
+      "sdk/port_input.inc",
+      "sdk/ranked_buffered.inc",
+      "sdk/ranked_runtime.inc",
       "sdk/session.inc",
       "sdk/sound.inc"
     ],

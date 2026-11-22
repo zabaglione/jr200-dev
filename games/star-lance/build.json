@@ -33,6 +33,8 @@
       "sdk/font_data.inc",
       "sdk/frame.inc",
       "sdk/gfx.inc",
+      "sdk/gfx_runtime.inc",
+      "sdk/guide.inc",
       "sdk/jr200.inc",
       "sdk/keys.inc",
       "sdk/keyscan.inc",
@@ -40,6 +42,7 @@
       "sdk/math.inc",
       "sdk/pcg.inc",
       "sdk/port.inc",
+      "sdk/port_runtime.inc",
       "sdk/selftest.inc",
       "sdk/session.inc",
       "sdk/sound.inc"

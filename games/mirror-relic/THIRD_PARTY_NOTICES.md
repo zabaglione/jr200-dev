@@ -9,12 +9,16 @@ The built CJR incorporates code from these jr200-dev SDK modules:
 - `sdk/font.inc`
 - `sdk/font_data.inc`
 - `sdk/frame.inc`
-- `sdk/gfx.inc`
+- `sdk/gfx_buffered.inc`
+- `sdk/gfx_runtime.inc`
+- `sdk/guide.inc`
 - `sdk/jr200.inc`
 - `sdk/keys_ext.inc`
 - `sdk/math.inc`
 - `sdk/pcg.inc`
-- `sdk/port.inc`
+- `sdk/port_buffered.inc`
+- `sdk/port_input.inc`
+- `sdk/port_runtime.inc`
 - `sdk/session.inc`
 - `sdk/sound.inc`
 

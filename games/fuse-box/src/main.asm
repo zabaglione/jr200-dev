@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -282,7 +284,7 @@ game_draw:
         LDAA    [JR_PORT_LEVEL]
         INCA
         JSR     jr_gfx_dec2
-        ; switches at (5 + i % 5 * 3, 5 + i // 5 * 3)
+        ; switches at (4 + i % 5 * 4, 5 + i // 5 * 3)
         CLR     [FB_DI]
 fb_draw_cell:
         LDAA    [FB_DI]
@@ -319,7 +321,7 @@ fb_draw_tile:
         LDAA    [FB_DI]
         CMPA    25
         BNE     fb_draw_cell
-        ; cursor '>' at (4 + i % 5 * 3, 5 + i // 5 * 3)
+        ; cursor '>' at (3 + i % 5 * 4, 5 + i // 5 * 3)
         LDAA    FB_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    [FB_CURSOR]
@@ -328,7 +330,7 @@ fb_draw_tile:
         JSR     jr_gfx_at
         LDAA    0x3e
         JSR     jr_gfx_putc
-        ; clues: row count at (2, 5 + i * 3), column count at (5 + i * 3, 2)
+        ; clues: row count at (2, 5 + i * 3), column at (4 + i * 4, 2)
         CLR     [FB_DI]
 fb_draw_clue:
         LDAA    [FB_DI]
@@ -347,6 +349,12 @@ fb_draw_clue:
         LDAA    [FB_DROW]
         ADDA    0x30
         JSR     jr_gfx_putc
+        ; Column clues follow the widened tile pitch; row clues remain 3 rows apart.
+        LDAA    [FB_DI]
+        ASLA
+        ASLA
+        ADDA    4
+        STAA    [FB_DK]
         LDAA    [FB_DCOL]
         LDAB    [FB_DFCOL]
         JSR     fb_clue_color
@@ -422,23 +430,20 @@ fb_dcount_col:
         BNE     fb_dcount_col
         RTS
 
-; A = cell -> A = 5 + cell % 5 * 3, B = 5 + cell // 5 * 3.
+; A = cell -> A = 4 + cell % 5 * 4, B = 5 + cell // 5 * 3.
 fb_cell_xy:
         LDAB    5
         JSR     jr_divmod8
-        STAB    [FB_DK]
+        STAB    [FB_DJ]
         TAB
         ASLA
         ABA
         ADDA    5
         TAB
-        LDAA    [FB_DK]
-        STAB    [FB_DK]
-        TAB
+        LDAA    [FB_DJ]
         ASLA
-        ABA
-        ADDA    5
-        LDAB    [FB_DK]
+        ASLA
+        ADDA    4
         RTS
 
 game_draw_title:
@@ -477,6 +482,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    FB_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     fb_help_diagram
+        JSR     jr_guide_draw
         LDX     fb_help_lines
         JMP     jr_gfx_lines
 
@@ -491,15 +498,15 @@ fb_hud:
         .dw     fb_txt_name
         .db     23, 0, FB_ATTR_LABEL
         .dw     fb_txt_stage
-        .db     22, 3, FB_ATTR_LABEL
+        .db     23, 3, FB_ATTR_LABEL
         .dw     fb_txt_matrix
-        .db     22, 9, FB_ATTR_LABEL
+        .db     23, 9, FB_ATTR_LABEL
         .dw     fb_txt_flips
-        .db     21, 14, FB_ATTR_TITLE
+        .db     23, 14, FB_ATTR_TITLE
         .dw     fb_txt_key_on
-        .db     21, 15, FB_ATTR_TEXT
+        .db     23, 15, FB_ATTR_TEXT
         .dw     fb_txt_key_off
-        .db     21, 16, FB_ATTR_MATCH
+        .db     23, 16, FB_ATTR_MATCH
         .dw     fb_txt_key_match
         .db     0xff
 
@@ -525,26 +532,58 @@ fb_title_lines:
         .dw     fb_txt_credit
         .db     0xff
 fb_help_lines:
-        .db     11, 2, FB_ATTR_TITLE
+        .db     12, 1, FB_ATTR_TITLE
         .dw     fb_txt_name
-        .db     1, 5, FB_ATTR_TEXT
-        .dw     fb_help_1
-        .db     1, 7, FB_ATTR_TEXT
-        .dw     fb_help_2
-        .db     1, 9, FB_ATTR_TEXT
-        .dw     fb_help_3
-        .db     1, 11, FB_ATTR_TEXT
-        .dw     fb_help_4
-        .db     1, 13, FB_ATTR_TEXT
-        .dw     fb_help_5
-        .db     1, 15, FB_ATTR_TEXT
-        .dw     fb_help_6
-        .db     1, 17, FB_ATTR_TEXT
-        .dw     fb_help_7
-        .db     1, 19, FB_ATTR_TEXT
-        .dw     fb_help_8
-        .db     1, 21, FB_ATTR_LABEL
-        .dw     fb_help_back
+        .db     2, 4, FB_ATTR_LABEL
+        .dw     fb_help_label_1
+        .db     21, 4, FB_ATTR_LABEL
+        .dw     fb_help_label_2
+        .db     2, 14, FB_ATTR_TEXT
+        .dw     fb_help_label_3
+        .db     2, 16, FB_ATTR_TEXT
+        .dw     fb_help_label_4
+        .db     2, 18, FB_ATTR_TEXT
+        .dw     fb_help_label_5
+        .db     2, 20, FB_ATTR_TEXT
+        .dw     fb_help_label_6
+        .db     2, 22, FB_ATTR_LABEL
+        .dw     fb_help_label_7
+        .db     0xff
+fb_help_label_1:
+        .db     "SWITCH", 0
+fb_help_label_2:
+        .db     "MATCH", 0
+fb_help_label_3:
+        .db     "WASD SELECT   RETURN TOGGLE", 0
+fb_help_label_4:
+        .db     "MATCH EVERY ROW AND COLUMN", 0
+fb_help_label_5:
+        .db     "GREEN COUNTS MATCH", 0
+fb_help_label_6:
+        .db     "SPACE CLEAR   CTRL+C BASIC", 0
+fb_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+fb_help_diagram:
+; One switch fixes its row and its column at the same time.
+        .db     4, 6, FB_ATTR_MATCH, 1, 0x31
+        .db     6, 6, FB_ATTR_CLUE, 1, 0x31
+        .db     2, 7, FB_ATTR_CLUE, 1, 0x32
+        .db     2, 9, FB_ATTR_MATCH, 1, 0x30
+        .db     4, 0x80 + 7, FB_ATTR_ON, 1, FB_TILE_ON
+        .db     6, 0x80 + 7, FB_ATTR_OFF, 1, FB_TILE_OFF
+        .db     4, 0x80 + 9, FB_ATTR_OFF, 2, FB_TILE_OFF, FB_TILE_OFF
+        .db     6, 11, 0x06, 1, 0x5e
+        .db     12, 8, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 8, 0x86, 1, 0x06
+        .db     16, 7, 0x86, 1, 0x00
+        .db     16, 9, 0x80, 1, 0x06
+        .db     23, 6, FB_ATTR_MATCH, 1, 0x31
+        .db     25, 6, FB_ATTR_MATCH, 1, 0x31
+        .db     21, 7, FB_ATTR_MATCH, 1, 0x32
+        .db     21, 9, FB_ATTR_MATCH, 1, 0x30
+        .db     23, 0x80 + 7, FB_ATTR_ON, 2, FB_TILE_ON, FB_TILE_ON
+        .db     23, 0x80 + 9, FB_ATTR_OFF, 2, FB_TILE_OFF, FB_TILE_OFF
         .db     0xff
 
 fb_txt_name:
@@ -569,24 +608,6 @@ fb_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 fb_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-fb_help_1:
-        .db     "WASD : SELECT A SWITCH", 0
-fb_help_2:
-        .db     "RETURN : ON OR OFF", 0
-fb_help_3:
-        .db     "MATCH THE COUNT IN EVERY ROW", 0
-fb_help_4:
-        .db     "AND THE COUNT IN EVERY COLUMN.", 0
-fb_help_5:
-        .db     "ANY MATCHING WIRING IS VALID.", 0
-fb_help_6:
-        .db     "MATCHED COUNTS TURN GREEN.", 0
-fb_help_7:
-        .db     "SPACE : CLEAR THE PANEL", 0
-fb_help_8:
-        .db     "CTRL+C : BACK TO BASIC", 0
-fb_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -638,7 +659,7 @@ fb_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -646,5 +667,6 @@ fb_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

@@ -32,7 +32,10 @@ class RelicDiveContractTests(unittest.TestCase):
                                       for event in profiles[name]['replay']])
         returned = profiles['local-rom-basic-return']
         self.assertEqual(returned['expect']['memory']['basic-return-proof'], 'a5')
-        self.assertEqual(returned['expect']['pc'], '0x4a68')
+        probe_return = int(returned['expect']['pc'], 16)
+        self.assertIn(returned['expect']['pc'], returned['breakpoints'])
+        self.assertIn(f'a=usr(${probe_return - 5:04x})\r',
+                      [event.get('text') for event in returned['replay']])
         restored = profiles['local-rom-screen-restore']
         self.assertEqual(restored['expect']['pc'], '0x1274')
         self.assertEqual(profiles['local-rom-goal']['expect']['memory']['kills'], '01')

@@ -13,6 +13,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x46a0
 SR_KEEP:            .equ    0x46a0      ; cleared field (255 none), water, total
@@ -994,6 +996,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    SR_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     sr_help_diagram
+        JSR     jr_guide_draw
         LDX     sr_help_lines
         JMP     jr_gfx_lines
 
@@ -1075,27 +1079,56 @@ sr_title_lines:
         .db     0xff
 sr_help_lines:
         .db     10, 1, SR_ATTR_TITLE
-        .dw     sr_txt_name
-        .db     1, 3, SR_ATTR_TEXT
-        .dw     sr_help_1
-        .db     1, 5, SR_ATTR_TEXT
-        .dw     sr_help_2
-        .db     1, 7, SR_ATTR_TEXT
-        .dw     sr_help_3
-        .db     1, 9, SR_ATTR_TEXT
-        .dw     sr_help_4
-        .db     1, 11, SR_ATTR_TEXT
-        .dw     sr_help_5
-        .db     1, 13, SR_ATTR_TEXT
-        .dw     sr_help_6
-        .db     1, 15, SR_ATTR_TEXT
-        .dw     sr_help_7
-        .db     1, 17, SR_ATTR_TEXT
-        .dw     sr_help_8
-        .db     1, 19, SR_ATTR_TEXT
-        .dw     sr_help_9
-        .db     1, 21, SR_ATTR_LABEL
-        .dw     sr_help_back
+        .dw     sr_help_label_0
+        .db     2, 4, SR_ATTR_LABEL
+        .dw     sr_help_label_1
+        .db     19, 4, SR_ATTR_LABEL
+        .dw     sr_help_label_2
+        .db     2, 14, SR_ATTR_TEXT
+        .dw     sr_help_label_3
+        .db     2, 16, SR_ATTR_TEXT
+        .dw     sr_help_label_4
+        .db     2, 18, SR_ATTR_TEXT
+        .dw     sr_help_label_5
+        .db     2, 20, SR_ATTR_TEXT
+        .dw     sr_help_label_6
+        .db     2, 22, SR_ATTR_LABEL
+        .dw     sr_help_label_7
+        .db     0xff
+sr_help_label_0:
+        .db     "SAND RESCUE", 0
+sr_help_label_1:
+        .db     "SELECT GATE", 0
+sr_help_label_2:
+        .db     "RETURN POUR", 0
+sr_help_label_3:
+        .db     "A/D GATE   9 WATER MAX", 0
+sr_help_label_4:
+        .db     "CRACKS TAKE 1-3 / POUR", 0
+sr_help_label_5:
+        .db     "NEAR +3  FAR +6-10", 0
+sr_help_label_6:
+        .db     "W LEAVE AT QUOTA  SPACE NEW", 0
+sr_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+sr_help_diagram:
+; A gate opens and water reaches two crops, after leaking through a crack.
+        .db     2, 7, SR_ATTR_GATE, 1, SR_CHAR_GATE_SHUT
+        .db     3, 7, SR_ATTR_SAND, 4, SR_CHAR_CHANNEL, SR_CHAR_CHANNEL, SR_CHAR_CHANNEL, SR_CHAR_CHANNEL
+        .db     5, 8, SR_ATTR_CRACK, 1, SR_CHAR_CRACK
+        .db     8, 0x80 + 6, SR_ATTR_CROP, 1, SR_TILE_SPROUT
+        .db     11, 0x80 + 6, SR_ATTR_CROP, 1, SR_TILE_SPROUT + 8
+        .db     14, 7, 0xad, 3, 0x2d, 0x2d, 0x2d
+        .db     17, 7, 0x85, 1, 0x05
+        .db     16, 6, 0x85, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x05
+        .db     19, 7, SR_ATTR_GATE, 1, SR_CHAR_GATE_OPEN
+        .db     20, 7, SR_ATTR_WATER, 4, SR_CHAR_WET, SR_CHAR_WET, SR_CHAR_WET, SR_CHAR_WET
+        .db     22, 8, SR_ATTR_CRACK, 1, SR_CHAR_CRACK
+        .db     24, 0x80 + 6, SR_ATTR_CROP, 1, SR_TILE_SPROUT + 4
+        .db     27, 0x80 + 6, SR_ATTR_CROP, 1, SR_TILE_SPROUT + 12
+        .db     24, 9, 0x04, 2, 0x2b, 0x33
         .db     0xff
 
 sr_txt_name:
@@ -1154,26 +1187,6 @@ sr_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 sr_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-sr_help_1:
-        .db     "A/D: SELECT WATER GATE.", 0
-sr_help_2:
-        .db     "RETURN: POUR THE WHOLE TANK.", 0
-sr_help_3:
-        .db     "W: LEAVE AFTER HARVEST TARGET.", 0
-sr_help_4:
-        .db     "TANK HOLDS 9. EXCESS OVERFLOWS.", 0
-sr_help_5:
-        .db     "NEAR CROPS: 3 PTS. FAR: 6-10.", 0
-sr_help_6:
-        .db     "CRACKS SOAK 1-3 WATER PER POUR.", 0
-sr_help_7:
-        .db     "CROP: WATER GIVEN/NEEDED, +PTS", 0
-sr_help_8:
-        .db     "SAVE WATER ACROSS SIX FIELDS.", 0
-sr_help_9:
-        .db     "SPACE: NEW GAME FROM FIELD 1", 0
-sr_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1229,7 +1242,7 @@ sr_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1237,6 +1250,7 @@ sr_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

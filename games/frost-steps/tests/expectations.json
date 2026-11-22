@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "expected_entry_address": "0x1000",
-  "notes": "State expectations come from games/frost-steps/tests/model.py (upstream rules 1.7.2) and tests/ranked_model.py (upstream ranked campaign runtime and password), not from the emulator; best is the per-stage rating table at 0x4760. Stages replay upstream solutions.json (three stars) and the challenges.json clear route (two stars); synthetic-chambers-1-20 and synthetic-chambers-21-40 (resumed by password) rate all forty stages. synthetic-password types a code made by the model and restores stage 13 and its ratings. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
+  "notes": "State expectations come from games/frost-steps/tests/model.py (upstream rules 1.7.2) and tests/ranked_model.py (upstream ranked campaign runtime and password), not from the emulator; best is the per-stage rating table at 0x4760. Stages replay upstream solutions.json (three stars) and the challenges.json clear route (two stars); synthetic-chambers-1-20 and synthetic-chambers-21-40 (resumed by password) rate all forty stages. synthetic-password types a code made by the model and restores stage 13 and its ratings. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000. synthetic-buffered-navigation sends right, left, right 32 ms apart and expects three moves.",
   "runtime": {
     "default_profile": "synthetic-first-clear",
     "profiles": [
@@ -86,7 +86,7 @@
             "mode": "05",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "996e8f7236cdc93068dccaac16b0e7c786910d69ad5205e445133082f8192655",
+          "framebuffer_sha256": "583d54fbb7135cdec80cd4f9ed399183cbf6c5a40adb3df51b32e0cccd578a05",
           "pcm": null,
           "cassette": null
         }
@@ -8065,6 +8065,104 @@
             "channel-c": "00",
             "channel-d": "00",
             "channel-f": "00",
+            "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-buffered-navigation",
+        "mode": "synthetic-injection",
+        "max_cycles": 1640000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 316000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 440000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 456000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 482857,
+            "code": "0x61",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 498857,
+            "code": "0x61",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 525714,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 541714,
+            "code": "0x64",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "moves",
+            "address": "0x4645",
+            "length": 1
+          },
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "level",
+            "address": "0x4621",
+            "length": 1
+          },
+          {
+            "name": "action",
+            "address": "0x4622",
+            "length": 1
+          },
+          {
+            "name": "best",
+            "address": "0x4760",
+            "length": 40
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "moves": "03",
+            "mode": "01",
+            "level": "00",
+            "action": "04",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
           "framebuffer_sha256": null,

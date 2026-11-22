@@ -663,6 +663,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    OD_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     od_help_diagram
+        JSR     jr_guide_draw
         LDX     od_help_lines
         JMP     jr_gfx_lines
 
@@ -704,24 +706,41 @@ od_title_lines:
 od_help_lines:
         .db     10, 1, OD_ATTR_TITLE
         .dw     od_txt_name
-        .db     1, 3, OD_ATTR_TEXT
-        .dw     od_help_1
-        .db     1, 5, OD_ATTR_TEXT
-        .dw     od_help_2
-        .db     1, 7, OD_ATTR_TEXT
-        .dw     od_help_3
-        .db     1, 9, OD_ATTR_TEXT
-        .dw     od_help_4
-        .db     1, 11, OD_ATTR_TEXT
-        .dw     od_help_5
-        .db     1, 13, OD_ATTR_TEXT
-        .dw     od_help_6
-        .db     1, 15, OD_ATTR_TEXT
-        .dw     od_help_7
-        .db     1, 17, OD_ATTR_TEXT
-        .dw     od_help_8
-        .db     1, 21, OD_ATTR_LABEL
+        .db     1, 19, OD_ATTR_TEXT
+        .dw     od_help_move
+        .db     1, 20, OD_ATTR_TEXT
+        .dw     od_help_switch
+        .db     1, 21, OD_ATTR_TEXT
+        .dw     od_help_goal
+        .db     1, 22, OD_ATTR_LABEL
         .dw     od_help_back
+        .db     0xff
+
+od_help_diagram:
+; The ship circles two rings; the hot target sends a beam across the orbit.
+        .db     14, 0x80 + 3, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     23, 0x80 + 4, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     27, 0x80 + 9, OD_ATTR_TARGET_HOT, 1, OD_TILE_TARGET
+        .db     23, 0x80 + 14, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     14, 0x80 + 15, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     5, 0x80 + 14, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     2, 0x80 + 9, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     5, 0x80 + 4, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     14, 0x80 + 6, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     18, 0x80 + 7, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     20, 0x80 + 9, OD_ATTR_GEM, 1, OD_TILE_GEM
+        .db     18, 0x80 + 11, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     14, 0x80 + 12, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     10, 0x80 + 11, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     8, 0x80 + 9, OD_ATTR_DOT, 1, OD_TILE_DOT
+        .db     10, 0x80 + 7, OD_ATTR_SHIP, 1, OD_TILE_SHIP
+        .db     14, 0x80 + 9, OD_ATTR_PLANET, 1, OD_TILE_PLANET
+        .db     25, 9, OD_ATTR_BEAM, 2, OD_CHAR_H, OD_CHAR_H
+        .db     24, 9, OD_ATTR_BEAM, 1, OD_CHAR_TIP
+        .db     7, 4, 0xb6, 3, 0x36, 0x36, 0x36
+        .db     10, 4, 0x86, 1, 0x06
+        .db     9, 3, 0x86, 1, 0x00
+        .db     9, 5, 0x80, 1, 0x06
         .db     0xff
 
 od_txt_name:
@@ -750,24 +769,14 @@ od_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 od_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-od_help_1:
-        .db     "A/D OR W/S : MOVE AROUND ORBIT", 0
-od_help_2:
-        .db     "RETURN : CHANGE INNER / OUTER", 0
-od_help_3:
-        .db     "FLASHING TARGETS WILL BE HIT.", 0
-od_help_4:
-        .db     "COLLECT GEMS AT IMPACT TIME.", 0
-od_help_5:
-        .db     "CONSECUTIVE GEMS PAY UP TO +3.", 0
-od_help_6:
-        .db     "ENERGY >= WAVES EARNS GOLD.", 0
-od_help_7:
-        .db     "SIX SECTORS / THREE HULL EACH.", 0
-od_help_8:
-        .db     "SPACE : RETRY THE SECTOR", 0
+od_help_move:
+        .db     "A/D OR W/S: MOVE AROUND RING", 0
+od_help_switch:
+        .db     "RETURN: SWITCH INNER / OUTER", 0
+od_help_goal:
+        .db     "DODGE BEAMS / COLLECT GEMS", 0
 od_help_back:
-        .db     "ANY KEY : TITLE", 0
+        .db     "SPACE RETRY   ANY KEY TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -824,6 +833,7 @@ od_lose_bass:
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
         .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"

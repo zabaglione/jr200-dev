@@ -998,6 +998,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    SL_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     sl_help_diagram
+        JSR     jr_guide_draw
         LDX     sl_help_lines
         JMP     jr_gfx_lines
 
@@ -1046,25 +1048,51 @@ sl_title_lines:
         .db     0xff
 sl_help_lines:
         .db     11, 1, SL_ATTR_TITLE
-        .dw     sl_txt_name
-        .db     1, 3, SL_ATTR_TEXT
-        .dw     sl_help_1
-        .db     1, 5, SL_ATTR_TEXT
-        .dw     sl_help_2
-        .db     1, 7, SL_ATTR_TEXT
-        .dw     sl_help_3
-        .db     1, 9, SL_ATTR_TEXT
-        .dw     sl_help_4
-        .db     1, 11, SL_ATTR_TEXT
-        .dw     sl_help_5
-        .db     1, 13, SL_ATTR_TEXT
-        .dw     sl_help_6
-        .db     1, 15, SL_ATTR_TEXT
-        .dw     sl_help_7
-        .db     1, 17, SL_ATTR_TEXT
-        .dw     sl_help_8
-        .db     1, 21, SL_ATTR_LABEL
-        .dw     sl_help_back
+        .dw     sl_help_label_0
+        .db     2, 4, SL_ATTR_LABEL
+        .dw     sl_help_label_1
+        .db     19, 4, SL_ATTR_LABEL
+        .dw     sl_help_label_2
+        .db     2, 14, SL_ATTR_TEXT
+        .dw     sl_help_label_3
+        .db     2, 16, SL_ATTR_TEXT
+        .dw     sl_help_label_4
+        .db     2, 18, SL_ATTR_TEXT
+        .dw     sl_help_label_5
+        .db     2, 20, SL_ATTR_TEXT
+        .dw     sl_help_label_6
+        .db     2, 22, SL_ATTR_LABEL
+        .dw     sl_help_label_7
+        .db     0xff
+sl_help_label_0:
+        .db     "STAR LANCE", 0
+sl_help_label_1:
+        .db     "RETURN SHOT", 0
+sl_help_label_2:
+        .db     "W HEAVY", 0
+sl_help_label_3:
+        .db     "HOLD A/D MOVE   SPACE RETRY", 0
+sl_help_label_4:
+        .db     "HIT/HEAT: SHOT 1/3 HEAVY 2/5", 0
+sl_help_label_5:
+        .db     "FULL HEAT LOCKS WEAPONS", 0
+sl_help_label_6:
+        .db     "STOP FLASHING SHIP: -4 HEAT", 0
+sl_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+sl_help_diagram:
+; Shots rise toward a normal ship and a flashing enemy ready to fire.
+        .db     4, 0x80 + 6, SL_ATTR_ENEMY, 1, SL_TILE_ENEMY
+        .db     21, 0x80 + 6, SL_ATTR_FLASH, 1, SL_TILE_FLASH
+        .db     4, 8, SL_ATTR_SHOT, 1, SL_CHAR_LIGHT
+        .db     4, 9, SL_ATTR_SHOT, 1, SL_CHAR_LIGHT
+        .db     21, 8, SL_ATTR_SHOT, 1, SL_CHAR_HEAVY
+        .db     21, 9, SL_ATTR_SHOT, 1, SL_CHAR_HEAVY
+        .db     4, 0x80 + 10, SL_ATTR_SHIP, 1, SL_TILE_SHIP
+        .db     21, 0x80 + 10, SL_ATTR_SHIP, 1, SL_TILE_SHIP
+        .db     6, 11, 0xb6, 3, 0x36, 0x36, 0x36
+        .db     23, 11, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
         .db     0xff
 
 sl_txt_name:
@@ -1097,24 +1125,6 @@ sl_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 sl_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-sl_help_1:
-        .db     "A/D: HOLD TO MOVE", 0
-sl_help_2:
-        .db     "RETURN : FIRE / W : HEAVY SHOT", 0
-sl_help_3:
-        .db     "DAMAGE/HEAT: SHOT 1/3 HEAVY 2/5", 0
-sl_help_4:
-        .db     "FULL HEAT LOCKS YOUR WEAPONS.", 0
-sl_help_5:
-        .db     "FLASHING ENEMY : ABOUT TO FIRE", 0
-sl_help_6:
-        .db     "STOP ITS SHOT : COOL FOUR HEAT", 0
-sl_help_7:
-        .db     "3 HULL / 18 SHIPS / SIX WAVES", 0
-sl_help_8:
-        .db     "SPACE : RETRY THE WAVE", 0
-sl_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1186,4 +1196,5 @@ sl_lose_bass:
         .include "../../../sdk/port.inc"
         .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

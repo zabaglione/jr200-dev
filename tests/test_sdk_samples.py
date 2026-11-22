@@ -35,9 +35,9 @@ PROJECTS = {
     'port-fixture-sample': (
         'samples/port-fixture',
         ('sdk/effect.inc', 'sdk/font.inc', 'sdk/font_data.inc', 'sdk/frame.inc', 'sdk/gfx.inc',
-         'sdk/jr200.inc', 'sdk/keyrepeat.inc', 'sdk/keys.inc', 'sdk/keyscan.inc',
+         'sdk/gfx_runtime.inc', 'sdk/jr200.inc', 'sdk/keyrepeat.inc', 'sdk/keys.inc', 'sdk/keyscan.inc',
          'sdk/math.inc', 'sdk/pcg.inc',
-         'sdk/port.inc', 'sdk/session.inc', 'sdk/sfx.inc', 'sdk/sound.inc'),
+         'sdk/port.inc', 'sdk/port_runtime.inc', 'sdk/session.inc', 'sdk/sfx.inc', 'sdk/sound.inc'),
     ),
 }
 PORT_CONSUMERS = ['brick-pulse', 'circuit-works', 'corner-crown', 'hearth-zero', 'lumen-cross', 'port-fixture-sample']
@@ -47,6 +47,11 @@ RANKED_GAMES = ['frost-steps', 'glyph-shift', 'gravity-well', 'magnet-vault']
 SELFTEST_GAMES = ['echo-parry', 'gate-runner', 'iron-script', 'loop-ten', 'lunar-touchdown', 'metro-weave', 'night-swarm', 'orbit-dodge', 'pendulum-port', 'ribbon-snake', 'sand-rescue', 'star-lance', 'trace-blade']
 SFX_GAME_CONSUMERS = [*PORT_CONSUMERS, 'quiet-route', 'seed-merge']
 PORT_GAME_CONSUMERS = sorted([*SFX_GAME_CONSUMERS, *AUDIO_GAMES])
+UNBUFFERED_PORTS = [
+    'brick-pulse', 'echo-parry', 'gate-runner', 'lunar-touchdown', 'night-swarm',
+    'orbit-dodge', 'pendulum-port', 'port-fixture-sample', 'ribbon-snake', 'star-lance',
+]
+BUFFERED_PORTS = [g for g in PORT_GAME_CONSUMERS if g not in UNBUFFERED_PORTS]
 
 
 class SampleContractTests(unittest.TestCase):
@@ -86,8 +91,8 @@ class SampleContractTests(unittest.TestCase):
     def test_sdk_does_not_take_over_stack_or_interrupt_contracts(self):
         forbidden = {'lds', 'cli', 'sei', 'swi', 'rti'}
         # session.inc owns the stack/IRQ mask for a whole game session and
-        # gfx.inc borrows S (under that mask) to copy the shadow screen.
-        owners = {'sdk/session.inc': {'lds', 'sei'}, 'sdk/gfx.inc': {'lds'}}
+        # The graphics runtime borrows S under that mask to copy the shadow screen.
+        owners = {'sdk/session.inc': {'lds', 'sei'}, 'sdk/gfx_runtime.inc': {'lds'}}
         paths = sorted((ROOT / 'sdk').glob('*.inc'))
         paths += sorted((ROOT / 'samples').glob('*/src/*.asm'))
         for path in paths:
@@ -231,17 +236,24 @@ class SdkImpactTests(unittest.TestCase):
                 *PORT_GAME_CONSUMERS]),
             'sdk/timing.inc': ['game-loop-sample', 'side-catch', 'sound-sample'],
         }
-        for module in ('font', 'font_data', 'frame', 'gfx', 'math', 'session'):
+        for module in ('font', 'font_data', 'frame', 'math', 'session'):
             cases[f'sdk/{module}.inc'] = PORT_GAME_CONSUMERS
-        cases['sdk/port.inc'] = [g for g in PORT_GAME_CONSUMERS if g not in RANKED_GAMES]
-        cases['sdk/ranked.inc'] = RANKED_GAMES
+        cases['sdk/gfx.inc'] = UNBUFFERED_PORTS
+        cases['sdk/gfx_runtime.inc'] = PORT_GAME_CONSUMERS
+        cases['sdk/gfx_buffered.inc'] = BUFFERED_PORTS
+        cases['sdk/port.inc'] = UNBUFFERED_PORTS
+        cases['sdk/port_runtime.inc'] = [g for g in PORT_GAME_CONSUMERS if g not in RANKED_GAMES]
+        cases['sdk/port_buffered.inc'] = [g for g in BUFFERED_PORTS if g not in RANKED_GAMES]
+        cases['sdk/port_input.inc'] = BUFFERED_PORTS
+        cases['sdk/ranked_runtime.inc'] = RANKED_GAMES
+        cases['sdk/ranked_buffered.inc'] = RANKED_GAMES
         cases['sdk/keys.inc'] = [g for g in PORT_GAME_CONSUMERS if g not in KEYS_EXT_GAMES]
         cases['sdk/keys_ext.inc'] = KEYS_EXT_GAMES
         cases['sdk/sfx.inc'] = SFX_GAME_CONSUMERS
         cases['sdk/frame.inc'] = sorted(['chord-sample', *PORT_GAME_CONSUMERS])
         cases['sdk/audio.inc'] = sorted(['chord-sample', *AUDIO_GAMES])
         cases['sdk/audio_notes.inc'] = sorted(['chord-sample', *AUDIO_GAMES])
-        cases['sdk/pcg.inc'] = sorted([*PORT_CONSUMERS, *AUDIO_GAMES])
+        cases['sdk/pcg.inc'] = sorted([*PORT_CONSUMERS, *AUDIO_GAMES, 'quiet-route', 'seed-merge'])
         cases['sdk/font.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])
         cases['sdk/font_data.inc'] = sorted([*PORT_GAME_CONSUMERS, 'relic-dive', 'side-catch'])
         cases['sdk/session.inc'] = sorted([*PORT_GAME_CONSUMERS, 'side-catch'])

@@ -63,7 +63,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "81a02e3fe67b228d798b012b54634461bc155feb52223cc61bf1c15aa2daadde",
           "pcm": null,
           "cassette": null
         }
@@ -127,7 +127,7 @@
       {
         "profile": "synthetic-night",
         "mode": "synthetic-injection",
-        "max_cycles": 2120000,
+        "max_cycles": 2158600,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -173,7 +173,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "d171b7502ee48a192307d8c05c817ba6703e6b77e74a1bb95b3a9fe149af7d51",
+          "framebuffer_sha256": "c32024c2dd5f3d417b70321a6ef0cd6e7facb309ab3af392a9238486c2595c34",
           "pcm": null,
           "cassette": null
         }
@@ -349,7 +349,7 @@
           },
           {
             "name": "notice",
-            "address": "0xc3a1",
+            "address": "0xc3c1",
             "length": 21
           }
         ],
@@ -501,7 +501,7 @@
           },
           {
             "name": "notice",
-            "address": "0xc3a1",
+            "address": "0xc3c1",
             "length": 24
           }
         ],
@@ -1785,7 +1785,7 @@
             "level": "00",
             "status": "434c454152202d2052455455524e20464f52204e455854205354414745"
           },
-          "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48",
+          "framebuffer_sha256": "aaf4fc557c4e2d2421b78cae8bc44c4cc441a4ed0bda9091734b20933be8e43f",
           "pcm": null,
           "cassette": null
         }
@@ -2989,7 +2989,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "76949a071500fe6869b58c128b0b96380526f59926753570e8d602bdbe023208",
+          "framebuffer_sha256": "8bac337f22ef866c2626eacb338ee0c199e929331c107081d5155ca7d9e331c5",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -3027,7 +3027,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "0119bbc29042ff305fa701bf62208de5c1e043e122126327392da5a6ee9eee48",
+          "framebuffer_sha256": "aaf4fc557c4e2d2421b78cae8bc44c4cc441a4ed0bda9091734b20933be8e43f",
           "pcm": null,
           "cassette": {
             "state": 6,

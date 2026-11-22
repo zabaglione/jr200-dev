@@ -63,7 +63,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "3463105b8dee1c9bb4b4df3c615bd69c02f7a7043866399f0b9debd57398bca8",
           "pcm": null,
           "cassette": null
         }

@@ -11,6 +11,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -241,6 +243,10 @@ gw_act_index:
 gw_act_next:
         INC     [GW_K]
         LDAA    [GW_K]
+        BITA    7
+        BNE     gw_act_next_ball
+        JSR     jr_input_capture
+gw_act_next_ball:
         CMPA    64
         BNE     gw_act_ball
         ; nothing rolled: later sweeps cannot roll either
@@ -248,11 +254,17 @@ gw_act_next:
         BEQ     gw_act_settled
         CLRA
         JSR     jr_port_sound
+        JSR     jr_input_capture
+        LDAA    [JR_INPUT_HEAD]
+        CMPA    [JR_INPUT_TAIL]
+        BNE     gw_act_settle_draw
         LDAA    2
         JSR     jr_port_animate
+gw_act_settle_draw:
         JSR     gw_origins
         DEC     [GW_STEP]
-        BNE     gw_act_sweep
+        BEQ     gw_act_settled
+        JMP     gw_act_sweep
 gw_act_settled:
         TST     [GW_CHANGED]
         BEQ     gw_act_sockets
@@ -477,6 +489,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    GW_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     gw_help_diagram
+        JSR     jr_guide_draw
         LDX     gw_help_lines
         JMP     jr_gfx_lines
 
@@ -529,26 +543,55 @@ gw_title_lines:
 gw_help_lines:
         .db     10, 1, GW_ATTR_TITLE
         .dw     game_title_text
-        .db     1, 3, GW_ATTR_TEXT
-        .dw     gw_help_1
-        .db     1, 5, GW_ATTR_TEXT
-        .dw     gw_help_2
-        .db     1, 7, GW_ATTR_TEXT
-        .dw     gw_help_3
-        .db     1, 9, GW_ATTR_TEXT
-        .dw     gw_help_4
-        .db     1, 11, GW_ATTR_TEXT
-        .dw     gw_help_5
-        .db     1, 13, GW_ATTR_TEXT
-        .dw     gw_help_6
-        .db     1, 15, GW_ATTR_TEXT
-        .dw     gw_help_7
-        .db     1, 17, GW_ATTR_TEXT
-        .dw     gw_help_8
-        .db     1, 19, GW_ATTR_TEXT
-        .dw     gw_help_9
-        .db     1, 21, GW_ATTR_LABEL
-        .dw     gw_help_back
+        .db     2, 4, GW_ATTR_LABEL
+        .dw     gw_help_label_1
+        .db     22, 4, GW_ATTR_LABEL
+        .dw     gw_help_label_2
+        .db     2, 14, GW_ATTR_TEXT
+        .dw     gw_help_label_3
+        .db     2, 16, GW_ATTR_TEXT
+        .dw     gw_help_label_4
+        .db     2, 18, GW_ATTR_TEXT
+        .dw     gw_help_label_5
+        .db     2, 22, GW_ATTR_LABEL
+        .dw     gw_help_label_6
+        .db     0xff
+gw_help_label_1:
+        .db     "S TILT", 0
+gw_help_label_2:
+        .db     "BOTH IN", 0
+gw_help_label_3:
+        .db     "WASD TILT  /  FILL BOTH", 0
+gw_help_label_4:
+        .db     "PAR = 2*  BOTH RUNES = 3*", 0
+gw_help_label_5:
+        .db     "SPACE RETRY  F STAGES  X CODE", 0
+gw_help_label_6:
+        .db     "ANY KEY TO TITLE", 0
+
+gw_help_diagram:
+; Two shafts tilt together. The balls settle in the two sockets.
+        .db     2, 0x80 + 6, GW_ATTR_BALL, 1, GW_TILE_BALL
+        .db     8, 0x80 + 6, GW_ATTR_BALL, 1, GW_TILE_BALL
+        .db     2, 0x80 + 8, GW_ATTR_FLOOR, 1, GW_TILE_FLOOR
+        .db     8, 0x80 + 8, GW_ATTR_FLOOR, 1, GW_TILE_FLOOR
+        .db     2, 0x80 + 10, GW_ATTR_SOCKET, 1, GW_TILE_SOCKET
+        .db     8, 0x80 + 10, GW_ATTR_SOCKET, 1, GW_TILE_SOCKET
+        .db     2, 0x80 + 12, GW_ATTR_WALL, 1, GW_TILE_WALL
+        .db     8, 0x80 + 12, GW_ATTR_WALL, 1, GW_TILE_WALL
+        .db     21, 0x80 + 6, GW_ATTR_FLOOR, 1, GW_TILE_FLOOR
+        .db     27, 0x80 + 6, GW_ATTR_FLOOR, 1, GW_TILE_FLOOR
+        .db     21, 0x80 + 8, GW_ATTR_FLOOR, 1, GW_TILE_FLOOR
+        .db     27, 0x80 + 8, GW_ATTR_FLOOR, 1, GW_TILE_FLOOR
+        .db     21, 0x80 + 10, GW_ATTR_BALL_IN, 1, GW_TILE_BALL
+        .db     27, 0x80 + 10, GW_ATTR_BALL_IN, 1, GW_TILE_BALL
+        .db     21, 0x80 + 12, GW_ATTR_WALL, 1, GW_TILE_WALL
+        .db     27, 0x80 + 12, GW_ATTR_WALL, 1, GW_TILE_WALL
+        .db     13, 8, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 8, 0x86, 1, 0x06
+        .db     16, 7, 0x86, 1, 0x00
+        .db     16, 9, 0x80, 1, 0x06
+        .db     28, 0x80 + 15, GW_ATTR_RUNE, 1, GW_TILE_RUNE
         .db     0xff
 
 gw_txt_gravity:
@@ -563,26 +606,6 @@ gw_txt_start:
         .db     "RETURN : PLAY THE STAGE", 0
 gw_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-gw_help_1:
-        .db     "WASD : TILT THE ROOM", 0
-gw_help_2:
-        .db     "BOTH BALLS ROLL TOGETHER.", 0
-gw_help_3:
-        .db     "FILL BOTH DIAMOND SOCKETS.", 0
-gw_help_4:
-        .db     "ROLL OVER OPTIONAL RUNES.", 0
-gw_help_5:
-        .db     "PAR OR LESS = TWO STARS.", 0
-gw_help_6:
-        .db     "PLUS BOTH RUNES = THREE STARS.", 0
-gw_help_7:
-        .db     "OVER PAR = CLEAR / ONE STAR.", 0
-gw_help_8:
-        .db     "SPACE RETRY / F STAGE SELECT", 0
-gw_help_9:
-        .db     "X : PASSWORD (TITLE / MAP)", 0
-gw_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -631,7 +654,7 @@ gw_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -639,5 +662,6 @@ gw_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/ranked.inc"
+        .include "../../../sdk/ranked_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

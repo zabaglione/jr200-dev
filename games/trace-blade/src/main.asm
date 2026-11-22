@@ -15,6 +15,8 @@
 JR_SHADOW:          .equ    0x4000
 JR_SAVE:            .equ    0x4600
 JR_RT:              .equ    0x5600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x5640
 GAME_STATE_END:     .equ    0x57c0
 JR_AUDIO:           .equ    0x57c0
@@ -703,6 +705,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    TB_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     tb_help_diagram
+        JSR     jr_guide_draw
         LDX     tb_help_lines
         JMP     jr_gfx_lines
 
@@ -783,25 +787,52 @@ tb_title_lines:
         .db     0xff
 tb_help_lines:
         .db     10, 1, TB_ATTR_TITLE
-        .dw     tb_txt_name
-        .db     1, 3, TB_ATTR_TEXT
-        .dw     tb_help_1
-        .db     1, 5, TB_ATTR_TEXT
-        .dw     tb_help_2
-        .db     1, 7, TB_ATTR_TEXT
-        .dw     tb_help_3
-        .db     1, 9, TB_ATTR_TEXT
-        .dw     tb_help_4
-        .db     1, 11, TB_ATTR_TEXT
-        .dw     tb_help_5
-        .db     1, 13, TB_ATTR_TEXT
-        .dw     tb_help_6
-        .db     1, 15, TB_ATTR_TEXT
-        .dw     tb_help_7
-        .db     1, 17, TB_ATTR_TEXT
-        .dw     tb_help_8
-        .db     1, 21, TB_ATTR_LABEL
-        .dw     tb_help_back
+        .dw     tb_help_label_0
+        .db     2, 4, TB_ATTR_LABEL
+        .dw     tb_help_label_1
+        .db     22, 4, TB_ATTR_LABEL
+        .dw     tb_help_label_2
+        .db     2, 15, TB_ATTR_TEXT
+        .dw     tb_help_label_3
+        .db     2, 17, TB_ATTR_TEXT
+        .dw     tb_help_label_4
+        .db     2, 19, TB_ATTR_TEXT
+        .dw     tb_help_label_5
+        .db     2, 22, TB_ATTR_LABEL
+        .dw     tb_help_label_6
+        .db     0xff
+tb_help_label_0:
+        .db     "TRACE BLADE", 0
+tb_help_label_1:
+        .db     "PASS TARGETS", 0
+tb_help_label_2:
+        .db     "F CUT", 0
+tb_help_label_3:
+        .db     "WASD TRACE   SPACE UNDO", 0
+tb_help_label_4:
+        .db     "NO WALLS OR REUSED CELLS", 0
+tb_help_label_5:
+        .db     "RETURN MENU  /  ESC BASIC", 0
+tb_help_label_6:
+        .db     "ANY KEY TO TITLE", 0
+
+tb_help_diagram:
+; Trace an unbroken path from the blade across the red target to the exit.
+        .db     2, 0x80 + 6, TB_ATTR_BLADE, 1, TB_TILE_BLADE
+        .db     4, 0x80 + 6, TB_ATTR_FLOOR, 1, TB_TILE_FLOOR
+        .db     6, 0x80 + 6, TB_ATTR_TARGET, 1, TB_TILE_TARGET
+        .db     8, 0x80 + 6, TB_ATTR_FLOOR, 1, TB_TILE_FLOOR
+        .db     8, 0x80 + 8, TB_ATTR_EXIT, 1, TB_TILE_EXIT
+        .db     4, 0x80 + 8, TB_ATTR_WALL, 1, TB_TILE_WALL
+        .db     13, 8, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 8, 0x86, 1, 0x06
+        .db     16, 7, 0x86, 1, 0x00
+        .db     16, 9, 0x80, 1, 0x06
+        .db     21, 0x80 + 6, TB_ATTR_TRAIL, 2, TB_TILE_TRAIL, TB_TILE_TRAIL
+        .db     25, 0x80 + 6, TB_ATTR_MARKED, 1, TB_TILE_MARKED
+        .db     27, 0x80 + 6, TB_ATTR_TRAIL, 1, TB_TILE_TRAIL
+        .db     27, 0x80 + 8, TB_ATTR_EXIT, 1, TB_TILE_EXIT
+        .db     25, 0x80 + 8, TB_ATTR_BURST, 1, TB_TILE_SHARDS
         .db     0xff
 
 tb_txt_name:
@@ -848,24 +879,6 @@ tb_txt_test:
         .db     "T : SELF TEST", 0
 tb_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-tb_help_1:
-        .db     "W/A/S/D: EXTEND THE PATH.", 0
-tb_help_2:
-        .db     "WALLS AND USED CELLS BLOCK IT.", 0
-tb_help_3:
-        .db     "SPACE: UNDO ONE STEP.", 0
-tb_help_4:
-        .db     "PASS EVERY RED TARGET AND END", 0
-tb_help_5:
-        .db     "ON THE EXIT, THEN F: CUT.", 0
-tb_help_6:
-        .db     "RETURN: MENU (CUT UNDO RESET", 0
-tb_help_7:
-        .db     "TITLE BACK), W/S AND RETURN.", 0
-tb_help_8:
-        .db     "THIRTY ROOMS. ESC: BASIC.", 0
-tb_help_back:
-        .db     "ANY KEY : TITLE", 0
 
         .include "rooms.inc"
         .include "selftest.inc"
@@ -913,7 +926,7 @@ tb_win_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -921,6 +934,7 @@ tb_win_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

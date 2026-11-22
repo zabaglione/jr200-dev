@@ -11,6 +11,7 @@ import unittest
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+from test_gallery import gallery_expectations_snapshot
 from wiki.generate import (WikiError, apply_files, render_pages,
                            require_git_worktree, sync_plan)
 
@@ -38,6 +39,18 @@ def development_games():
 
 
 DEVELOPMENT = development_games()
+
+
+def bind_fixture_gallery_receipts(project):
+    """Bind the fixture's copied receipts to its own replay expectations."""
+    receipts = list((project / 'media/receipts').glob('*.json'))
+    if not receipts:
+        return
+    digest = hashlib.sha256((project / 'tests/expectations.json').read_bytes()).hexdigest()
+    for path in receipts:
+        receipt = json.loads(path.read_text(encoding='utf-8'))
+        receipt['expectations_sha256'] = digest
+        path.write_text(json.dumps(receipt) + '\n', encoding='utf-8')
 
 
 def make_cjr(payload=b'\x01\x39', start=0x1000):
@@ -111,7 +124,15 @@ class WikiFixture:
         for name in DEVELOPMENT:
             shutil.copytree(ROOT / 'games' / name, self.root / 'games' / name,
                             ignore=shutil.ignore_patterns('build', '__pycache__'))
-            metadata_path = self.root / 'games' / name / 'game.json'
+            project = self.root / 'games' / name
+            if name in ('lumen-cross', 'relic-dive'):
+                # These draft fixtures use each fixed gallery from its release.
+                gallery = ROOT / 'games' / name / 'media/gallery.json'
+                (project / 'tests/expectations.json').write_bytes(
+                    gallery_expectations_snapshot(gallery))
+            else:
+                bind_fixture_gallery_receipts(project)
+            metadata_path = project / 'game.json'
             metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
             metadata['release']['status'] = 'draft'
             metadata['release']['publication'] = 'not-published'

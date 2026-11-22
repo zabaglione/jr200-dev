@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -49,6 +51,13 @@ SA_DCUL:            .equ    GAME_STATE + 39
 
 SA_TILE_FACE:       .equ    0x80        ; + 4 * (b - 1)
 SA_TILE_SPARK:      .equ    0x00
+SA_ICON_HAT:        .equ    0x0c
+SA_ICON_GLASSES:    .equ    0x0d
+SA_ICON_TIE:        .equ    0x0e
+SA_ICON_YES:        .equ    0x0f
+SA_ICON_NO:         .equ    0x10
+SA_ICON_FILE:       .equ    0x11
+SA_ICON_TARGET:     .equ    0x12
 SA_ATTR_FACE:       .equ    0x47
 SA_ATTR_WRONG:      .equ    0x42        ; red portrait: contradicted
 SA_ATTR_SPARK:      .equ    0x46
@@ -61,6 +70,9 @@ SA_ATTR_LABEL:      .equ    0x04
 SA_ATTR_TITLE:      .equ    0x06
 SA_ATTR_DIM:        .equ    0x05
 SA_ATTR_MODE:       .equ    0x05
+SA_ATTR_ICON:       .equ    0x46
+SA_ATTR_ICON_YES:   .equ    0x44
+SA_ATTR_ICON_NO:    .equ    0x42
 
         .org    0x1000
 start:
@@ -74,6 +86,10 @@ start:
         LDX     sa_spark_patterns
         CLRA
         LDAB    12
+        JSR     jr_pcg_load
+        LDX     sa_status_patterns
+        LDAA    SA_ICON_HAT
+        LDAB    7
         JSR     jr_pcg_load
         JMP     jr_port_run
 
@@ -253,6 +269,7 @@ game_draw:
         JSR     jr_gfx_fill
         LDX     sa_hud
         JSR     jr_gfx_lines
+        JSR     sa_draw_file_labels
         LDAA    SA_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    29
@@ -337,18 +354,18 @@ sa_draw_traits:
         JSR     jr_gfx_at
         LDAB    1
 sa_draw_trait:
-        LDAA    SA_ATTR_NO
+        LDAA    SA_ATTR_ICON_NO
         STAA    [JR_RT_COLOR]
-        LDAA    0x4e
+        LDAA    SA_ICON_NO
         STAB    [SA_DT]
         PSHA
         TBA
         ANDA    [SA_DBITS]
         PULA
         BEQ     sa_draw_trait_put
-        LDAA    SA_ATTR_YES
+        LDAA    SA_ATTR_ICON_YES
         STAA    [JR_RT_COLOR]
-        LDAA    0x59
+        LDAA    SA_ICON_YES
 sa_draw_trait_put:
         JSR     jr_gfx_putc
         LDAB    [SA_DT]
@@ -400,16 +417,16 @@ sa_draw_answer:
         LDAA    [SA_DT]
         ANDA    [SA_DCUL]
         BEQ     sa_draw_no
-        LDAA    SA_ATTR_YES
+        LDAA    SA_ATTR_ICON_YES
         STAA    [JR_RT_COLOR]
-        LDX     sa_txt_yes
+        LDAA    SA_ICON_YES
         BRA     sa_draw_answer_text
 sa_draw_no:
-        LDAA    SA_ATTR_NO
+        LDAA    SA_ATTR_ICON_NO
         STAA    [JR_RT_COLOR]
-        LDX     sa_txt_no
+        LDAA    SA_ICON_NO
 sa_draw_answer_text:
-        JSR     jr_gfx_text
+        JSR     jr_gfx_putc
 sa_draw_answer_next:
         ASL     [SA_DT]
         INC     [SA_DI]
@@ -417,9 +434,23 @@ sa_draw_answer_next:
         CMPA    3
         BNE     sa_draw_answer
         ; files read, mode line
-        LDAA    SA_ATTR_TEXT
+        LDAA    SA_ATTR_LABEL
         STAA    [JR_RT_COLOR]
-        LDAA    12
+        LDAA    1
+        LDAB    18
+        JSR     jr_gfx_at
+        LDAA    SA_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    SA_ICON_FILE
+        JSR     jr_gfx_putc
+        LDAA    SA_ATTR_LABEL
+        STAA    [JR_RT_COLOR]
+        LDAA    3
+        LDAB    18
+        JSR     jr_gfx_at
+        LDX     sa_txt_read
+        JSR     jr_gfx_text
+        LDAA    8
         LDAB    18
         JSR     jr_gfx_at
         LDAA    [SA_READ]
@@ -432,24 +463,37 @@ sa_draw_answer_next:
         JSR     jr_gfx_at
         TST     [SA_CHOOSING]
         BEQ     sa_draw_mode_file
-        LDX     sa_txt_accuse
-        JSR     jr_gfx_text
-        LDAA    10
+        LDAA    SA_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    SA_ICON_TARGET
+        JSR     jr_gfx_putc
+        LDAA    SA_ATTR_MODE
+        STAA    [JR_RT_COLOR]
+        LDAA    4
         LDAB    20
         JSR     jr_gfx_at
-        LDAA    [SA_CHOICE]
-        ADDA    0x41
-        JSR     jr_gfx_putc
+        LDX     sa_txt_accuse
+        JSR     jr_gfx_text
         BRA     sa_draw_paper
 sa_draw_mode_file:
+        LDAA    SA_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    SA_ICON_FILE
+        JSR     jr_gfx_putc
+        LDAA    SA_ATTR_MODE
+        STAA    [JR_RT_COLOR]
+        LDAA    4
+        LDAB    20
+        JSR     jr_gfx_at
         LDX     sa_txt_open_file
         JSR     jr_gfx_text
-        LDAA    12
+        LDAA    9
         LDAB    20
         JSR     jr_gfx_at
         LDAA    [SA_FILE]
         ADDA    0x31
         JSR     jr_gfx_putc
+        BRA     sa_draw_paper
 sa_draw_paper:
         TST     [SA_OPENING]
         BEQ     sa_draw_rating
@@ -540,6 +584,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    SA_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     sa_help_diagram
+        JSR     jr_guide_draw
         LDX     sa_help_lines
         JMP     jr_gfx_lines
 
@@ -561,15 +607,52 @@ sa_hud:
         .dw     sa_txt_six
         .db     19, 3, SA_ATTR_LABEL
         .dw     sa_txt_files
-        .db     18, 6, SA_ATTR_TEXT
-        .dw     sa_txt_hat
-        .db     18, 10, SA_ATTR_TEXT
-        .dw     sa_txt_glasses
-        .db     18, 14, SA_ATTR_TEXT
-        .dw     sa_txt_tie
-        .db     1, 18, SA_ATTR_LABEL
-        .dw     sa_txt_read
         .db     0xff
+sa_draw_file_labels:
+        LDAA    SA_ATTR_LABEL
+        STAA    [JR_RT_COLOR]
+        LDAA    18
+        LDAB    6
+        JSR     jr_gfx_at
+        LDAA    SA_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    SA_ICON_HAT
+        JSR     jr_gfx_putc
+        LDAA    SA_ATTR_LABEL
+        STAA    [JR_RT_COLOR]
+        LDAA    20
+        LDAB    6
+        JSR     jr_gfx_at
+        LDX     sa_txt_hat
+        JSR     jr_gfx_text
+        LDAA    18
+        LDAB    10
+        JSR     jr_gfx_at
+        LDAA    SA_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    SA_ICON_GLASSES
+        JSR     jr_gfx_putc
+        LDAA    SA_ATTR_LABEL
+        STAA    [JR_RT_COLOR]
+        LDAA    20
+        LDAB    10
+        JSR     jr_gfx_at
+        LDX     sa_txt_glasses
+        JSR     jr_gfx_text
+        LDAA    18
+        LDAB    14
+        JSR     jr_gfx_at
+        LDAA    SA_ATTR_ICON
+        STAA    [JR_RT_COLOR]
+        LDAA    SA_ICON_TIE
+        JSR     jr_gfx_putc
+        LDAA    SA_ATTR_LABEL
+        STAA    [JR_RT_COLOR]
+        LDAA    20
+        LDAB    14
+        JSR     jr_gfx_at
+        LDX     sa_txt_tie
+        JMP     jr_gfx_text
 sa_title_lines:
         .db     9, 8, SA_ATTR_TITLE
         .dw     sa_txt_name
@@ -583,26 +666,49 @@ sa_title_lines:
         .dw     sa_txt_credit
         .db     0xff
 sa_help_lines:
-        .db     9, 2, SA_ATTR_TITLE
+        .db     9, 1, SA_ATTR_TITLE
         .dw     sa_txt_name
-        .db     1, 5, SA_ATTR_TEXT
-        .dw     sa_help_1
-        .db     1, 7, SA_ATTR_TEXT
-        .dw     sa_help_2
-        .db     1, 9, SA_ATTR_TEXT
-        .dw     sa_help_3
-        .db     1, 11, SA_ATTR_TEXT
-        .dw     sa_help_4
-        .db     1, 13, SA_ATTR_TEXT
-        .dw     sa_help_5
-        .db     1, 15, SA_ATTR_TEXT
-        .dw     sa_help_6
-        .db     1, 17, SA_ATTR_TEXT
-        .dw     sa_help_7
-        .db     1, 19, SA_ATTR_TEXT
-        .dw     sa_help_8
-        .db     1, 21, SA_ATTR_LABEL
-        .dw     sa_help_back
+        .db     2, 4, SA_ATTR_LABEL
+        .dw     sa_help_label_1
+        .db     20, 4, SA_ATTR_LABEL
+        .dw     sa_help_label_2
+        .db     2, 14, SA_ATTR_TEXT
+        .dw     sa_help_label_3
+        .db     2, 16, SA_ATTR_TEXT
+        .dw     sa_help_label_4
+        .db     2, 18, SA_ATTR_TEXT
+        .dw     sa_help_label_5
+        .db     2, 20, SA_ATTR_TEXT
+        .dw     sa_help_label_6
+        .db     2, 22, SA_ATTR_LABEL
+        .dw     sa_help_label_7
+        .db     0xff
+sa_help_label_1:
+        .db     "OPEN FILE", 0
+sa_help_label_2:
+        .db     "RULE OUT", 0
+sa_help_label_3:
+        .db     "W/S FILES / ACCUSE", 0
+sa_help_label_4:
+        .db     "A/D CHOICE  RETURN OPEN/ACCUSE", 0
+sa_help_label_5:
+        .db     "TWO FILES = GOLD", 0
+sa_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+sa_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+sa_help_diagram:
+; A hat clue eliminates a suspect who has no hat.
+        .db     3, 0x80 + 6, SA_ATTR_FACE, 1, SA_TILE_FACE + 4
+        .db     5, 7, 0x04, 3, 0x48, 0x41, 0x54
+        .db     11, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     16, 7, 0x86, 1, 0x06
+        .db     15, 6, 0x86, 1, 0x00
+        .db     15, 8, 0x80, 1, 0x06
+        .db     20, 0x80 + 6, SA_ATTR_WRONG, 1, SA_TILE_FACE
+        .db     21, 8, SA_ATTR_MARK, 1, 0x58
+        .db     25, 0x80 + 6, SA_ATTR_FACE, 1, SA_TILE_FACE + 4
         .db     0xff
 
 sa_txt_name:
@@ -614,21 +720,17 @@ sa_txt_six:
 sa_txt_files:
         .db     "CASE FILES", 0
 sa_txt_hat:
-        .db     "1 HAT", 0
+        .db     "HAT", 0
 sa_txt_glasses:
-        .db     "2 GLASSES", 0
+        .db     "GLASSES", 0
 sa_txt_tie:
-        .db     "3 TIE", 0
+        .db     "TIE", 0
 sa_txt_read:
-        .db     "FILES READ", 0
-sa_txt_yes:
-        .db     "YES", 0
-sa_txt_no:
-        .db     "NO", 0
+        .db     "READ", 0
 sa_txt_accuse:
         .db     "ACCUSE", 0
 sa_txt_open_file:
-        .db     "OPEN FILE", 0
+        .db     "OPEN", 0
 sa_txt_paper:
         .db     "__________", 0
 sa_txt_gold:
@@ -645,24 +747,6 @@ sa_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 sa_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-sa_help_1:
-        .db     "W/S : FILES OR ACCUSE MODE", 0
-sa_help_2:
-        .db     "A/D : SELECT FILE OR SUSPECT", 0
-sa_help_3:
-        .db     "RETURN : OPEN OR ACCUSE", 0
-sa_help_4:
-        .db     "CLUES: HAT, GLASSES, TIE.", 0
-sa_help_5:
-        .db     "RED X: CONTRADICTED SUSPECT.", 0
-sa_help_6:
-        .db     "SOLVE WITH TWO FILES: GOLD.", 0
-sa_help_7:
-        .db     "WRONG SUSPECT: CASE FAILED.", 0
-sa_help_8:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-sa_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -714,7 +798,7 @@ sa_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -722,5 +806,6 @@ sa_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_STACK_TOP:       .equ    0x4fff
@@ -585,6 +587,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    CW_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     cw_help_diagram
+        JSR     jr_guide_draw
         LDX     cw_help_lines
         JMP     jr_gfx_lines
 
@@ -639,24 +643,59 @@ cw_title_lines:
         .dw     cw_txt_credit
         .db     0xff
 cw_help_lines:
-        .db     9, 2, CW_ATTR_TITLE
+        .db     9, 1, CW_ATTR_TITLE
         .dw     cw_txt_name
-        .db     2, 5, CW_ATTR_TEXT
-        .dw     cw_help_1
-        .db     2, 7, CW_ATTR_TEXT
-        .dw     cw_help_2
-        .db     2, 9, CW_ATTR_TEXT
-        .dw     cw_help_3
-        .db     2, 11, CW_ATTR_TEXT
-        .dw     cw_help_4
-        .db     2, 13, CW_ATTR_TEXT
-        .dw     cw_help_5
-        .db     2, 15, CW_ATTR_TEXT
-        .dw     cw_help_6
-        .db     2, 17, CW_ATTR_TEXT
-        .dw     cw_help_7
-        .db     2, 20, CW_ATTR_LABEL
-        .dw     cw_help_back
+        .db     3, 4, CW_ATTR_LABEL
+        .dw     cw_help_label_1
+        .db     3, 8, CW_ATTR_LABEL
+        .dw     cw_help_label_2
+        .db     3, 12, CW_ATTR_LABEL
+        .dw     cw_help_label_3
+        .db     26, 4, CW_ATTR_LABEL
+        .dw     cw_help_label_4
+        .db     2, 16, CW_ATTR_TEXT
+        .dw     cw_help_label_5
+        .db     2, 18, CW_ATTR_TEXT
+        .dw     cw_help_label_6
+        .db     2, 20, CW_ATTR_TEXT
+        .dw     cw_help_label_7
+        .db     2, 22, CW_ATTR_LABEL
+        .dw     cw_help_label_8
+        .db     0xff
+cw_help_label_1:
+        .db     "A", 0
+cw_help_label_2:
+        .db     "B", 0
+cw_help_label_3:
+        .db     "C", 0
+cw_help_label_4:
+        .db     "WANTED", 0
+cw_help_label_5:
+        .db     "W/S GATE   A/D AND OR XOR", 0
+cw_help_label_6:
+        .db     "RETURN TEST ALL 8 INPUTS", 0
+cw_help_label_7:
+        .db     "SPACE RESTART / CTRL+C EXIT", 0
+cw_help_label_8:
+        .db     "ANY KEY TO TITLE", 0
+
+cw_help_diagram:
+; An input row: (1 AND 0) OR 1, then XOR 1, matches wanted zero.
+        .db     3, 5, CW_ATTR_ONE, 1, 0x31
+        .db     3, 9, CW_ATTR_ZERO, 1, 0x30
+        .db     3, 13, CW_ATTR_ONE, 1, 0x31
+        .db     5, 5, CW_ATTR_WIRE, 3, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE
+        .db     5, 9, CW_ATTR_WIRE, 3, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE
+        .db     5, 13, CW_ATTR_WIRE, 8, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE
+        .db     8, 0x80 + 7, 0x45, 1, CW_TILE_GATE
+        .db     10, 8, CW_ATTR_WIRE, 3, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE
+        .db     13, 0x80 + 9, 0x43, 1, CW_TILE_GATE + 4
+        .db     15, 10, CW_ATTR_WIRE, 3, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE
+        .db     18, 0x80 + 8, 0x46, 1, CW_TILE_GATE + 8
+        .db     18, 6, CW_ATTR_ONE, 1, 0x31
+        .db     20, 9, CW_ATTR_WIRE, 3, CW_CODE_WIRE, CW_CODE_WIRE, CW_CODE_WIRE
+        .db     23, 9, CW_ATTR_MATCH, 3, 0x30, 0x3d, 0x30
+        .db     25, 6, CW_ATTR_MATCH, 1, 0x30
         .db     0xff
 
 cw_txt_name:
@@ -681,22 +720,6 @@ cw_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 cw_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-cw_help_1:
-        .db     "W/S : SELECT A LOGIC GATE", 0
-cw_help_2:
-        .db     "A/D : CHOOSE AND, OR OR XOR", 0
-cw_help_3:
-        .db     "G1=A OP B / G2=G1 OP C", 0
-cw_help_4:
-        .db     "G3=G2 OP A / W=WANTED", 0
-cw_help_5:
-        .db     "RETURN : TEST ALL 8 INPUTS", 0
-cw_help_6:
-        .db     "MATCH EVERY OUTPUT TO WIN.", 0
-cw_help_7:
-        .db     "SPACE RESTART / CTRL+C EXIT", 0
-cw_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 game_sfx_table:
         .dw     cw_sfx_pulse, cw_sfx_ok, cw_sfx_win, cw_sfx_miss
@@ -712,12 +735,13 @@ cw_sfx_miss:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
         .include "../../../sdk/math.inc"
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/sfx.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

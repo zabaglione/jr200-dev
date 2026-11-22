@@ -106,9 +106,9 @@ class LumenCrossExpectationTests(unittest.TestCase):
                 playing = port.mode == 1 and port.confirm is None
                 port.key(int(event['code'], 16))
                 if playing and event['code'] == '0x0d':
-                    cells = len(lc.cross_cells(port.game.cursor))
                     end = following['cycle'] if following else profile['max_cycles']
-                    self.assertGreaterEqual(end - event['cycle'], 280000 * cells,
+                    # All affected cells now share the five animation poses.
+                    self.assertGreaterEqual(end - event['cycle'], 500000,
                                             profile['profile'])
 
 

@@ -7,6 +7,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_STACK_TOP:       .equ    0x4fff
@@ -42,11 +44,16 @@ SM_NUMBER:          .equ    GAME_STATE + 36
 SM_TEXT:            .equ    0x07
 SM_TITLE:           .equ    0x06
 SM_LABEL:           .equ    0x04
+SM_FRAME:           .equ    0x80
 
         .org    0x1000
 start:
         JSR     jr_session_enter
         JSR     jr_font_install
+        LDX     sm_frame_patterns
+        LDAA    SM_FRAME
+        LDAB    9
+        JSR     jr_pcg_load
         JMP     jr_port_run
 
 ; ---------------------------------------------------------------- rules
@@ -303,9 +310,8 @@ game_draw:
         LDX     sm_hud
         JSR     jr_gfx_lines
         CLR     [SM_DI]
-        LDAA    2
-        STAA    [SM_DX]
-        LDAA    4
+        CLR     [SM_DX]
+        LDAA    1
         STAA    [SM_DY]
 sm_draw_loop:
         LDX     SM_BOARD
@@ -316,11 +322,13 @@ sm_draw_loop:
         LDX     sm_colors
         JSR     jr_add_x_a
         LDAA    [X]
+        ANDA    7
+        ORAA    0x40
         STAA    [JR_RT_COLOR]
         LDAA    [SM_DX]
         LDAB    [SM_DY]
         JSR     jr_gfx_at
-        LDX     sm_border
+        LDX     sm_border_top
         JSR     jr_gfx_text
         LDAA    [SM_DX]
         LDAB    [SM_DY]
@@ -332,10 +340,33 @@ sm_draw_loop:
         LDAB    [SM_DY]
         ADDB    2
         JSR     jr_gfx_at
-        LDX     sm_border
+        LDX     sm_inside
+        JSR     jr_gfx_text
+        LDAA    [SM_DX]
+        LDAB    [SM_DY]
+        ADDB    3
+        JSR     jr_gfx_at
+        LDX     sm_inside
+        JSR     jr_gfx_text
+        LDAA    [SM_DX]
+        LDAB    [SM_DY]
+        ADDB    4
+        JSR     jr_gfx_at
+        LDX     sm_border_bottom
         JSR     jr_gfx_text
         TST     [SM_DVAL]
         BEQ     sm_draw_next
+        LDAA    [JR_RT_COLOR]
+        ANDA    7
+        ASLA
+        ASLA
+        ASLA
+        ORAA    7
+        CMPA    0x18
+        BCS     sm_value_light
+        ANDA    0x38
+sm_value_light:
+        STAA    [JR_RT_COLOR]
         LDAA    1
         STAA    [SM_NUMBER]
         LDAB    [SM_DVAL]
@@ -346,7 +377,7 @@ sm_draw_power:
         LDAA    [SM_DX]
         ADDA    2
         LDAB    [SM_DY]
-        INCB
+        ADDB    2
         JSR     jr_gfx_at
         LDAA    [SM_NUMBER]
         JSR     jr_gfx_dec3
@@ -356,14 +387,13 @@ sm_draw_next:
         ANDA    3
         BEQ     sm_draw_new_row
         LDAA    [SM_DX]
-        ADDA    7
+        ADDA    8
         STAA    [SM_DX]
         BRA     sm_draw_check
 sm_draw_new_row:
-        LDAA    2
-        STAA    [SM_DX]
+        CLR     [SM_DX]
         LDAA    [SM_DY]
-        ADDA    4
+        ADDA    5
         STAA    [SM_DY]
 sm_draw_check:
         LDAA    [SM_DI]
@@ -374,7 +404,7 @@ sm_draw_finish:
         LDAA    SM_TITLE
         STAA    [JR_RT_COLOR]
         LDAA    7
-        LDAB    20
+        LDAB    0
         JSR     jr_gfx_at
         LDAA    1
         LDAB    [SM_BEST]
@@ -384,7 +414,7 @@ sm_draw_best_power:
         BNE     sm_draw_best_power
         JSR     jr_gfx_dec3
         LDAA    21
-        LDAB    20
+        LDAB    0
         JSR     jr_gfx_at
         LDAA    [SM_MOVES]
         JMP     jr_gfx_dec3
@@ -400,6 +430,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    SM_TEXT
         JSR     jr_gfx_fill
+        LDX     sm_help_diagram
+        JSR     jr_guide_draw
         LDX     sm_help_lines
         JMP     jr_gfx_lines
 
@@ -417,22 +449,31 @@ sm_right:
         .db     3,2,1,0, 7,6,5,4, 11,10,9,8, 15,14,13,12
 sm_colors:
         .db     0x04, 0x02, 0x03, 0x06, 0x05, 0x01, 0x0e, 0x0f
-sm_border:
-        .db     "+-----+", 0
+sm_border_top:
+        .db     0x80,0x81,0x81,0x81,0x81,0x81,0x81,0x82,0
 sm_inside:
-        .db     "|     |", 0
+        .db     0x83,0x88,0x88,0x88,0x88,0x88,0x88,0x84,0
+sm_border_bottom:
+        .db     0x85,0x86,0x86,0x86,0x86,0x86,0x86,0x87,0
+; Each frame edge reaches the cell boundary, including both corners.
+sm_frame_patterns:
+        .db     0xff,0x80,0x80,0x80,0x80,0x80,0x80,0x80
+        .db     0xff,0,0,0,0,0,0,0
+        .db     0xff,1,1,1,1,1,1,1
+        .db     0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80
+        .db     1,1,1,1,1,1,1,1
+        .db     0x80,0x80,0x80,0x80,0x80,0x80,0x80,0xff
+        .db     0,0,0,0,0,0,0,0xff
+        .db     1,1,1,1,1,1,1,0xff
+        .db     0,0,0,0,0,0,0,0
 
 sm_hud:
-        .db     10,0,SM_TITLE
-        .dw     sm_txt_name
-        .db     4,2,SM_LABEL
-        .dw     sm_txt_goal
-        .db     2,20,SM_LABEL
+        .db     2,0,SM_LABEL
         .dw     sm_txt_best
-        .db     15,20,SM_LABEL
+        .db     10,0,SM_LABEL
+        .dw     sm_txt_target
+        .db     15,0,SM_LABEL
         .dw     sm_txt_moves
-        .db     1,22,SM_TEXT
-        .dw     sm_txt_bottom
         .db     0xff
 sm_title_lines:
         .db     10,3,SM_TITLE
@@ -449,20 +490,50 @@ sm_title_lines:
         .dw     sm_txt_credit
         .db     0xff
 sm_help_lines:
-        .db     10,2,SM_TITLE
+        .db     11, 1, SM_TITLE
         .dw     sm_txt_name
-        .db     3,6,SM_TEXT
-        .dw     sm_help_1
-        .db     3,9,SM_TEXT
-        .dw     sm_help_2
-        .db     3,12,SM_TEXT
-        .dw     sm_help_3
-        .db     3,15,SM_TEXT
-        .dw     sm_help_4
-        .db     3,18,SM_TEXT
-        .dw     sm_help_5
-        .db     6,21,SM_LABEL
-        .dw     sm_help_back
+        .db     2, 4, SM_LABEL
+        .dw     sm_help_label_1
+        .db     22, 4, SM_LABEL
+        .dw     sm_help_label_2
+        .db     2, 14, SM_TEXT
+        .dw     sm_help_label_3
+        .db     2, 16, SM_TEXT
+        .dw     sm_help_label_4
+        .db     2, 18, SM_TEXT
+        .dw     sm_help_label_5
+        .db     2, 20, SM_TEXT
+        .dw     sm_help_label_6
+        .db     2, 22, SM_LABEL
+        .dw     sm_help_label_7
+        .db     0xff
+sm_help_label_1:
+        .db     "A SLIDE", 0
+sm_help_label_2:
+        .db     "MERGE", 0
+sm_help_label_3:
+        .db     "WASD SLIDE ALL SEEDS", 0
+sm_help_label_4:
+        .db     "MERGE ONCE PER MOVE", 0
+sm_help_label_5:
+        .db     "NEW 2 AFTER MOVE   REACH 64", 0
+sm_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+sm_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+sm_help_diagram:
+; Equal seeds merge once while all tiles slide until blocked.
+        .db     3, 7, 0x34, 3, 0x32, 0x20, 0x32
+        .db     6, 7, 0x0e, 1, 0x34
+        .db     3, 8, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     12, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     22, 7, 0x0e, 2, 0x34, 0x34
+        .db     22, 8, 0xb6, 2, 0x36, 0x36
+        .db     27, 7, 0x34, 1, 0x32
         .db     0xff
 sm_txt_name:
         .db     "SEED MERGE", 0
@@ -480,22 +551,10 @@ sm_txt_best:
         .db     "BEST", 0
 sm_txt_moves:
         .db     "MOVES", 0
-sm_txt_bottom:
-        .db     "SPACE:RESTART  CTRL+C:BASIC", 0
+sm_txt_target:
+        .db     "/64", 0
 sm_txt_lose:
         .db     "NO MORE MOVES", 0
-sm_help_1:
-        .db     "WASD : SLIDE ALL SEEDS", 0
-sm_help_2:
-        .db     "EQUAL NUMBERS MERGE ONCE", 0
-sm_help_3:
-        .db     "A NEW TWO AFTER A MOVE", 0
-sm_help_4:
-        .db     "GROW A SIXTY FOUR TO WIN", 0
-sm_help_5:
-        .db     "SPACE:RESTART  CTRL+C:BASIC", 0
-sm_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 game_sfx_table:
         .dw     sm_sfx_slide, sm_sfx_merge, sm_sfx_win, sm_sfx_lose
@@ -510,11 +569,13 @@ sm_sfx_lose:
 
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/frame.inc"
         .include "../../../sdk/math.inc"
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/sfx.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
+        .include "../../../sdk/pcg.inc"
         .include "../../../sdk/font_data.inc"

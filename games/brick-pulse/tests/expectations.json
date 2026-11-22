@@ -63,7 +63,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "081112a468809e17b9a290f1dc44cca66faaab76ddd3a74c7de807eb73f82d58",
           "pcm": null,
           "cassette": null
         }
@@ -71,7 +71,7 @@
       {
         "profile": "synthetic-start",
         "mode": "synthetic-injection",
-        "max_cycles": 1260000,
+        "max_cycles": 1280000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -113,7 +113,7 @@
             "level": "00",
             "state": "0101010101010100010100010001000001000000000000000c0c06030601000f0e000100000000000000000000000000000000"
           },
-          "framebuffer_sha256": "e6aaafc8d81958166e97b12deea87ee405011b35d983593c7d453c16118eb7b2",
+          "framebuffer_sha256": "25759e08a4edb43686de4485c5b02f3756d4f987544a7e671ed23403a63914f5",
           "pcm": null,
           "cassette": null
         }
@@ -527,12 +527,42 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "98c57728245331c059ca1c51ce1a8dfc383270bf4a1deb22a05a6dc891cfe7b9",
+          "framebuffer_sha256": "45d0b1daebf873450fe89a1df5faff0c3cfe971f6b1d10742a97cbef213e72be",
           "pcm": {
             "minimum_frames": 1000,
             "minimum_nonzero_frames": 1000,
             "maximum_dropped_frames": 5000000
           },
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-ball-over-burst",
+        "mode": "synthetic-injection",
+        "max_cycles": 4810000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {"kind": "key", "cycle": 1200000, "code": "0x70", "pressed": true},
+          {"kind": "key", "cycle": 1240000, "code": "0x70", "pressed": false}
+        ],
+        "observations": [
+          {"name": "ball-position", "address": "0x465f", "length": 2},
+          {"name": "ball-and-burst-codes", "address": "0xc1ab", "length": 2},
+          {"name": "ball-and-burst-attributes", "address": "0xc5ab", "length": 2},
+          {"name": "upper-burst-codes", "address": "0xc18b", "length": 2}
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "ball-position": "0a03",
+            "ball-and-burst-codes": "8591",
+            "ball-and-burst-attributes": "4746",
+            "upper-burst-codes": "8e8f"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
           "cassette": null
         }
       },
