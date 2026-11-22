@@ -18,9 +18,11 @@ JR_TEST_OUT:        .equ    0x5000
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
-; Upstream moves every 14 frames; one tick here is GAME_RATE idle frames plus
-; the render (see README).
-GAME_RATE:          .equ    9
+; The shared port loop handles menus. The garden loop accounts for both
+; full renders per step and advances its clock even when a key is pressed.
+GAME_RATE:          .equ    0
+RS_IDLE_FRAMES:     .equ    4
+RS_BRAKE_FRAMES:    .equ    4       ; replace the glide render and wait on skipped ticks
 GAME_SPACE_RESET:   .equ    1
 GAME_STATUS_ROW:    .equ    22
 GAME_STATUS_ATTR:   .equ    0x06
@@ -55,6 +57,7 @@ RS_DT:              .equ    GAME_STATE + 122
 RS_DY:              .equ    GAME_STATE + 123
 RS_DCODE:           .equ    GAME_STATE + 124
 RS_MSG:             .equ    GAME_STATE + 125    ; loss message (2)
+RS_TURN:            .equ    GAME_STATE + 127    ; first legal turn for the next step
 
 RS_TILE_FLOOR:      .equ    0x80
 RS_TILE_ROCK:       .equ    0x84
@@ -88,6 +91,14 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
+        JSR     rs_init_board
+        TST     [JR_TEST_QUIET]
+        BNE     rs_init_done
+        JMP     rs_play
+rs_init_done:
+        RTS
+
+rs_init_board:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    3
@@ -183,6 +194,82 @@ rs_place_food_next:
 game_raw_key:
         JMP     jr_test_raw_key
 
+; Enter from the shared stage initializer. Return to it on a clear or loss
+; so it can draw the result and handle menus. Self-tests call only the rules.
+rs_play:
+        CLR     [JR_PORT_TICKS]
+        JSR     jr_port_render
+rs_play_input:
+        JSR     rs_read_key
+        CMPA    JR_KEY_BACK
+        BEQ     rs_play_reset
+        JSR     game_act
+        LDAA    [JR_PORT_TICKS]
+        CMPA    RS_IDLE_FRAMES
+        BCC     rs_play_step
+        JSR     rs_wait_frame
+        INC     [JR_PORT_TICKS]
+        BRA     rs_play_input
+rs_play_step:
+        CLR     [JR_PORT_TICKS]
+        JSR     game_tick
+        LDAA    [JR_PORT_MODE]
+        CMPA    JR_MODE_PLAY
+        BEQ     rs_play
+        RTS
+
+rs_play_reset:
+        JSR     jr_port_confirm
+        TSTA
+        BEQ     rs_play
+        LDX     GAME_STATE
+rs_play_clear:
+        CLR     [X]
+        INX
+        CPX     GAME_STATE_END
+        BNE     rs_play_clear
+        JSR     jr_sfx_stop
+        JSR     rs_init_board
+        BRA     rs_play
+
+rs_read_key:
+        JSR     jr_keys_poll
+        STAB    [JR_PORT_RAW]
+        CMPA    JR_KEY_EXIT
+        BEQ     rs_exit
+        RTS
+rs_exit:
+        JMP     jr_session_leave
+
+rs_wait_frame:
+        JSR     jr_frame_wait
+        JMP     jr_sfx_tick
+
+; The glide and food flash accept turns, but keep the board and effects
+; advancing on their own clock. Other commands stay in the garden loop.
+rs_animate:
+        TST     [JR_TEST_QUIET]
+        BNE     rs_effect_done
+        SUBA    GAME_RENDER_FRAMES
+        STAA    [JR_PORT_FRAMES]
+        JSR     jr_port_render
+        BRA     rs_wait_turn
+rs_brake_hold:
+        TST     [JR_TEST_QUIET]
+        BNE     rs_effect_done
+        LDAA    RS_BRAKE_FRAMES
+        STAA    [JR_PORT_FRAMES]
+rs_wait_turn:
+        JSR     rs_read_key
+        JSR     rs_act_turn
+        TST     [JR_PORT_FRAMES]
+        BEQ     rs_effect_done
+        JSR     rs_wait_frame
+        DEC     [JR_PORT_FRAMES]
+        BRA     rs_wait_turn
+rs_effect_done:
+        RTS
+
 game_act:
         CMPA    JR_KEY_CONFIRM
         BNE     rs_act_turn
@@ -199,15 +286,19 @@ game_act:
 rs_act_turn:
         TSTA
         BEQ     rs_act_done
-        CMPA    5
+        CMPA    JR_KEY_CONFIRM
         BCC     rs_act_done
+        TST     [RS_TURN]
+        BNE     rs_act_done
         TAB
-        LDX     rs_opposite - 1
         LDAA    [RS_DIR]
+        CBA
+        BEQ     rs_act_done
+        LDX     rs_opposite - 1
         JSR     jr_add_x_a
         CMPB    [X]
         BEQ     rs_act_done
-        STAB    [RS_DIR]
+        STAB    [RS_TURN]
 rs_act_done:
         RTS
 
@@ -221,8 +312,14 @@ game_tick:
         DEC     [RS_SLOW]
         LDAA    [RS_SLOW]
         ANDA    1
-        BEQ     rs_act_done
+        BNE     rs_tick_move
+        JMP     rs_brake_hold
 rs_tick_move:
+        LDAA    [RS_TURN]
+        BEQ     rs_tick_keep_dir
+        STAA    [RS_DIR]
+        CLR     [RS_TURN]
+rs_tick_keep_dir:
         LDAA    [RS_B]
         LDAB    [RS_DIR]
         JSR     rs_move
@@ -285,7 +382,7 @@ rs_tick_shift:
         LDAA    1
         STAA    [RS_SLIDING]
         LDAA    3
-        JSR     jr_test_animate
+        JSR     rs_animate
         CLR     [RS_SLIDING]
         TST     [RS_EATING]
         BNE     rs_act_done_near289
@@ -296,7 +393,7 @@ rs_act_done_near289:
         INCA
         STAA    [RS_SPARK]
         LDAA    6
-        JSR     jr_test_animate
+        JSR     rs_animate
         CLR     [RS_SPARK]
         INC     [RS_EATEN]
         JSR     rs_place_food

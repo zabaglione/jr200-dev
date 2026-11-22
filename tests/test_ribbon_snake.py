@@ -43,6 +43,24 @@ class RibbonSnakeRuleTests(unittest.TestCase):
         game.act(1)                              # reversing is ignored
         self.assertEqual(game.dir, 2)
 
+    def test_first_legal_turn_wins_until_the_next_move(self):
+        game, _ = ST.start(0)
+        game.tick()
+        for key in (2, 1, 4, 1, 3):          # same, opposite, right, then two more turns
+            game.act(key)
+        self.assertEqual((game.dir, game.turn, game.b[0]), (2, 4, 16))
+        game.tick()
+        self.assertEqual((game.dir, game.turn, game.b[0]), (4, 0, 17))
+
+    def test_turn_stays_queued_while_braking_skips_a_tick(self):
+        game, _ = ST.start(0)
+        game.slow = 3
+        game.act(4)
+        game.tick()
+        self.assertEqual((game.dir, game.turn, game.b[0]), (2, 4, 8))
+        game.tick()
+        self.assertEqual((game.dir, game.turn, game.b[0]), (4, 0, 9))
+
     def test_scripts_clear_every_garden(self):
         for level, script in enumerate(data.SCRIPTS):
             with self.subTest(garden=level + 1):
@@ -96,7 +114,13 @@ class RibbonSnakeExpectationTests(unittest.TestCase):
         demo, port, _ = ST.play(0, data.SCRIPTS[0])
         memory = self.memory('synthetic-demo-clear')
         self.assertEqual((memory['state'], memory['mode']), (state(demo), '02'))
-        self.assertEqual(self.memory('synthetic-turn')['dir'], '04')
+        start.tick()                              # moving down when D is pressed
+        start.act(4)
+        start.act(1)                              # W arrives before moving right
+        start.tick()
+        turn = self.memory('synthetic-turn')
+        self.assertEqual((turn['dir'], turn['head'], turn['queued']),
+                         tuple(f'{value:02x}' for value in (start.dir, start.b[0], start.turn)))
 
     def test_three_voice_title_and_jingle_and_silent_exit(self):
         for name in ('synthetic-title', 'synthetic-demo-clear'):
