@@ -270,9 +270,10 @@ class WikiGenerationTests(unittest.TestCase):
                           'media/side-catch-play.png', 'media/side-catch-goal.webm']))
         page = files['Game-side-catch.md'].decode('utf-8')
         all_games = files['All-Games.md'].decode('utf-8')
-        self.assertIn('| タイトル画面 | 作品 |', all_games)
+        self.assertIn('## タイトル画面', all_games)
         self.assertIn('<a href="Game-side-catch"><img src="media/side-catch-title.png" '
-                      'alt="SIDE CATCHのタイトル画面" width="160"></a>', all_games)
+                      'alt="SIDE CATCHのタイトル画面" width="320"><br>SIDE CATCH</a>', all_games)
+        self.assertIn('</a></td>\n<td></td>\n<td></td>\n</tr>', all_games)
         self.assertIn('非公開の候補版プレビュー', page)
         self.assertIn('media/side-catch-title.png', page)
         self.assertIn('通常MLOAD/USRで実行', page)
@@ -310,11 +311,12 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertEqual(files['media/side-catch.png'],
                          (project / 'media/gameplay.png').read_bytes())
 
-    def test_all_games_leaves_title_image_empty_without_gallery(self):
+    def test_all_games_keeps_game_information_without_a_title_image(self):
         (self.fixture.root / 'games/side-catch/media/gallery.json').unlink()
         files, _ = render_pages(self.fixture.root, None, True)
         all_games = files['All-Games.md'].decode('utf-8')
-        self.assertIn('| — | [SIDE CATCH](Game-side-catch) |', all_games)
+        self.assertNotIn('## タイトル画面', all_games)
+        self.assertIn('| [SIDE CATCH](Game-side-catch) |', all_games)
 
     def test_candidate_rejects_unsafe_capture_path(self):
         self.fixture.catalog['games'][0]['wiki']['screenshot']['file'] = (
@@ -607,6 +609,11 @@ class SevenGamePreviewTests(unittest.TestCase):
         self.assertTrue(set(BASE_PAGES) <= set(files))
         home = files['Home.md'].decode('utf-8')
         all_games = files['All-Games.md'].decode('utf-8')
+        gallery_rows = re.findall(r'<tr>\n(.*?)\n</tr>', all_games, re.DOTALL)
+        self.assertTrue(all(row.count('<td') == 3 for row in gallery_rows))
+        self.assertEqual([slug for row in gallery_rows
+                          for slug in re.findall(r'<a href="Game-([^"]+)"', row)],
+                         [item['id'] for item in games])
         for game, genre in {**DEVELOPMENT, 'side-catch': 'Genre-Action'}.items():
             page = files[f'Game-{game}.md'].decode('utf-8')
             self.assertIn(f'](Game-{game})', home)
