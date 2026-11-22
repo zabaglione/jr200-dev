@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "4ed4ab62668de757d59ff44c247a2ea9f81db182d25e545e7d5778594eb3f185",
-      "framebuffer_sha256": "64dd5a522d3943a7ba8ee04e19bcfb22b78baa4ba4fc279cf41cefa3db144b6f"
+      "sha256": "0493ecb457242d3353581552a23d65c5f46663707f8d4383c37b3ac1a0888427",
+      "framebuffer_sha256": "9f50c34050a719e62d91cc882362303e162e7786ad7ae4b3e62098961e823a1a"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで光線が放たれる前の場面",
-      "sha256": "776c6c594fb65248a9abc5cd7a48da8397924c4be0edef8ed67859939203fb23",
+      "sha256": "58f403a693659ce9202b1e30e64f1c07f028c8af117b02c32987cc54a671a3de",
       "framebuffer_sha256": "d100e130088175522811f9ffd3380de0cfce3be28fb674da597aca4c57ff8afb"
     },
     {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 23.2,
-    "frames": 696,
-    "frames_sha256": "7fdc9f37741d555a2ad041fb7f2e08287dfed5d4bebe9b63939bf50d27fa6e6b",
-    "pcm_sha256": "24d854abca176f9f21ebc650be98466508e2d43192d25ee6a0270ee66814df00",
-    "sha256": "f91730d42b28aa73d54c6e943307b82e6fd7fe857b1a4d477e6a153026553468",
+    "seconds": 23.3,
+    "frames": 699,
+    "frames_sha256": "b60d45814d1dfc7c98e626ccd3d2279e1a3565548a9070e831f6f63eded9cc4e",
+    "pcm_sha256": "942212e8b317ac1f02d9bdc4a56dc3e8dafb2139912127749ae82a8563aafb55",
+    "sha256": "8959b74cab229d5918a568a3f3508d2946828095ce4e953c9dba65459f038c93",
     "caption": "1つ目の宙域の自動デモ（宝石を取り続けて金の軌道）"
   }
 }

@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "0ab5dccf4586fd1d1dbbbe8f473846057df77c4aa24281e9ed7772da7d7b0ddd",
-      "framebuffer_sha256": "6a43daf22bc5a81e7d9415fc49a7b1cec6768f4d85673c0248f6d76bcda26b4e"
+      "sha256": "ffcd423098312e2f8181dbd654354e386776a85acc78b588c51cc7cfd1c77339",
+      "framebuffer_sha256": "3ade51dd9ee5f086bb1c47731799092643254c450efa6769fbe7cb74dfbdedfb"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで門へ走る場面",
-      "sha256": "bd70831da2affe7ef7781b22581be7583a502d70c3b56173c2784ad9e8476455",
+      "sha256": "80e7219192c5d56dfe10aac1166f973107e47a99fd0ffd8cabef3afc928b987a",
       "framebuffer_sha256": "630f43651dc9724aa70b5486a66d7611f2b4a442b5107030f4b0351ac5d2c30b"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "9つの門を越えて金の走りで1つ目のコースをクリア",
-      "sha256": "613e17af326152860a198889dd0e40075c6c9ee061db04b7a2d76181bba23a87",
+      "sha256": "4dec87790b008c107e6d04431626386f790ad273d778e53110bd6f10c3aa9f89",
       "framebuffer_sha256": "9b2f7bf375b39f81fb8df621fa60e11f9fd41babba98503be9c27a229dc57629"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 19.1,
-    "frames": 573,
-    "frames_sha256": "7217d5e928b5f93ee63197f371c85cf527875fd46bf05fc63c0a8d1615215a67",
-    "pcm_sha256": "d7a16fd7685db510a0d37f433a686ac41363076cd9c1b8e9656eb8a00f132e48",
-    "sha256": "bf310951316fe665a7da157747967d4dcf73ca695d4d904ce4b1a671c779877e",
+    "seconds": 19.2,
+    "frames": 575,
+    "frames_sha256": "7560a4fa772c4f5847e0987859aa6ca49a54dc3d1d6462345987f7ca6e3bd2f5",
+    "pcm_sha256": "4b3a2260c37ce88dd6ce37d201d03069974aeffcf3a68a8fabc7815e5ca409f8",
+    "sha256": "59e0de30160aa662a125d73ac446b49c454c8431ed439d39218ff77f6d144743",
     "caption": "1つ目のコースの自動デモ（9つの門を越え、結晶をすべて取る）"
   }
 }

@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。3と7、4と6の札",
-      "sha256": "162da5e054c59300384b6f355d81700c4edaf94714632a2ffc08edc02b384d76",
-      "framebuffer_sha256": "e7664aa3ab32f5a7ec7567fd26feade6576c26ea1789a1e6da5c304defa9c876"
+      "sha256": "e8ac670bb183575995a5afc0a19b5351cc3ce7106bd09d7ccc222019504d35a8",
+      "framebuffer_sha256": "6683188b6c0ae2ef5e44f59839eddfe5fa00c7702945007e7fd56e76c70d7cc6"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-two-pairs",
       "role": "play",
       "caption": "2組を消した後の盤",
-      "sha256": "9779189c67be7df1425e842c099b06f4b1683abba5d4e39ba6335c262338597e",
+      "sha256": "7e7652b63a58a7226f378626cbfb967a58846ddc8554905838887c586d09abbe",
       "framebuffer_sha256": "bedae72f3b2810a63058d0bcf1747aa2504502cfea10dbdcc63a71c1828f028b"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "16個すべてを消した1面目のクリア",
-      "sha256": "d0bedf79d6145b22b8ca4f1fc9449b5e03c6bce57aaa9fb83b41c75950d92a86",
+      "sha256": "8917132f0be2332d666bac0caac51a7ac24433bb4bc18326aac95a7f171d3ae3",
       "framebuffer_sha256": "7c9574f50aa7749be4748c2f611d41b1a5e8c5b9cce6b7145adc3f763d8d58df"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 17.8,
-    "frames": 534,
-    "frames_sha256": "fe23314b403b6f2f94437318ff608bdbce6abbce26c97ca88d1b97f615b76be3",
-    "pcm_sha256": "7030007be192667d8464673932f0145d799af4aab1bb1758d70d34cbcc7befd2",
-    "sha256": "a879709a332555e5546ec9b760441528e906ba13403f45ffa2d9409b1987460f",
+    "seconds": 17.9,
+    "frames": 537,
+    "frames_sha256": "cb7ad4e24bba8655d068a1e11c8213eed4f76621a2e5aff62fb0b5495daec1e1",
+    "pcm_sha256": "9d7f09dcd301bd3070df6f7395326470acc996321600ff6842f00070b9dd7892",
+    "sha256": "6b2e46a3db40eb8ac82dcc5751694d91b08cf43b1c8267ac6fea131cb961cda9",
     "caption": "1面目の8組を消してクリアするまで"
   }
 }

@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。ペグが隣のペグを飛び越える図",
-      "sha256": "5988a6a4b96b2f5daf1e816d13f88cc3ed22f2566546f9b110dbbc5b7b663307",
-      "framebuffer_sha256": "066403ed8adf3b01dd85a6c58a8f60070a69566ab80ab3f965f26517eda45d53"
+      "sha256": "e33edfd03fdec8d68ac4e2ad7ccf682b8789a9b3f25fa253980d8bc93ce4a956",
+      "framebuffer_sha256": "c669dbd0461985c2630ea2bc7b2d802a6684a9a9e841a81b0dbd81d51c5144c3"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-first-jump",
       "role": "play",
       "caption": "最初の1手。上の石が中央の穴へ飛び込み、間の石が消えた",
-      "sha256": "346bda1182e426319928006fc9dd3f77da230bb3c7c9e2efa407c7eb2caf60e9",
+      "sha256": "5ce9c97def7a4d8d96222055aecda0d239d316a6a6d29d35025a4b43167e0e33",
       "framebuffer_sha256": "4be9311e8493012929e07a27ce88921112a9bf3810a145ddf5c25357a0542b1a"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-clear",
       "role": "goal",
       "caption": "15回飛び越して残り5個でクリア",
-      "sha256": "d8a5e6cf230b9caff165e3a6dfbe4721512893ee6e6d2459cdaf3b293f4972e5",
+      "sha256": "af9d09c5328227f3e3e4a09b9a7fce24cfced84a073e151b9f101177bf6db21e",
       "framebuffer_sha256": "715c890f14294b97723958b599ac44c61351ff0106825294023a6a26a75bbead"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 16.6,
-    "frames": 498,
-    "frames_sha256": "82083bc3a8a4f386c8bf063f5045d7bb6a1369f111fdc06ef723d2b30e8c1281",
-    "pcm_sha256": "efe0371b6a5f6fd4715206b6bf0417cf5a214552c2a344cccb0f4e89bfdd8c5f",
-    "sha256": "761f0dbe0d9f0fa9dcc4bb3b38b1b9552812dbcc9dac5c3fefd64ec3160fffd1",
+    "seconds": 16.7,
+    "frames": 501,
+    "frames_sha256": "217a47a0a36529421c9575143eddc4c50f780168cd0b0b5f766c77c3e9ed4fa5",
+    "pcm_sha256": "064a8d754627c113342776cca8281473dd4c6a72287d33545cf5863b4c4add63",
+    "sha256": "df6eb916c90f457f9711953d466c3bdcc7a5627c6ac8cd7252d5c85118d58a1e",
     "caption": "開始から15回の飛び越しでクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

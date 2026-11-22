@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。白い石の五連と黒い石",
-      "sha256": "5c0cfba2d9956811959820dd8e56b4b3a341bf7cc3eb5b28903e8d21dce51257",
-      "framebuffer_sha256": "a920ff01b3617a629d7f5ebd4bf616aa51ff9e387c100ad2a5aa7168fbd998a0"
+      "sha256": "66089d0bd7775d93a294258843b663f0f2feedbe7dcc6a432e79aeefc438d591",
+      "framebuffer_sha256": "17f037e44f3b006895b42e406a131fa52efd53885fe3191a71297617d0f5baad"
     },
     {
       "id": "play",
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "斜めの五連ができたクリア",
-      "sha256": "ff23eb759fa13572b85b4d973fb5cfd4393bd101039381ba0e6c0e0fab5c4d84",
+      "sha256": "a67904e2e8ebe16eca21b773f1a5a5f45486624a1b0e431b83cff149e1e3da5d",
       "framebuffer_sha256": "ae5bd567505abc12eb3c7b5f33460420b379b1f257be1ea0adae473b46d0e213"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 22.7,
-    "frames": 682,
-    "frames_sha256": "734a9d1a50bc858e1a9b61df3f77fa65f66a82bce649e6f1d28b05802edd6a89",
-    "pcm_sha256": "6a1cb0b4e45b92342bc567991dcb7b0fe4f8f3a6453db879cc354d831576589d",
-    "sha256": "ed6b6fe1631647156f96fc13d6603a63e7907b0546b7bf1453474055f356fdf8",
+    "seconds": 22.8,
+    "frames": 685,
+    "frames_sha256": "d4b58bde132389349b7d84f6b908936536b70e89e86a39a32476ab8ba60e4aad",
+    "pcm_sha256": "aa622defffd7ac44156add03ef17f85e304429748ec7d18e402e52ef9f44bc7d",
+    "sha256": "596e4580a36e7dfdfba3ba10d85898e1f68933514c51951d41c37d7637074631",
     "caption": "5手で斜めの五連を作ってクリアするまで"
   }
 }

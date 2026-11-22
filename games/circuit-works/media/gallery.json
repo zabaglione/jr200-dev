@@ -7,8 +7,8 @@
       "profile": "local-rom-gallery-title",
       "role": "title",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、タイトル画面（画面全体・無加工）",
-      "sha256": "0a83f24e3d32643cb5fe7435d88ef412e03483faf4066dd9695723fed13532f3",
-      "framebuffer_sha256": "d08e50c8427156fcb683214db5283fdc64ea2d6eea0290f318473d24083310f9"
+      "sha256": "74d17df3280fba3d66b258226583d4c5588d2231dba7f6c25e930737e05c0e0b",
+      "framebuffer_sha256": "7c4f21f2f51ee102befb9c280fb4bcf068f1acb9d95395cb549b8c24a6023047"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "local-rom-gallery-play",
       "role": "play",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ2の試験中。信号が配線を流れ、真理値表に結果が並ぶ（画面全体・無加工）",
-      "sha256": "f6dd26bec00f3cd4accbd4122fa8fb5502b8bb8388e238729a9c2e621367b269",
-      "framebuffer_sha256": "570c679bc9660ae18b2a9d2b36490561c8ac9606fadf62e47458e43f97e627dc"
+      "sha256": "18db42aee7957e2d3c7d02eccad0f89cf41506bd760ca8347a221f91a1a0fa87",
+      "framebuffer_sha256": "a40d72ba853a695d1628d46a3f2a4a9b1818ae9d6ee05179f4bd7b487d29545c"
     },
     {
       "id": "clear",
@@ -34,19 +34,19 @@
     "profile": "local-rom-gallery-goal",
     "fps": 30,
     "speed": 1,
-    "seconds": 6.5,
-    "frames": 196,
-    "frames_sha256": "50cbf74e587862955c59ac5964d791ec9ca3c532c0d239aa29191805bf5aab28",
-    "pcm_sha256": "e7207e75656283a376ac8316d7923580190d02203e6e51ccc5fe9d6550560bc1",
-    "sha256": "74608f22e6a260433f1314af25aad883aca0b64e8573cfd3cdb10f811d609223",
+    "seconds": 6.6,
+    "frames": 199,
+    "frames_sha256": "5626d49a3dc22e20e97c04d028c349bfaa6180f1c762e33dcbfb6463a31a88fd",
+    "pcm_sha256": "534ab4f5527870ebf66077c980c6bb1a6c301aeb1981dc8acd3a7936a3953d68",
+    "sha256": "6e8ff67afc9e63623b431a12f0164967b1b74d1400e484aae65e64aaad5a59a9",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1の8行試験で全一致するまで（音付き）（画面全体・無加工）",
     "mode": "rom-cassette",
-    "artifact_sha256": "6c51881031bf87f4bfc22ea3576e0256d56defe6beb95fd2bdbb8d49726cada9",
+    "artifact_sha256": "e83a5ae8c5bece27350b7ecb0d8a9bcaebbfd8db7d4e099a2cbb844f9b56a4c4",
     "start_cycle": 83500000
   },
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "6c51881031bf87f4bfc22ea3576e0256d56defe6beb95fd2bdbb8d49726cada9",
+    "artifact_sha256": "e83a5ae8c5bece27350b7ecb0d8a9bcaebbfd8db7d4e099a2cbb844f9b56a4c4",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }

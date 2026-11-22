@@ -4,9 +4,9 @@ JR-200向けゲームの開発ルール、共通ルーチン、サンプル、�
 エミュレータ本体は [jr200-web-emulator](https://github.com/zabaglione/jr200-web-emulator) で管理します。
 アセンブラは既存の [jrasm](https://github.com/ypsitau/jrasm) を外部ツールとして利用し、独自版を開発・同梱しません。
 
-**52作品を公開カタログに登録しています。** 45の移植作品は0.1.0として
-[固定パッケージ](https://github.com/zabaglione/jr200-dev/releases/tag/jr200-ports-2026-11-22)を用意し、
-[作品一覧](https://github.com/zabaglione/jr200-dev/wiki/All-Games)からCJRとブラウザ起動へ進めます。
+**52作品を公開カタログに登録しています。** 51作品のタイトル画と外周色を更新したパッチ版を
+[固定パッケージ](https://github.com/zabaglione/jr200-dev/releases/tag/jr200-title-artwork-2026-11-22)にまとめています。
+[全作品のギャラリー](https://github.com/zabaglione/jr200-dev/wiki/All-Games)から作品ごとの画像、CJR、ブラウザ起動へ進めます。
 
 初回7作品の公開にあわせて、要求仕様、CIの影響範囲判定、外部jrasmの固定版・doctor・
 合成fixtureに加え、JR-200ルール、プロジェクト契約、最小CJRテンプレート、選択的CI、

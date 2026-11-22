@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "549d5c3a948e1679496088e44aff3b391e7f99b5c0c1c69511b2a08afd92caae",
-      "framebuffer_sha256": "03b750e465d258a2857e1495ddc5b007961693a3f44950c9e5b14ba1f4ee67de"
+      "sha256": "fec1e59344e8b5ab583bce1b957bf8af939fda707f8c0f5b879a3d80b90e4ceb",
+      "framebuffer_sha256": "7fb7892d5389773e55093548311bd0c93bdb374108cc38eaa5d3a2101910b7ba"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで降下中の着陸船",
-      "sha256": "2841d2aec3104bb33640e01498c37b3c2f48c19c5c4625b8a272e6b5a4a4b984",
+      "sha256": "f58ec4691117c4ad2a662c3880d2ec521f499ea7c01c5979f3c6fb03499953f3",
       "framebuffer_sha256": "cf6aef1e3f9a897f0f91d4afd9c8562aa503340c9b034935ba556c5e856f9eca"
     },
     {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 5.6,
-    "frames": 169,
-    "frames_sha256": "702fe267544889e94c67fa37ea97ca48704a81736302b628b47f5a91d81cf04a",
-    "pcm_sha256": "cddd47b460001fcb4d4881da496e147d3e5b60676448987fbbddd51379b7db76",
-    "sha256": "9373ae2bfcfc01008e7bb5165dd04732fcfe421b987ddc5c1571216d7226b6a7",
+    "seconds": 5.7,
+    "frames": 172,
+    "frames_sha256": "7687ce33d94638c73b0f008cf11b08a386b37f0a9ddae2b01299f04c8ffb948a",
+    "pcm_sha256": "04f46a57819554ad0895165f230335657e3cbf84657af221491048996342dc0c",
+    "sha256": "b7a1e46c5411ded03dbc0874c475c49307c323df623da0d924ce9f9a3da8d70e",
     "caption": "1つ目の着陸地の自動デモ（広い台に着陸）"
   }
 }

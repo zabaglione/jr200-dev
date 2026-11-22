@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。3つの山の石",
-      "sha256": "1b007b720f792f0721445a2d6d9d4a90441493aca4afd296b8d40f32034140e4",
-      "framebuffer_sha256": "80e5ff358ffd88801f03b880df3589ffc9e079ecdacf410c5df5521693e73277"
+      "sha256": "13f53899caf90304f3e6f58b62f5f14d4023cb5bceb9279cb258559980428538",
+      "framebuffer_sha256": "30de6058afe71e53d94ebe4ba000cf9791e09a4c18e3bfee440f7564f3cf20ae"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-first-move",
       "role": "play",
       "caption": "左の山から2個取り、ライバルが1個取った後",
-      "sha256": "570e1003f30be30565c3977bc52d13020dd7069dd81a5cbf6007769ff620e53f",
+      "sha256": "233f2bca01c361933151ebcc4bcd4d0e09e17588f8309120b12a1ee2756fcfc6",
       "framebuffer_sha256": "7c8676e888c70c804bef84ab208cc8d174292fc1c1a5d98fc8f64edb9b0cb9e6"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "最後の石を取って1面クリア",
-      "sha256": "4ccea50c81c3ecdb75331b2dc5820a27d01dd2aa235ff300521ec4ddb7602070",
+      "sha256": "b54722a017b84596d19ac7284fa40f4d6cba93afb0c53aad3ae5fbceef55a680",
       "framebuffer_sha256": "a84f2de535d1235cb863ebad000433eb8407ed2c16ba21c88227d9bfb4708248"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 13.9,
-    "frames": 417,
-    "frames_sha256": "b2bcedf49610b7753bab8f0360f234d0ac86353555808a7a9b84f78c662ccbdc",
-    "pcm_sha256": "897c32e84e80e887365578cb699b7d7890cfda1301fbb853431cb4546b8b1dab",
-    "sha256": "1754b175771311e50b766a68d6be3dcd2f7d8158d398d6faf683954c6339ab7b",
+    "seconds": 14.0,
+    "frames": 420,
+    "frames_sha256": "1442c4333a794c4cae407cf855f805a66e4b987d6981cfc6153844e656404452",
+    "pcm_sha256": "bbcd023404dadd21cf7d71f086b8ccbf7b18dc2a70486d6b7a43a0be7d88fe84",
+    "sha256": "ff3a0516b50b223c0576f468706516061f88c89b6ca35c853d06e83eaf7f51f0",
     "caption": "1面で5手を指し、最後の石を取ってクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

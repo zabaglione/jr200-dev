@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "peg-garden",
   "title": "PEG GARDEN",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Jump pegs over neighbours on a cross-shaped garden until five or fewer remain.",
   "genre": "puzzle",
   "license": "MIT",

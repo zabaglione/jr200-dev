@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "lumen-cross",
   "title": "LUMEN CROSS",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Flip a five-light cross on a 5x5 panel and switch every light off across 18 stages.",
   "genre": "puzzle",
   "license": "MIT",

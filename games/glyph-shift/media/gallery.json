@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。壁、歩く人、箱、敵、ルーン、門",
-      "sha256": "f028c8b6943bb0c8dff12fd11617dee78ea386a38476376d352bc899ddaf63df",
-      "framebuffer_sha256": "afd66aeea296fac9e494298c1cfcfb671c953a7100563972f7d5b88786d5d3d4"
+      "sha256": "18275f8efa8d3d2f29eb05ea1075f882740c810987b5f0f2f0c8781585df6ffa",
+      "framebuffer_sha256": "4ae613e9ba1e77c7eb9e95a77b1c356b059a5b91b702b4295d82d0d148f03e72"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-slides",
       "role": "play",
       "caption": "規則を書き換えて進む途中",
-      "sha256": "9dd45517ae657ed9f4ed4c9cb04ec88c0e8b8d22a019d58ad293d8e2a83e8691",
+      "sha256": "25d4586f4898d1a0eeb79bf40960155c163a3896b0249bac39ec7fafe5902882",
       "framebuffer_sha256": "d09a474b98b892eb483835ba2fa77bbfb7c4df298c0ca957920beb8e2f1daa90"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "星3つで1部屋目をクリア",
-      "sha256": "e0514a19243469d653f7677654448a54498675fa6bdf5d68069359c6185b9d93",
+      "sha256": "63920000450decc9285e08d0606dfdbd157fe72ec21e40c1a3c3044ee99cc5ce",
       "framebuffer_sha256": "e114069f27b5f13874d70582617640f986f9a95de74ecd744815ce161bdddae6"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 4.2,
-    "frames": 127,
-    "frames_sha256": "56cdc608b8b1eb881114031eccf24a34b9880933bb858b3455a8bc46fa52674e",
-    "pcm_sha256": "b3dedd76cc74fe7ffc5f2649fde66c28a380fabcfa8261afe1cab2afaa6a4504",
-    "sha256": "b5b4b923c12251ca04c6947c07061d6c151945b28e5973db4245db75bbd37634",
+    "seconds": 4.3,
+    "frames": 130,
+    "frames_sha256": "aeaa34b81a2f33e968e5bd304bb94b68f896411071ebc55226e64a5243eac84b",
+    "pcm_sha256": "ded87060e0be820baa54b4bb25f2f0e06100eed7d48e9b48a7cc9406ec6c88b2",
+    "sha256": "26d3467ccad25cbaf432ece76aa532afb183afe9ed8a6bc2b84fc425455526b2",
     "caption": "1部屋目で規則を書き換え、両方のルーンを通って門に着くまで"
   }
 }

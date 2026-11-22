@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "51651af4add0a5420dea90f8f6733ec3faeced14ac569a75a4afee3d97b84f88",
-      "framebuffer_sha256": "a5b1ccf0b7ac4d16aba13919dfe9411a6a55c7021f0bf8e2d265c00bce028d5d"
+      "sha256": "dd24f89966303d28bceabaeb7c1f9bee189b4c9f833f2d229ba20a817f32d827",
+      "framebuffer_sha256": "20938b93e284d13b518ec50e2904e3cc2f417bd6d5b62334ccab821618db8ea3"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモでプログラムを実行する場面",
-      "sha256": "3d80384bbb99c59254df121650321a6c80e71c5bc7c587d6ad282970fd4ed8eb",
-      "framebuffer_sha256": "f53c305cefcb36539c8593b285d07dcf04f69e5bd7d0828886c31d9b6664f8b1"
+      "sha256": "2fe7c4caddb5c43ba05e4455c91ae9f91a87beccc2b8e1c427ea53a6fc3f4513",
+      "framebuffer_sha256": "f7fee48a1601feaa7558de3ef7ea4dc52a89444c9317844e0bd5a946b6ae7cfc"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "端末に着いて1つ目の部屋をクリア",
-      "sha256": "3abf80ffecdf7c178d8f9b72e65ba0774f1a8a18ef4e7bd01faa27b29def6613",
-      "framebuffer_sha256": "39e3ecfa78236d99925397ec91f68f3425c672d7ec24d3a89a79937a1885cbf8"
+      "sha256": "c37051f32b247741530061ba8f9fa0c64a75a60d22cd0119d0646959f35d61ce",
+      "framebuffer_sha256": "e0e94d06ea6f67ec71c11007b1b3292425c46020cadc71a2fd2b4c3dad28bdcf"
     }
   ],
   "video": {
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 3.8,
-    "frames": 113,
-    "frames_sha256": "e4213a24df75701cc71f9a1af1956c1d5bcab811a2d9a6267c91b4544789fac5",
-    "pcm_sha256": "036ec618b407f4912f22dec3237deef88a30c31cee77c25c42c56d50d3970231",
-    "sha256": "1cada940c8674897d51f1904fce0efad689e1ac421ceb09ac528b6c5e234d46d",
+    "seconds": 3.9,
+    "frames": 116,
+    "frames_sha256": "6e5405ad8fa4621d0b34d917bc1636d523ddf0ec4ab486a24be6fe32cfcb1340",
+    "pcm_sha256": "8b24ebc0bb4bb22386308063617ec04a4d2844d9cb448e9ad0d82d59b4e12bd0",
+    "sha256": "24992a81dabd7bac73329f31f658ea81cf70ce1ac50fe8655fd93a80367c4dc0",
     "caption": "1つ目の部屋の自動デモ（プログラムを入力して実行）"
   }
 }

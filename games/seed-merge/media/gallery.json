@@ -7,8 +7,8 @@
       "profile": "local-rom-title",
       "role": "title",
       "caption": "所有ROM/FONTで通常MLOAD/USR後のタイトル画面（画面全体・無加工）",
-      "sha256": "22e6ecca80616128bd8f9f6a5c7b7fb165ad602bfda3b8adfa680c29edb5e439",
-      "framebuffer_sha256": "eb06a73b5b80fae08514e88ee09f69e6f2ad36feac136eb8de66aac1bd9b62ab"
+      "sha256": "210b930f4b89d90dd4fc3d6df8a99f5cce6952ea294039a8084b30839450383d",
+      "framebuffer_sha256": "ae0ce3388038e8a9dc5973c9f037a860e4fc6b5fd2463790f3c36f6e083c5c08"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "local-rom-play",
       "role": "play",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、4×4盤面の2個の種から開始（画面全体・無加工）",
-      "sha256": "6c3b2b1c413d00e4dbef156494c53beb99edba36d37a9806a822b227ce3837d8",
-      "framebuffer_sha256": "25db86d7cde926f1461469dd4367bdff8e932a3535472ae910a40663c607be5c"
+      "sha256": "c44a58010e452d184e68d1cc8efb387abc87f80c2da4acf90a4e10d064835c30",
+      "framebuffer_sha256": "995f956d0097b01b78bbfeb3ebe0d78aa020dbf1a0290bb6bf56d26cdd2ca5da"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "local-rom-goal",
       "role": "goal",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、35手で64に到達した盤面（画面全体・無加工）",
-      "sha256": "80e29a3d386eedf4057b63b8968f74077148c4430d12013bcde5b603a1d5dab1",
-      "framebuffer_sha256": "59a5f8540cbc4ee65de5c72fefb11482374e085a2b180745da2d014606a9cbf5"
+      "sha256": "9a5d7ec184f209034c6af31347e5a239b21349582456d14358205d893bfcef50",
+      "framebuffer_sha256": "4b5d295d5258b51a9a5800f19c6d657a6df6b66e5c470a40d3902913464908a6"
     }
   ],
   "video": {
@@ -35,18 +35,18 @@
     "fps": 30,
     "speed": 4.0,
     "seconds": 28.3,
-    "frames": 3395,
-    "frames_sha256": "bc82ad47657be58b099c18dd8c49106ba2519a8c2c6bd9c2a5bef1862e534940",
-    "pcm_sha256": "68a4ddcd7d1ddf77e5582bc24d7f4b55f31ec34605dafe90a73fd8a8c5f8f964",
-    "sha256": "27c77aec18b29267a56db3a9b2897d5f25459bb0defdf421b0ddbd895d97549a",
+    "frames": 3398,
+    "frames_sha256": "af7806be1fdf972cde1e8c000bb44dcad5477ab076a73d1e7180e2beec773100",
+    "pcm_sha256": "fcb1e00fdb9b0ef48a3d65d6e8c24273ec4dcc4c79e0e788aa1f40f21bbc73d3",
+    "sha256": "fc966350c3b366bf67bbf6cf5acc96d08dfe32daf97fee55ed78641b9ec19414",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、35手で64に到達するまでを音付きで記録（画面全体・無加工）",
     "mode": "rom-cassette",
-    "artifact_sha256": "79497def55904a480333db39554a8f7147472f3ae72751e67ff08f6ccdaede44",
+    "artifact_sha256": "dfda070fee11afe21971d5855f5368058a8a3e8300d5f95e7b7679b142e9570c",
     "start_cycle": 83500000
   },
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "79497def55904a480333db39554a8f7147472f3ae72751e67ff08f6ccdaede44",
+    "artifact_sha256": "dfda070fee11afe21971d5855f5368058a8a3e8300d5f95e7b7679b142e9570c",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }

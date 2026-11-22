@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "stone-balance",
   "title": "STONE BALANCE",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Take one to three stones from a pile against a rival; the last-stone rule flips halfway.",
   "genre": "tabletop",
   "license": "MIT",

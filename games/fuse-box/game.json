@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "fuse-box",
   "title": "FUSE BOX",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Switch fuses on so every row and column count matches its clue across ten panels.",
   "genre": "puzzle",
   "license": "MIT",

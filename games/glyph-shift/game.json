@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "glyph-shift",
   "title": "GLYPH SHIFT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Swap which glyphs count as walls to walk forty chambers to the gate, within par and past both runes.",
   "genre": "puzzle",
   "license": "MIT",

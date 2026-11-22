@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。壁、遺物、探検者、出口の並び",
-      "sha256": "4c73fc9d5edbbe4819f69d9bc8fed4c7814ef635d576822cb55eac067d3f1111",
-      "framebuffer_sha256": "ab5ce9fbefe20f54236f3c421ab6f5ee1f7ddf56c126a3a977ac6477121e614d"
+      "sha256": "7a9516071e7292e6c9bb7a327bc8ea2818e7bf2f321a189f998aadc7ba23edc7",
+      "framebuffer_sha256": "56e917d1ae60fe8aeb5467cea35609e03b0036d0a075ac6bf668e1619efe979a"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-first-relic",
       "role": "play",
       "caption": "時計回りに回転して位相Bの遺物を拾った場面",
-      "sha256": "8893381cf4aa7ab704e0fe6502070d304a779d3bdc37b4cc1ba76b303b840467",
+      "sha256": "86f41a90bdf94111e2ad680984d4b910df1618746ac776b75484356a76fdbbb6",
       "framebuffer_sha256": "08ec3f321955f49a3aba8227b80b5ae9282cac885684404a66c7ad0150f087c2"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "3つの遺物を拾い、開いた出口で1広間クリア",
-      "sha256": "038c1490f5074457984d79c445cbd21d13517d0fec993593c2ac1969d8df95d5",
+      "sha256": "dba7b0632f6e502d9500b233c918a755bd68347666259bb4257609e1ccad7c86",
       "framebuffer_sha256": "03645ae43e759e1c3e2ee8afefe5fb603bb13607b35f0b93d93db691329b6362"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 10.8,
-    "frames": 324,
-    "frames_sha256": "f0d51397612709870fd80af8797bd86851d0f24a423e60030de5f43a6732b4d8",
-    "pcm_sha256": "26fc65eea23af59df132d5579e50c49180c8efc85a3bc5109fff83189778fe4c",
-    "sha256": "85c62d86924b5a77367cd2907e6fd8702c7a415f70c2d473914b93b5e5fa0e64",
+    "seconds": 10.9,
+    "frames": 327,
+    "frames_sha256": "3f1ba58fd81ce6e4186a458e3fb94be903a9f22e3bccc434ee86dd48b11d81ec",
+    "pcm_sha256": "6ab6311a572252e4a545663b8dc06a5fc277d65054154692e983708194e5ae3b",
+    "sha256": "d2f6f3beeac26dea99af2f243755fad91ec46dbccdff27b79a2430b8548c1cff",
     "caption": "1広間で3つの遺物を位相に合わせて拾い、出口でクリアして3声のジングルが鳴るまで（音付き）"
   }
 }

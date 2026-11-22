@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "b1af4d1ec064912fb62347ab5e54905732d75ba422fe01a7df8e6acb6cd7dc04",
-      "framebuffer_sha256": "cae2c7690ffe259ac94f2492234e97dfd5791e25c0953e1002cf04f598962aa9"
+      "sha256": "cd205721bac2e2006e727fece384c713f7bdf94a17dba848ace66f2d630980a0",
+      "framebuffer_sha256": "09c55e7d0080c75a0d4ae482c574cc5859191200e4b20c54c483d3750fa422bb"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで水槽に水がたまる場面",
-      "sha256": "3502b79094f5e5df6e179ad9ad6fe906435c1c6199ceea42203d9b91fdeacb46",
+      "sha256": "00791ad7a2c53b7fdf8955aaad136f1514d923b493f03db18e8135dc7cab7846",
       "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "目標点に届いて1面を終える",
-      "sha256": "29388b16951666928b04a51e3cb3716797f01dedf0f68be2c2d61278fac2d959",
+      "sha256": "bc55d7c13f5c9e0ce03de6a9f0a26658a7a4fcc7f8a057cf22c90372720acfa9",
       "framebuffer_sha256": "ab667b72b0776464913b90c683a80288ee92eaabc90f56eff04e5d6126584c67"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 14.6,
-    "frames": 438,
-    "frames_sha256": "59fd9b452b27918229918f372e30e486dafaa907a16e3a16696a0fdac7844a0e",
-    "pcm_sha256": "761a8a7e9455f343f9874055f72276ca3295d484521105a8194e3550b5778171",
-    "sha256": "c6b81b1b68c9fcc4caf491bd243d524f768674fa3930d9a87c7b297c760220f2",
+    "seconds": 14.7,
+    "frames": 441,
+    "frames_sha256": "8272778842c9719b7d64a11bce82ab79c07bfd570fd1df8121a739aab0ab0ba1",
+    "pcm_sha256": "f267d6d6c4a5319eb9ab574c9814bcffeb2232a3df076a1c894530344c771ffc",
+    "sha256": "25f6131ea57a58a7d469eae6e96cbd988c99f9aa257c17d9d9eddeb2940f93cc",
     "caption": "1面の自動デモ（水をためて流し目標点へ）"
   }
 }
