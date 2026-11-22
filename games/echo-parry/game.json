@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "echo-parry",
   "title": "ECHO PARRY",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Guard high or low and parry the echo knight's attacks in six duels, watching for feints.",
   "genre": "action",
   "license": "MIT",

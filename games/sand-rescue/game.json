@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "sand-rescue",
   "title": "SAND RESCUE",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Pour a slowly filling water tank down desert channels to save crops across six fields, carrying water between them.",
   "genre": "tactics",
   "license": "MIT",

@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "night-swarm",
   "title": "NIGHT SWARM",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Hold the night against six waves of a closing swarm with auto fire, area pulses and salvage.",
   "genre": "action",
   "license": "MIT",

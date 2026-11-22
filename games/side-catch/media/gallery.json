@@ -2,7 +2,7 @@
   "schema_version": 2,
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "afb7532fb0add608acc147e1c8c96600357e455fe9ae183a61484493f691816b",
+    "artifact_sha256": "9426c873bf9532be3ad355dae6cfff88c4a9e8ee6527b7336aac3ae14f9e776f",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   },
@@ -13,8 +13,8 @@
       "profile": "local-rom-title",
       "role": "title",
       "caption": "所有ROM/FONTでMLOAD/USRした最初のラウンド。文字はゲーム内の自作字形",
-      "sha256": "cf14815a66016e64a485f265bd8fd87c2c1ddae257d83ace35027a7c5d73580e",
-      "framebuffer_sha256": "32ee8dca37184887a096fa3137ca8e703a8b813be6ab35f7113aac431a9c0b90"
+      "sha256": "91c87bde87086dc6f2aad2c98bf032de0953ad63696b41d8a566e2d815842f8b",
+      "framebuffer_sha256": "6768b93dae5e7c4b116d44354e48ccd0cdc1ac7e3b18fd7cd566753f40b655af"
     },
     {
       "id": "play",
@@ -22,8 +22,8 @@
       "profile": "local-rom-play",
       "role": "play",
       "caption": "右のtargetを捕獲し、Rで左targetのラウンドに進んだ場面",
-      "sha256": "3b4dba1fbadcb69687447d08348e0a17493651ee879dd108d3c67e1159fcebe7",
-      "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67"
+      "sha256": "598c36897204996c89c7e6fbd12f1efa4f4d1ad5d4dc6ad94ef891b6ea969fd6",
+      "framebuffer_sha256": "888797d73517d93a15667ace3324d48592ad101fb12e506fef90ae8473258696"
     },
     {
       "id": "goal",
@@ -31,23 +31,23 @@
       "profile": "local-rom-goal",
       "role": "goal",
       "caption": "Dで最初の右targetを捕獲し、累計001を表示した場面",
-      "sha256": "02d2c8c6cd5313543ce9b791f801f48964c044a4ce901f3ba3a79c8ee8a79f20",
-      "framebuffer_sha256": "08fb415a3dde301e9b6ab9576df65751991b5e43748324746f523990f32107b4"
+      "sha256": "eb1fac66c1516f33efc2cbff7332e32f69e2670a241e8a185ce749bede49d5af",
+      "framebuffer_sha256": "337528abc236ec3aac3b28c024dde751f7dacf89109cde3a6d79e030dd6b8b09"
     }
   ],
   "video": {
     "file": "goal.webm",
     "profile": "local-rom-goal",
     "mode": "rom-cassette",
-    "artifact_sha256": "afb7532fb0add608acc147e1c8c96600357e455fe9ae183a61484493f691816b",
+    "artifact_sha256": "9426c873bf9532be3ad355dae6cfff88c4a9e8ee6527b7336aac3ae14f9e776f",
     "start_cycle": 82800000,
     "fps": 30,
     "speed": 1.0,
     "seconds": 0.9,
     "frames": 28,
-    "frames_sha256": "8566c300950711229582b235c907278d3b1f08093a45c261573bb7332d7b4b3d",
-    "pcm_sha256": "14e645410798cb743abf42c266d76e94b74108fe114f29535900f6ce388c306d",
-    "sha256": "6737e0b01cf8813519a613f0e48081e16db13199d6893b3e0cf1b5db39327ff7",
+    "frames_sha256": "d8e15125b1274a8ba47b90e52fe94cafdcd8c8f773a058f400fde98c250da570",
+    "pcm_sha256": "f4852a6567a1f87536637f7b3e673eeab36bac6e49d47051697cbd3f7982981b",
+    "sha256": "1fbc637d7bf2018808cb41902829122632200407598706dc9a4176c3c7e516e3",
     "caption": "通常MLOAD/USR後の最初の捕獲と累計表示（実ゲームPCM付き、起動中のBASIC画面と音は除外）"
   }
 }

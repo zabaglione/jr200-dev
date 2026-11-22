@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "69ccdab5ed1af1b826412a1113a2f9fc100ea2612c6ea88a46460ebbf4fc3ae5",
-      "framebuffer_sha256": "addb86dff9ef9de8ccc9698e484f7a79d5575e942c00568299eff675ff47f78f"
+      "sha256": "5884324484b437e813a2313d37cc70468d5b740a2705ef206b8a1faff293ba38",
+      "framebuffer_sha256": "b54b8b184e305fcc7faf15ffb7d0c6f12682d55e377d99461ef8a49f16307b22"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで群れを迎え撃つ場面",
-      "sha256": "9f0728fca5fc7437331f3057229172ecbf68ea7dd4cb345c0337e10d3cd013cc",
+      "sha256": "2c42ad74f320ba4bc8d6df9d0311ff895ad8db86267affd472ca329f82c5e05f",
       "framebuffer_sha256": "6884fd67919396218d8f7f132f49a908c55eed5bad5eb2bae3ab5660f48acbdd"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "12体を倒して1つ目の波をクリア",
-      "sha256": "12f183bb3d111534c3aaf34f568f57b9695ea9897e160010313d94ff2238755e",
+      "sha256": "7d2d223992eb97ba6f9b14b729131c79f3061168cf66089e4a868b7529b06d62",
       "framebuffer_sha256": "c558447a61f704801b56c4d74f2ec62230bfc5298615c538dd9de75f8ed97cef"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 16.8,
-    "frames": 505,
-    "frames_sha256": "9bb1eeff81d9c4df2dcbe9f91811d43c678d9128ea7e0254334592ed040b314e",
-    "pcm_sha256": "0a9ed78a72445b754d40eabc306b8a60d18d8999d43ff37a2cc9e2331c7976b0",
-    "sha256": "0384651508e166b0763e603dc0a3d8d81dc1223bc49cb68789cd0979e14e133c",
+    "seconds": 17.1,
+    "frames": 513,
+    "frames_sha256": "4975f637259656494cee545c11ae694e20c4f7e2123203cc1bc9d61ff5e82f9e",
+    "pcm_sha256": "f179bc061684234c7c4a4b34812af3a90ffc7ad5f1af54f5a3719e64cb51dc16",
+    "sha256": "6ad9c517bb8fcfed7bf83eef4ff82338baa48c8b566b64b54cd38bc815e6167f",
     "caption": "1つ目の波の自動デモ（12体を倒して夜明け）"
   }
 }

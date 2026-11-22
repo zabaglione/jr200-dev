@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。4つのスート",
-      "sha256": "f20cf2d34178ec1018282d8feb4d6e7dc12b3a4e55f3a7af24a39fced1e2aaf9",
-      "framebuffer_sha256": "296442e30887d80e7e1d1689d4c40d748fb0464dd20a6db0500d7f7e9d57208e"
+      "sha256": "579995155e32f194da1a8ba36e8de33fcfe840824b1638b9bc92bcdb0387e679",
+      "framebuffer_sha256": "e8da02ba824df338f93d4e14ac712cc954ab930506ecde165176552f25026aa7"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-redraw",
       "role": "play",
       "caption": "1枚目と3枚目を引き直してスリーカードになった手札",
-      "sha256": "617b118b067a31ac4154def64b399f9dc65595104c94274822100b14c846147a",
+      "sha256": "4aab3a22cbd53de5ca1ce5aafab6aa93994fdd6cf109ace9222b9ddb57c0799e",
       "framebuffer_sha256": "1fe4e0b6c8730b4db1cd23fc25150146829c714ec692823e1d1ffa8b6920113e"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "3回目の手札を採点して25点を超えたクリア",
-      "sha256": "bea376e186ce77cbec4a5d0d782f95baa009381e30c7e3ff809f866c10e7dbdc",
+      "sha256": "87ee0b7ad0847ddd62b575c602149f281c1f778af6e5a5235d9e53aaee111c0f",
       "framebuffer_sha256": "4710060fc6c38d9cb980ee7a8622bf3a04f595bf251b0f3c87dba11ddbf7bd42"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 23.8,
-    "frames": 713,
-    "frames_sha256": "461584c96f273a21d36679469c12e37b598e17c992a4bbaae14e4f739f76cb2f",
-    "pcm_sha256": "d91161a0b45fa98160bc2518c5742ef1b97b2cb345ce7b2ae77be8def5b1b483",
-    "sha256": "5da65349065c17f621fb7ffffc7af55bab4020c37dbbf122d148d62b8a5565bd",
+    "seconds": 23.9,
+    "frames": 716,
+    "frames_sha256": "18da93d7d92931505613d647272ec6584f3b346dcfdf24138d775aea03a5a928",
+    "pcm_sha256": "6cc36e52fc16510cba55fe5499946fe7732a7d867ed1867aa8bbaf2a4574d8b8",
+    "sha256": "7f50a93770f216c5289fe73ce5bd89f2592d0fa580f5331c3e6d4d630cc9ceae",
     "caption": "3回の手札で引き直して48点を取るまで"
   }
 }

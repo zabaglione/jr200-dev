@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "2e2d370d74b45167817aa17c477e7b8fd4e20b40e64aaeeb5183c9014b11797b",
-      "framebuffer_sha256": "fefe63e82814899a4d7307c1e37ceda02502fdd4cae30cc97eef93516b9f4c7d"
+      "sha256": "07463ac099f51adb9f9d32f697567012ee9b4b44ca44f3a4f59baf9909f50644",
+      "framebuffer_sha256": "627a8e6db410b00b0e16f00a9d734d440b771829f559b241cbb08428664a4a44"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-roll",
       "role": "play",
       "caption": "部屋を傾けて球を転がしたあと",
-      "sha256": "ff72ff6c93eb1fe22cbb773f389a0556e9f1910591443ad58d229433ec695222",
+      "sha256": "ca80aef149fb1b7e61a8510e8ae11417c09735c39a0c1c43568a4b23b40e2e78",
       "framebuffer_sha256": "d349621be4dc9573b0761088932a87c232f9ad0c3f8aa0518f8de738c7869d2d"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "星3つで1つ目の井戸をクリア",
-      "sha256": "3b9f127a30af6e38dfe00fa036582c7cb49a63bb46e39d304db4e6225f85f8e4",
+      "sha256": "54c5ee2030953ffc46d2317112924b5a268549273a0b5aeea2f138ef24525e54",
       "framebuffer_sha256": "3eb953836893c408fe5d0df6129cbe27b8531027329280d0cd4ad3e5d952ebd2"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 3.7,
-    "frames": 110,
-    "frames_sha256": "2caf1d423b9502696059422914ff89f64a8792563822d970e8c469ec622b0bb2",
-    "pcm_sha256": "9bec7eff0bdfed0788e10d54ad4bb7f21051da6c6a2923135dc70f2b96c1db1c",
-    "sha256": "4a3ee535bc30da0db5921f74347cc3eb9dcda6c5fcaf0684a94dfd785bdfd72d",
+    "seconds": 3.8,
+    "frames": 113,
+    "frames_sha256": "9492ff6e6084e38e8ad769f21b0ec692a44d4f291ce406c3f8915c96d65bcd6f",
+    "pcm_sha256": "9ba65e448ce9736e4d743af296f3afa9d1cebf58dd986a07d9f1731fff03bd62",
+    "sha256": "5638141a25846a551a703f8b2e0fb9dc153594bdeac8df7c0b6e06e9e7c47e67",
     "caption": "1つ目の井戸を星3つでクリア"
   }
 }

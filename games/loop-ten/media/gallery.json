@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "3146e5f1cd81e2234d0e1e41bfdcae55c88e40966c7bd0efa06e4793cd0ec7f4",
-      "framebuffer_sha256": "3d5e7d5fe3dde543328b038e0e8e172bebb55f036b97c48540e8cf8d54523c1d"
+      "sha256": "d7094188c21a7b5d8448390701f88ae93259d33339d7e7c14a4a902801ff0d6a",
+      "framebuffer_sha256": "74913235d03b39c344ea69a8f706834a366647c96b69fc6bed7bcc041725d710"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで封印へ向かう場面",
-      "sha256": "40170a7ac938f04461335a3841ed8a9add00cfa8f2fa9c693ce473eee19516e9",
+      "sha256": "75d19fb4b1d22916dd8e69d58a8d3aaef22d58ad4d8d78134370c4eac5fd1491",
       "framebuffer_sha256": "1d9053a16241ade800789523d66c6e163103aabe892c8d5a6ba7817512a919a8"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "12番目の封印を点灯させ、ループから脱出する",
-      "sha256": "511d8ed0aad3e0184921b0de876ae8a951889c7d41a4660887ec4294252df13e",
+      "sha256": "c0617104d1f38046e448ad109f5febed4487d37920126f56c3864bdcc7aa0d28",
       "framebuffer_sha256": "7443398c46f050aba629c84761bc2640a39dc54a4c2d4d4a7ff0a001f7ed8532"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 32.0,
-    "frames": 960,
-    "frames_sha256": "03708d66ac07a801a6df816a0d3d5ed25eceafeb42c495fbc569f0b933c6fb62",
-    "pcm_sha256": "ea0530f72bed3d9f46171ea6f5e4ffeb427093ca237d230052451d0a420703eb",
-    "sha256": "baf76ce820c291b7d17e5a320b5e229224073d90189a5c110d709a059745702b",
+    "seconds": 32.1,
+    "frames": 963,
+    "frames_sha256": "556fcf4c302e93c7f7c21f7298e31e7f0d4843034bde92f7f00cc1df786fa550",
+    "pcm_sha256": "35d9cde64d5e26ea9390bbc006b743a9acadaa31b52fb1a86dd8f971f47ed42f",
+    "sha256": "42e3f7897823c51c3b5fcf457bb501494b1011806cf2748bc70268b2b2e58084",
     "caption": "自動デモで12の封印を点灯させて脱出する（等速）"
   }
 }

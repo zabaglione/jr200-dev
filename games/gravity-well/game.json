@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "gravity-well",
   "title": "GRAVITY WELL",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Tilt the room so both balls roll together onto the two sockets in forty wells, within par and past both runes for three stars.",
   "genre": "puzzle",
   "license": "MIT",

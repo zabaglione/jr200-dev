@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。金庫の扉",
-      "sha256": "f5b885c1eccdc3796e188430d30040ed9608f2f25adaabb82cac456095473f2d",
-      "framebuffer_sha256": "4761dea9b95822fc2776d4992c1f05555ab793d27bd119b216b25cf57ba58ac2"
+      "sha256": "726d2c67188c612ca45c41686887e692add295b0f77b3e7c496936554a3dc8f1",
+      "framebuffer_sha256": "0d67b4048a5d078a0a3fe0b29c0c47416db7ac5c3a9be8bc28ffeefac74749cb"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-history",
       "role": "play",
       "caption": "2回試した記録。EXACTとNEARが右に並ぶ",
-      "sha256": "b88d39b8ace9071a4755989a119083d457bfbc46617b542395afa5ca77e60fac",
+      "sha256": "233f686dc31d2113a4ab7b2ce52df2fa61acbe3453b565fe62e158186cb4aed9",
       "framebuffer_sha256": "79fcbfd462f2ba29849c368515b5d19fdad53388a55550bd2a38c720c1e73c32"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "4桁が合って扉が開き、1面クリア",
-      "sha256": "bc40fdb1fb375c708a98db78163d7e97ba27e2e4b42b33daa73aca70d8ff355c",
+      "sha256": "35c92f620779922267f60f7ec94f169e8ef21f6c9d6a5c993811193ef909afb5",
       "framebuffer_sha256": "cc8ac571327dfdff25ecb7ed2311aabbc513964af08e96bd728e981277686dbb"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 9.4,
-    "frames": 283,
-    "frames_sha256": "04377f93ffe5bb191b3dc6d9276f8d6052a0e94b978c483fb73f303289876083",
-    "pcm_sha256": "0cfedc0e39db395adb7d905373eb32c75b89152224dfdc2ff38d86048fc56de8",
-    "sha256": "819b7c30eb669f82a4f992b965676981fc3d6e4f19fc0a30ba22b38e3333bfba",
+    "seconds": 9.5,
+    "frames": 286,
+    "frames_sha256": "be9207919a67961edb19028d6c7a13224a7e371e6ffabf0834e4163760b4fa40",
+    "pcm_sha256": "29bce26047a589252325f20c5886076322203069d63c006d797b24b2bcd91282",
+    "sha256": "f28f0e7341f2abe281f46126ded27f6db39f621e83242a49b45f27b83bee7bac",
     "caption": "1面で矛盾しない番号を順に試し、扉を開けて3声のジングルが鳴るまで（音付き）"
   }
 }

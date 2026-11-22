@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。光源、鏡、受光器をつなぐ光",
-      "sha256": "6c189d58c714823f5a1553ea8b49feb3515840cf6088769fd77328f5ee3f3f89",
-      "framebuffer_sha256": "d1158139b198e391a81af954ccdeaa4609b7f3c930c549239de0043d841f7784"
+      "sha256": "ef19827c0d4eda6df7255624b406ca95fbadb3335a4074957c7712b18c6b873c",
+      "framebuffer_sha256": "37da5d529ef993893e0b3065a6a1800be18a6c02bbc48cbbe1ce5f0bac24443e"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-first-turns",
       "role": "play",
       "caption": "3枚回して光が伸びた途中",
-      "sha256": "cab13f17532093628de2eba9a0d8f4b0aa4b08eefed1dfc5cb791c8f55ecccd6",
+      "sha256": "ae4201c4b775862381a175efb040001a4b5cdbd842e5b6197a8b9e8d87056959",
       "framebuffer_sha256": "11ee52cddcbb635d7e1099d1f5dc60d7c78b66cad1246a2ed0cc627b0bfabd6e"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "光が受光器に届いたクリア",
-      "sha256": "db4726be849d9bcab262717a600b5763afacbffa7e87c2dacf9e402969cca6d7",
+      "sha256": "15e80fbcc2dd399f30e25667ea44a909223f15137459d2fd43a543253f2dfe7e",
       "framebuffer_sha256": "cb6b93781d1c008a2362cab605d3118bb4765fd9426faccc6550b4752dc094e0"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 7.8,
-    "frames": 233,
-    "frames_sha256": "dccd45249cd059207bab61755502e299aa621005646fed3bff90e1ce290c32e6",
-    "pcm_sha256": "1c00ecdf3267d85b5fd6f8c1e5b72d53545c2ac28ec7a4f2a91e04007c1b4802",
-    "sha256": "bb6e355891219199e22e1c3be0da82d812e514e9456406750a4e53fa0b2bd4d0",
+    "seconds": 7.9,
+    "frames": 236,
+    "frames_sha256": "6fb739e943eca878e3716d36673d09a1a9ad6148840d9d17653dad3b55ae709c",
+    "pcm_sha256": "9603eb1e5fd7a45707b9be46179ba77b850fc7a7c9b56d2cc525fa898b616398",
+    "sha256": "9f50ea394843880e0fb3d08e37184ab1cf7f9196b464d125c6125152487775b0",
     "caption": "5枚の鏡を回して光を受光器へ届けるまで"
   }
 }

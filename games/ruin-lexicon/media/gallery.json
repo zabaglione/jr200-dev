@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。柱と石板",
-      "sha256": "87b1485cd7b0c71df3d026c18aaa85853cf3dca54151758cb08034c3c70f780b",
-      "framebuffer_sha256": "9973c9c4a46ceb4329ed1f44e110d1f054b627b8e1c3a5f6a88dc20159432524"
+      "sha256": "6c9a59c2014ce5dc4782040b0198ae34ed441ed18bcdf6ef098bf4eca50f9e26",
+      "framebuffer_sha256": "5955db772e3a7da9ffe81d5251200030c1773a3eea04a14785c8b434686e51f5"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-wrong-try",
       "role": "play",
       "caption": "1回外して、合う和と合わない和に印が付いた場面",
-      "sha256": "908af5270ee47d42487c080f59e63db715351544ab93881e0c285e6bce6701e2",
+      "sha256": "898af9687d49de2af71ea63b4cbf7e2574d6a56a7e78d1d4b395c58f29ee5ade",
       "framebuffer_sha256": "9386e7f06d072f5755bf927f6c668e3deda284bd3523c44336007154ef726411"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "4文字がすべて合った1碑文目のクリア",
-      "sha256": "1c5043d3a2f8a3607e7417786225973a21f2a44039aa32074e594f74b9c38bf5",
+      "sha256": "3c8810971269b0c9865761cba9914d9a2e230fe64136f0a12f340c0bdf1325a5",
       "framebuffer_sha256": "54255400b7d14a43c573917380995ffa89488ae571aeb5dcd28b0196c141c4f3"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 4.5,
-    "frames": 134,
-    "frames_sha256": "36dc87a863e46ff5bb08014a5355ee1c0c09c1e297278a157a91d0e341538e59",
-    "pcm_sha256": "0ac7a4504e22f7e494b1db583ebedc3284ff3a616c300e7810bcbbdcb086bb5c",
-    "sha256": "8125687fccd95f65299b31b99a68ff924f49190ab01a9a2fccb3385efd7650da",
+    "seconds": 4.6,
+    "frames": 137,
+    "frames_sha256": "c73994e5ba08570f53f0183b324b32ebe7feee68a81793158b697d2735171e65",
+    "pcm_sha256": "a6701b842cbf933ccd0c9cbbd9c273d180bc8493073d6c7b4306e41446842e4f",
+    "sha256": "16499c47a313f3071dfcd1528fe6091e69bfcd79a3e407ab5f7c8d6d67a65a36",
     "caption": "1碑文目の和から数字を割り当てて照合するまで"
   }
 }

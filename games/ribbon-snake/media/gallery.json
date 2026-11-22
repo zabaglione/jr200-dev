@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "70c537cfae231ffa9767bb91aed743089295770bd59234a8ee54c9776dccd81f",
-      "framebuffer_sha256": "359b03e5e8517bd628dc97f2995c0668c83de2b2ef7e2f3df8330fba8b389b95"
+      "sha256": "b549ba81f2ed09ae1fe195dcb06a42cdb0ba101fec6567934b1d8c325600446a",
+      "framebuffer_sha256": "d6d6f5a8c9c6bc67f387461361b4849c33fd359186446c8622195ff6225d9fe5"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで餌へ向かうリボン",
-      "sha256": "d286434dc92c31928b2e2337deaa90ac9d00c9383452cea2414d5d7c04ab221e",
+      "sha256": "837f8638b5944f1b8b10045c14f595a1481571544f23ee3469186af98b502df0",
       "framebuffer_sha256": "3052924bfef38d423965d51af75fa7f75e1b931b2c4b7670df6e1cf596daa2c0"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "8個目を食べて1つ目の庭をクリア",
-      "sha256": "5e028cc11b13c3c87d2a4ae4ba2fb24c955d9297528fdd78010951f6c641c41f",
+      "sha256": "83aa6b2bdc74bb7b6361ea47e9800f65f9e755e866b95421769afba239a48a4a",
       "framebuffer_sha256": "7bd4d8cdce32052f47834f5a0dc0b73425d29e4a9ef50800484a7c4ee83eccc7"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 19.5,
-    "frames": 584,
-    "frames_sha256": "5692b6c52f2f9642e85de84991e9885ed610d3795b60724230490c225edf853e",
-    "pcm_sha256": "54bf66afe9671abe8a91fc6b909744aa9bd4d37c1064624fa855985669730b7d",
-    "sha256": "848c63cedaa2fbc57ec2890602c85be03e3dcc07e0f1137fb1a0ff455eea554d",
+    "seconds": 19.6,
+    "frames": 587,
+    "frames_sha256": "b6ad3719b2c7458b97879cd4dc0154fbf57bb08d509cfeabd92d31137d622ce1",
+    "pcm_sha256": "9913e27a53069fd2b3fcaaf32480fb42670eacf55f85847aa71dcc76d5ff7688",
+    "sha256": "fbe772148b9ba0fe8f28afb9150aa1cfaf33e17645292096ed8ec542a281151b",
     "caption": "1つ目の庭の自動デモ（8個食べてクリア）"
   }
 }

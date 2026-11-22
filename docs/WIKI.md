@@ -4,7 +4,7 @@
 
 `tools/wiki/generate.py` は、固定済みの作品packageを検査してWiki用fileを生成します。
 このtool自身はclone、commit、push、Release作成、repositoryのvisibility変更を行いません。
-公開カタログは52作品です。新たな45作品の0.1.0は固定ZIP、CJR単体、起動支援リンクを掲載します。
+公開カタログは52作品です。タイトル画と外周色を更新した51作品のパッチ版を含め、固定ZIP、CJR単体、起動支援リンクを掲載します。
 7作品は `verified`／公開指定の固定版となり、公開Releaseにclean-source ZIPを登録しました。
 Pagesの配信・所有ROM/FONTによる実起動を確認後、Wikiに7作品ページと媒体を同期しました。
 開発リポジトリのpublic化後、Releaseの7 ZIPとWikiの22ページ・35媒体を匿名取得して固定値と照合しました。

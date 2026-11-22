@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "trace-blade",
   "title": "TRACE BLADE",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Plan one unbroken sword path through every target to the exit, then watch the blade cut it, across thirty rooms.",
   "genre": "puzzle",
   "license": "MIT",

@@ -1,73 +1,73 @@
 {
-  "artifact_sha256": "20331241139e3f64813234baea0dc5870c430269957929041ccb501d67e59f1c",
-  "expectations_sha256": "da275f7b8c7184a2f89168bc749fac7867af0941637e13f0701a3310ad28210e",
-  "mode": "rom-cassette",
-  "profile": "local-rom-gallery-goal",
+  "schema_version": 1,
   "project": "lumen-cross",
-  "result": {
-    "artifact_sha256": "20331241139e3f64813234baea0dc5870c430269957929041ccb501d67e59f1c",
-    "cassette": {
-      "mode": 1,
-      "read_started": false,
-      "remote": false,
-      "state": 6
-    },
-    "elapsed_cycles": 91500003,
-    "evidence": "emulator_with_local_rom",
-    "framebuffer_sha256": "90121d01e1e67c4afff9469d1b5f0647bc6f6e6859851f3fab422e08b27e95a5",
-    "hardware": "not_run",
-    "memory": {},
-    "mode": "rom-cassette",
-    "pcm": {
-      "dropped_high": 0,
-      "dropped_low": 3008817,
-      "frames": 4096,
-      "nonzero_frames": 4096,
-      "peak": 7000,
-      "sha256": "d971cf864cbc57520cfe5be1609f4fed0c10991b7d20f094ec7bdf89cd2233e4"
-    },
-    "profile": "local-rom-gallery-goal",
-    "registers": {
-      "a": 2,
-      "b": 0,
-      "cc": 208,
-      "pc": 6364,
-      "sp": 20477,
-      "waiting": 0,
-      "x": 167
-    },
-    "runner_contract_version": 1,
-    "runner_version": "0.3.0",
-    "schema_version": 1,
-    "status": "passed",
-    "stop": {
-      "address": 0,
-      "reason": "cycle-limit"
-    }
-  },
+  "profile": "local-rom-gallery-goal",
+  "mode": "rom-cassette",
+  "artifact_sha256": "24d66368da2224fda52094fffe56699f30ef1e927d7f89f918e8d1b909b3a512",
+  "expectations_sha256": "af48787a9533d6d93555037068ec133804142f96d21131877075792702a25dd0",
   "runner": {
+    "version": "0.3.0",
     "contract_version": 1,
+    "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
+    "node_version": "26.13.1",
     "module_files": [
       {
         "path": "jr200_codec.mjs",
-        "sha256": "0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c",
-        "size": 17276
+        "size": 17276,
+        "sha256": "0da8182674173af74ec529e71b29384cb530e6834269e9d4b615788a1d3fcf9c"
       },
       {
         "path": "jr200_codec.wasm",
-        "sha256": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20",
-        "size": 83629
+        "size": 83629,
+        "sha256": "8b0153570c4e7d0bd267ad8d3ae65eaefb1b18d51e5019a44475e58a6364ec20"
       }
-    ],
-    "node_version": "24.3.0",
-    "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
-    "version": "0.3.0"
+    ]
   },
-  "schema_version": 1,
+  "result": {
+    "schema_version": 1,
+    "runner_contract_version": 1,
+    "runner_version": "0.3.0",
+    "status": "passed",
+    "profile": "local-rom-gallery-goal",
+    "mode": "rom-cassette",
+    "evidence": "emulator_with_local_rom",
+    "artifact_sha256": "24d66368da2224fda52094fffe56699f30ef1e927d7f89f918e8d1b909b3a512",
+    "elapsed_cycles": 91634339,
+    "stop": {
+      "reason": "cycle-limit",
+      "address": 0
+    },
+    "registers": {
+      "pc": 6649,
+      "sp": 20477,
+      "x": 1696,
+      "a": 2,
+      "b": 0,
+      "cc": 208,
+      "waiting": 0
+    },
+    "memory": {},
+    "framebuffer_sha256": "48384a22213753f922314ade929c8f7140b7eaccb46c8cffbe3509e77ffd9088",
+    "pcm": {
+      "frames": 4096,
+      "nonzero_frames": 4096,
+      "peak": 7000,
+      "sha256": "5b450811288a1e06e5471c65a1e6c185ffcc880356c0dce7a06f3a3c7258841c",
+      "dropped_low": 3013241,
+      "dropped_high": 0
+    },
+    "cassette": {
+      "state": 6,
+      "mode": 1,
+      "remote": false,
+      "read_started": false
+    },
+    "hardware": "not_run"
+  },
   "verification": {
-    "cassette_path": "normal",
     "emulator": "passed",
-    "hardware": "not_run",
-    "rom": "provided_locally"
+    "rom": "provided_locally",
+    "cassette_path": "normal",
+    "hardware": "not_run"
   }
 }

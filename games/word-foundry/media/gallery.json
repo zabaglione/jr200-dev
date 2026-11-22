@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。CATからDOGへの単語はしご",
-      "sha256": "f5333fef6619e325d024307c045f590354e9040b105d6efc9970046b440a0988",
-      "framebuffer_sha256": "e70e6c517297670bd98b92d6a6d3aabdbd317e5c7fe8f6a6ecda7d37b98f9350"
+      "sha256": "44852bf8cfc15a6bfc9a7b5132c9c9046113a2685ac8273d798a2e292c55f877",
+      "framebuffer_sha256": "8d60124db5772a7c81866c9f845a2afaa00439eb9cc6351563e7d4fd79e14125"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-via",
       "role": "play",
       "caption": "CATをCOTに置き換えてVIAに到達。次に選べる単語が緑になる",
-      "sha256": "aba331c1886495440e741c8ccf0eead88de5842fb9f39a476437523cb285b236",
+      "sha256": "a79c8f31153b648dc2855f4e649b05fae20f0930ab413212a817ae568d802af7",
       "framebuffer_sha256": "85c98e14e32d8e9d356954017f7877d0a5d133bf01eff62c78217bd3e4b2fe86"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "5手でPIGに着いて1面クリア",
-      "sha256": "e83b74a76fd30d507dbe1723ac924290d11335100cdf02c7da2d50b3723d6325",
+      "sha256": "9e46b5c1958314cff8488e13f99dfaf08669bc0043937cc9f1c59d85a09144ee",
       "framebuffer_sha256": "8d19f140e9d85546b2dadee2635f652e9d4a86fd42f1c0442aacf2bf15be8d85"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-first-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 5.5,
-    "frames": 164,
-    "frames_sha256": "19b17d12fc81b6a3ff546cc416b92a56f99af3bcb3fa418fceb80f19c7fe42d9",
-    "pcm_sha256": "f6e8503385edeee3cf2325f5b3c73ffd4cdf4ef0313799890a1d4137a0fc2ab6",
-    "sha256": "8a058c27764145c6b4814cc881dfc552e0e9d950f26ae59281f6a953e53f4dd2",
+    "seconds": 5.6,
+    "frames": 167,
+    "frames_sha256": "3d40fcd60f1f530bf81f4f96145f9b8fda11177b5c17f744c9dd32e91a202ded",
+    "pcm_sha256": "a5261e214ed6b46e47fba3f8c70110b47fe03c115845d42e665bb9a530d28c8e",
+    "sha256": "f95230de82053597378ba1dfcf66bd6974123259e8caee1566b1d0a412840b7f",
     "caption": "1面でCATからVIAのCOTを通ってPIGまで5手でクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

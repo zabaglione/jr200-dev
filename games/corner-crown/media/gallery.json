@@ -7,8 +7,8 @@
       "profile": "local-rom-gallery-title",
       "role": "title",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、タイトル画面（画面全体・無加工）",
-      "sha256": "102a8d816849391f43903676e45c668344e017fa577bd2dddf7b8a32b91c25de",
-      "framebuffer_sha256": "8bbd4fa5f7062d276557948480ce641662691dd2accde3ad962103b8710c1a88"
+      "sha256": "0dc90a6dc270d96efef6340253725f16d03b8285fe7ec6e3665f212483be9dd9",
+      "framebuffer_sha256": "cb4ef5631bda45a9697f19fe5d2fe55cb1efaa1bd91e28609303c1b184abd1d8"
     },
     {
       "id": "play",
@@ -35,18 +35,18 @@
     "fps": 30,
     "speed": 3,
     "seconds": 50.6,
-    "frames": 4552,
-    "frames_sha256": "9957b8cf3f9b96fa427ce26ba22e0503f4f802bc83f486329534a710641dd4c9",
-    "pcm_sha256": "8a9045decf3edd6ca9632e7ba52d591cc340c6163da19ee6075ba3615a24e3d6",
-    "sha256": "58d69d6d4c4a70489246b313f88190061584d649960ae3abfc8c27d9fb614f32",
+    "frames": 4555,
+    "frames_sha256": "9cbef80092523aac7042267897205f224c8f604d21013dcf7c7b98d91314c579",
+    "pcm_sha256": "73ca020129f69fe7bd09c0a731ab15d3154e9aec3a787e8a11d8aa92aa213908",
+    "sha256": "6a3a3491d88888ebeb9f3e1901e56c9526e7178e3a41e7d7f07d513f3a33804b",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、30手の勝ち筋で角を4つ取り39対25で勝つまで（音付き、3倍速に短縮）（画面全体・無加工）",
     "mode": "rom-cassette",
-    "artifact_sha256": "33b3d153974fc652d151431adb2f4eae72fa604b89471005a34d138c32180ead",
+    "artifact_sha256": "4ab880e710b30179e08db7ccd2ca63a9618aec712c987eaed61688b3d78538f6",
     "start_cycle": 83500000
   },
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "33b3d153974fc652d151431adb2f4eae72fa604b89471005a34d138c32180ead",
+    "artifact_sha256": "4ab880e710b30179e08db7ccd2ca63a9618aec712c987eaed61688b3d78538f6",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }

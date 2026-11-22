@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "25812c126b3978bd6bb7a068b63baba3352ca4f5d271be9aafa37c1189e686b6",
-      "framebuffer_sha256": "5624910503e09fd6538b7f3c627278fc7962f9e0ff6d0145b51376670fb123ec"
+      "sha256": "6b1f99be6aaec15337ec9fc09622f3f1852ef85cf10c2f5517b2beff12da3077",
+      "framebuffer_sha256": "d8037464920bf11b9b6012a2210d85bc5bcc5aae83d8e76296a127d883ee23f7"
     },
     {
       "id": "play",
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 7.9,
-    "frames": 237,
-    "frames_sha256": "f7884ab6d8a32c12e49fb9be79b42e1f658f7a0137947e52bf2086bc0dfa4326",
-    "pcm_sha256": "ba4f72195a2d996e17861bade00614f3c2af88a90ee0e05ed2558d9c350ea539",
-    "sha256": "4be19d9891fcb9159e787e744869e39b040f06d53038ae6688f57404daffb531",
+    "seconds": 8.0,
+    "frames": 240,
+    "frames_sha256": "9f3301e62edb52704c56d5a123165b63da06df4160f8471f3c6874a8fb094cf1",
+    "pcm_sha256": "318b47cfd12b7e226b04700d9e4aa02a71c40fb7aee6c8656876a495a4a35a5c",
+    "sha256": "ce2ef26413971a23832cf0d1409cdac07fe8c02445c90695c2122b16d237fd7e",
     "caption": "1つ目の航路の自動デモ（6回着地してクリア）"
   }
 }

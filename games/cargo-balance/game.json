@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "cargo-balance",
   "title": "CARGO BALANCE",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Load twelve crates into four holds without the wind and torque tipping the ship.",
   "genre": "management",
   "license": "MIT",

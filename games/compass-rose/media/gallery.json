@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。砂地、足跡、探検家、岩、光",
-      "sha256": "7572f0f7837e7feea285cca3e7534a2a2aed773e0fba1e670b8d84f9fb9cb3c4",
-      "framebuffer_sha256": "4f92bb2b7f4c0530cc87c068ad521afb5c4314a0cef1647fefb6988dc542845a"
+      "sha256": "0e3e61ea5a4be5ec1f98e858a2c64da6396ba2174783cc08260b843bc6d71744",
+      "framebuffer_sha256": "cf6cfa1aae1b9c86a71a27577a3528a205d11e12e5568cc06964863d3f85f6a9"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-survey",
       "role": "play",
       "caption": "岩にぶつかった後、東へ2歩進んで測り直した場面",
-      "sha256": "6458f08ab93be520539f3f0422f860ddd5b8455a8a8b8d0cda66c1750ce15579",
+      "sha256": "48791c03985ae7064408ffb6f8e53c3e4b113a152ed0807c23920b1271d3ef3e",
       "framebuffer_sha256": "c854e857e66ae4be9f98e6c05279686da4ea74cbb7a63e075c5e175d8885a89b"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "遺物を掘り当てた1地点目のクリア",
-      "sha256": "566dd984ed54de24abd53a5e6fa9e3d55f15809975a5039a9f537eba364a796a",
+      "sha256": "85b4a70d6e035c779526d919103e892f961df42cd86fdf593ab7ff2c5b7d8449",
       "framebuffer_sha256": "43df75aaf5fdd958e69074da81fb29976a68b753718269159694c205115518a8"
     }
   ],
@@ -35,10 +35,10 @@
     "fps": 30,
     "speed": 1.0,
     "seconds": 5.4,
-    "frames": 161,
-    "frames_sha256": "9a3054684c07af39ae2fdc8cc1f96a263cd2245eded7b8931130bcd69c98674b",
-    "pcm_sha256": "b027738068c7a576992519df251279beeddc7916ecad4011c470993c682cc213",
-    "sha256": "ee22fdebb8f24880e1bb65dd2e46caf39ed46e49799635fe8b4f3b356edd551d",
+    "frames": 163,
+    "frames_sha256": "a7f4c0a0faf21dc83c47c4e6b9f67c9c8171b5166065e5db900bcc6f175ef004",
+    "pcm_sha256": "6f5234f1687ae35ba88a91f1b087596818dc96a53e508a6008aa1317e3d222fe",
+    "sha256": "5030caec20d412b39dbd57cc63036d0d7e140a76d043e0ee8948c5d94be93df1",
     "caption": "1地点目で測定し、岩を回り込んで遺物を掘り当てるまで"
   }
 }

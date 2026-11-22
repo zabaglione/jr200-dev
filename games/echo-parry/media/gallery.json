@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "ad0d5aad0489898772de3f6648033a09a8daec914be05115479c411132ca7075",
-      "framebuffer_sha256": "81e00e72a1daf24e5e962ae053fb643194f10b54c4650900ec27c6f7eb525508"
+      "sha256": "4290095aef597a1063e3e7edb5abc6b0724da920c2a22c437391b41e61319b7c",
+      "framebuffer_sha256": "f88fe68ebe5404b208879010d2c3b5e48f54349e6be28dda8ac8a9a111604046"
     },
     {
       "id": "play",
@@ -16,7 +16,7 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで攻撃を待つ場面",
-      "sha256": "b0a759362fb7418da78e6c813fad6a1375a09c1ecb99847f15bf7a090907f7c8",
+      "sha256": "2eec37d9ee2058b5a636597d2cae584b721ec3f4b0123f446233eaa36dae163f",
       "framebuffer_sha256": "f4915634b9af076823d828a65a9041e43dd9748a6eaed352fdadb98120dbf7c9"
     },
     {
@@ -25,7 +25,7 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "鎧を削りきって1つ目の決闘に勝つ",
-      "sha256": "cf98af7f859031b7bd5c09e174c2ba8fe63851ac0d62f5c73761717dc41ef1be",
+      "sha256": "c49d99379e3ca4e3df0941396e55f9e8d4e165b40a9d9b577e525bf4bc2caee4",
       "framebuffer_sha256": "f75b2b3284e8d0a3b154c0c3cab36131a7308bd7d2d560a1be78ac81adfdd6aa"
     }
   ],
@@ -34,11 +34,11 @@
     "profile": "synthetic-demo-clear",
     "fps": 30,
     "speed": 1.0,
-    "seconds": 8.3,
-    "frames": 248,
-    "frames_sha256": "001b3673b4a7dc2fab0c875ab18e1abb9e3eae5b100798963bd846ff4ab7a442",
-    "pcm_sha256": "8af41e902932e9ea5740e74342d5e5bf8d9cb21c06b83a728292635c076be8cf",
-    "sha256": "d96d02d3575cd6f8f9e0898c9f62f16e2a34837b93d3a76198968736690ee61d",
+    "seconds": 8.4,
+    "frames": 251,
+    "frames_sha256": "1d1befddbfdbdfd773be84006e69876e823e54b3f370fc4c128bfca4473cbdae",
+    "pcm_sha256": "b1a3249f28b9c5e58b2acbcd216a2344891a35cd1ec9798a2326882ba07a432c",
+    "sha256": "f6acee83149dc5305b5b06d02e8b01535b0b40cfe75b84f3f4edf4f6b3314168",
     "caption": "1つ目の決闘の自動デモ（受け流しで鎧を削りきる）"
   }
 }
