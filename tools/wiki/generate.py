@@ -882,7 +882,7 @@ def title_gallery(entries: list[dict[str, Any]]) -> list[str]:
         return []
     columns = 3
     cells.extend(['<td></td>'] * (-len(cells) % columns))
-    lines = ['[作品情報を見る](#作品情報)', '', '## タイトル画面', '', '<table width="100%">']
+    lines = ['## タイトル画面', '', '<table width="100%">']
     for index in range(0, len(cells), columns):
         lines.extend(['<tr>', *cells[index:index + columns], '</tr>'])
     return [*lines, '</table>', '', '## 作品情報', '']
@@ -1171,11 +1171,14 @@ def render_pages(root: Path, packages: Path | None,
         rows.append(f'| [{title}]({page}) | '
                     f'[{genre["title"]}]({genre["page"]}) | {TIERS[entry["tier"]]} | '
                     f'`{entry["version"]}` | {first_sentence(entry["_intro"])} |')
+    gallery = title_gallery(selected)
+    navigation = '[Home](Home) › 全作品'
+    if gallery:
+        navigation += ' · [作品情報を見る](#作品情報)'
     files['All-Games.md'] = '\n'.join([
-        '# 全作品', '', '[Home](Home) › 全作品', '',
-        'タイトル順の一覧です。' + ('この表示にはローカルプレビューの作品も含みます。'
-                           if preview else ''), '',
-        *title_gallery(selected),
+        '# 全作品', '', navigation, '',
+        *(['この表示にはローカルプレビューの作品も含みます。', ''] if preview else []),
+        *gallery,
         *(rows if selected else ['公開作品準備中']), '',
     ]).encode('utf-8')
     files['Games.md'] = '\n'.join([
