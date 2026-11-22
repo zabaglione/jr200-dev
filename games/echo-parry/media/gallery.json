@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "4290095aef597a1063e3e7edb5abc6b0724da920c2a22c437391b41e61319b7c",
+      "sha256": "597b438b39e30e653f2ab6789e8364dfafb959b524823fe3aecf922888a0789a",
       "framebuffer_sha256": "f88fe68ebe5404b208879010d2c3b5e48f54349e6be28dda8ac8a9a111604046"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで攻撃を待つ場面",
-      "sha256": "2eec37d9ee2058b5a636597d2cae584b721ec3f4b0123f446233eaa36dae163f",
-      "framebuffer_sha256": "f4915634b9af076823d828a65a9041e43dd9748a6eaed352fdadb98120dbf7c9"
+      "sha256": "f24a8048795bd852e891ea8f49afe26bc633b2d6cdcd96cc198f97ee02d90fe2",
+      "framebuffer_sha256": "59c4cb9530c9f8fca2a1c392107718d948ecb0693fa01a6542f9e92530620e88"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "鎧を削りきって1つ目の決闘に勝つ",
-      "sha256": "c49d99379e3ca4e3df0941396e55f9e8d4e165b40a9d9b577e525bf4bc2caee4",
-      "framebuffer_sha256": "f75b2b3284e8d0a3b154c0c3cab36131a7308bd7d2d560a1be78ac81adfdd6aa"
+      "sha256": "aeec87a7bf882a8e0bbd43b12776cb24505fe026491ad8b714cd303684a4410e",
+      "framebuffer_sha256": "95a6a09d096db599c61078d91850b2aebc3aa42f3cf995667c84b28b8c1772c6"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 8.4,
     "frames": 251,
-    "frames_sha256": "1d1befddbfdbdfd773be84006e69876e823e54b3f370fc4c128bfca4473cbdae",
-    "pcm_sha256": "b1a3249f28b9c5e58b2acbcd216a2344891a35cd1ec9798a2326882ba07a432c",
-    "sha256": "f6acee83149dc5305b5b06d02e8b01535b0b40cfe75b84f3f4edf4f6b3314168",
+    "frames_sha256": "bc1df1071dbb82686cf9513e0bf00fa14a2c477d3c78cd809335703502d71521",
+    "pcm_sha256": "c88edcda376a272aa49450ce49a8102e66731a6fe100185e28b12184a00622bc",
+    "sha256": "54c7cc7f95dae973ecd385d5ed785e32f915ebd18c8bae81416fb11de6dd5e3b",
     "caption": "1つ目の決闘の自動デモ（受け流しで鎧を削りきる）"
   }
 }

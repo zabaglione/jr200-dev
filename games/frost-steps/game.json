@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "frost-steps",
   "title": "FROST STEPS",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Slide across forty ice chambers to take every crystal, within par and with both runes for three stars.",
   "genre": "puzzle",
   "license": "MIT",

@@ -124,7 +124,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         ; continue after a clear: the port has just moved one stage on
         LDAA    [JR_PORT_LEVEL]
         BEQ     or_init_fresh
@@ -1285,7 +1284,6 @@ or_title_card:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    OR_ATTR_TEXT
         JSR     jr_gfx_fill

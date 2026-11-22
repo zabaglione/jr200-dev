@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "word-foundry",
   "title": "WORD FOUNDRY",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Forge a word ladder one letter at a time, through the via word, within par plus two.",
   "genre": "puzzle",
   "license": "MIT",

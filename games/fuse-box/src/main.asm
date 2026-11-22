@@ -79,7 +79,6 @@ start:
 
 ; d[i] = 1 if (i * 3 + i // 5 + level) % 7 < 3 else 0
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         CLR     [FB_I]
 fb_init_cell:
@@ -485,7 +484,6 @@ fb_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    FB_ATTR_TEXT
         JSR     jr_gfx_fill

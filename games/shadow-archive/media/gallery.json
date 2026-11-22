@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。帽子・眼鏡・ネクタイの組み合わせの6つの顔",
-      "sha256": "7675b90a8b770efbb755094111c88ecdd9b8f9c57e5c3bc0e25d1b1dbee68704",
+      "sha256": "0d26e8eaa7ca847c05254facd9dc188960e9447b3282be244ad6c819bff12313",
       "framebuffer_sha256": "4f35b086e9f7750c4ca4db70330c58c1e76095e1f24f4202b8390ed31893bd39"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-files",
       "role": "play",
       "caption": "調書を2冊開き、食い違う容疑者が赤くなった場面",
-      "sha256": "d5439975ec93616795965358e6060462d27dead1252ba70630046476dd6bc337",
-      "framebuffer_sha256": "44e5a795362bca98edf65e928f39fefb9d6a5794b15807f1150de7df7afe64ec"
+      "sha256": "e871208ce96d4604966694e4f3f45bebb0d4b211311f04b53817399154aff4c7",
+      "framebuffer_sha256": "ed2553639f056145d363c0193fb3ca4b8d926dc10fecfa8d653373786188cd0d"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "犯人を告発してGOLD DETECTIVEで解決",
-      "sha256": "b03ac48f6d1173d8703b285241b930aa292b02ee6deaaa1eba0172da6fc98b87",
-      "framebuffer_sha256": "4eb61c1953bf2c2aeeed59688886baf7aa4269d0e5ee310c00d89552648310b6"
+      "sha256": "f6784a8a2b8341f0cc2cc646f71cc4dfd6facb98815de44708d6e3a33b4a5e10",
+      "framebuffer_sha256": "8ea8ddf34cd1c8bfdc6c765fc5fde1edfab28b1b68bcb168c93e1a8e610a9620"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 3.2,
     "frames": 95,
-    "frames_sha256": "f3cad7d8ddc8f2e102f515c9e116994ae5252d3681dbc64fa4f7d56cf324d7de",
-    "pcm_sha256": "e9278bd0071ae423e5744dff5900cb88c1203fa8970f440cd136484c90e76086",
-    "sha256": "446ff3736f28ab2d192a4e392d8a5a72f950492a6f59bd59f604716dc329e801",
+    "frames_sha256": "aa5be504e35afa484325d29dbccf4c62b38c73fa2a07c502d86ab2700e3ade76",
+    "pcm_sha256": "d7c52f2949200e18a9e608e1cf40c7ad49293ee780a63446e9646d3dcf4874b7",
+    "sha256": "00756929d73f1b91385e57d8f351c54527a6fb89a6a801860846a1a7d77f642b",
     "caption": "1件目で調書を2冊開き、犯人を告発してGOLDで解決し、3声のジングルが鳴るまで（音付き）"
   }
 }

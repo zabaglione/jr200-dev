@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。3つの山の石",
-      "sha256": "13f53899caf90304f3e6f58b62f5f14d4023cb5bceb9279cb258559980428538",
+      "sha256": "97b1f1dac023a5b25e5ca0668b40183a60d197defff721b15134b4706130fd12",
       "framebuffer_sha256": "30de6058afe71e53d94ebe4ba000cf9791e09a4c18e3bfee440f7564f3cf20ae"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-move",
       "role": "play",
       "caption": "左の山から2個取り、ライバルが1個取った後",
-      "sha256": "233f2bca01c361933151ebcc4bcd4d0e09e17588f8309120b12a1ee2756fcfc6",
-      "framebuffer_sha256": "7c8676e888c70c804bef84ab208cc8d174292fc1c1a5d98fc8f64edb9b0cb9e6"
+      "sha256": "c219ed17c6d5907128bdb40ca766be9b8214b593bf83ca32dfb19177ef0fb1cd",
+      "framebuffer_sha256": "7e4fe2e946024c57b0c8ce58ac06bef566f1b1987695b95f78b21b27c7209751"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "最後の石を取って1面クリア",
-      "sha256": "b54722a017b84596d19ac7284fa40f4d6cba93afb0c53aad3ae5fbceef55a680",
-      "framebuffer_sha256": "a84f2de535d1235cb863ebad000433eb8407ed2c16ba21c88227d9bfb4708248"
+      "sha256": "c75e32033a15b7fff8cf8fdf1be188d9c24eb858a31b6bcc6e39bcb5ad41cd65",
+      "framebuffer_sha256": "50ed184301fcd02a7577e4cda09af6fcc14636c6deb4ded9676864b646737200"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 14.0,
     "frames": 420,
-    "frames_sha256": "1442c4333a794c4cae407cf855f805a66e4b987d6981cfc6153844e656404452",
-    "pcm_sha256": "bbcd023404dadd21cf7d71f086b8ccbf7b18dc2a70486d6b7a43a0be7d88fe84",
-    "sha256": "ff3a0516b50b223c0576f468706516061f88c89b6ca35c853d06e83eaf7f51f0",
+    "frames_sha256": "a0e6120968091bef06f9ce9dede92471cd64cfa4823504afcf55751e214869d6",
+    "pcm_sha256": "4461fc066d2c56e6cbcf5bbbdf05de1af1af213b102e781f00da1f9b1a29deae",
+    "sha256": "14a4364249ffd9a9c4279ff4c8535a8719480c707cf6daa91086868e0e8e1230",
     "caption": "1面で5手を指し、最後の石を取ってクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

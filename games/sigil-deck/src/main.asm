@@ -153,7 +153,6 @@ start:
 
 ; NEW_RUN: HP 60, the eight-card deck; the seed is the music's position.
 game_init:
-        CLR     [JR200_BORDER]
         ; Keep the original song-based seeds when the melody moves in memory.
         LDAA    [JR_AU_VOICE + 1]
         ADDA    (0x54 - sd_music_title_f) & 0xff
@@ -1593,7 +1592,6 @@ sd_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    SD_ATTR_TEXT
         JSR     jr_gfx_fill

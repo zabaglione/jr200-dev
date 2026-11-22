@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。フラスコ、盤、毒、注文の星",
-      "sha256": "157997ebbd7221494b973e356026a39758412457af2f1ab611c511d544d2f46c",
+      "sha256": "c00e4d5633babcd0fdc6809862de004e53e62396a7d2a9d0162fec0eafec7e10",
       "framebuffer_sha256": "d6b682b4cf2f87e19753516e553196826feb82f0e389730d29e8eb0b3bc02e19"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-dose",
       "role": "play",
       "caption": "1回注いで薬が動いた場面",
-      "sha256": "b6c5a6b9ab730e23b26d3851913f4605b1444ec35e19f8b137ef605935019035",
-      "framebuffer_sha256": "23bb68069689b5040b515df9c6770c4e2eb28c4772625fe5d7901a12c328ed57"
+      "sha256": "3744aec568cab743ac9e96e9cb155dd8d2a1d30aa182d21e84c2bcccdf34fdab",
+      "framebuffer_sha256": "e26008af4d809f97ca4f175ff1168a440f875b73c3e224ef7f8e9f8f1ddee839"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "薬が注文の星に着いた1注文目のクリア",
-      "sha256": "a9fa98a4ca4095235f58eb84c8fc6ecf90fe61ca411d4ef1ab60e248f0caae3f",
-      "framebuffer_sha256": "fca7579c4b5d8f1621849cba26ab4da40f6457fec02514a21a272452713f04e9"
+      "sha256": "aecef8d787546a122397f27efaa71962615ff6023a8fe1eb80d6660e77e8393e",
+      "framebuffer_sha256": "5a9706c249f6a171744943c4e5d6049ef7428fc3e62799554b5c498abd1e2ce6"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 4.3,
     "frames": 130,
-    "frames_sha256": "f8e608dd2e47f3ecc6d1aeedd8485b80ef26463e7aed902301fca95732db968b",
-    "pcm_sha256": "92506e8d34593643f351f2672377f729fe59b76e14e784f8e7a36a7bc74ed37a",
-    "sha256": "4860e1d9718aa0901608b6247d83bd3bd4aff8ad91c1a966cbb22510ca0661ef",
+    "frames_sha256": "fa9e00c2183da3b93f6c77281bc49df879b072926fe9f864f5ff54945ee2455e",
+    "pcm_sha256": "e4500d33483039308ad8cedbd96455a51a753f3b6474f6b588f10b3a81c72acc",
+    "sha256": "b08b15a23909550f4c344af17280521d6f65cd9a4b77b5a3b9803e2d4d9b85c3",
     "caption": "1注文目で2種類の材料を注ぎ、薬を星へ届けるまで"
   }
 }

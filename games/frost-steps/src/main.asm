@@ -109,7 +109,6 @@ game_level_par:
         RTS
 
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         ; d[0-63] from nibbles, d[64-69] as they are
         LDAA    [JR_PORT_LEVEL]
@@ -450,7 +449,6 @@ fs_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    FS_ATTR_TEXT
         JSR     jr_gfx_fill

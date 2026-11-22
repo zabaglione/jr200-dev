@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "ba6c11fbf5d1023b09695bcd1a09e37b1f4b75619f48ebe5af3b32133053cb94",
+      "sha256": "76cc7090e19fe330c0400dc0039a6890ba74bde3d82528875a48a23ba1c9ff46",
       "framebuffer_sha256": "b80b900bb8bd145712cddd6e6094e3dccc955f2a4b56e8d308b381070eb879bd"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで分岐を切り替える場面",
-      "sha256": "3a5719f5c5f76ed8c7bd044b1da019edf2da5079987539760b5663c52290513c",
-      "framebuffer_sha256": "acf3af3485376980e4a78312b09088be8eb05dc9f31e736b33e6b18298e7bbbb"
+      "sha256": "a562ee06ea37e75565dbd5e71609c20de95580c086f46bd3adce28d8cf724eec",
+      "framebuffer_sha256": "da0a315c37646a55ee54fa540332bb578e1624e215a8f9380ae4847a968d9233"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "8本を届けて金メダルで1つ目の勤務を終える",
-      "sha256": "5a2556ff1a064d3294b6a2110058565a7e4b35a218bda1315e529c5caf90d24e",
-      "framebuffer_sha256": "dda7fe89b40781653bf1ba2942c4bcc00a6254440d75ec60fe734ea14342cb19"
+      "sha256": "61a2795df5fffb395156eeadfc1439b010102068225dc706ee91276a3d06c2e9",
+      "framebuffer_sha256": "c3ebac829f71a76037ea5abfa6ce921e1d4dc62c29bfb9c02d83a3ea647ef177"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 24.8,
     "frames": 744,
-    "frames_sha256": "e15f8d080a1e7e9fd052eab8427008b6816441b5ab7c82164a2c3ad7d25af66d",
-    "pcm_sha256": "fd1d7f65319d624ab151d9983d202655b1bacafcd623b61083242c90dbb40896",
-    "sha256": "551dfdb21cb21d934ca12ced03046493125648f757744fea4f4d2c1349034ac1",
+    "frames_sha256": "a136fcfbfb82bd936fa4b6c2d96128ab051c7f025d9d805b76a0fd1e99c172c6",
+    "pcm_sha256": "bb48bee4e4cb67389f5e6ff093d6e37564f0a3bad29e6401b480ef6de321c0b1",
+    "sha256": "d7cc2a1cc68f2d056f1e76b4beda14f9b1fbae40eed84e0aa2da9edcf66d2103",
     "caption": "1つ目の勤務の自動デモ（8本を正しい駅へ）"
   }
 }

@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "dd83d60d1194904c90a3845045f45f7e352f93c06613c06723e3d0dc6a20c608",
+      "sha256": "a8c4a2640c95320e8d80bc7051446cd08983067cdee2f4db75cac2d567ccec2d",
       "framebuffer_sha256": "ef5a90ecac79af9f5827bbc7ed707dfc2a88ed2d14a88eda29f051bf4b5a8ccb"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-pull",
       "role": "play",
       "caption": "箱を引き寄せたあと",
-      "sha256": "ff047ed334a63321219e4bea76e71ebfa4972cdd0216fb62831029adda8330ef",
-      "framebuffer_sha256": "bb22ecc902ce4891856630d4d2c1a25034db5440daac0663686061088935ae50"
+      "sha256": "8d5c3b8cd92da2ef28784f56db7bfa549d6874c6eb8e985ab478414a33a4a1e0",
+      "framebuffer_sha256": "192e640c482ca2b4001ec3485f5287ead5f7583a921e77531b9436d6548fce97"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "星3つで1室目をクリア",
-      "sha256": "2572f3313561efef01b00f71b8d945a6474ea578bb7b7bd3d7c162b1f0df7899",
-      "framebuffer_sha256": "272a6aed144fd93594c11c09f238c313ccd2fe722c52f29884ca0b0a1819d578"
+      "sha256": "4f447d811106a620520d8355d17601bfb3424f0ad1993d93bd61d939f61dc480",
+      "framebuffer_sha256": "548389351469a14d1ca3f6221d442ff2e822e48547e7b393965235e11d5810a1"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 5.3,
     "frames": 158,
-    "frames_sha256": "75dfaffe62547b05f9cdbd316faa6ef950c13a6a531181f28ff68063fc213aa1",
-    "pcm_sha256": "11c8bc437f7ba439ef0eaec2cb07d207a6f3420673051a806d2174680e7805ad",
-    "sha256": "5761778d8c6632de284fd0233eebc91b74a6f4312e37f3554d402ba458dcb773",
+    "frames_sha256": "2f434f33896a8119b371559272b6f416d3956b4712859bba21c51c18bbda8fb4",
+    "pcm_sha256": "2f008c9359cd087d4427cf95aff2636f4feb8fffa0005006ab502f22952c3113",
+    "sha256": "b7e1e18ec4a2d1c32933b5e60e7151cdaadc96b0c077a0badcba4c5e47e9c1e3",
     "caption": "1室目を星3つでクリア"
   }
 }

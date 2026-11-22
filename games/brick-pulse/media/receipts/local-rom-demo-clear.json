@@ -3,13 +3,13 @@
   "project": "brick-pulse",
   "profile": "local-rom-demo-clear",
   "mode": "rom-cassette",
-  "artifact_sha256": "9cf09ecaf86ffce1ef245071008264e873418af670d5720cdd204beb693cf22e",
-  "expectations_sha256": "99c2ffff4f24312594ee5c0318125c397fb6d9d5c6f31d4370b99ec51627cec3",
+  "artifact_sha256": "ae07f2ca6aec7c77d19a09f2c70c53f6e357f55097a7530e9d8674953cb00c3c",
+  "expectations_sha256": "9bcd29dc83a81055a43cb37529fdf2c19c720004a4fb006897f399ba0a9c1472",
   "runner": {
     "version": "0.3.0",
     "contract_version": 1,
     "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
-    "node_version": "26.13.1",
+    "node_version": "24.3.0",
     "module_files": [
       {
         "path": "jr200_codec.mjs",
@@ -31,16 +31,16 @@
     "profile": "local-rom-demo-clear",
     "mode": "rom-cassette",
     "evidence": "emulator_with_local_rom",
-    "artifact_sha256": "9cf09ecaf86ffce1ef245071008264e873418af670d5720cdd204beb693cf22e",
-    "elapsed_cycles": 179200001,
+    "artifact_sha256": "ae07f2ca6aec7c77d19a09f2c70c53f6e357f55097a7530e9d8674953cb00c3c",
+    "elapsed_cycles": 179200003,
     "stop": {
       "reason": "cycle-limit",
       "address": 0
     },
     "registers": {
-      "pc": 9046,
+      "pc": 9040,
       "sp": 20477,
-      "x": 1699,
+      "x": 1694,
       "a": 2,
       "b": 0,
       "cc": 208,
@@ -51,7 +51,7 @@
       "mode": "02",
       "status": "434c454152202d2052455455524e20464f52204e455854205354414745"
     },
-    "framebuffer_sha256": "1f07fb681485097bb2c933f400ac8268882fcecd45b623834601302e8b68848b",
+    "framebuffer_sha256": "60176f7f5443513d327343faadf29fe852cd00064b382a7c22fbc8ee67eb46bd",
     "pcm": {
       "frames": 4096,
       "nonzero_frames": 0,

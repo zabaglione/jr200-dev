@@ -59,7 +59,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         LDAA    7
         STAA    [SM_SEED]
         JSR     sm_spawn
@@ -433,7 +432,6 @@ game_prepare_title:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    SM_TEXT
         JSR     jr_gfx_fill

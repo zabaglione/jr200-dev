@@ -76,7 +76,6 @@ start:
 
 ; init: for i in range(4 + level // 3): cross((level*7 + i*11 + 3) % 25)
 game_init:
-        CLR     [JR200_BORDER]
         CLR     [LC_I]
 lc_init_loop:
         LDAA    [JR_PORT_LEVEL]
@@ -519,7 +518,6 @@ lc_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    LC_ATTR_TEXT
         JSR     jr_gfx_fill

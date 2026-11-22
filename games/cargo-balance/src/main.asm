@@ -80,7 +80,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         CLRA
         JSR     cb_cargo
@@ -617,7 +616,6 @@ game_prepare_title:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    CB_ATTR_TEXT
         JSR     jr_gfx_fill

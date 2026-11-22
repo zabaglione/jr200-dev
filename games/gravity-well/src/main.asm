@@ -112,7 +112,6 @@ game_level_par:
         RTS
 
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDAA    [JR_PORT_LEVEL]
         JSR     gw_stage
@@ -492,7 +491,6 @@ gw_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    GW_ATTR_TEXT
         JSR     jr_gfx_fill

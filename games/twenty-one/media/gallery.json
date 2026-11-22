@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。スペードのA、ハートのK、伏せ札",
-      "sha256": "818b9098e278f3296ef7c5a4ff356f5fcea7bacb9fd5c09e3f7859671cea82a4",
+      "sha256": "914af724e51bc1e679e268d14f33acb135cb9cb3efacccc1345af6108ebf50e7",
       "framebuffer_sha256": "31339b8e910f97c349b9bbccd61fac147411fb2b8b20b2e57e062019a48f2f05"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-hands",
       "role": "play",
       "caption": "3回目の勝負の最初の2枚",
-      "sha256": "b0f1e1f247f04a161e25c7af34e4466398c33f3e8d7ee8498186423b28bc35dc",
-      "framebuffer_sha256": "4c86c7da2fa588a666fba551ab1627b42c43fe7efeb4ef704706f546eede795d"
+      "sha256": "f684778a27df0d1eba3924c95d5b10edb034dbc24a2504f0ab6699cf3fa444e6",
+      "framebuffer_sha256": "1b2aa116ef3995bcf2dfd768eabf799d1c7e2600f63c93c7d6d301dcbcc379ec"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "7回を終えて持ち金が12以上になったクリア",
-      "sha256": "9acd6c82bfed53a1be690a55d9ad10f2f97d45cc158b134690a569ab621f3a75",
-      "framebuffer_sha256": "aa6e247b12dbd366af73a95b6772aac6cd52a5a721b9b18c1f7a7f68437c9615"
+      "sha256": "530342930d6bbec9c7613d9e7ab51aea1344a639480d7821e47aa135ebda17fa",
+      "framebuffer_sha256": "1c92de4965ceb89f17f2fa52685b07f31d95120e662b94b43d91e3b7f10bbcbe"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 54.1,
     "frames": 1624,
-    "frames_sha256": "e6dd2d82a52f91a172ee6541f66f6d83c4226c714f1d5f2d5c640416f87edc4a",
-    "pcm_sha256": "d7c4553c26c2dd06b4084375b265999c32c2a61c11b7b64fc7a6408bcf2dd71d",
-    "sha256": "58016bf0224fd5617900bb961caf0c47c896f51979aaa276d200637f8fedb0bf",
+    "frames_sha256": "6bb9f864ce99ec9ecb942a3f151289f22e0744b411e50a4146a732b97f35a2ce",
+    "pcm_sha256": "c234bdbf276050f5b8344ac92b4bc477a6f4cbb78269967fe161a82c82cedf19",
+    "sha256": "145658aedbab630c2610030fc005380cc50b1c95e73adcf7c04c79130abdf1ef",
     "caption": "7回の勝負で持ち金を12以上にするまで"
   }
 }

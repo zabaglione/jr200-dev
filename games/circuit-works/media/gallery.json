@@ -7,7 +7,7 @@
       "profile": "local-rom-gallery-title",
       "role": "title",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、タイトル画面（画面全体・無加工）",
-      "sha256": "74d17df3280fba3d66b258226583d4c5588d2231dba7f6c25e930737e05c0e0b",
+      "sha256": "ee6b9162f3d9984bc9de143d5937d85510d818e510e24e9642ada561368cdd16",
       "framebuffer_sha256": "7c4f21f2f51ee102befb9c280fb4bcf068f1acb9d95395cb549b8c24a6023047"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "local-rom-gallery-play",
       "role": "play",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ2の試験中。信号が配線を流れ、真理値表に結果が並ぶ（画面全体・無加工）",
-      "sha256": "18db42aee7957e2d3c7d02eccad0f89cf41506bd760ca8347a221f91a1a0fa87",
-      "framebuffer_sha256": "a40d72ba853a695d1628d46a3f2a4a9b1818ae9d6ee05179f4bd7b487d29545c"
+      "sha256": "c53f7e54ea9def995c0f41f6d834f4e2a14823357df847ea94ce504fdd157430",
+      "framebuffer_sha256": "068cbb409c4d5cf82700796773ea29e08b848c7f83c7bf1199a5a944d7b3449b"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "local-rom-gallery-goal",
       "role": "goal",
       "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1で8行すべてが一致（画面全体・無加工）",
-      "sha256": "3e467c9a3e18f14c6be5a3611c293064ba3d5db965f8a30d8a1e36f410debb5e",
-      "framebuffer_sha256": "3ce121925747acd7ed1fbb2324bc69b79734f0cd3fd5a6cd369d6a347453b5d8"
+      "sha256": "1418e648e29e1d5b97a88ebdf3b7be502231e016a289cbb40b7c2d380b8711f9",
+      "framebuffer_sha256": "c34a2fe12ab111e7d842f63c909a376d682d1ce1e8deda1c3f6440b421cc5b46"
     }
   ],
   "video": {
@@ -36,17 +36,17 @@
     "speed": 1,
     "seconds": 6.6,
     "frames": 199,
-    "frames_sha256": "5626d49a3dc22e20e97c04d028c349bfaa6180f1c762e33dcbfb6463a31a88fd",
-    "pcm_sha256": "534ab4f5527870ebf66077c980c6bb1a6c301aeb1981dc8acd3a7936a3953d68",
-    "sha256": "6e8ff67afc9e63623b431a12f0164967b1b74d1400e484aae65e64aaad5a59a9",
+    "frames_sha256": "8426d3b27a86fffa1f6e61de64829084606630cff9936748f8d3501548973ed3",
+    "pcm_sha256": "6f07240307dab457168649de9a5ee1da665d614776ae4e4f7c610488af3e2842",
+    "sha256": "78765893821522b370d6a2e2cced86cb60e1d0d59a4d12968d93079df16d1a4b",
     "caption": "所有ROM/FONTで通常MLOAD/USR後、ステージ1の8行試験で全一致するまで（音付き）（画面全体・無加工）",
     "mode": "rom-cassette",
-    "artifact_sha256": "e83a5ae8c5bece27350b7ecb0d8a9bcaebbfd8db7d4e099a2cbb844f9b56a4c4",
+    "artifact_sha256": "3361c81c25f7a48287306d7f0cc9dd0bd2f855266b1346dc13db9bfc3c262771",
     "start_cycle": 83500000
   },
   "capture": {
     "mode": "rom-cassette",
-    "artifact_sha256": "e83a5ae8c5bece27350b7ecb0d8a9bcaebbfd8db7d4e099a2cbb844f9b56a4c4",
+    "artifact_sha256": "3361c81c25f7a48287306d7f0cc9dd0bd2f855266b1346dc13db9bfc3c262771",
     "glyph_source": "sdk/font_data.inc",
     "glyph_source_sha256": "875ac07fb07c6394225e62b4aa96270c50d1f908a45c358fb2d73af0750f65dd"
   }

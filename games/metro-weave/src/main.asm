@@ -117,7 +117,6 @@ start:
 ; when the shift starts, or 0 for the self test and the demo.
 ; seed = origin ^ (37 + level * 17).
 game_init:
-        CLR     [JR200_BORDER]
         LDAA    [JR_AU_VOICE + 1]
         SUBA    [JR_AU_VOICE + 4]
         ASLA
@@ -1109,7 +1108,6 @@ game_test_draw:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    MW_ATTR_TEXT
         JSR     jr_gfx_fill

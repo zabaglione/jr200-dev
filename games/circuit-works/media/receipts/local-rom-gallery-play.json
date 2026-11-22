@@ -3,13 +3,13 @@
   "project": "circuit-works",
   "profile": "local-rom-gallery-play",
   "mode": "rom-cassette",
-  "artifact_sha256": "e83a5ae8c5bece27350b7ecb0d8a9bcaebbfd8db7d4e099a2cbb844f9b56a4c4",
-  "expectations_sha256": "7c77394d5b3e3d3a35ea6dc4701f9313fa0438711a611e015835a1f32c1cb1ce",
+  "artifact_sha256": "3361c81c25f7a48287306d7f0cc9dd0bd2f855266b1346dc13db9bfc3c262771",
+  "expectations_sha256": "f2bd1aadfb2d6d3e74fe564ee0f5363e28569c2b5add28f836adc597933d58db",
   "runner": {
     "version": "0.3.0",
     "contract_version": 1,
     "source_revision": "c4c0c30f98c5878480c31af8595b6307e66b8ef0",
-    "node_version": "26.13.1",
+    "node_version": "24.3.0",
     "module_files": [
       {
         "path": "jr200_codec.mjs",
@@ -31,28 +31,28 @@
     "profile": "local-rom-gallery-play",
     "mode": "rom-cassette",
     "evidence": "emulator_with_local_rom",
-    "artifact_sha256": "e83a5ae8c5bece27350b7ecb0d8a9bcaebbfd8db7d4e099a2cbb844f9b56a4c4",
-    "elapsed_cycles": 96328882,
+    "artifact_sha256": "3361c81c25f7a48287306d7f0cc9dd0bd2f855266b1346dc13db9bfc3c262771",
+    "elapsed_cycles": 96328886,
     "stop": {
       "reason": "cycle-limit",
       "address": 0
     },
     "registers": {
-      "pc": 6235,
+      "pc": 6237,
       "sp": 20466,
       "x": 17988,
-      "a": 0,
+      "a": 48,
       "b": 217,
       "cc": 216,
       "waiting": 0
     },
     "memory": {},
-    "framebuffer_sha256": "a40d72ba853a695d1628d46a3f2a4a9b1818ae9d6ee05179f4bd7b487d29545c",
+    "framebuffer_sha256": "068cbb409c4d5cf82700796773ea29e08b848c7f83c7bf1199a5a944d7b3449b",
     "pcm": {
       "frames": 4096,
       "nonzero_frames": 4096,
       "peak": 7000,
-      "sha256": "a6ae3358dc28cad5f15e4d6a5a51e99c7c417b0fc1248169f5acedb5356c1b48",
+      "sha256": "5b0ae8516f77fb4935b39080cea42d5d6cad92f8da7cae0b79c7d7cd4856c5d4",
       "dropped_low": 3167823,
       "dropped_high": 0
     },

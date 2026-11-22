@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "0ddccae5093d84ae8e7875eabf4695fd8194b2cbc89f0156cdcd0771e4a09dda",
+      "sha256": "6c8186ae4423bdcd7d3068963b09565d72ab4b359e294f1761c1967162008443",
       "framebuffer_sha256": "f5031bea227a689005545099454efd854fe940a05930829bcac55ff06c536ca9"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで艦隊を撃つ場面",
-      "sha256": "a33c3e4a48c6d7be829664634bd376dddf82a9a7fdd9d24ac1a129bc9abace59",
-      "framebuffer_sha256": "fc1a8c02eca098f69e7bd64359fa1674f9234ae3c04b3e19d37c18bf219227b0"
+      "sha256": "1e3ed1da78cd2743e1428bae72bc861e264048a5430200e0b11a5e63a8f00054",
+      "framebuffer_sha256": "e4f4b1c662d232389557796f3fa0c57a6546ddd4fa30f517e91130b4a591b619"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "18隻を撃ち落として1つ目の波をクリア",
-      "sha256": "98babc17daeb6224c85a14e0d2b4be0657f8d002212aec69acf7cfac3c5a12fd",
-      "framebuffer_sha256": "e9bf9cdaf5a2ac9d2f9d7af1ff66e9aa4fe90d037e6392ffc6dfbfcd205cd30b"
+      "sha256": "ffb2b63a4312c5e926d670b5854153eb3ab54551dfa03fdd676ff235c3f8bb22",
+      "framebuffer_sha256": "923bed4bf8b8cc579298ebd25ebf6d2e2596d926af82167752ad62888e75a893"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 19.3,
     "frames": 578,
-    "frames_sha256": "729c0984f37a269cad8c0d979fbce12872e3b90ce078921b4796d5e8ace8b2be",
-    "pcm_sha256": "7434ad3b2de2aa60b6e6c2c0af90066c91220f8c3e7880ecc2e0bfa07f45d83d",
-    "sha256": "85b7c74c31323ac6db46df1e98ca74a65269604e6393135f32e7c09c44daa681",
+    "frames_sha256": "9bf8afed3d07b5f656234d0b19ad36c78be9adbcb0c127e10ae61ba6e1845fe8",
+    "pcm_sha256": "dd77dc168745e9352be47fa737b66df2155a338c17664332a227efd1cf35d7bf",
+    "sha256": "14bef4d068beb5f2d85676af715dc3afbb09ae4d81fa766dbb08189f391f762c",
     "caption": "1つ目の波の自動デモ（18隻を撃ち落とす）"
   }
 }

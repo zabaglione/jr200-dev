@@ -84,7 +84,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDAA    [JR_PORT_LEVEL]
         ASLA
@@ -601,7 +600,6 @@ tn_title_wave:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    TN_ATTR_TEXT
         JSR     jr_gfx_fill

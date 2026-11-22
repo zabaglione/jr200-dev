@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "cd205721bac2e2006e727fece384c713f7bdf94a17dba848ace66f2d630980a0",
+      "sha256": "77c170571e9daeea8f55b6b61149376a49d157c74f6b7fb427c13141883b58f9",
       "framebuffer_sha256": "09c55e7d0080c75a0d4ae482c574cc5859191200e4b20c54c483d3750fa422bb"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで水槽に水がたまる場面",
-      "sha256": "00791ad7a2c53b7fdf8955aaad136f1514d923b493f03db18e8135dc7cab7846",
-      "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749"
+      "sha256": "ac3bb691bffacd9f0c08a20e824aa6a2c67ec1919f201c8d88c17a83b7772a77",
+      "framebuffer_sha256": "31f886f9c99fdd84a0f11539c5c834345f3a658ce8042b9066b6dc158c5a89ce"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "目標点に届いて1面を終える",
-      "sha256": "bc55d7c13f5c9e0ce03de6a9f0a26658a7a4fcc7f8a057cf22c90372720acfa9",
-      "framebuffer_sha256": "ab667b72b0776464913b90c683a80288ee92eaabc90f56eff04e5d6126584c67"
+      "sha256": "def835eb1067dd3486b6916e29f61bdb79db17e15bd3af8f1de39c4d9a0050b1",
+      "framebuffer_sha256": "b93be4757f7f122dccf948e4256d4b8fcba3603908dfa6bbe8984667b0028c43"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 14.7,
     "frames": 441,
-    "frames_sha256": "8272778842c9719b7d64a11bce82ab79c07bfd570fd1df8121a739aab0ab0ba1",
-    "pcm_sha256": "f267d6d6c4a5319eb9ab574c9814bcffeb2232a3df076a1c894530344c771ffc",
-    "sha256": "25f6131ea57a58a7d469eae6e96cbd988c99f9aa257c17d9d9eddeb2940f93cc",
+    "frames_sha256": "368bbc8c15eb3bf4bafa4bfd4e12c6e5e079e82320b42c603228583ee5714314",
+    "pcm_sha256": "25f78b47b44ac530925e81f9832dffecd1c8b11d4ce47df1b900cac5edb0c69e",
+    "sha256": "80bbf9072bf7c763ce620bd7a2ee2c1d10160a85566d8d4426aceb74fe5aff00",
     "caption": "1面の自動デモ（水をためて流し目標点へ）"
   }
 }

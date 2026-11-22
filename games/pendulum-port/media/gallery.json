@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "6b1f99be6aaec15337ec9fc09622f3f1852ef85cf10c2f5517b2beff12da3077",
+      "sha256": "752ef1659eb6066cedef1090b874ee4d2500df13b941909f4364aaef76fbdc11",
       "framebuffer_sha256": "d8037464920bf11b9b6012a2210d85bc5bcc5aae83d8e76296a127d883ee23f7"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで振り子が揺れる場面",
-      "sha256": "a6b96e5adb0511d5ddd7b8b5d1e6c2434ea0cb991d616baf5e145310671aeaa7",
-      "framebuffer_sha256": "a28f035a1d4f5d9bcfcbd05b905bc1bb874f440785880e0ee58fce02baf83742"
+      "sha256": "438acd168ad21910fd6cc69ec8059c27861f563d9f8841e5e9d189236b74ea1e",
+      "framebuffer_sha256": "4ba1a16c639823900787f925a2c233993518aa3726012ee180e3f84993ca43c6"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "6回目の着地で1つ目の航路をクリア",
-      "sha256": "92be8c32ee66b7d59ec300ebf1505a1c451292727696e6ec7153888c02d8c944",
-      "framebuffer_sha256": "806072ff0a86b5989df01b950ab9a7439c6c86d008fdf5d25af4cdc0334ee904"
+      "sha256": "6dbf8729ed592b197a2697c7a0a25653fb098faf4295337357622f0879885780",
+      "framebuffer_sha256": "90a1963c97653056edf313497299113ad1471409eabcd4e5ad8143f01e1fd275"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 8.0,
     "frames": 240,
-    "frames_sha256": "9f3301e62edb52704c56d5a123165b63da06df4160f8471f3c6874a8fb094cf1",
-    "pcm_sha256": "318b47cfd12b7e226b04700d9e4aa02a71c40fb7aee6c8656876a495a4a35a5c",
-    "sha256": "ce2ef26413971a23832cf0d1409cdac07fe8c02445c90695c2122b16d237fd7e",
+    "frames_sha256": "b85eb4b7514494fb93ffb3c39eb716dc3e6069be79decbfa0c8d63c1d32a9224",
+    "pcm_sha256": "5715c726f4f68cffceeaf0c242133ffc35a2355af3879cdbf6f960f3c90dcb60",
+    "sha256": "cec61a03c1f02a5e9cdc138d74a57befdbd9403a38da338a75a32c4a016551b8",
     "caption": "1つ目の航路の自動デモ（6回着地してクリア）"
   }
 }

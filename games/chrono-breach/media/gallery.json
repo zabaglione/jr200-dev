@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "5c2e726bb87442d4114f2ae1f605a717c027e5e8774daebbd4f06dfb8a79603a",
+      "sha256": "3ed12eab04a836e033a9a1d44574f3ffd2aa30ff11703924461e14eae17aa084",
       "framebuffer_sha256": "6e78f2236cb31265fff2f78e25018652e59808f6061b612fe2e23ca55db5a534"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-kill",
       "role": "play",
       "caption": "射線をかわして撃ち、衛兵を倒した場面",
-      "sha256": "0e311ca844d93154ee2c237e8cfa27c9edb9db431fcb9d650d308d44c18fc7cc",
-      "framebuffer_sha256": "477fe960cca786e881df59728831a45810f743d8f141ef0449f237098d1b7b06"
+      "sha256": "9c9c7cfa7173bff23afe478483a4dacf2fed79b2ac8bc7db70902eda5676be5b",
+      "framebuffer_sha256": "9bd75805cb2b49af835e3c72d2f99e1a5ecefa98e9fdf33822519be5b1c10f6c"
     },
     {
       "id": "menu",
@@ -25,8 +25,8 @@
       "profile": "synthetic-menu",
       "role": "play",
       "caption": "戦術メニューで照準を選ぶ場面",
-      "sha256": "c8ee4836e6812874bddcaa5f08b308fcf17c0fbaba8e320fbf2cb1840fcf641f",
-      "framebuffer_sha256": "8e037074d22bcc194d7d676e1560502d56743dc5cb39765e5e67990f132c008d"
+      "sha256": "7b7bcad25cfe4e261e79714fe1cd6a06ee6111959488c8602ab5420477ecf357",
+      "framebuffer_sha256": "cfd6872089cf6e0b59d06cc8163d85d9e31aefc73764ebf46077f59645f15f2c"
     },
     {
       "id": "goal",
@@ -34,8 +34,8 @@
       "profile": "synthetic-all-sectors",
       "role": "goal",
       "caption": "20区画すべてを突破する",
-      "sha256": "f40d3c887868cf92af5b992c8c05c2521d387e6c18dbeebb71288edcb721bc73",
-      "framebuffer_sha256": "de098bad3406073e56f1752552713c4435271fdf08444ce5948ad74c7625f738"
+      "sha256": "8e000b5b97356544c2119efcf9a21ea9566c43d6a2e8b66a0c600c47da997575",
+      "framebuffer_sha256": "df155bcd2653ee90bd4782acfc1d30453ca6df149bb2195b99635acb74b2ffa1"
     }
   ],
   "video": {
@@ -45,9 +45,9 @@
     "speed": 1.0,
     "seconds": 5.4,
     "frames": 161,
-    "frames_sha256": "a4c02c0a7d3e1eaa7b858976bdab3209dd15102821f33d8462e84dac3b7963a5",
-    "pcm_sha256": "fc2f445abf55782e8ac65237bcd569e73351fcc99e2f4d3c0735bd8c7296c1d9",
-    "sha256": "f1849328f840c21ee1e02cc1061e9494d5d6662f647f9b756356b9981a06ce3e",
+    "frames_sha256": "2a15159ed4c549a1c950b2a3cec5849ac90eb87d9c46393cbd09e406742f65f5",
+    "pcm_sha256": "b56c777767b521fc0c1427e7b1487ff003c5f7ceaa5310c9f5874ec057ff895a",
+    "sha256": "d7bc3985618f5166e10a5cf1b29ba943aca48d9407d012ae5614a0d96c78ddc8",
     "caption": "最初の区画FIRST CONTACTを突破する（11行動、等速）"
   }
 }

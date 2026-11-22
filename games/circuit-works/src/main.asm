@@ -106,7 +106,6 @@ cw_inputs:
         RTS
 
 game_init:
-        CLR     [JR200_BORDER]
         LDX     cw_targets
         LDAA    [JR_PORT_LEVEL]
         LDAB    3
@@ -590,7 +589,6 @@ cw_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    CW_ATTR_TEXT
         JSR     jr_gfx_fill

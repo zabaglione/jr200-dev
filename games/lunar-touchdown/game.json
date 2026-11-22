@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "lunar-touchdown",
   "title": "LUNAR TOUCHDOWN",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Thrust and steer a lander through six sites of crosswinds onto a wide pad or the narrow star pad.",
   "genre": "action",
   "license": "MIT",

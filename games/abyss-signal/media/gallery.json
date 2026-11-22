@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "17278411be4ae668cee87f603794709eed52d757b3a1b2aece41740205f33bd9",
+      "sha256": "30d6a79672ec674c5d034414d77bae3874a1ec9b1472a0ce48888c26c2f1dfad",
       "framebuffer_sha256": "8aba2cabe4e5607ddfc80d24b29015590b493aaeb58ee7f55d3ca119d5f6ccb1"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-sonar",
       "role": "play",
       "caption": "ソナーの走査線が視界を横切る場面",
-      "sha256": "c2148b12d0cb9dd073150115892bd7bbe979caa730727a07f48eefaa465990cc",
-      "framebuffer_sha256": "87d037502e7483fbce5842038c8e5648c8d00be3505030809a9afebc4821235f"
+      "sha256": "5f2cb36614dec402411f4d093b0c82b954e2fa3d85d836ffae50d422bd181edc",
+      "framebuffer_sha256": "e2da28b1fd082f568fedddd6cdba44c0a80aa6d65a5f11786361b878767b1d3d"
     },
     {
       "id": "photo",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-site",
       "role": "play",
       "caption": "最初の遺構LOST RELAYの観測画面",
-      "sha256": "505ddd20e60b8d18aec5790b86e1a5d1b69d4cef52749f7d0c5ebdab7cce40df",
-      "framebuffer_sha256": "8a87ec6c65e43b95a00ebb7fb223cf94014aefce601c71ac2b072a71dfdd2994"
+      "sha256": "426c5f5ca493c1ab7e1f90dd8f9a8fc732c0047244f251cf1a8bc6861b2b5fab",
+      "framebuffer_sha256": "964090c73071826e9f561959152cfaa8e7785118dbec0cf8b0ec6f09a2b2fd20"
     },
     {
       "id": "goal",
@@ -34,8 +34,8 @@
       "profile": "synthetic-survey",
       "role": "goal",
       "caption": "5地点を記録して基地へ帰還する",
-      "sha256": "5473a97b401da3f0760b195284b58108071e64807b73235070b1926f2dad27de",
-      "framebuffer_sha256": "37e8a5c5f7c1e35e1683e33dc8d2f82dcc11c7f5cdc5e26e8be44ef139efee20"
+      "sha256": "46fbca7431128755f25bd2dc29f9f4d4a2eeba923f72b1dfb4b192626fb579b2",
+      "framebuffer_sha256": "50cd78353f7f65b7415911ee1eae664abf125c3c939ea3fe3a8b25a5359870af"
     }
   ],
   "video": {
@@ -45,9 +45,9 @@
     "speed": 2.0,
     "seconds": 34.5,
     "frames": 2072,
-    "frames_sha256": "c98853cd294144e86fa5592fab80ae6160c8b2cd35a106c77ff7e3c74b925eb4",
-    "pcm_sha256": "179fff86b04a5bf7af967a4fc1f24743a5cae5a61181c42f0e2fb19417350a49",
-    "sha256": "895349338fb91c65dba56fa29ea9000cd5e92d14a3e49e9e2f8678b0a7b231e0",
+    "frames_sha256": "acf39df0ac493d0cc7d70bf9bb696238491df94d5c765f70d0713bf01d3387b2",
+    "pcm_sha256": "294dd0156f06512032b99456361a0d3c878fade94a1972da6d8da7bc23fcacf6",
+    "sha256": "9ecb41740abf5c8b69620a2d92953b767983cb33b219416777410e09819ca695",
     "caption": "5地点を記録して基地へ帰還する（117行動、2倍速）"
   }
 }

@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "phase-pairs",
   "title": "PHASE PAIRS",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Pair neighbouring numbers that sum to ten until all sixteen are gone, with six misses allowed.",
   "genre": "puzzle",
   "license": "MIT",

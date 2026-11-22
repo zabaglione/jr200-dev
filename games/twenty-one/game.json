@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "twenty-one",
   "title": "TWENTY ONE",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Hit, stand or double against the dealer to finish seven hands with at least twelve coins.",
   "genre": "tabletop",
   "license": "MIT",

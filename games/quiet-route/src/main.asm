@@ -69,7 +69,6 @@ start:
         JMP jr_port_run
 
 game_init:
-        CLR     [JR200_BORDER]
         LDAA 9
         STAA [QR_POS]
         STAA [QR_ORIGIN]
@@ -597,7 +596,6 @@ game_prepare_title:
         LDX qr_title_lines
         JMP jr_gfx_lines
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA 0x20
         LDAB 0x07
         JSR jr_gfx_fill

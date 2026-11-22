@@ -119,7 +119,6 @@ start:
 ; origin = entropy(): (voice 0 offset * 8 + frames left) of the song playing
 ; when the table opens; the deck is shuffled from it.
 game_init:
-        CLR     [JR200_BORDER]
         LDAA    [JR_AU_VOICE + 1]
         SUBA    [JR_AU_VOICE + 4]
         ASLA
@@ -913,7 +912,6 @@ to_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    TO_ATTR_TEXT
         JSR     jr_gfx_fill

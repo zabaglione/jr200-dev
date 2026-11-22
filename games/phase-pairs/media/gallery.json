@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。3と7、4と6の札",
-      "sha256": "e8ac670bb183575995a5afc0a19b5351cc3ce7106bd09d7ccc222019504d35a8",
+      "sha256": "1328802d5224d194cc2228ad573b4be8a9a8f072d3972a5c1ca05cfb4566e05b",
       "framebuffer_sha256": "6683188b6c0ae2ef5e44f59839eddfe5fa00c7702945007e7fd56e76c70d7cc6"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-two-pairs",
       "role": "play",
       "caption": "2組を消した後の盤",
-      "sha256": "7e7652b63a58a7226f378626cbfb967a58846ddc8554905838887c586d09abbe",
-      "framebuffer_sha256": "bedae72f3b2810a63058d0bcf1747aa2504502cfea10dbdcc63a71c1828f028b"
+      "sha256": "8168a187f5a7cd927875205cacfd047e950915ade015a0c708b40ced9d42c45d",
+      "framebuffer_sha256": "a21b1fb069366fcb612922e085d33ab5d2e40771067f85b95c69681298091047"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "16個すべてを消した1面目のクリア",
-      "sha256": "8917132f0be2332d666bac0caac51a7ac24433bb4bc18326aac95a7f171d3ae3",
-      "framebuffer_sha256": "7c9574f50aa7749be4748c2f611d41b1a5e8c5b9cce6b7145adc3f763d8d58df"
+      "sha256": "0b04e98c2e7b073987659161d415a0d03a4d2516bb213782ff5b4c9750cb794f",
+      "framebuffer_sha256": "53fcd1a8115d5af91e8a974b8cea54987b1be7aa7fb75a6a6f8b7efc94cd0f6b"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 17.9,
     "frames": 537,
-    "frames_sha256": "cb7ad4e24bba8655d068a1e11c8213eed4f76621a2e5aff62fb0b5495daec1e1",
-    "pcm_sha256": "9d7f09dcd301bd3070df6f7395326470acc996321600ff6842f00070b9dd7892",
-    "sha256": "6b2e46a3db40eb8ac82dcc5751694d91b08cf43b1c8267ac6fea131cb961cda9",
+    "frames_sha256": "a04e44f7268e50f57043f831a18b42e4884ed1e763dd783e3ef748a004fd085d",
+    "pcm_sha256": "903c1888760cfc7d7313713c89cdf0ced1f43c732294f17e9c149f06dd5a3082",
+    "sha256": "85dd5b82a4ee3086171931fb52072ee2298cf931cb9ce206947fc5a13af84746",
     "caption": "1面目の8組を消してクリアするまで"
   }
 }

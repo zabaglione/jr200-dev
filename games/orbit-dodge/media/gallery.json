@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで光線が放たれる前の場面",
-      "sha256": "58f403a693659ce9202b1e30e64f1c07f028c8af117b02c32987cc54a671a3de",
-      "framebuffer_sha256": "d100e130088175522811f9ffd3380de0cfce3be28fb674da597aca4c57ff8afb"
+      "sha256": "82ecbb634be02353ff9bfcd9f29f5f69fff0aaf217524e47ea6a190f2466b0a6",
+      "framebuffer_sha256": "8ebd30844a21db89d6eb326cda3f09ba3d48c1cee0611cbcd4b45584e8c749f5"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "12波を越えて金の軌道で1つ目の宙域をクリア",
-      "sha256": "299f0f54ac0b7e3e06d3f86eab05d2ab482e43a8734fc8a516c60a65290dc781",
-      "framebuffer_sha256": "5997a001107d6bad9a4fa2f0f70749c63e66d625ba68747b16fb8ceda64cc764"
+      "sha256": "3e27f011b608ce85b2e6c5fe57d32c3043f16c04fa43ba0773ab24e7e2ff04c6",
+      "framebuffer_sha256": "7688a5d38cdaff1523462baa44517697785ef537ed77abc4ac3514af433dddbc"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 23.3,
     "frames": 699,
-    "frames_sha256": "b60d45814d1dfc7c98e626ccd3d2279e1a3565548a9070e831f6f63eded9cc4e",
-    "pcm_sha256": "942212e8b317ac1f02d9bdc4a56dc3e8dafb2139912127749ae82a8563aafb55",
-    "sha256": "8959b74cab229d5918a568a3f3508d2946828095ce4e953c9dba65459f038c93",
+    "frames_sha256": "677ffc7e0fa5b61d4db7e5bcc04cc8cdf5e4ee837f1e4c7baf0bff917fd4c2be",
+    "pcm_sha256": "e9c2afe9eabe6f28c1373e92aa1cf53c40ca30de6c500887884d48de83a0c89e",
+    "sha256": "f98ba2f6acd2f52bcebcbcf9f344ccfd76c7df2a755436c0050b53f99abaff69",
     "caption": "1つ目の宙域の自動デモ（宝石を取り続けて金の軌道）"
   }
 }

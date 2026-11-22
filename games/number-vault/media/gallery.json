@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。金庫の扉",
-      "sha256": "726d2c67188c612ca45c41686887e692add295b0f77b3e7c496936554a3dc8f1",
+      "sha256": "b109ad56fae35d44f78d8643b6b5df28f52745a70b51f65b198cb467dffd649f",
       "framebuffer_sha256": "0d67b4048a5d078a0a3fe0b29c0c47416db7ac5c3a9be8bc28ffeefac74749cb"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-history",
       "role": "play",
       "caption": "2回試した記録。EXACTとNEARが右に並ぶ",
-      "sha256": "233f686dc31d2113a4ab7b2ce52df2fa61acbe3453b565fe62e158186cb4aed9",
-      "framebuffer_sha256": "79fcbfd462f2ba29849c368515b5d19fdad53388a55550bd2a38c720c1e73c32"
+      "sha256": "e417bd21ac36a5af63835025acd44cfe7bf35d82542077f181aaa58e4b51427e",
+      "framebuffer_sha256": "4270b167442dc03d0f290473720b41433d1030d5d83745aa7d4ff34bfa9669c4"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "4桁が合って扉が開き、1面クリア",
-      "sha256": "35c92f620779922267f60f7ec94f169e8ef21f6c9d6a5c993811193ef909afb5",
-      "framebuffer_sha256": "cc8ac571327dfdff25ecb7ed2311aabbc513964af08e96bd728e981277686dbb"
+      "sha256": "1b2dd091a5fee2df5d3ec887f1c64cfb1f4045e7254084a460debcc13f5f559f",
+      "framebuffer_sha256": "8172f5958b92aa56fded5a0a59d702415ab0e5ff9165ec1af1121796f8ad7985"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 9.5,
     "frames": 286,
-    "frames_sha256": "be9207919a67961edb19028d6c7a13224a7e371e6ffabf0834e4163760b4fa40",
-    "pcm_sha256": "29bce26047a589252325f20c5886076322203069d63c006d797b24b2bcd91282",
-    "sha256": "f28f0e7341f2abe281f46126ded27f6db39f621e83242a49b45f27b83bee7bac",
+    "frames_sha256": "819caf8454cb1e4d29ac4517e7fd0e5bd11f4da4bb190542d99cf91e1b199f2c",
+    "pcm_sha256": "25134ae1c693d7e09803641d5a25907ae76987ade4fb026c250eb24b156d05ce",
+    "sha256": "b56768b0f4dcae294b9b69c84d9b3d6b7d4838fc71ade43e4d995a7b2be3375c",
     "caption": "1面で矛盾しない番号を順に試し、扉を開けて3声のジングルが鳴るまで（音付き）"
   }
 }

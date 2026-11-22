@@ -114,7 +114,6 @@ start:
 ; A field starts: the next field after a clear takes the kept water and total;
 ; anything else (a loss, a restart) begins again at field 1 with 108 water.
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    [SR_KEEP]
@@ -999,7 +998,6 @@ sr_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    SR_ATTR_TEXT
         JSR     jr_gfx_fill

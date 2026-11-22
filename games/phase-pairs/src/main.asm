@@ -78,7 +78,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         CLR     [PH_K]
 ph_init_copy:
@@ -760,7 +759,6 @@ ph_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    PH_ATTR_TEXT
         JSR     jr_gfx_fill

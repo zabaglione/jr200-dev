@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。水面、橋板、主人公、門",
-      "sha256": "3c9e083334db337682b226b819200163c34d1ab35fbaf7ac5849b5ff424a7121",
+      "sha256": "819b9d8640805ac43ac3fc0769d57bd9b73f605b344512e58ad8ea660089454c",
       "framebuffer_sha256": "f8e6eea787d59ea81e123e21e0a5a02e232ee6a13ca29c54fd0e20d84c6e5586"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-changes",
       "role": "play",
       "caption": "3本の行を反転した後、5行目を選んだ場面",
-      "sha256": "c8233bed5ca4a889a0f88e1f7c097a7864ae10c96065f664c096dcc2f057cb32",
-      "framebuffer_sha256": "e9b4f0512306e4b8c12060ebbb18daffdf70957763bd9402eedaa640949a4acc"
+      "sha256": "8c5cc4f3a10f73ee7c0636ba098bd8d4b9d7a5984a364904f0ca3642760a7ab4",
+      "framebuffer_sha256": "f37aed9f3d7fc8cb3651a0ef6b73581f7a22869eb8c175c85b38050492127365"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "道がつながり、主人公が門に着いた1面目のクリア",
-      "sha256": "8a24e750fca249a35ab3603ef6354ca84634e4f70a24e03694bd5e5293778f97",
-      "framebuffer_sha256": "ede55dc83c7daf3f378bdeb6e6d17ec8005ab2ba9ad1eb4086afeca29a1079d8"
+      "sha256": "ae29b426e403eb212b61268b5bae9d4e8b77fe7d78ba7321605683a6c7b834dd",
+      "framebuffer_sha256": "f4476bc5fe57b1aace09c2f4acac45b2582f4c4c590a40146d31d682d63c510e"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 5.6,
     "frames": 169,
-    "frames_sha256": "df3dfaff1d3b708de064abc3e8bcf8fe105ecae488f143adaf234bd5a34f8ac2",
-    "pcm_sha256": "1eb7022ed258d5c7fe64e1af31dbb5cd2ddb648e479d03df2138c7e63f7d5804",
-    "sha256": "48534db902e3ef6141e710a225674ec6d4c77f9bd0910fa9d9ec54fe2da9c277",
+    "frames_sha256": "37cf977ee639680e44d85218ef59bebce388c1dc8dd005494f3f2eed9a5c7b07",
+    "pcm_sha256": "dc913d39e7e42c01dad4d84e46c0a638a52ff9d165c8df1e2d8cba1f7d8d2902",
+    "sha256": "0c5d82e8961bd2a45ed1af85192baa9e184950f66da228ca56fc05187a3c5d6d",
     "caption": "1面目で4本の行・列を反転し、主人公が門まで歩くまで"
   }
 }

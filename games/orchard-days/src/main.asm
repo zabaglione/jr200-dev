@@ -101,7 +101,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDAA    8
         STAA    [OD_SEEDS]
@@ -743,7 +742,6 @@ od_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    OD_ATTR_TEXT
         JSR     jr_gfx_fill

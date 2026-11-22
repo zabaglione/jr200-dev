@@ -129,7 +129,6 @@ start:
 ; NEW_GAME: keep the original seed for each point in the title melody,
 ; independent of the link address of the notes.
 game_init:
-        CLR     [JR200_BORDER]
         LDAA    [JR_AU_VOICE + 1]
         ADDA    (0x3f - dr_title_melody) & 0xff
         EORA    [JR_AU_VOICE + 2]
@@ -1150,7 +1149,6 @@ game_prepare_title:
         JMP     jr_gfx_putc
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    DR_ATTR_TEXT
         JSR     jr_gfx_fill
