@@ -40,15 +40,12 @@ JR100 Wikiの構成を参考にしていますが、文章は複製せず、作�
 
 正本は `games/catalog.json`、`wiki-development.json`、各作品の `game.json`、README、
 catalogで指定した代表画像、`media/gallery.json`、`tools/wiki/genres.json` です。
-任意の `wiki/title-previews.json` と `wiki/title-previews/<id>.png` は、公開作品のタイトル画像previewに使います。
 候補版を含める場合でも、generatorは次をすべて検査します。
 
 - catalogと作品metadataのID、version、status、publication、license
 - 固定ZIPのSHA-256、安全なmember path、内部 `SHA256SUMS`
 - CJRのSHA-256と、合成／local-ROMのprofile別実行report
 - 代表画像のPNG SHA-256、320×224 RGBA画素hash、対応profileのframebuffer hash
-- タイトル画像previewのPNGと画素hash、320×224のサイズ、manifest・画像の通常file属性、容量上限
-- `--expected-commit`指定時のタイトル画像preview source commitの祖先性
 - 公開指定時の `verified`、固定Release URL、clean sourceから作られたpackage
 
 - `gallery.json`の各画像のPNG SHA-256、320×224の画素hash、対応profileの期待framebuffer hash、
@@ -67,30 +64,6 @@ catalogで指定した代表画像、`media/gallery.json`、`tools/wiki/genres.j
 generator自体は外部URLのHTTP到達性を検査しません。初回7作品については、
 公開Pagesのcatalog・CJRをHTTP取得してhashを照合し、所有ROM/FONTで起動した後に
 当時privateだったWikiの「遊ぶ」リンクを有効化しました。
-
-### All-Gamesのタイトル画像preview
-
-開発ビルドのタイトル画面を一部の公開作品で試す場合は、次のmanifestとPNGを置きます。
-
-```json
-{
-  "schema_version": 1,
-  "source_commit": "<40 lowercase hex>",
-  "games": {
-    "<published-id>": {
-      "sha256": "<64 lowercase hex>",
-      "framebuffer_sha256": "<64 lowercase hex>",
-      "artifact_sha256": "<64 lowercase hex>"
-    }
-  }
-}
-```
-
-画像は `wiki/title-previews/<id>.png` に置き、固定runnerの320×224 captureを使います。
-generatorはPNG byte hash、復号したRGBA画素hash、IDの公開・検証状態、通常fileであることと容量を検査します。
-`--expected-commit`がある場合、`source_commit`はその祖先でなければなりません。
-All-Gamesだけでpreviewを表示し、リンク先の作品ページと固定ゲーム媒体は変更しません。
-manifestがない場合は従来のタイトルギャラリーを生成します。
 
 ## 開発中の作品のWiki掲載とpreview
 

@@ -348,23 +348,6 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertNotIn('## タイトル画面', all_games)
         self.assertIn('| [SIDE CATCH](Game-side-catch) |', all_games)
 
-    def test_title_preview_manifest_rejects_a_candidate_game(self):
-        preview_dir = self.fixture.root / 'wiki'
-        preview_dir.mkdir()
-        manifest = {
-            'schema_version': 1,
-            'source_commit': 'a' * 40,
-            'games': {'side-catch': {
-                'sha256': 'b' * 64,
-                'framebuffer_sha256': 'c' * 64,
-                'artifact_sha256': 'd' * 64,
-            }},
-        }
-        (preview_dir / 'title-previews.json').write_text(
-            json.dumps(manifest) + '\n', encoding='utf-8')
-        with self.assertRaisesRegex(WikiError, 'Invalid title preview game ID'):
-            render_pages(self.fixture.root, None, True)
-
     def test_candidate_rejects_unsafe_capture_path(self):
         self.fixture.catalog['games'][0]['wiki']['screenshot']['file'] = (
             'media/../screenshot.png')

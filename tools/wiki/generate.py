@@ -9,7 +9,6 @@ import html
 import json
 from pathlib import Path, PurePosixPath
 import re
-import stat
 import subprocess
 import sys
 import tempfile
@@ -46,9 +45,6 @@ UPSTREAM_URL = ('https://github.com/zabaglione/jr100dev/blob/'
                 '9a3921c4371d84c55fc468879dbed2f00fe42960/')
 GENRES = Path(__file__).resolve().with_name('genres.json')
 MAX_GALLERY_BYTES = 10_000_000
-MAX_TITLE_PREVIEW_MANIFEST_BYTES = 100_000
-MAX_TITLE_PREVIEW_BYTES = 2_000_000
-MAX_TITLE_PREVIEWS_BYTES = 20_000_000
 
 
 class WikiError(ValueError):
@@ -107,104 +103,6 @@ def commit_is_ancestor(root: Path, ancestor: Any, descendant: Any) -> bool:
     if result.returncode not in (0, 1):
         raise WikiError('Cannot verify published source ancestry')
     return result.returncode == 0
-
-
-def load_title_previews(root: Path, entries: list[dict[str, Any]],
-                        expected_commit: str | None) -> dict[str, bytes]:
-    """Load optional development captures for published entries in All-Games."""
-    wiki_dir = root / 'wiki'
-    if wiki_dir.is_symlink():
-        raise WikiError('Title preview directory is a symlink')
-    if wiki_dir.exists() and not wiki_dir.is_dir():
-        raise WikiError('Title preview path is not a directory')
-    manifest_path = wiki_dir / 'title-previews.json'
-    if manifest_path.is_symlink():
-        raise WikiError('Title preview manifest is a symlink')
-    if not manifest_path.exists():
-        return {}
-    try:
-        manifest_stat = manifest_path.lstat()
-    except OSError as exc:
-        raise WikiError(f'Cannot inspect title preview manifest: {exc}') from exc
-    if not stat.S_ISREG(manifest_stat.st_mode):
-        raise WikiError('Title preview manifest is not a regular file')
-    manifest = read_json(
-        manifest_path, 'title preview manifest',
-        max_bytes=MAX_TITLE_PREVIEW_MANIFEST_BYTES)
-    if (not isinstance(manifest, dict)
-            or set(manifest) != {'schema_version', 'source_commit', 'games'}
-            or type(manifest['schema_version']) is not int
-            or manifest['schema_version'] != 1
-            or not isinstance(manifest['source_commit'], str)
-            or re.fullmatch(r'[0-9a-f]{40}', manifest['source_commit']) is None
-            or not isinstance(manifest['games'], dict)):
-        raise WikiError('Invalid title preview manifest')
-    source_commit = manifest['source_commit']
-    if (expected_commit is not None
-            and not commit_is_ancestor(root, source_commit, expected_commit)):
-        raise WikiError('Title preview source is not an ancestor of the expected commit')
-
-    published_ids = {
-        entry['id'] for entry in entries
-        if entry['tier'] == 'published' and entry['status'] == 'verified'
-        and entry['_metadata']['release']['publication'] == 'published'
-    }
-    preview_ids = set()
-    for identifier, record in manifest['games'].items():
-        if (not isinstance(identifier, str) or SAFE_ID.fullmatch(identifier) is None
-                or identifier not in published_ids):
-            raise WikiError(f'Invalid title preview game ID: {identifier!r}')
-        if (not isinstance(record, dict)
-                or set(record) != {'sha256', 'framebuffer_sha256', 'artifact_sha256'}
-                or any(not isinstance(record[key], str)
-                       or HEX64.fullmatch(record[key]) is None
-                       for key in ('sha256', 'framebuffer_sha256', 'artifact_sha256'))):
-            raise WikiError(f'{identifier}: invalid title preview hashes')
-        preview_ids.add(identifier)
-
-    if not preview_ids:
-        return {}
-    preview_dir = wiki_dir / 'title-previews'
-    if preview_dir.is_symlink():
-        raise WikiError('Title preview images directory is a symlink')
-    try:
-        preview_dir_stat = preview_dir.lstat()
-    except OSError as exc:
-        raise WikiError(f'Cannot inspect title preview images directory: {exc}') from exc
-    if not stat.S_ISDIR(preview_dir_stat.st_mode):
-        raise WikiError('Title preview images path is not a directory')
-
-    previews: dict[str, bytes] = {}
-    total_bytes = 0
-    for identifier, record in manifest['games'].items():
-        image_path = preview_dir / f'{identifier}.png'
-        if image_path.is_symlink():
-            raise WikiError(f'{identifier}: title preview image is a symlink')
-        try:
-            image_stat = image_path.lstat()
-        except OSError as exc:
-            raise WikiError(f'{identifier}: title preview image is missing: {exc}') from exc
-        if not stat.S_ISREG(image_stat.st_mode):
-            raise WikiError(f'{identifier}: title preview image is not a regular file')
-        if image_stat.st_size > MAX_TITLE_PREVIEW_BYTES:
-            raise WikiError(f'{identifier}: title preview image exceeds the size limit')
-        total_bytes += image_stat.st_size
-        if total_bytes > MAX_TITLE_PREVIEWS_BYTES:
-            raise WikiError('Title preview images exceed the total size limit')
-        try:
-            payload = image_path.read_bytes()
-            width, height, pixels = decode_rgba(payload)
-        except OSError as exc:
-            raise WikiError(f'{identifier}: cannot read title preview image: {exc}') from exc
-        except PngError as exc:
-            raise WikiError(f'{identifier}: invalid title preview image: {exc}') from exc
-        if (len(payload) > MAX_TITLE_PREVIEW_BYTES
-                or hashlib.sha256(payload).hexdigest() != record['sha256']
-                or (width, height) != (320, 224)
-                or hashlib.sha256(pixels).hexdigest() != record['framebuffer_sha256']):
-            raise WikiError(f'{identifier}: title preview hash or size contract mismatch')
-        previews[identifier] = payload
-    return previews
 
 
 def catalog_entries(root: Path) -> list[dict[str, Any]]:
@@ -972,7 +870,7 @@ def tier_sections(entries: list[dict[str, Any]], genres: dict[str, dict[str, str
 def title_gallery(entries: list[dict[str, Any]]) -> list[str]:
     cells = []
     for entry in entries:
-        image = entry.get('_title_preview_path') or entry['_title_image']
+        image = entry['_title_image']
         if image is None:
             continue
         title = html.escape(entry['_metadata']['title'], quote=True)
@@ -984,12 +882,7 @@ def title_gallery(entries: list[dict[str, Any]]) -> list[str]:
         return []
     columns = 3
     cells.extend(['<td></td>'] * (-len(cells) % columns))
-    preview_note = ([
-        '※ タイトル画面の一部は現在の開発ビルドを撮影したプレビューです。'
-        'リンク先の作品ページでは配布版を案内しています。',
-        '',
-    ] if any(entry.get('_title_preview_path') for entry in entries) else [])
-    lines = ['## タイトル画面', '', *preview_note, '<table width="100%">']
+    lines = ['## タイトル画面', '', '<table width="100%">']
     for index in range(0, len(cells), columns):
         lines.extend(['<tr>', *cells[index:index + columns], '</tr>'])
     return [*lines, '</table>', '', '## 作品情報', '']
@@ -1189,7 +1082,6 @@ def render_pages(root: Path, packages: Path | None,
         if entry['genre'] not in genres:
             raise WikiError(f'{entry["id"]}: unknown genre {entry["genre"]!r}')
         selected.append(entry)
-    title_previews = load_title_previews(root, selected, expected_commit)
     files: dict[str, bytes] = {}
     for entry in selected:
         slug = entry['wiki']['slug']
@@ -1197,11 +1089,6 @@ def render_pages(root: Path, packages: Path | None,
         entry['_intro'] = first_paragraph(readme_parts(entry['_readme'])[0], metadata['summary'])
         files[f'media/{slug}.png'] = entry['_thumbnail']
         entry['_title_image'] = None
-        entry['_title_preview_path'] = None
-        title_preview = title_previews.get(entry['id'])
-        if title_preview is not None:
-            entry['_title_preview_path'] = f'media/{slug}-title-preview.png'
-            files[entry['_title_preview_path']] = title_preview
         gallery = entry['_gallery']
         if gallery is None:
             entry['_scenes'] = [{'path': f'media/{slug}.png',
