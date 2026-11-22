@@ -10,6 +10,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -391,6 +393,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    PT_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     pt_help_diagram
+        JSR     jr_guide_draw
         LDX     pt_help_lines
         JMP     jr_gfx_lines
 
@@ -441,22 +445,49 @@ pt_title_lines:
         .dw     pt_txt_credit
         .db     0xff
 pt_help_lines:
-        .db     10, 2, PT_ATTR_TITLE
+        .db     10, 1, PT_ATTR_TITLE
         .dw     pt_txt_name
-        .db     1, 5, PT_ATTR_TEXT
-        .dw     pt_help_1
-        .db     1, 7, PT_ATTR_TEXT
-        .dw     pt_help_2
-        .db     1, 9, PT_ATTR_TEXT
-        .dw     pt_help_3
-        .db     1, 11, PT_ATTR_TEXT
-        .dw     pt_help_4
-        .db     1, 13, PT_ATTR_TEXT
-        .dw     pt_help_5
-        .db     1, 15, PT_ATTR_TEXT
-        .dw     pt_help_6
-        .db     1, 21, PT_ATTR_LABEL
-        .dw     pt_help_back
+        .db     2, 4, PT_ATTR_LABEL
+        .dw     pt_help_label_1
+        .db     20, 4, PT_ATTR_LABEL
+        .dw     pt_help_label_2
+        .db     2, 14, PT_ATTR_TEXT
+        .dw     pt_help_label_3
+        .db     2, 16, PT_ATTR_TEXT
+        .dw     pt_help_label_4
+        .db     2, 18, PT_ATTR_TEXT
+        .dw     pt_help_label_5
+        .db     2, 22, PT_ATTR_LABEL
+        .dw     pt_help_label_6
+        .db     0xff
+pt_help_label_1:
+        .db     "MISSED", 0
+pt_help_label_2:
+        .db     "LIT RECEIVER", 0
+pt_help_label_3:
+        .db     "WASD MIRROR   RETURN ROTATE", 0
+pt_help_label_4:
+        .db     "WATCH THE BEAM CHANGE", 0
+pt_help_label_5:
+        .db     "SPACE RESTORE   CTRL+C BASIC", 0
+pt_help_label_6:
+        .db     "ANY KEY TO TITLE", 0
+
+pt_help_diagram:
+; Rotating the mirror changes an eastbound beam from southbound to northbound.
+        .db     8, 0x80 + 6, PT_ATTR_RECEIVER, 1, PT_TILE_RECEIVER
+        .db     2, 0x80 + 8, PT_ATTR_EMITTER, 1, PT_TILE_EMITTER
+        .db     4, 0x80 + 8, PT_ATTR_BEAM, 2, PT_TILE_BEAM_H, PT_TILE_BEAM_H
+        .db     8, 0x80 + 8, PT_ATTR_MIRROR_LIT, 1, PT_TILE_SLASH + 4
+        .db     8, 0x80 + 10, PT_ATTR_BEAM, 1, PT_TILE_BEAM_V
+        .db     13, 8, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 8, 0x86, 1, 0x06
+        .db     16, 7, 0x86, 1, 0x00
+        .db     16, 9, 0x80, 1, 0x06
+        .db     27, 0x80 + 6, PT_ATTR_RECEIVED, 1, PT_TILE_RECEIVER
+        .db     21, 0x80 + 8, PT_ATTR_EMITTER, 1, PT_TILE_EMITTER
+        .db     23, 0x80 + 8, PT_ATTR_BEAM, 2, PT_TILE_BEAM_H, PT_TILE_BEAM_H
+        .db     27, 0x80 + 8, PT_ATTR_MIRROR_LIT, 1, PT_TILE_SLASH
         .db     0xff
 
 pt_txt_name:
@@ -475,20 +506,6 @@ pt_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 pt_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-pt_help_1:
-        .db     "WASD : SELECT A MIRROR", 0
-pt_help_2:
-        .db     "RETURN : ROTATE THE MIRROR", 0
-pt_help_3:
-        .db     "GUIDE THE BEAM FROM THE LEFT", 0
-pt_help_4:
-        .db     "TO THE TOP RIGHT RECEIVER.", 0
-pt_help_5:
-        .db     "THE TRACE UPDATES IMMEDIATELY.", 0
-pt_help_6:
-        .db     "SPACE : RESTORE  CTRL+C : BASIC", 0
-pt_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -536,7 +553,7 @@ pt_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -544,5 +561,6 @@ pt_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

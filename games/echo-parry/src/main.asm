@@ -16,6 +16,7 @@ GAME_STATE_END:     .equ    0x4680
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -84,7 +85,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    4
@@ -180,7 +181,7 @@ ep_act_armor:
         LDAA    1
         JSR     jr_port_sound
         LDAA    8
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    7
         LDAB    24
         JSR     ep_flight_hero
@@ -191,7 +192,7 @@ ep_act_armor:
         BNE     ep_act_impact
         LDAA    12
 ep_act_impact:
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [EP_HIT]
         TST     [EP_ENEMY]
         BNE     ep_act_riposte_done
@@ -218,7 +219,7 @@ ep_hurt:
         LDAA    1
         STAA    [EP_HIT]
         LDAA    6
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [EP_HIT]
         RTS
 
@@ -244,17 +245,17 @@ ep_flight:
         LDAA    1
         STAA    [EP_FLY]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [EP_FX]
         ADDA    [EP_F1]
         LSRA
         STAA    [EP_FX]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [EP_F1]
         STAA    [EP_FX]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [EP_FLY]
         RTS
 
@@ -292,7 +293,7 @@ ep_tick_turn_mod:
         LDX     ep_sfx_warn
         JSR     jr_sfx_play
         LDAA    12
-        JSR     jr_test_animate
+        JSR     jr_live_animate
 ep_tick_phase:
         LDAA    [EP_PHASE]
         BNE     ep_tick_attack
@@ -402,6 +403,7 @@ ep_draw_armor:
         DECB
         BNE     ep_draw_armor
 ep_draw_hero:
+        JSR     jr_live_capture
         LDAA    EP_ATTR_HERO
         LDAB    [EP_HIT]
         CMPB    1
@@ -475,6 +477,7 @@ ep_draw_recovery:
 ep_draw_phase_text:
         JSR     jr_gfx_text
 ep_draw_panel:
+        JSR     jr_live_capture
         LDAA    EP_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    9
@@ -562,6 +565,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    EP_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     ep_help_diagram
+        JSR     jr_guide_draw
         LDX     ep_help_lines
         JMP     jr_gfx_lines
 
@@ -601,25 +606,53 @@ ep_title_lines:
         .db     0xff
 ep_help_lines:
         .db     11, 1, EP_ATTR_TITLE
-        .dw     ep_txt_name
-        .db     1, 3, EP_ATTR_TEXT
-        .dw     ep_help_1
-        .db     1, 5, EP_ATTR_TEXT
-        .dw     ep_help_2
-        .db     1, 7, EP_ATTR_TEXT
-        .dw     ep_help_3
-        .db     1, 9, EP_ATTR_TEXT
-        .dw     ep_help_4
-        .db     1, 11, EP_ATTR_TEXT
-        .dw     ep_help_5
-        .db     1, 13, EP_ATTR_TEXT
-        .dw     ep_help_6
-        .db     1, 15, EP_ATTR_TEXT
-        .dw     ep_help_7
-        .db     1, 17, EP_ATTR_TEXT
-        .dw     ep_help_8
-        .db     1, 21, EP_ATTR_LABEL
-        .dw     ep_help_back
+        .dw     ep_help_label_0
+        .db     2, 4, EP_ATTR_LABEL
+        .dw     ep_help_label_1
+        .db     18, 4, EP_ATTR_LABEL
+        .dw     ep_help_label_2
+        .db     2, 14, EP_ATTR_TEXT
+        .dw     ep_help_label_3
+        .db     2, 16, EP_ATTR_TEXT
+        .dw     ep_help_label_4
+        .db     2, 18, EP_ATTR_TEXT
+        .dw     ep_help_label_5
+        .db     2, 20, EP_ATTR_TEXT
+        .dw     ep_help_label_6
+        .db     2, 22, EP_ATTR_LABEL
+        .dw     ep_help_label_7
+        .db     0xff
+ep_help_label_0:
+        .db     "ECHO PARRY", 0
+ep_help_label_1:
+        .db     "W HIGH", 0
+ep_help_label_2:
+        .db     "S LOW", 0
+ep_help_label_3:
+        .db     "MATCH THE WEAPON HEIGHT", 0
+ep_help_label_4:
+        .db     "RETURN PARRY DURING SWING", 0
+ep_help_label_5:
+        .db     "A STEP BACK  /  NO COUNTER", 0
+ep_help_label_6:
+        .db     "4 HEARTS  SPACE RETRY", 0
+ep_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+ep_help_diagram:
+; The same opponents shown on the two guard lanes.
+        .db     2, 0x80 + 6, EP_ATTR_HERO, 1, EP_TILE_HERO
+        .db     6, 0x80 + 6, EP_ATTR_KNIGHT, 1, EP_TILE_KNIGHT
+        .db     4, 6, EP_ATTR_SLASH, 2, EP_CHAR_SLASH, EP_CHAR_SLASH
+        .db     2, 9, EP_ATTR_FLOOR, 6, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR
+        .db     18, 0x80 + 8, EP_ATTR_HERO, 1, EP_TILE_HERO
+        .db     22, 0x80 + 8, EP_ATTR_KNIGHT, 1, EP_TILE_KNIGHT
+        .db     20, 9, EP_ATTR_SLASH, 2, EP_CHAR_SLASH, EP_CHAR_SLASH
+        .db     18, 11, EP_ATTR_FLOOR, 6, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR, EP_CHAR_FLOOR
+        .db     10, 6, 0x96, 1, 0x16
+        .db     10, 8, 0x80, 1, 0x36
+        .db     26, 6, 0x80, 1, 0x36
+        .db     26, 8, 0x96, 1, 0x16
         .db     0xff
 
 ep_txt_name:
@@ -664,24 +697,6 @@ ep_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 ep_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-ep_help_1:
-        .db     "W : HIGH GUARD / S : LOW GUARD", 0
-ep_help_2:
-        .db     "RETURN : PARRY DURING ATTACK", 0
-ep_help_3:
-        .db     "A : STEP BACK, NO COUNTER", 0
-ep_help_4:
-        .db     "LATE PARRY OR THIRD CHAIN: +2", 0
-ep_help_5:
-        .db     "WATCH THE WEAPON AFTER A FEINT.", 0
-ep_help_6:
-        .db     "SIX KNIGHTS USE NEW RHYTHMS.", 0
-ep_help_7:
-        .db     "FOUR HEARTS FOR EACH DUEL.", 0
-ep_help_8:
-        .db     "SPACE : RETRY THE DUEL", 0
-ep_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -746,5 +761,7 @@ ep_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

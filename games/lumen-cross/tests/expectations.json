@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "expected_entry_address": "0x1000",
-  "notes": "Memory expectations are computed by games/lumen-cross/tests/model.py (upstream rules 2.0.0), not recorded from the emulator; the emulator result must match them. Framebuffer hashes of title/start/first-clear fix the gallery images. Replays leave 1.7M cycles after each cross press so its five-pose animation finishes. stack-guard shows the game stack stayed above 0x4f10. The runner drains PCM only at the end, so long runs drop old frames.",
+  "notes": "Memory expectations are computed by games/lumen-cross/tests/model.py (upstream rules 2.0.0), not recorded from the emulator; the emulator result must match them. Framebuffer hashes of title/start/first-clear fix the gallery images. Each cross shares its five poses across the affected cells. First-clear ends soon after its final press so the end-of-run PCM sample includes the short sound effect. stack-guard shows the game stack stayed above 0x4f10. The runner drains PCM only at the end, so long runs drop old frames.",
   "runtime": {
     "default_profile": "synthetic-first-clear",
     "profiles": [
@@ -63,7 +63,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": null,
+          "framebuffer_sha256": "a1ef26c4e6ff872aca82022209659dee249791415d623e030c0fa9fefb334113",
           "pcm": null,
           "cassette": null
         }
@@ -191,9 +191,9 @@
             "state": "010101010101010001010101010101000100000100000000000600000001",
             "mode": "01",
             "level": "00",
-            "marks": "20202020205e2020202020202020202020202020205052455353455320202020"
+            "marks": "2020202020205e20202020202020202020202020205052455353455320202020"
           },
-          "framebuffer_sha256": "2906cf284a05a9083e2ec92c2ac8e83dbe160b8c56462cacd06867194f03dd46",
+          "framebuffer_sha256": "891e70c2a20d0b31927d36fab5dddd87d045005f58743bfc83153617d1cc4e40",
           "pcm": null,
           "cassette": null
         }
@@ -201,7 +201,7 @@
       {
         "profile": "synthetic-first-clear",
         "mode": "synthetic-injection",
-        "max_cycles": 7800000,
+        "max_cycles": 7950000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -374,13 +374,13 @@
           },
           {
             "kind": "key",
-            "cycle": 6150000,
+            "cycle": 7250000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 6190000,
+            "cycle": 7290000,
             "code": "0x0d",
             "pressed": false
           }
@@ -423,7 +423,7 @@
             "perfect": "504552464543542043495243554954",
             "status": "434c454152202d2052455455524e20464f52204e455854205354414745"
           },
-          "framebuffer_sha256": "90121d01e1e67c4afff9469d1b5f0647bc6f6e6859851f3fab422e08b27e95a5",
+          "framebuffer_sha256": "48384a22213753f922314ade929c8f7140b7eaccb46c8cffbe3509e77ffd9088",
           "pcm": {
             "minimum_frames": 1000,
             "minimum_nonzero_frames": 100,
@@ -8475,7 +8475,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "2906cf284a05a9083e2ec92c2ac8e83dbe160b8c56462cacd06867194f03dd46",
+          "framebuffer_sha256": "891e70c2a20d0b31927d36fab5dddd87d045005f58743bfc83153617d1cc4e40",
           "pcm": null,
           "cassette": {
             "state": 6,
@@ -8513,7 +8513,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "90121d01e1e67c4afff9469d1b5f0647bc6f6e6859851f3fab422e08b27e95a5",
+          "framebuffer_sha256": "48384a22213753f922314ade929c8f7140b7eaccb46c8cffbe3509e77ffd9088",
           "pcm": null,
           "cassette": {
             "state": 6,

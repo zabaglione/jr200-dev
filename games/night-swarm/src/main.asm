@@ -17,6 +17,7 @@ GAME_STATE_END:     .equ    0x46a0
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -112,7 +113,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    27
@@ -323,7 +324,7 @@ ns_hurt_gone:
         JSR     jr_port_sound
 ns_hurt_show:
         LDAA    4
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_FLASH]
         LDAA    [NS_KILLS]
         CMPA    [NS_LIMIT]
@@ -358,7 +359,7 @@ ns_act_face:
         JSR     ns_move8
         STAA    [NS_POS]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [NS_POS]
         STAA    [NS_ORIGIN]
         CMPA    [NS_CELL]
@@ -381,7 +382,7 @@ ns_act_salvage:
         LDAA    1
         JSR     jr_port_sound
         LDAA    6
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_FLASH]
 ns_act_done:
         RTS
@@ -394,7 +395,7 @@ ns_act_pulse:
 ns_act_ring:
         STAA    [NS_PULSE]
         LDAA    3
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [NS_PULSE]
         INCA
         CMPA    4
@@ -497,7 +498,7 @@ ns_tick_foe_next:
         LDAA    1
         STAA    [NS_MARCHING]
         LDAA    3
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_MARCHING]
 ns_tick_contact:
         ; foes that reach the ship crash into it: one hull for any number
@@ -526,7 +527,7 @@ ns_tick_contact_next:
         LDX     ns_sfx_crash
         JSR     jr_sfx_play
         LDAA    8
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_FLASH]
         TST     [NS_HP]
         BNE     ns_tick_spawn
@@ -595,7 +596,7 @@ ns_tick_fire_foe:
         INCA
         STAA    [NS_SHOT]
         LDAA    4
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_SHOT]
         JMP     ns_hurt
 ns_tick_fire_next:
@@ -702,6 +703,7 @@ ns_draw_floor:
         LDAA    NS_CHAR_PULSE
         JSR     jr_gfx_putc
 ns_draw_floor_next:
+        JSR     jr_live_capture
         INC     [NS_DI]
         LDAA    [NS_DI]
         CMPA    64
@@ -721,6 +723,7 @@ ns_draw_floor_next:
         STAB    [NS_DCODE]
         JSR     ns_put
 ns_draw_foes:
+        JSR     jr_live_capture
         CLR     [NS_DI]
 ns_draw_foe:
         LDX     NS_B
@@ -776,6 +779,7 @@ ns_draw_shot:
         LDAA    NS_CHAR_PULSE
         JSR     jr_gfx_putc
 ns_draw_ship:
+        JSR     jr_live_capture
         LDAA    NS_ATTR_SHIP
         STAA    [JR_RT_COLOR]
         LDAA    [NS_POS]
@@ -875,6 +879,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    NS_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     ns_help_diagram
+        JSR     jr_guide_draw
         LDX     ns_help_lines
         JMP     jr_gfx_lines
 
@@ -924,24 +930,32 @@ ns_title_lines:
 ns_help_lines:
         .db     10, 1, NS_ATTR_TITLE
         .dw     ns_txt_name
-        .db     1, 3, NS_ATTR_TEXT
-        .dw     ns_help_1
-        .db     1, 5, NS_ATTR_TEXT
-        .dw     ns_help_2
-        .db     1, 7, NS_ATTR_TEXT
-        .dw     ns_help_3
-        .db     1, 9, NS_ATTR_TEXT
-        .dw     ns_help_4
-        .db     1, 11, NS_ATTR_TEXT
-        .dw     ns_help_5
-        .db     1, 13, NS_ATTR_TEXT
-        .dw     ns_help_6
-        .db     1, 15, NS_ATTR_TEXT
-        .dw     ns_help_7
-        .db     1, 17, NS_ATTR_TEXT
-        .dw     ns_help_8
-        .db     1, 21, NS_ATTR_LABEL
+        .db     3, 14, NS_ATTR_TEXT
+        .dw     ns_help_move
+        .db     3, 16, NS_ATTR_TEXT
+        .dw     ns_help_auto
+        .db     3, 17, NS_ATTR_TEXT
+        .dw     ns_help_pulse
+        .db     3, 18, NS_ATTR_TEXT
+        .dw     ns_help_cell
+        .db     3, 20, NS_ATTR_TEXT
+        .dw     ns_help_waves
+        .db     8, 22, NS_ATTR_LABEL
         .dw     ns_help_back
+        .db     0xff
+
+ns_help_diagram:
+; A portal previews a foe; the ship fires as it moves toward salvage.
+        .db     3, 0x80 + 5, NS_ATTR_PORTAL, 1, NS_TILE_PORTAL
+        .db     6, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     11, 7, 0x86, 1, 0x06
+        .db     10, 6, 0x86, 1, 0x00
+        .db     10, 8, 0x80, 1, 0x06
+        .db     13, 0x80 + 5, NS_ATTR_WEAK, 1, NS_TILE_WEAK
+        .db     17, 0x80 + 7, NS_ATTR_SHIP, 1, NS_TILE_SHIP + 12
+        .db     21, 8, NS_ATTR_PULSE, 1, NS_CHAR_PULSE
+        .db     24, 0x80 + 5, NS_ATTR_FOE, 1, NS_TILE_FOE
+        .db     27, 0x80 + 10, NS_ATTR_CELL, 1, NS_TILE_CELL
         .db     0xff
 
 ns_txt_name:
@@ -972,22 +986,16 @@ ns_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 ns_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-ns_help_1:
-        .db     "QWE / AD / ZXC : EIGHT WAYS", 0
-ns_help_2:
-        .db     "RETURN : AREA PULSE WHEN READY", 0
-ns_help_3:
-        .db     "AUTO FIRE HITS ONE NEARBY FOE.", 0
-ns_help_4:
-        .db     "PORTALS SHOW THE NEXT ARRIVAL.", 0
-ns_help_5:
-        .db     "ARMOURED FOES TAKE TWO HITS.", 0
-ns_help_6:
-        .db     "SALVAGE: HEAL + READY PULSE", 0
-ns_help_7:
-        .db     "SIX WAVES GROW MORE CROWDED.", 0
-ns_help_8:
-        .db     "SPACE : RETRY THE WAVE", 0
+ns_help_move:
+        .db     "QWE / AD / ZXC: 8-WAY MOVE", 0
+ns_help_auto:
+        .db     "AUTO FIRE HITS NEARBY FOES", 0
+ns_help_pulse:
+        .db     "RETURN: AREA PULSE WHEN READY", 0
+ns_help_cell:
+        .db     "CELL: HEALS / RESETS PULSE", 0
+ns_help_waves:
+        .db     "6 WAVES   SPACE: RETRY", 0
 ns_help_back:
         .db     "ANY KEY : TITLE", 0
 
@@ -1048,6 +1056,7 @@ ns_lose_bass:
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
         .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1056,5 +1065,6 @@ ns_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"

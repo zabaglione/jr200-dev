@@ -10,6 +10,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -755,6 +757,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    PH_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     ph_help_diagram
+        JSR     jr_guide_draw
         LDX     ph_help_lines
         JMP     jr_gfx_lines
 
@@ -813,24 +817,45 @@ ph_title_lines:
         .dw     ph_txt_credit
         .db     0xff
 ph_help_lines:
-        .db     10, 2, PH_ATTR_TITLE
+        .db     10, 1, PH_ATTR_TITLE
         .dw     ph_txt_name
-        .db     1, 5, PH_ATTR_TEXT
-        .dw     ph_help_1
-        .db     1, 7, PH_ATTR_TEXT
-        .dw     ph_help_2
-        .db     1, 9, PH_ATTR_TEXT
-        .dw     ph_help_3
-        .db     1, 11, PH_ATTR_TEXT
-        .dw     ph_help_4
-        .db     1, 13, PH_ATTR_TEXT
-        .dw     ph_help_5
-        .db     1, 15, PH_ATTR_TEXT
-        .dw     ph_help_6
-        .db     1, 17, PH_ATTR_TEXT
-        .dw     ph_help_7
-        .db     1, 21, PH_ATTR_LABEL
-        .dw     ph_help_back
+        .db     2, 4, PH_ATTR_LABEL
+        .dw     ph_help_label_1
+        .db     22, 4, PH_ATTR_LABEL
+        .dw     ph_help_label_2
+        .db     2, 14, PH_ATTR_TEXT
+        .dw     ph_help_label_3
+        .db     2, 16, PH_ATTR_TEXT
+        .dw     ph_help_label_4
+        .db     2, 18, PH_ATTR_TEXT
+        .dw     ph_help_label_5
+        .db     2, 22, PH_ATTR_LABEL
+        .dw     ph_help_label_6
+        .db     0xff
+ph_help_label_1:
+        .db     "NEIGHBORS", 0
+ph_help_label_2:
+        .db     "REMOVE", 0
+ph_help_label_3:
+        .db     "WASD SELECT   RETURN PAIR", 0
+ph_help_label_4:
+        .db     "CLEAR 16   6 ERRORS END ROUND", 0
+ph_help_label_5:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+ph_help_label_6:
+        .db     "ANY KEY TO TITLE", 0
+
+ph_help_diagram:
+; Adjacent digits that add to ten disappear together.
+        .db     3, 7, 0x46, 2, PH_TILE_DIGIT + 12, PH_TILE_DIGIT + 8
+        .db     3, 8, 0x46, 2, PH_TILE_DIGIT + 13, PH_TILE_DIGIT + 9
+        .db     6, 7, 0x06, 6, 0x36, 0x2b, 0x34, 0x3d, 0x31, 0x30
+        .db     14, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     19, 7, 0x86, 1, 0x06
+        .db     18, 6, 0x86, 1, 0x00
+        .db     18, 8, 0x80, 1, 0x06
+        .db     23, 7, 0x80, 2, 0x24, 0x24
+        .db     23, 8, 0xa4, 2, 0x00, 0x00
         .db     0xff
 
 ph_txt_name:
@@ -861,22 +886,6 @@ ph_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 ph_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-ph_help_1:
-        .db     "WASD : CHOOSE A NUMBER", 0
-ph_help_2:
-        .db     "RETURN : SELECT TWO NEIGHBORS", 0
-ph_help_3:
-        .db     "THEIR SUM MUST BE TEN.", 0
-ph_help_4:
-        .db     "REMOVE ALL SIXTEEN NUMBERS.", 0
-ph_help_5:
-        .db     "SIX WRONG PAIRS END A ROUND.", 0
-ph_help_6:
-        .db     "SAME COLOUR = PAIR TO TEN.", 0
-ph_help_7:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-ph_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -930,7 +939,7 @@ ph_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -938,5 +947,6 @@ ph_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

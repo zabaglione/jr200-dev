@@ -24,6 +24,8 @@ jr_keys_poll:
         LDAA    [JR200_KEY_IRQ_STATUS]
         BITA    1
         BEQ     jr_keys_poll_none
+; Decode a Key-On event already acknowledged by reading the status.
+jr_keys_decode:
         LDAB    [JR200_KEY_DATA]
         TBA
         CMPA    0x1b

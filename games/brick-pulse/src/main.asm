@@ -66,6 +66,13 @@ BP_DI:              .equ    GAME_STATE + 96
 BP_DRAW_X:          .equ    GAME_STATE + 97
 BP_DRAW_Y:          .equ    GAME_STATE + 98
 BP_DN:              .equ    GAME_STATE + 99
+BP_BALL_NEXT:       .equ    GAME_STATE + 100
+BP_BALL_VRAM:       .equ    GAME_STATE + 102
+BP_BALL_NEXT_ATTR:  .equ    GAME_STATE + 104
+BP_BALL_OLD_ATTR:   .equ    GAME_STATE + 106
+BP_EFFECT_PTR:      .equ    GAME_STATE + 108
+BP_EFFECT_CODE:     .equ    GAME_STATE + 110
+BP_EFFECT_ATTR:     .equ    GAME_STATE + 111
 ; Self-test bytes (outside the per-stage state).
 BP_QUIET:           .equ    0x46c0
 BP_FIX:             .equ    0x46c2
@@ -685,27 +692,43 @@ bp_vram:
         LDX     [BP_EFP]
         RTS
 
-; A = code, B = attribute: fill the 2x2 cell at BP_EFX, BP_EFY in VRAM.
+; A = first code, B = attribute: draw a 2x2 effect over the board.
+; The impact repeats one glyph. A burst uses four consecutive PCG glyphs.
 bp_cell_write:
-        PSHB
-        PSHA
+        STAA    [BP_EFFECT_CODE]
+        STAB    [BP_EFFECT_ATTR]
         LDAA    [BP_EFX]
         LDAB    [BP_EFY]
         JSR     bp_vram
-        PULA
-        STAA    [X]
-        STAA    [X + 1]
-        STAA    [X + 32]
-        STAA    [X + 33]
-        LDAA    [BP_EFP]
-        ADDA    4
-        STAA    [BP_EFP]
+        JSR     bp_effect_pair
         LDX     [BP_EFP]
-        PULB
+        LDAA    32
+        JSR     jr_add_x_a
+bp_effect_pair:
+        JSR     bp_effect_cell
+        INX
+bp_effect_cell:
+        ; The ball stays above brick, drone and miss effects.
+        CPX     [BP_BALL_VRAM]
+        BEQ     bp_effect_advance
+        LDAA    [BP_EFFECT_CODE]
+        STAA    [X]
+        STX     [BP_EFFECT_PTR]
+        LDAA    [BP_EFFECT_PTR]
+        ADDA    4
+        STAA    [BP_EFFECT_PTR]
+        LDX     [BP_EFFECT_PTR]
+        LDAB    [BP_EFFECT_ATTR]
         STAB    [X]
-        STAB    [X + 1]
-        STAB    [X + 32]
-        STAB    [X + 33]
+        SUBA    4
+        STAA    [BP_EFFECT_PTR]
+        LDX     [BP_EFFECT_PTR]
+bp_effect_advance:
+        LDAA    [BP_EFFECT_CODE]
+        CMPA    BP_CHAR_BLOCK
+        BEQ     bp_effect_cell_done
+        INC     [BP_EFFECT_CODE]
+bp_effect_cell_done:
         RTS
 
 ; impact(x, y): two blinks of the struck 2x2 cell (the game clock stops).
@@ -733,7 +756,9 @@ bp_impact_blink:
 ; vanish(x, y): four burst frames in the 2x2 cell (the game clock stops).
 bp_vanish:
         TST     [BP_QUIET]
-        BNE     bp_effect_skip
+        BEQ     bp_vanish_begin
+        RTS
+bp_vanish_begin:
         STAA    [BP_EFX]
         STAB    [BP_EFY]
         JSR     jr_port_render
@@ -741,29 +766,12 @@ bp_vanish:
         JSR     jr_sfx_play
         CLR     [BP_EFN]
 bp_vanish_frame:
-        LDAA    [BP_EFX]
-        LDAB    [BP_EFY]
-        JSR     bp_vram
         LDAA    [BP_EFN]
         ASLA
         ASLA
         ADDA    BP_TILE_BURST
-        STAA    [X]
-        INCA
-        STAA    [X + 1]
-        INCA
-        STAA    [X + 32]
-        INCA
-        STAA    [X + 33]
-        LDAA    [BP_EFP]
-        ADDA    4
-        STAA    [BP_EFP]
-        LDX     [BP_EFP]
-        LDAA    BP_ATTR_BURST
-        STAA    [X]
-        STAA    [X + 1]
-        STAA    [X + 32]
-        STAA    [X + 33]
+        LDAB    BP_ATTR_BURST
+        JSR     bp_cell_write
         LDAA    2
         JSR     bp_hold_input
         INC     [BP_EFN]
@@ -902,7 +910,8 @@ bp_draw_ball:
         INCA
         LDAB    [BP_Y]
         ADDB    2
-        JSR     jr_gfx_at
+        JSR     bp_vram
+        STX     [BP_BALL_NEXT]
         LDAA    BP_CHAR_BALL
         JSR     jr_gfx_putc
         ; paddle: left cap, width - 2 middles, right cap on row 19
@@ -1002,12 +1011,59 @@ bp_draw_done:
         CLRB
         JSR     jr_gfx_at
         LDX     bp_txt_demo
-        JMP     jr_gfx_text
+        JSR     jr_gfx_text
 bp_draw_end:
+        ; Commit the ball's two cells together before the sequential full copy.
+        ; Otherwise the scan can see two balls, none, or PCG 0x85 as a ROM glyph.
+        LDX     [BP_BALL_NEXT]
+        CPX     [BP_BALL_VRAM]
+        BEQ     bp_ball_present_done
+        TST     [BP_BALL_VRAM]
+        BEQ     bp_ball_present_remember    ; first frame uses the full copy
+        LDAA    [BP_BALL_NEXT]
+        ADDA    4
+        STAA    [BP_BALL_NEXT_ATTR]
+        LDAA    [BP_BALL_NEXT + 1]
+        STAA    [BP_BALL_NEXT_ATTR + 1]
+        ; Fetch the old cell's replacement from the fully composed shadow.
+        LDAA    [BP_BALL_VRAM]
+        SUBA    (JR200_SCREEN_CODES >> 8) - (JR_SHADOW >> 8)
+        STAA    [BP_EFFECT_PTR]
+        ADDA    3
+        STAA    [BP_BALL_OLD_ATTR]
+        LDAA    [BP_BALL_VRAM + 1]
+        STAA    [BP_EFFECT_PTR + 1]
+        STAA    [BP_BALL_OLD_ATTR + 1]
+        LDX     [BP_BALL_OLD_ATTR]
+        LDAB    [X]
+        LDX     [BP_EFFECT_PTR]
+        LDAA    [X]
+        PSHA
+        ; Set PCG mode before writing the new ball and clear it afterward at
+        ; the old address. Keep the two code writes as close as possible.
+        LDX     [BP_BALL_NEXT_ATTR]
+        LDAA    BP_ATTR_BALL
+        STAA    [X]
+        LDX     [BP_BALL_VRAM]
+        PULA
+        STAA    [X]
+        LDX     [BP_BALL_NEXT]
+        LDAA    BP_CHAR_BALL
+        STAA    [X]
+        LDAA    [BP_BALL_OLD_ATTR]
+        ADDA    (JR200_SCREEN_ATTRIBUTES >> 8) - ((JR_SHADOW + 0x300) >> 8)
+        STAA    [BP_BALL_OLD_ATTR]
+        LDX     [BP_BALL_OLD_ATTR]
+        STAB    [X]
+bp_ball_present_remember:
+        LDX     [BP_BALL_NEXT]
+        STX     [BP_BALL_VRAM]
+bp_ball_present_done:
         RTS
 
 game_draw_title:
         CLR     [BP_DEMO]
+        CLR     [BP_BALL_VRAM]
         LDAA    0x20
         LDAB    BP_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1073,6 +1129,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    BP_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     bp_help_diagram
+        JSR     jr_guide_draw
         LDX     bp_help_lines
         JMP     jr_gfx_lines
 
@@ -1310,24 +1368,58 @@ bp_title_lines:
         .dw     bp_txt_credit
         .db     0xff
 bp_help_lines:
-        .db     10, 2, BP_ATTR_TITLE
+        .db     10, 1, BP_ATTR_TITLE
         .dw     bp_txt_name
-        .db     2, 5, BP_ATTR_TEXT
-        .dw     bp_help_1
-        .db     2, 7, BP_ATTR_TEXT
-        .dw     bp_help_2
-        .db     2, 9, BP_ATTR_TEXT
-        .dw     bp_help_3
-        .db     2, 11, BP_ATTR_TEXT
-        .dw     bp_help_4
-        .db     2, 13, BP_ATTR_TEXT
-        .dw     bp_help_5
+        .db     2, 4, BP_ATTR_LABEL
+        .dw     bp_help_label_1
+        .db     22, 4, BP_ATTR_LABEL
+        .dw     bp_help_label_2
         .db     2, 15, BP_ATTR_TEXT
-        .dw     bp_help_6
+        .dw     bp_help_label_3
         .db     2, 17, BP_ATTR_TEXT
-        .dw     bp_help_7
-        .db     2, 20, BP_ATTR_LABEL
-        .dw     bp_help_back
+        .dw     bp_help_label_4
+        .db     2, 19, BP_ATTR_TEXT
+        .dw     bp_help_label_5
+        .db     2, 20, BP_ATTR_TEXT
+        .dw     bp_help_label_6
+        .db     2, 22, BP_ATTR_LABEL
+        .dw     bp_help_label_7
+        .db     0xff
+bp_help_label_1:
+        .db     "BOUNCE", 0
+bp_help_label_2:
+        .db     "CLEAR", 0
+bp_help_label_3:
+        .db     "HOLD A/D MOVE   P DEMO", 0
+bp_help_label_4:
+        .db     "CATCH W:WIDE S:SLOW G:GUARD", 0
+bp_help_label_5:
+        .db     "3 BALLS / ARENA", 0
+bp_help_label_6:
+        .db     "CTRL+C : BACK TO BASIC", 0
+bp_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+bp_help_diagram:
+; Show the shot, then the same field with a cleared strip.
+        .db     2, 6, 0x46, 4, BP_CHAR_CAP_L, BP_CHAR_BODY + 1, BP_CHAR_BODY + 1, BP_CHAR_CAP_R
+        .db     6, 6, 0x42, 4, BP_CHAR_CAP_L, BP_CHAR_BODY + 3, BP_CHAR_BODY + 3, BP_CHAR_CAP_R
+        .db     2, 13, BP_ATTR_PADDLE, 4, BP_CHAR_PAD_L, BP_CHAR_PAD_M, BP_CHAR_PAD_M, BP_CHAR_PAD_R
+        .db     5, 11, BP_ATTR_BALL, 1, BP_CHAR_BALL
+        .db     5, 10, 0x80, 1, 0x04
+        .db     6, 9, 0x81, 1, 0x08
+        .db     7, 8, 0x81, 1, 0x08
+        .db     8, 7, BP_ATTR_BALL, 1, BP_CHAR_BALL
+        .db     13, 9, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 9, 0x86, 1, 0x06
+        .db     16, 8, 0x86, 1, 0x00
+        .db     16, 10, 0x80, 1, 0x06
+        .db     20, 6, 0x42, 4, BP_CHAR_CAP_L, BP_CHAR_BODY + 2, BP_CHAR_BODY + 2, BP_CHAR_CAP_R
+        .db     22, 7, BP_ATTR_BURST, 1, BP_TILE_BURST + 2
+        .db     23, 10, BP_ATTR_DRONE, 3, BP_CHAR_DRONE, BP_CHAR_DRONE + 1, BP_CHAR_DRONE + 2
+        .db     24, 11, BP_ATTR_BOMB, 1, BP_CHAR_BOMB
+        .db     21, 13, BP_ATTR_PADDLE, 4, BP_CHAR_PAD_L, BP_CHAR_PAD_M, BP_CHAR_PAD_M, BP_CHAR_PAD_R
+        .db     27, 9, BP_ATTR_BALL, 1, BP_CHAR_BALL
         .db     0xff
 
 bp_txt_name:
@@ -1366,22 +1458,6 @@ bp_txt_testing:
         .db     "SELF TEST RUNNING", 0
 bp_txt_tested:
         .db     "SELF TEST FINISHED", 0
-bp_help_1:
-        .db     "HOLD A/D : MOVE THE PADDLE", 0
-bp_help_2:
-        .db     "12 ARENAS / THREE BALLS EACH", 0
-bp_help_3:
-        .db     "W WIDE / S SLOW / G GUARD", 0
-bp_help_4:
-        .db     "ARMORED BRICKS NEED MORE HITS", 0
-bp_help_5:
-        .db     "HIT DRONES / DODGE BOMBS.", 0
-bp_help_6:
-        .db     "CLEAR BRICKS AND DRONE TO WIN", 0
-bp_help_7:
-        .db     "CTRL+C : BACK TO BASIC", 0
-bp_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 game_sfx_table:
         .dw     bp_sfx_bounce, bp_sfx_hit, bp_sfx_catch, bp_sfx_lost
@@ -1409,4 +1485,5 @@ bp_sfx_vanish:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/sfx.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

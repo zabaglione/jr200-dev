@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -596,6 +598,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    TN_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     tn_help_diagram
+        JSR     jr_guide_draw
         LDX     tn_help_lines
         JMP     jr_gfx_lines
 
@@ -636,26 +640,49 @@ tn_title_lines:
 tn_help_lines:
         .db     11, 1, TN_ATTR_TITLE
         .dw     tn_txt_name
-        .db     1, 4, TN_ATTR_TEXT
-        .dw     tn_help_1
-        .db     1, 6, TN_ATTR_TEXT
-        .dw     tn_help_2
-        .db     1, 8, TN_ATTR_TEXT
-        .dw     tn_help_3
-        .db     1, 10, TN_ATTR_TEXT
-        .dw     tn_help_4
-        .db     1, 12, TN_ATTR_TEXT
-        .dw     tn_help_5
-        .db     1, 14, TN_ATTR_TEXT
-        .dw     tn_help_6
-        .db     1, 16, TN_ATTR_TEXT
-        .dw     tn_help_7
-        .db     1, 18, TN_ATTR_TEXT
-        .dw     tn_help_8
-        .db     1, 20, TN_ATTR_TEXT
-        .dw     tn_help_9
-        .db     1, 22, TN_ATTR_LABEL
-        .dw     tn_help_back
+        .db     2, 4, TN_ATTR_LABEL
+        .dw     tn_help_label_1
+        .db     20, 4, TN_ATTR_LABEL
+        .dw     tn_help_label_2
+        .db     2, 14, TN_ATTR_TEXT
+        .dw     tn_help_label_3
+        .db     2, 16, TN_ATTR_TEXT
+        .dw     tn_help_label_4
+        .db     2, 18, TN_ATTR_TEXT
+        .dw     tn_help_label_5
+        .db     2, 20, TN_ATTR_TEXT
+        .dw     tn_help_label_6
+        .db     2, 22, TN_ATTR_LABEL
+        .dw     tn_help_label_7
+        .db     0xff
+tn_help_label_1:
+        .db     "FINE NET", 0
+tn_help_label_2:
+        .db     "WIDE NET", 0
+tn_help_label_3:
+        .db     "A/D PLACE   W/S WIDTH", 0
+tn_help_label_4:
+        .db     "RETURN CAST   9 CASTS / TRIP", 0
+tn_help_label_5:
+        .db     "SHOAL +2  DEEP +4   12 ROPE", 0
+tn_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+tn_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+tn_help_diagram:
+; One net column takes one rope, two columns take two.
+        .db     2, 0x80 + 6, TN_ATTR_WAVE, 4, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE
+        .db     2, 0x80 + 8, TN_ATTR_WAVE, 4, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE
+        .db     4, 0x80 + 6, TN_ATTR_NET, 1, TN_TILE_NET
+        .db     4, 0x80 + 8, TN_ATTR_SHOAL, 1, TN_TILE_FISH
+        .db     20, 0x80 + 6, TN_ATTR_WAVE, 4, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE
+        .db     20, 0x80 + 8, TN_ATTR_WAVE, 4, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE, TN_TILE_WAVE
+        .db     22, 0x80 + 6, TN_ATTR_NET, 2, TN_TILE_NET, TN_TILE_NET
+        .db     22, 0x80 + 8, TN_ATTR_SHOAL, 1, TN_TILE_FISH
+        .db     24, 0x80 + 8, TN_ATTR_DEEP, 1, TN_TILE_FISH
+        .db     4, 10, 0x06, 1, 0x31
+        .db     22, 10, 0x06, 1, 0x32
         .db     0xff
 
 tn_txt_name:
@@ -694,26 +721,6 @@ tn_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 tn_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-tn_help_1:
-        .db     "A/D : PLACE NET  W/S : WIDTH", 0
-tn_help_2:
-        .db     "RETURN : CAST THROUGH THE TIDE", 0
-tn_help_3:
-        .db     "FINE NET: ONE COLUMN, ONE ROPE", 0
-tn_help_4:
-        .db     "WIDE NET: TWO COLUMNS, TWO ROPE", 0
-tn_help_5:
-        .db     "DEEP FISH DRIFT TWICE AS FAR.", 0
-tn_help_6:
-        .db     "SHOAL +2 / DEEP +4 / BOTH +6", 0
-tn_help_7:
-        .db     "NINE CASTS AND TWELVE ROPE.", 0
-tn_help_8:
-        .db     "THREE TRIPS, HIGHER QUOTAS.", 0
-tn_help_9:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-tn_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -765,7 +772,7 @@ tn_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -773,5 +780,6 @@ tn_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

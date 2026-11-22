@@ -17,6 +17,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -941,7 +943,7 @@ or_draw_quarter_put:
         BNE     or_draw_quarter
         BRA     or_draw_next
 or_draw_still:
-        ; the card's letter above its picture, or a burst while it clears
+        ; Card motif, or a burst while it clears
         LDAA    [OR_DI]
         ANDA    3
         LDAB    5
@@ -952,17 +954,6 @@ or_draw_still:
         ANDA    0x0c
         ADDA    3
         STAA    [OR_DY]
-        LDAA    [OR_DCODE]
-        LDX     or_kind_text
-        JSR     jr_add_x_a
-        LDAA    [X]
-        STAA    [JR_RT_COLOR]
-        LDAA    [OR_DX]
-        LDAB    [OR_DY]
-        JSR     jr_gfx_at
-        LDAA    [OR_DCODE]
-        ADDA    0x41
-        JSR     jr_gfx_putc
         LDAA    [OR_DCODE]
         JSR     or_kind_colour
         LDAA    [OR_DCODE]
@@ -1095,7 +1086,7 @@ or_draw_right_mark:
         LDAA    0x3c
         JSR     jr_gfx_putc
 or_draw_offers:
-        ; the two offers with their letters, the pick mark and NEXT
+        ; The offers and upcoming cards use the same motifs as the board.
         CLR     [OR_DI]
 or_draw_offer:
         LDAA    [OR_DI]
@@ -1116,17 +1107,6 @@ or_draw_offer:
         ASLA
         ADDA    OR_TILE_CARD
         JSR     jr_gfx_tile
-        LDAA    [OR_DCODE]
-        LDX     or_kind_text
-        JSR     jr_add_x_a
-        LDAA    [X]
-        STAA    [JR_RT_COLOR]
-        LDAA    [OR_DX]
-        LDAB    7
-        JSR     jr_gfx_at
-        LDAA    [OR_DCODE]
-        ADDA    0x41
-        JSR     jr_gfx_putc
         INC     [OR_DI]
         LDAA    [OR_DI]
         CMPA    2
@@ -1148,17 +1128,18 @@ or_draw_next_card:
         JSR     jr_add_x_a
         LDAA    [X]
         STAA    [OR_DCODE]
-        LDX     or_kind_text
-        JSR     jr_add_x_a
-        LDAA    [X]
-        STAA    [JR_RT_COLOR]
+        JSR     or_kind_colour
         LDAA    [OR_DI]
-        ADDA    27
-        LDAB    8
+        ASLA
+        ADDA    [OR_DI]
+        ADDA    23
+        LDAB    9
         JSR     jr_gfx_at
         LDAA    [OR_DCODE]
-        ADDA    0x41
-        JSR     jr_gfx_putc
+        ASLA
+        ASLA
+        ADDA    OR_TILE_CARD
+        JSR     jr_gfx_tile
         INC     [OR_DI]
         LDAA    [OR_DI]
         CMPA    3
@@ -1222,29 +1203,22 @@ or_draw_spins:
         LDAA    [JR_PORT_MODE]
         CMPA    JR_MODE_PLAY
         BNE     or_draw_done
-        LDAA    OR_ATTR_TEXT
-        STAA    [JR_RT_COLOR]
-        LDAA    1
-        LDAB    21
-        JSR     jr_gfx_at
-        LDX     or_txt_menu
-        JSR     jr_gfx_text
-        LDAA    OR_ATTR_PICK
+        LDX     or_tool_icons
+        JSR     jr_guide_draw
+        LDAA    0xb6
         STAA    [JR_RT_COLOR]
         LDAA    [OR_TOOL]
         LDAB    6
         JSR     jr_mul8
-        STAA    [OR_DX]
-        LDAB    21
+        INCA
+        LDAB    22
         JSR     jr_gfx_at
-        LDAA    0x5b
+        LDAA    0x36
         JSR     jr_gfx_putc
-        LDAA    [OR_DX]
-        ADDA    5
-        LDAB    21
-        JSR     jr_gfx_at
-        LDAA    0x5d
         JSR     jr_gfx_putc
+        JSR     jr_gfx_putc
+        LDAA    OR_ATTR_PICK
+        STAA    [JR_RT_COLOR]
         TST     [OR_PHASE]
         BEQ     or_draw_notice
         LDAA    [OR_CURSOR]
@@ -1253,7 +1227,7 @@ or_draw_spins:
         SUBA    16
         LDAB    6
         JSR     jr_mul8
-        LDAB    21
+        LDAB    20
         JSR     jr_gfx_at
         LDAA    0x3e
         JSR     jr_gfx_putc
@@ -1269,7 +1243,7 @@ or_draw_notice:
         LDX     [X]
         STX     [JR_RT_TABLE]
         CLRA
-        LDAB    22
+        LDAB    23
         JSR     jr_gfx_at
         LDX     [JR_RT_TABLE]
         JMP     jr_gfx_text
@@ -1308,6 +1282,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    OR_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     or_help_diagram
+        JSR     jr_guide_draw
         LDX     or_help_lines
         JMP     jr_gfx_lines
 
@@ -1322,8 +1298,17 @@ or_paths_end:
 ; planet red, star yellow, moon cyan, comet green, sun magenta
 or_kind_attr:
         .db     0x42, 0x46, 0x45, 0x44, 0x43
-or_kind_text:
-        .db     0x02, 0x06, 0x05, 0x04, 0x03
+; Drop a card, shift a horizontal row, shift a vertical column.
+or_tool_icons:
+        .db     2, 20, 0x80, 1, 0x3f
+        .db     2, 21, 0x85, 1, 0x28
+        .db     7, 20, 0x81, 3, 0x01, 0x01, 0x01
+        .db     7, 21, 0x86, 3, 0x06, 0x06, 0x06
+        .db     13, 20, 0x81, 3, 0x01, 0x01, 0x01
+        .db     13, 21, 0x81, 3, 0x01, 0x01, 0x01
+        .db     14, 20, 0x86, 1, 0x06
+        .db     14, 21, 0x86, 1, 0x06
+        .db     0xff
 or_notice_text:
         .dw     or_txt_no_spins, or_txt_full, or_txt_column, or_txt_same
 
@@ -1362,26 +1347,49 @@ or_title_lines:
 or_help_lines:
         .db     10, 1, OR_ATTR_TITLE
         .dw     or_txt_name
-        .db     1, 3, OR_ATTR_TEXT
-        .dw     or_help_1
-        .db     1, 5, OR_ATTR_TEXT
-        .dw     or_help_2
-        .db     1, 7, OR_ATTR_TEXT
-        .dw     or_help_3
-        .db     1, 9, OR_ATTR_TEXT
-        .dw     or_help_4
-        .db     1, 11, OR_ATTR_TEXT
-        .dw     or_help_5
-        .db     1, 13, OR_ATTR_TEXT
-        .dw     or_help_6
-        .db     1, 15, OR_ATTR_TEXT
-        .dw     or_help_7
-        .db     1, 17, OR_ATTR_TEXT
-        .dw     or_help_8
-        .db     1, 19, OR_ATTR_TEXT
-        .dw     or_help_9
-        .db     1, 21, OR_ATTR_LABEL
-        .dw     or_help_back
+        .db     2, 4, OR_ATTR_LABEL
+        .dw     or_help_label_1
+        .db     22, 4, OR_ATTR_LABEL
+        .dw     or_help_label_2
+        .db     2, 13, OR_ATTR_TEXT
+        .dw     or_help_label_3
+        .db     2, 15, OR_ATTR_TEXT
+        .dw     or_help_label_4
+        .db     2, 17, OR_ATTR_TEXT
+        .dw     or_help_label_5
+        .db     2, 19, OR_ATTR_TEXT
+        .dw     or_help_label_6
+        .db     2, 22, OR_ATTR_LABEL
+        .dw     or_help_label_7
+        .db     0xff
+or_help_label_1:
+        .db     "DROP", 0
+or_help_label_2:
+        .db     "CHAIN", 0
+or_help_label_3:
+        .db     "A/D CARD, THEN COLUMN", 0
+or_help_label_4:
+        .db     "RETURN SELECT / DROP", 0
+or_help_label_5:
+        .db     "3 SAME: ROW / COL / DIAGONAL", 0
+or_help_label_6:
+        .db     "CLEAR EARNS SPINS   SPACE NEW", 0
+or_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+or_help_diagram:
+; Drop a third card to clear a match and let the cards above fall.
+        .db     6, 0x80 + 5, 0x45, 1, OR_TILE_CARD + 8
+        .db     6, 7, 0x06, 1, 0x76
+        .db     2, 0x80 + 9, 0x45, 2, OR_TILE_CARD + 8, OR_TILE_CARD + 8
+        .db     2, 0x80 + 7, 0x42, 1, OR_TILE_CARD
+        .db     12, 8, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 8, 0x86, 1, 0x06
+        .db     16, 7, 0x86, 1, 0x00
+        .db     16, 9, 0x80, 1, 0x06
+        .db     22, 0x80 + 9, 0x42, 1, OR_TILE_CARD
+        .db     24, 0x80 + 9, OR_ATTR_BURST, 1, OR_TILE_BURST
+        .db     26, 0x80 + 9, OR_ATTR_BURST, 1, OR_TILE_BURST
         .db     0xff
 
 or_txt_name:
@@ -1402,8 +1410,6 @@ or_txt_slash:
         .db     "/", 0
 or_txt_spins:
         .db     "SPINS", 0
-or_txt_menu:
-        .db     "CARD  ROW   COL", 0
 or_txt_no_spins:
         .db     "NO SPINS: CLEAR A LINE TO EARN", 0
 or_txt_full:
@@ -1422,26 +1428,6 @@ or_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 or_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-or_help_1:
-        .db     "A/D PICK 1/2. RETURN SELECT.", 0
-or_help_2:
-        .db     "CARD: PICK COLUMN. RET DROP.", 0
-or_help_3:
-        .db     "3 SAME: ROW / COL / DIAGONAL.", 0
-or_help_4:
-        .db     "FALLING CARDS CAN CHAIN AGAIN.", 0
-or_help_5:
-        .db     "WASD TO MENU: CARD / ROW / COL.", 0
-or_help_6:
-        .db     "ROW / COL STAY UNTIL CARD.", 0
-or_help_7:
-        .db     "CLEAR LINES TO EARN SPINS.", 0
-or_help_8:
-        .db     "REACH GOAL. KEEP BOARD + SCORE.", 0
-or_help_9:
-        .db     "SPACE : NEW GAME  CTRL+C : BASIC", 0
-or_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -1495,7 +1481,7 @@ or_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -1503,5 +1489,6 @@ or_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

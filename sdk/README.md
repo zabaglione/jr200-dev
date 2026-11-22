@@ -20,6 +20,7 @@
 | `gfx.inc` | RAM影画面への文字・数値・2×2 tile描画と一括転送（8マスごとに文字→属性の順） | `JR_SHADOW`はpage境界。転送中はSを使用。`JR_RT + 46`と`56..63`を使用 |
 | `font.inc` / `font_data.inc` | 自作5×7字形を`$D100-$D2FF`へ設置 | メーカーFONTを使わない。終了時に元へ戻す |
 | `pcg.inc` | user pattern（code 0x00-0x1F／0x80-0x9F）の転送 | attribute mode 0x40で表示 |
+| `guide.inc` | PCGやセミグラを組み合わせた盤面例の描画 | `gfx.inc`系と併用。同じ行に連続する字形を座標・属性・個数で指定する |
 | `frame.inc` | 約1/60秒のbusy-wait frame | 固定エミュレータのCPU clock基準 |
 | `effect.inc` | 待機しない演出step／phase管理 | 呼出元がtickごとに進め、表示・入力・音声を並行処理する。実時間保証なし |
 | `math.inc` | 8-bit乗除算、X+A | M6800命令のみ |

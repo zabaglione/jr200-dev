@@ -554,6 +554,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    RS_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     rs_help_diagram
+        JSR     jr_guide_draw
         LDX     rs_help_lines
         JMP     jr_gfx_lines
 
@@ -610,24 +612,49 @@ rs_title_lines:
 rs_help_lines:
         .db     10, 1, RS_ATTR_TITLE
         .dw     rs_txt_name
-        .db     1, 3, RS_ATTR_TEXT
-        .dw     rs_help_1
-        .db     1, 5, RS_ATTR_TEXT
-        .dw     rs_help_2
-        .db     1, 7, RS_ATTR_TEXT
-        .dw     rs_help_3
-        .db     1, 9, RS_ATTR_TEXT
-        .dw     rs_help_4
-        .db     1, 11, RS_ATTR_TEXT
-        .dw     rs_help_5
-        .db     1, 13, RS_ATTR_TEXT
-        .dw     rs_help_6
-        .db     1, 15, RS_ATTR_TEXT
-        .dw     rs_help_7
-        .db     1, 17, RS_ATTR_TEXT
-        .dw     rs_help_8
-        .db     1, 21, RS_ATTR_LABEL
-        .dw     rs_help_back
+        .db     2, 4, RS_ATTR_LABEL
+        .dw     rs_help_label_1
+        .db     21, 4, RS_ATTR_LABEL
+        .dw     rs_help_label_2
+        .db     5, 11, RS_ATTR_TEXT
+        .dw     rs_help_label_3
+        .db     17, 11, RS_ATTR_TEXT
+        .dw     rs_help_label_4
+        .db     2, 15, RS_ATTR_TEXT
+        .dw     rs_help_label_5
+        .db     2, 17, RS_ATTR_TEXT
+        .dw     rs_help_label_6
+        .db     2, 22, RS_ATTR_LABEL
+        .dw     rs_help_label_7
+        .db     0xff
+rs_help_label_1:
+        .db     "D STEER", 0
+rs_help_label_2:
+        .db     "GROW", 0
+rs_help_label_3:
+        .db     "AVOID", 0
+rs_help_label_4:
+        .db     "NO U-TURN", 0
+rs_help_label_5:
+        .db     "WASD STEER  /  SPACE RETRY", 0
+rs_help_label_6:
+        .db     "RETURN BRAKE: 4 MOVES (X3)", 0
+rs_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+rs_help_diagram:
+; The ribbon grows by a segment when its head takes food.
+        .db     2, 0x80 + 6, RS_ATTR_BODY, 2, RS_TILE_BODY, RS_TILE_BODY
+        .db     6, 0x80 + 6, RS_ATTR_HEAD, 1, RS_TILE_HEAD + 12
+        .db     8, 0x80 + 6, RS_ATTR_FOOD, 1, RS_TILE_FOOD
+        .db     13, 7, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     22, 0x80 + 6, RS_ATTR_BODY, 3, RS_TILE_BODY, RS_TILE_BODY, RS_TILE_BODY
+        .db     28, 0x80 + 6, RS_ATTR_HEAD, 1, RS_TILE_HEAD + 12
+        .db     2, 0x80 + 10, RS_ATTR_ROCK, 1, RS_TILE_ROCK
+        .db     12, 0x80 + 10, RS_ATTR_BODY, 2, RS_TILE_BODY, RS_TILE_BODY
         .db     0xff
 
 rs_txt_name:
@@ -662,24 +689,6 @@ rs_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 rs_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-rs_help_1:
-        .db     "WASD : STEER THE HEAD", 0
-rs_help_2:
-        .db     "RETURN : BRAKE FOR FOUR MOVES", 0
-rs_help_3:
-        .db     "THREE BRAKES FOR EACH GARDEN.", 0
-rs_help_4:
-        .db     "AVOID ROCKS, EDGES AND BODY.", 0
-rs_help_5:
-        .db     "FOOD GROWS THE RIBBON.", 0
-rs_help_6:
-        .db     "SIX GARDENS ADD NARROW ROUTES.", 0
-rs_help_7:
-        .db     "REVERSING DIRECTION IS IGNORED.", 0
-rs_help_8:
-        .db     "SPACE : RETRY THE GARDEN", 0
-rs_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -740,4 +749,5 @@ rs_lose_bass:
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

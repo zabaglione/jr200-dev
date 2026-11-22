@@ -524,6 +524,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    PP_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     pp_help_diagram
+        JSR     jr_guide_draw
         LDX     pp_help_lines
         JMP     jr_gfx_lines
 
@@ -567,24 +569,52 @@ pp_title_lines:
 pp_help_lines:
         .db     9, 1, PP_ATTR_TITLE
         .dw     pp_txt_name
-        .db     1, 3, PP_ATTR_TEXT
-        .dw     pp_help_1
-        .db     1, 5, PP_ATTR_TEXT
-        .dw     pp_help_2
-        .db     1, 7, PP_ATTR_TEXT
-        .dw     pp_help_3
-        .db     1, 9, PP_ATTR_TEXT
-        .dw     pp_help_4
-        .db     1, 11, PP_ATTR_TEXT
-        .dw     pp_help_5
-        .db     1, 13, PP_ATTR_TEXT
-        .dw     pp_help_6
-        .db     1, 15, PP_ATTR_TEXT
-        .dw     pp_help_7
-        .db     1, 17, PP_ATTR_TEXT
-        .dw     pp_help_8
-        .db     1, 21, PP_ATTR_LABEL
-        .dw     pp_help_back
+        .db     2, 4, PP_ATTR_LABEL
+        .dw     pp_help_label_1
+        .db     18, 4, PP_ATTR_LABEL
+        .dw     pp_help_label_2
+        .db     2, 14, PP_ATTR_TEXT
+        .dw     pp_help_label_3
+        .db     2, 16, PP_ATTR_TEXT
+        .dw     pp_help_label_4
+        .db     2, 18, PP_ATTR_TEXT
+        .dw     pp_help_label_5
+        .db     2, 20, PP_ATTR_TEXT
+        .dw     pp_help_label_6
+        .db     2, 22, PP_ATTR_LABEL
+        .dw     pp_help_label_7
+        .db     0xff
+pp_help_label_1:
+        .db     "SWING", 0
+pp_help_label_2:
+        .db     "RETURN RELEASE", 0
+pp_help_label_3:
+        .db     "A/D SHORTEN / LENGTHEN ROPE", 0
+pp_help_label_4:
+        .db     "V PREDICTS LANDING", 0
+pp_help_label_5:
+        .db     "CENTRE +2   3 ROPES / ROUTE", 0
+pp_help_label_6:
+        .db     "SPACE RETRY", 0
+pp_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+pp_help_diagram:
+; The jumper leaves the rope along its swing and lands by the marker.
+        .db     4, 0x80 + 6, PP_ATTR_PIVOT, 1, PP_TILE_PIVOT
+        .db     6, 7, PP_ATTR_ROPE, 1, PP_CHAR_ROPE
+        .db     7, 8, PP_ATTR_ROPE, 1, PP_CHAR_ROPE
+        .db     8, 0x80 + 9, PP_ATTR_JUMPER, 1, PP_TILE_JUMPER
+        .db     12, 9, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 9, 0x86, 1, 0x06
+        .db     16, 8, 0x86, 1, 0x00
+        .db     16, 10, 0x80, 1, 0x06
+        .db     19, 0x80 + 7, PP_ATTR_JUMPER, 1, PP_TILE_JUMPER
+        .db     23, 9, PP_ATTR_MARK, 1, PP_CHAR_MARK
+        .db     21, 0x80 + 10, PP_ATTR_DECK, 1, PP_TILE_DECK
+        .db     23, 0x80 + 10, PP_ATTR_CENTRE, 1, PP_TILE_CENTRE
+        .db     25, 0x80 + 10, PP_ATTR_DECK, 1, PP_TILE_DECK
+        .db     27, 11, PP_ATTR_WAVE, 2, PP_CHAR_WAVE, PP_CHAR_WAVE
         .db     0xff
 
 pp_txt_name:
@@ -611,24 +641,6 @@ pp_txt_demo_hint:
         .db     "P : DEMO   T : SELF TEST", 0
 pp_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-pp_help_1:
-        .db     "A/D : SHORTEN / LENGTHEN ROPE", 0
-pp_help_2:
-        .db     "RETURN : RELEASE THE SWING", 0
-pp_help_3:
-        .db     "MOMENTUM CARRIES THE JUMP.", 0
-pp_help_4:
-        .db     "THE V MARK PREDICTS LANDING.", 0
-pp_help_5:
-        .db     "HIT THE CENTRE FOR TWO POINTS.", 0
-pp_help_6:
-        .db     "LATER PORTS HAVE SMALLER DECKS.", 0
-pp_help_7:
-        .db     "SIX ROUTES / THREE ROPES EACH.", 0
-pp_help_8:
-        .db     "SPACE : RETRY THE ROUTE", 0
-pp_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -691,4 +703,5 @@ pp_lose_bass:
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
         .include "../../../sdk/selftest.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

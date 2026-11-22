@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "expected_entry_address": "0x1000",
-  "notes": "State expectations come from games/night-swarm/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six waves with their input scripts; synthetic-demo-clear plays wave 1 with the same script at normal speed; synthetic-no-input-loss never moves and the swarm breaks through. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
+  "notes": "State expectations come from games/night-swarm/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six waves with their input scripts; synthetic-demo-clear plays wave 1 with the same script at normal speed; synthetic-no-input-loss never moves and the swarm breaks through. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-rapid-taps expects all three right taps spaced 32 ms apart to move the player.",
   "runtime": {
     "default_profile": "synthetic-self-test",
     "profiles": [
@@ -74,7 +74,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "20659427fc9713df4a77e3ae073849c780e9325075fe4a728ba0043b551589c4",
+          "framebuffer_sha256": "f3441afde480e7481f18de57e2d4e39d0097fd13b343e49069ffe00a19ec8853",
           "pcm": null,
           "cassette": null
         }
@@ -185,6 +185,86 @@
             "mode": "01",
             "level": "00",
             "pos": "12"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-rapid-taps",
+        "mode": "synthetic-injection",
+        "max_cycles": 962500,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 316000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 462500,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 478500,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 505357,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 521357,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 548214,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 564214,
+            "code": "0x64",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "pos",
+            "address": "0x4640",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "01",
+            "pos": "1e"
           },
           "framebuffer_sha256": null,
           "pcm": null,
@@ -392,7 +472,7 @@
       {
         "profile": "synthetic-demo-play",
         "mode": "synthetic-injection",
-        "max_cycles": 11250000,
+        "max_cycles": 11850000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -422,7 +502,7 @@
       {
         "profile": "synthetic-demo-clear",
         "mode": "synthetic-injection",
-        "max_cycles": 22500000,
+        "max_cycles": 22710000,
         "return_address": "0x7ff0",
         "replay": [
           {

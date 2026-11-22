@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -577,6 +579,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    PP_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     pp_help_diagram
+        JSR     jr_guide_draw
         LDX     pp_help_lines
         JMP     jr_gfx_lines
 
@@ -646,26 +650,50 @@ pp_title_lines:
 pp_help_lines:
         .db     10, 1, PP_ATTR_TITLE
         .dw     pp_txt_name
-        .db     1, 3, PP_ATTR_TEXT
-        .dw     pp_help_1
-        .db     1, 5, PP_ATTR_TEXT
-        .dw     pp_help_2
-        .db     1, 7, PP_ATTR_TEXT
-        .dw     pp_help_3
-        .db     1, 9, PP_ATTR_TEXT
-        .dw     pp_help_4
-        .db     1, 11, PP_ATTR_TEXT
-        .dw     pp_help_5
-        .db     1, 13, PP_ATTR_TEXT
-        .dw     pp_help_6
-        .db     1, 15, PP_ATTR_TEXT
-        .dw     pp_help_7
-        .db     1, 17, PP_ATTR_TEXT
-        .dw     pp_help_8
-        .db     1, 19, PP_ATTR_TEXT
-        .dw     pp_help_9
-        .db     1, 21, PP_ATTR_LABEL
-        .dw     pp_help_back
+        .db     2, 4, PP_ATTR_LABEL
+        .dw     pp_help_label_1
+        .db     22, 4, PP_ATTR_LABEL
+        .dw     pp_help_label_2
+        .db     2, 14, PP_ATTR_TEXT
+        .dw     pp_help_label_3
+        .db     2, 16, PP_ATTR_TEXT
+        .dw     pp_help_label_4
+        .db     2, 18, PP_ATTR_TEXT
+        .dw     pp_help_label_5
+        .db     2, 20, PP_ATTR_TEXT
+        .dw     pp_help_label_6
+        .db     2, 22, PP_ATTR_LABEL
+        .dw     pp_help_label_7
+        .db     0xff
+pp_help_label_1:
+        .db     "MIX", 0
+pp_help_label_2:
+        .db     "LAND", 0
+pp_help_label_3:
+        .db     "WASD INGREDIENT   RETURN ADD", 0
+pp_help_label_4:
+        .db     "ASH L2 / MOSS R1 D2", 0
+pp_help_label_5:
+        .db     "SALT U1 / ROOT R3 D1", 0
+pp_help_label_6:
+        .db     "12 DOSES 4 EACH SPACE RETRY", 0
+pp_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+pp_help_diagram:
+; Salt moves the flask one square up onto the order.
+        .db     5, 0x80 + 6, PP_ATTR_TARGET, 1, PP_TILE_TARGET
+        .db     5, 0x80 + 8, PP_ATTR_FLASK, 1, PP_TILE_FLASK
+        .db     7, 0x80 + 8, PP_ATTR_POISON, 1, PP_TILE_POISON
+        .db     10, 8, 0x06, 1, 0x5e
+        .db     13, 8, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 8, 0x86, 1, 0x06
+        .db     16, 7, 0x86, 1, 0x00
+        .db     16, 9, 0x80, 1, 0x06
+        .db     22, 0x80 + 6, PP_ATTR_FLASK, 1, PP_TILE_FLASK
+        .db     22, 0x80 + 8, PP_ATTR_FLOOR, 1, PP_TILE_FLOOR
+        .db     24, 0x80 + 8, PP_ATTR_POISON, 1, PP_TILE_POISON
+        .db     26, 0x80 + 6, PP_ATTR_SPARK, 1, PP_TILE_SPARK
         .db     0xff
 
 pp_txt_name:
@@ -700,26 +728,6 @@ pp_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 pp_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-pp_help_1:
-        .db     "WASD : SELECT INGREDIENT", 0
-pp_help_2:
-        .db     "RETURN : ADD TO THE FLASK", 0
-pp_help_3:
-        .db     "FOUR DOSES OF EACH INGREDIENT.", 0
-pp_help_4:
-        .db     "RED CELLS REJECT A LANDING.", 0
-pp_help_5:
-        .db     "ASH L2 / MOSS R1 D2", 0
-pp_help_6:
-        .db     "SALT U1 / ROOT R3 D1", 0
-pp_help_7:
-        .db     "REACH THE ORDER IN 12 DOSES.", 0
-pp_help_8:
-        .db     "TRY TO MATCH THE PAR SCORE.", 0
-pp_help_9:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-pp_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -773,7 +781,7 @@ pp_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -781,5 +789,6 @@ pp_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

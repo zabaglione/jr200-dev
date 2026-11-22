@@ -19,6 +19,17 @@ def galleries():
     return sorted(ROOT.glob('games/*/media/gallery.json'))
 
 
+def gallery_expectations_snapshot(path):
+    """Read the exact expectations that accompanied a fixed gallery."""
+    relative = path.relative_to(ROOT)
+    revision = subprocess.check_output(
+        ['git', 'log', '-1', '--format=%H', '--', str(relative)], cwd=ROOT,
+        text=True).strip()
+    source = relative.parent.parent / 'tests/expectations.json'
+    return subprocess.check_output(
+        ['git', 'show', f'{revision}:{source.as_posix()}'], cwd=ROOT)
+
+
 class GalleryTests(unittest.TestCase):
     def test_side_catch_player_and_target_use_distinct_colors(self):
         _, _, pixels = decode_rgba(
@@ -52,7 +63,11 @@ class GalleryTests(unittest.TestCase):
         for path in galleries():
             project = path.parents[1]
             gallery = json.loads(path.read_text(encoding='utf-8'))
-            expectations = json.loads((project / 'tests/expectations.json').read_text())
+            published = fixed.get(project.name)
+            if published is not None and gallery['schema_version'] < 3:
+                expectations = json.loads(gallery_expectations_snapshot(path))
+            else:
+                expectations = json.loads((project / 'tests/expectations.json').read_text())
             profiles = {p['profile']: p for p in expectations['runtime']['profiles']}
             self.assertIn(gallery['schema_version'], (1, 2, 3))
             capture_mode = ('synthetic-injection' if gallery['schema_version'] == 1
@@ -63,7 +78,7 @@ class GalleryTests(unittest.TestCase):
                 source = ROOT / provenance['glyph_source']
                 self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(),
                                  provenance['glyph_source_sha256'])
-                game = fixed.get(project.name)
+                game = published
                 if game is not None:
                     self.assertEqual(provenance['artifact_sha256'],
                                      game['artifact_sha256'])

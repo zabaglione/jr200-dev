@@ -74,7 +74,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "5480011cc4e7af5ce0a64dadb4c410d82b7bbfb082732d15da30ef79e09f6ef2",
+          "framebuffer_sha256": "bc84ae63585870f4d9d74380a636840ff33c70b12e30001dd357ee406a0514cf",
           "pcm": null,
           "cassette": null
         }
@@ -82,7 +82,7 @@
       {
         "profile": "synthetic-start",
         "mode": "synthetic-injection",
-        "max_cycles": 450000,
+        "max_cycles": 472501,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -194,7 +194,7 @@
       {
         "profile": "synthetic-loss",
         "mode": "synthetic-injection",
-        "max_cycles": 175000000,
+        "max_cycles": 180224000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -211,37 +211,37 @@
           },
           {
             "kind": "key",
-            "cycle": 400000,
+            "cycle": 404000,
             "code": "0x61",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 440000,
+            "cycle": 444000,
             "code": "0x61",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158400000,
+            "cycle": 164724000,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158440000,
+            "cycle": 164764000,
             "code": "0x64",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158700000,
+            "cycle": 165036000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158740000,
+            "cycle": 165076000,
             "code": "0x0d",
             "pressed": false
           }
@@ -298,7 +298,7 @@
       {
         "profile": "synthetic-lose-retry",
         "mode": "synthetic-injection",
-        "max_cycles": 175750000,
+        "max_cycles": 182676001,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -315,73 +315,73 @@
           },
           {
             "kind": "key",
-            "cycle": 400000,
+            "cycle": 404000,
             "code": "0x61",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 440000,
+            "cycle": 444000,
             "code": "0x61",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158400000,
+            "cycle": 164724000,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158440000,
+            "cycle": 164764000,
             "code": "0x64",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 158700000,
+            "cycle": 165036000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 158740000,
+            "cycle": 165076000,
             "code": "0x0d",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 175000000,
+            "cycle": 181988000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 175040000,
+            "cycle": 182028000,
             "code": "0x0d",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 175300000,
+            "cycle": 182300000,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 175340000,
+            "cycle": 182340000,
             "code": "0x64",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 175600000,
+            "cycle": 182612000,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 175640000,
+            "cycle": 182652000,
             "code": "0x0d",
             "pressed": false
           }

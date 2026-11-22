@@ -8,6 +8,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_STACK_TOP:       .equ    0x4fff
@@ -173,6 +175,7 @@ cc_rival:
         STAA    [CC_CHOSEN]
         CLR     [CC_SCAN2]
 cc_rival_scan:
+        JSR     jr_input_capture
         LDAA    [CC_SCAN2]
         LDAB    2
         JSR     cc_probe
@@ -657,6 +660,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    CC_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     cc_help_diagram
+        JSR     jr_guide_draw
         LDX     cc_help_lines
         JMP     jr_gfx_lines
 
@@ -699,24 +704,50 @@ cc_title_lines:
         .dw     cc_txt_credit
         .db     0xff
 cc_help_lines:
-        .db     9, 2, CC_ATTR_TITLE
+        .db     10, 1, CC_ATTR_TITLE
         .dw     cc_txt_name
-        .db     2, 5, CC_ATTR_TEXT
-        .dw     cc_help_1
-        .db     2, 7, CC_ATTR_TEXT
-        .dw     cc_help_2
-        .db     2, 9, CC_ATTR_TEXT
-        .dw     cc_help_3
-        .db     2, 11, CC_ATTR_TEXT
-        .dw     cc_help_4
-        .db     2, 13, CC_ATTR_TEXT
-        .dw     cc_help_5
-        .db     2, 15, CC_ATTR_TEXT
-        .dw     cc_help_6
-        .db     2, 17, CC_ATTR_TEXT
-        .dw     cc_help_7
-        .db     2, 20, CC_ATTR_LABEL
-        .dw     cc_help_back
+        .db     2, 4, CC_ATTR_LABEL
+        .dw     cc_help_label_1
+        .db     22, 4, CC_ATTR_LABEL
+        .dw     cc_help_label_2
+        .db     2, 14, CC_ATTR_TEXT
+        .dw     cc_help_label_3
+        .db     2, 16, CC_ATTR_TEXT
+        .dw     cc_help_label_4
+        .db     2, 18, CC_ATTR_TEXT
+        .dw     cc_help_label_5
+        .db     2, 20, CC_ATTR_TEXT
+        .dw     cc_help_label_6
+        .db     2, 22, CC_ATTR_LABEL
+        .dw     cc_help_label_7
+        .db     0xff
+cc_help_label_1:
+        .db     "BRACKET", 0
+cc_help_label_2:
+        .db     "FLIP", 0
+cc_help_label_3:
+        .db     "WASD SELECT  RETURN PLACE", 0
+cc_help_label_4:
+        .db     "NO MOVE: RETURN PASS", 0
+cc_help_label_5:
+        .db     "MORE DISCS WINS", 0
+cc_help_label_6:
+        .db     "SPACE RESTART / CTRL+C EXIT", 0
+cc_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+cc_help_diagram:
+; A new white disc brackets two rival discs.
+        .db     2, 0x80 + 7, CC_ATTR_YOU, 1, CC_TILE_YOU
+        .db     4, 0x80 + 7, CC_ATTR_RIVAL, 2, CC_TILE_RIVAL, CC_TILE_RIVAL
+        .db     8, 0x80 + 7, CC_ATTR_CORNER, 1, CC_TILE_CORNER
+        .db     9, 6, 0x06, 1, 0x76
+        .db     12, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     22, 0x80 + 7, CC_ATTR_YOU, 4, CC_TILE_YOU, CC_TILE_YOU, CC_TILE_YOU, CC_TILE_YOU
+        .db     24, 9, 0x80, 6, 0x36, 0x36, 0x36, 0x36, 0x36, 0x36
         .db     0xff
 
 cc_txt_name:
@@ -737,22 +768,6 @@ cc_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 cc_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-cc_help_1:
-        .db     "WASD : CHOOSE A CELL", 0
-cc_help_2:
-        .db     "RETURN : PLACE AND FLIP", 0
-cc_help_3:
-        .db     "BRACKET RIVAL DISCS TO FLIP.", 0
-cc_help_4:
-        .db     "MORE DISCS AT THE END WINS.", 0
-cc_help_5:
-        .db     "RETURN PASSES IF NO MOVE.", 0
-cc_help_6:
-        .db     "THE RIVAL FAVORS BIG CAPTURES", 0
-cc_help_7:
-        .db     "SPACE RESTART / CTRL+C EXIT", 0
-cc_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 game_sfx_table:
         .dw     cc_sfx_flip, cc_sfx_turn, cc_sfx_win, cc_sfx_lose
@@ -768,12 +783,13 @@ cc_sfx_lose:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
         .include "../../../sdk/math.inc"
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/sfx.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

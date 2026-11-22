@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -592,6 +594,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    CS_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     cs_help_diagram
+        JSR     jr_guide_draw
         LDX     cs_help_lines
         JMP     jr_gfx_lines
 
@@ -628,24 +632,62 @@ cs_title_lines:
         .dw     cs_txt_credit
         .db     0xff
 cs_help_lines:
-        .db     11, 2, CS_ATTR_TITLE
+        .db     10, 1, CS_ATTR_TITLE
         .dw     cs_txt_name
-        .db     1, 5, CS_ATTR_TEXT
-        .dw     cs_help_1
-        .db     1, 7, CS_ATTR_TEXT
-        .dw     cs_help_2
-        .db     1, 9, CS_ATTR_TEXT
-        .dw     cs_help_3
-        .db     1, 11, CS_ATTR_TEXT
-        .dw     cs_help_4
-        .db     1, 13, CS_ATTR_TEXT
-        .dw     cs_help_5
-        .db     1, 15, CS_ATTR_TEXT
-        .dw     cs_help_6
-        .db     1, 17, CS_ATTR_TEXT
-        .dw     cs_help_7
-        .db     1, 21, CS_ATTR_LABEL
-        .dw     cs_help_back
+        .db     2, 4, CS_ATTR_LABEL
+        .dw     cs_help_label_1
+        .db     17, 4, CS_ATTR_LABEL
+        .dw     cs_help_label_2
+        .db     2, 13, CS_ATTR_TEXT
+        .dw     cs_help_label_3
+        .db     2, 15, CS_ATTR_TEXT
+        .dw     cs_help_label_4
+        .db     2, 17, CS_ATTR_TEXT
+        .dw     cs_help_label_5
+        .db     2, 19, CS_ATTR_TEXT
+        .dw     cs_help_label_6
+        .db     2, 22, CS_ATTR_LABEL
+        .dw     cs_help_label_7
+        .db     0xff
+cs_help_label_1:
+        .db     "PAIR +8", 0
+cs_help_label_2:
+        .db     "SAME SUIT +25", 0
+cs_help_label_3:
+        .db     "A/D CARD    W SWAP (2/HAND)", 0
+cs_help_label_4:
+        .db     "RETURN SCORE  HIGH 3/MULTI 16", 0
+cs_help_label_5:
+        .db     "25 POINTS IN 3 HANDS", 0
+cs_help_label_6:
+        .db     "SPACE RETRY  CTRL+C BASIC", 0
+cs_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+cs_help_diagram:
+; Five-card hands: matching ranks at left and one suit at right.
+        .db     1, 6, CS_ATTR_CARD, 2, 0x37, 0x20
+        .db     4, 6, CS_ATTR_CARD_RED, 2, 0x37, 0x20
+        .db     7, 6, CS_ATTR_CARD, 2, 0x4b, 0x20
+        .db     10, 6, CS_ATTR_CARD_RED, 2, 0x41, 0x20
+        .db     13, 6, CS_ATTR_CARD, 2, 0x32, 0x20
+        .db     1, 0x80 + 7, CS_ATTR_SUIT, 1, CS_TILE_SUIT
+        .db     4, 0x80 + 7, CS_ATTR_SUIT_RED, 1, CS_TILE_SUIT + 4
+        .db     7, 0x80 + 7, CS_ATTR_SUIT, 1, CS_TILE_SUIT + 12
+        .db     10, 0x80 + 7, CS_ATTR_SUIT_RED, 1, CS_TILE_SUIT + 8
+        .db     13, 0x80 + 7, CS_ATTR_SUIT, 1, CS_TILE_SUIT
+        .db     17, 6, CS_ATTR_CARD_RED, 2, 0x33, 0x20
+        .db     20, 6, CS_ATTR_CARD_RED, 2, 0x35, 0x20
+        .db     23, 6, CS_ATTR_CARD_RED, 2, 0x39, 0x20
+        .db     26, 6, CS_ATTR_CARD_RED, 2, 0x4a, 0x20
+        .db     29, 6, CS_ATTR_CARD_RED, 2, 0x51, 0x20
+        .db     17, 0x80 + 7, CS_ATTR_SUIT_RED, 1, CS_TILE_SUIT + 4
+        .db     20, 0x80 + 7, CS_ATTR_SUIT_RED, 1, CS_TILE_SUIT + 4
+        .db     23, 0x80 + 7, CS_ATTR_SUIT_RED, 1, CS_TILE_SUIT + 4
+        .db     26, 0x80 + 7, CS_ATTR_SUIT_RED, 1, CS_TILE_SUIT + 4
+        .db     29, 0x80 + 7, CS_ATTR_SUIT_RED, 1, CS_TILE_SUIT + 4
+        .db     1, 10, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     17, 10, 0xa4, 14, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24
         .db     0xff
 
 cs_txt_name:
@@ -688,22 +730,6 @@ cs_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 cs_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-cs_help_1:
-        .db     "A/D : CHOOSE A CARD", 0
-cs_help_2:
-        .db     "W : REPLACE IT (TWICE/HAND)", 0
-cs_help_3:
-        .db     "RETURN : SCORE THE HAND", 0
-cs_help_4:
-        .db     "HIGH 3 / PAIR 8 / MULTI 16", 0
-cs_help_5:
-        .db     "ALL SAME SUIT SCORES 25.", 0
-cs_help_6:
-        .db     "MAKE 25 POINTS IN THREE HANDS.", 0
-cs_help_7:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-cs_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -755,7 +781,7 @@ cs_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -763,5 +789,6 @@ cs_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

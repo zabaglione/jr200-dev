@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
@@ -656,6 +658,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    TB_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     tb_help_diagram
+        JSR     jr_guide_draw
         LDX     tb_help_lines
         JMP     jr_gfx_lines
 
@@ -705,22 +709,50 @@ tb_title_lines:
         .dw     tb_txt_credit
         .db     0xff
 tb_help_lines:
-        .db     10, 2, TB_ATTR_TITLE
+        .db     10, 1, TB_ATTR_TITLE
         .dw     tb_txt_name
-        .db     1, 5, TB_ATTR_TEXT
-        .dw     tb_help_1
-        .db     1, 7, TB_ATTR_TEXT
-        .dw     tb_help_2
-        .db     1, 9, TB_ATTR_TEXT
-        .dw     tb_help_3
-        .db     1, 11, TB_ATTR_TEXT
-        .dw     tb_help_4
-        .db     1, 13, TB_ATTR_TEXT
-        .dw     tb_help_5
-        .db     1, 15, TB_ATTR_TEXT
-        .dw     tb_help_6
-        .db     1, 21, TB_ATTR_LABEL
-        .dw     tb_help_back
+        .db     2, 4, TB_ATTR_LABEL
+        .dw     tb_help_label_1
+        .db     21, 4, TB_ATTR_LABEL
+        .dw     tb_help_label_2
+        .db     2, 14, TB_ATTR_TEXT
+        .dw     tb_help_label_3
+        .db     2, 16, TB_ATTR_TEXT
+        .dw     tb_help_label_4
+        .db     2, 18, TB_ATTR_TEXT
+        .dw     tb_help_label_5
+        .db     2, 20, TB_ATTR_TEXT
+        .dw     tb_help_label_6
+        .db     2, 22, TB_ATTR_LABEL
+        .dw     tb_help_label_7
+        .db     0xff
+tb_help_label_1:
+        .db     "LOWERED", 0
+tb_help_label_2:
+        .db     "RAISE ROW", 0
+tb_help_label_3:
+        .db     "W/S BRIDGE   A/D ROW/COLUMN", 0
+tb_help_label_4:
+        .db     "RETURN RAISE / LOWER", 0
+tb_help_label_5:
+        .db     "LINK SHORE TO GATE   30 MOVES", 0
+tb_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+tb_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+tb_help_diagram:
+; A raised line completes a dry route between shore and gate.
+        .db     2, 0x80 + 7, TB_ATTR_HERO, 1, TB_TILE_HERO + 12
+        .db     4, 0x80 + 7, TB_ATTR_WATER, 3, TB_TILE_WATER, TB_TILE_WATER, TB_TILE_WATER
+        .db     10, 0x80 + 7, TB_ATTR_GATE, 1, TB_TILE_GATE
+        .db     13, 7, 0xb6, 4, 0x36, 0x36, 0x36, 0x36
+        .db     17, 7, 0x86, 1, 0x06
+        .db     16, 6, 0x86, 1, 0x00
+        .db     16, 8, 0x80, 1, 0x06
+        .db     20, 0x80 + 7, TB_ATTR_HERO, 1, TB_TILE_HERO + 12
+        .db     22, 0x80 + 7, TB_ATTR_PLANK, 3, TB_TILE_PLANK, TB_TILE_PLANK, TB_TILE_PLANK
+        .db     28, 0x80 + 7, TB_ATTR_GATE, 1, TB_TILE_GATE
         .db     0xff
 
 tb_txt_name:
@@ -757,20 +789,6 @@ tb_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 tb_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-tb_help_1:
-        .db     "W/S : SELECT BRIDGE", 0
-tb_help_2:
-        .db     "A/D : ROW OR COLUMN", 0
-tb_help_3:
-        .db     "RETURN : RAISE / LOWER LINE", 0
-tb_help_4:
-        .db     "LINK THE SHORE TO THE GATE.", 0
-tb_help_5:
-        .db     "THIRTY CHANGES PER TIDE.", 0
-tb_help_6:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-tb_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -822,7 +840,7 @@ tb_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -830,5 +848,6 @@ tb_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -439,6 +441,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    RL_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     rl_help_diagram
+        JSR     jr_guide_draw
         LDX     rl_help_lines
         JMP     jr_gfx_lines
 
@@ -480,24 +484,50 @@ rl_title_lines:
         .dw     rl_txt_credit
         .db     0xff
 rl_help_lines:
-        .db     10, 2, RL_ATTR_TITLE
+        .db     10, 1, RL_ATTR_TITLE
         .dw     rl_txt_name
-        .db     1, 5, RL_ATTR_TEXT
-        .dw     rl_help_1
-        .db     1, 7, RL_ATTR_TEXT
-        .dw     rl_help_2
-        .db     1, 9, RL_ATTR_TEXT
-        .dw     rl_help_3
-        .db     1, 11, RL_ATTR_TEXT
-        .dw     rl_help_4
-        .db     1, 13, RL_ATTR_TEXT
-        .dw     rl_help_5
-        .db     1, 15, RL_ATTR_TEXT
-        .dw     rl_help_6
-        .db     1, 17, RL_ATTR_TEXT
-        .dw     rl_help_7
-        .db     1, 21, RL_ATTR_LABEL
-        .dw     rl_help_back
+        .db     2, 4, RL_ATTR_LABEL
+        .dw     rl_help_label_1
+        .db     20, 4, RL_ATTR_LABEL
+        .dw     rl_help_label_2
+        .db     2, 14, RL_ATTR_TEXT
+        .dw     rl_help_label_3
+        .db     2, 16, RL_ATTR_TEXT
+        .dw     rl_help_label_4
+        .db     2, 18, RL_ATTR_TEXT
+        .dw     rl_help_label_5
+        .db     2, 20, RL_ATTR_TEXT
+        .dw     rl_help_label_6
+        .db     2, 22, RL_ATTR_LABEL
+        .dw     rl_help_label_7
+        .db     0xff
+rl_help_label_1:
+        .db     "LETTER VALUES", 0
+rl_help_label_2:
+        .db     "MATCH CLUES", 0
+rl_help_label_3:
+        .db     "A/D LETTER  W/S VALUE 1-4", 0
+rl_help_label_4:
+        .db     "USE EACH VALUE ONCE", 0
+rl_help_label_5:
+        .db     "RETURN CHECK   5 WRONG LOSES", 0
+rl_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+rl_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+rl_help_diagram:
+; A four-letter dictionary satisfies a sum and inequality together.
+        .db     2, 0x80 + 6, RL_ATTR_PILLAR, 1, RL_TILE_PILLAR
+        .db     5, 6, RL_ATTR_LEX, 4, 0x41, 0x42, 0x43, 0x44
+        .db     5, 7, RL_ATTR_VALUE, 4, 0x31, 0x32, 0x33, 0x34
+        .db     11, 7, 0xb6, 5, 0x36, 0x36, 0x36, 0x36, 0x36
+        .db     16, 7, 0x86, 1, 0x06
+        .db     15, 6, 0x86, 1, 0x00
+        .db     15, 8, 0x80, 1, 0x06
+        .db     20, 0x80 + 6, RL_ATTR_TABLET, 1, RL_TILE_TABLET
+        .db     23, 6, RL_ATTR_SUM, 5, 0x41, 0x2b, 0x44, 0x3d, 0x35
+        .db     23, 8, RL_ATTR_RIGHT, 3, 0x41, 0x3c, 0x44
         .db     0xff
 
 rl_txt_name:
@@ -520,22 +550,6 @@ rl_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 rl_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-rl_help_1:
-        .db     "A/D : SELECT A LETTER", 0
-rl_help_2:
-        .db     "W/S : CHANGE ITS VALUE 1 TO 4", 0
-rl_help_3:
-        .db     "USE EACH VALUE EXACTLY ONCE.", 0
-rl_help_4:
-        .db     "THREE SUMS AND A<D OR A>D", 0
-rl_help_5:
-        .db     "RETURN : CHECK YOUR DICTIONARY", 0
-rl_help_6:
-        .db     "FIVE WRONG GUESSES LOSE.", 0
-rl_help_7:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-rl_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -585,7 +599,7 @@ rl_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -593,5 +607,6 @@ rl_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

@@ -150,7 +150,7 @@
             "playfield": "010020",
             "sound-control": "00"
           },
-          "framebuffer_sha256": "fd09622df63c3239dee9f3a58949994bd0da21e83d21b0636595ca07d7862c67",
+          "framebuffer_sha256": "0936dc0460e3180d15b827d895b2306eed767b2f5e8cfa599fdf3af25e52bc39",
           "pcm": null,
           "cassette": null
         }

@@ -9,6 +9,8 @@
 JR_SHADOW:          .equ    0x3000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
+JR_INPUT:          .equ    JR_RT + 0x300
+GAME_INPUT_POLICY: .equ    jr_input_default_policy
 GAME_STATE:         .equ    0x4640
 GAME_STATE_END:     .equ    0x4700
 JR_AUDIO:           .equ    0x4700
@@ -661,6 +663,8 @@ game_draw_help:
         LDAA    0x20
         LDAB    CR_ATTR_TEXT
         JSR     jr_gfx_fill
+        LDX     cr_help_diagram
+        JSR     jr_guide_draw
         LDX     cr_help_lines
         JMP     jr_gfx_lines
 
@@ -720,26 +724,52 @@ cr_title_lines:
         .dw     cr_txt_credit
         .db     0xff
 cr_help_lines:
-        .db     10, 2, CR_ATTR_TITLE
+        .db     10, 1, CR_ATTR_TITLE
         .dw     cr_txt_name
-        .db     1, 5, CR_ATTR_TEXT
-        .dw     cr_help_1
-        .db     1, 7, CR_ATTR_TEXT
-        .dw     cr_help_2
-        .db     1, 9, CR_ATTR_TEXT
-        .dw     cr_help_3
-        .db     1, 11, CR_ATTR_TEXT
-        .dw     cr_help_4
-        .db     1, 13, CR_ATTR_TEXT
-        .dw     cr_help_5
-        .db     1, 15, CR_ATTR_TEXT
-        .dw     cr_help_6
-        .db     1, 17, CR_ATTR_TEXT
-        .dw     cr_help_7
-        .db     1, 19, CR_ATTR_TEXT
-        .dw     cr_help_8
-        .db     1, 21, CR_ATTR_LABEL
-        .dw     cr_help_back
+        .db     2, 4, CR_ATTR_LABEL
+        .dw     cr_help_label_1
+        .db     21, 4, CR_ATTR_LABEL
+        .dw     cr_help_label_2
+        .db     2, 14, CR_ATTR_TEXT
+        .dw     cr_help_label_3
+        .db     2, 16, CR_ATTR_TEXT
+        .dw     cr_help_label_4
+        .db     2, 18, CR_ATTR_TEXT
+        .dw     cr_help_label_5
+        .db     2, 20, CR_ATTR_TEXT
+        .dw     cr_help_label_6
+        .db     2, 22, CR_ATTR_LABEL
+        .dw     cr_help_label_7
+        .db     0xff
+cr_help_label_1:
+        .db     "X SURVEY", 0
+cr_help_label_2:
+        .db     "RETURN DIG", 0
+cr_help_label_3:
+        .db     "WASD WALK   SURVEY 2 FOOD", 0
+cr_help_label_4:
+        .db     "NEAR 0-2  MID 3-5  FAR 6+", 0
+cr_help_label_5:
+        .db     "4 SURVEYS / 3 DIGS", 0
+cr_help_label_6:
+        .db     "SPACE RETRY   CTRL+C BASIC", 0
+cr_help_label_7:
+        .db     "ANY KEY TO TITLE", 0
+
+cr_help_diagram:
+; Bearings from two positions narrow the search to a shared spot.
+        .db     3, 0x80 + 6, CR_ATTR_HERO, 1, CR_TILE_HERO + 12
+        .db     3, 0x80 + 10, CR_ATTR_HERO, 1, CR_TILE_HERO + 12
+        .db     5, 7, 0xad, 5, 0x2d, 0x2d, 0x2d, 0x2d, 0x2d
+        .db     5, 10, 0xad, 5, 0x2d, 0x2d, 0x2d, 0x2d, 0x2d
+        .db     10, 8, 0xa8, 1, 0x05
+        .db     10, 9, 0x85, 1, 0x28
+        .db     11, 8, 0xb6, 1, 0x36
+        .db     14, 0x80 + 6, CR_ATTR_ROCK, 1, CR_TILE_ROCK
+        .db     21, 0x80 + 6, CR_ATTR_HERO, 1, CR_TILE_HERO + 12
+        .db     23, 0x80 + 6, CR_ATTR_SAND, 1, CR_TILE_SAND
+        .db     23, 8, CR_ATTR_HOLE, 1, 0x76
+        .db     23, 9, 0x86, 1, 0x06
         .db     0xff
 
 cr_txt_name:
@@ -776,24 +806,6 @@ cr_txt_howto:
         .db     "W/A/S/D : HOW TO PLAY", 0
 cr_txt_credit:
         .db     "JR-200 PORT OF JR100DEV", 0
-cr_help_1:
-        .db     "WASD : MOVE  RETURN : DIG", 0
-cr_help_2:
-        .db     "X : SURVEY AGAIN, COSTS 2 FOOD", 0
-cr_help_3:
-        .db     "BEARING STAYS AT LAST SURVEY.", 0
-cr_help_4:
-        .db     "NEAR 0-2 / MID 3-5 / FAR 6+", 0
-cr_help_5:
-        .db     "COMPARE READINGS TO FIND GOLD.", 0
-cr_help_6:
-        .db     "FOUR SURVEYS AND THREE DIGS.", 0
-cr_help_7:
-        .db     "ROCKS BLOCK TRAVEL.", 0
-cr_help_8:
-        .db     "SPACE : RESTART  CTRL+C : BASIC", 0
-cr_help_back:
-        .db     "ANY KEY : TITLE", 0
 
 ; ---------------------------------------------------------------- sound
 
@@ -849,7 +861,7 @@ cr_lose_bass:
         .include "art.inc"
         .include "../../../sdk/session.inc"
         .include "../../../sdk/keys_ext.inc"
-        .include "../../../sdk/gfx.inc"
+        .include "../../../sdk/gfx_buffered.inc"
         .include "../../../sdk/font.inc"
         .include "../../../sdk/pcg.inc"
         .include "../../../sdk/frame.inc"
@@ -857,5 +869,6 @@ cr_lose_bass:
         .include "../../../sdk/sound.inc"
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
-        .include "../../../sdk/port.inc"
+        .include "../../../sdk/port_buffered.inc"
+        .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"

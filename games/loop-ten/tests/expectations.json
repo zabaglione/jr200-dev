@@ -74,7 +74,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "82b8a9b3fe9fafa9dad736132b1ab374399a21e2bdbaa2c6c097354f54a51755",
+          "framebuffer_sha256": "6d766452e3f448e3b5a3a766ea18a0e7b2a5ff720ac61984eb38917c071406bb",
           "pcm": null,
           "cassette": null
         }
@@ -532,7 +532,7 @@
       {
         "profile": "synthetic-demo-play",
         "mode": "synthetic-injection",
-        "max_cycles": 15133333,
+        "max_cycles": 15273666,
         "return_address": "0x7ff0",
         "replay": [
           {

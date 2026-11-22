@@ -11,6 +11,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 from release_audit import (REVIEWED_GALLERY_VIDEOS, expected_spdx,
                            inspect_candidate_files, scan_text, unsafe_candidate_path)
+from test_gallery import gallery_expectations_snapshot
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,8 +77,8 @@ class GalleryVideoAuditTests(unittest.TestCase):
         self.project.mkdir(parents=True)
         shutil.copytree(ROOT / 'games/lumen-cross/media', self.project / 'media')
         (self.project / 'tests').mkdir()
-        shutil.copy2(ROOT / 'games/lumen-cross/tests/expectations.json',
-                     self.project / 'tests/expectations.json')
+        (self.project / 'tests/expectations.json').write_bytes(
+            gallery_expectations_snapshot(ROOT / 'games/lumen-cross/media/gallery.json'))
         self.video = self.root / VIDEO
         self.manifest = self.project / 'media/gallery.json'
 

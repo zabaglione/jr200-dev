@@ -36,8 +36,9 @@ class WebExportTests(unittest.TestCase):
         run = lambda *a: subprocess.run(['git', *a], cwd=self.root, check=True,  # noqa: E731
                                         capture_output=True, text=True).stdout.strip()
         run('init', '-q')
+        run('add', '--', 'LICENSE')
         run('-c', 'user.name=t', '-c', 'user.email=t@example.invalid', 'commit',
-            '-q', '--allow-empty', '-m', 'x')
+            '-q', '-m', 'x')
         return run('rev-parse', 'HEAD')
 
     def publish(self, status='verified', ready=True):
