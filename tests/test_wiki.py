@@ -366,6 +366,7 @@ class WikiGenerationTests(unittest.TestCase):
             render_pages(self.fixture.root, None, True)
 
     def test_published_page_requires_clean_source_ancestry(self):
+        self.fixture.metadata['license'] = 'MIT'
         self.fixture.metadata['release']['status'] = 'verified'
         self.fixture.metadata['release']['publication'] = 'published'
         self.fixture.metadata_path.write_text(
@@ -378,6 +379,12 @@ class WikiGenerationTests(unittest.TestCase):
             'v0.1.0/side-catch-0.1.0.zip')
         self.fixture.write_catalog()
         project = self.fixture.root / 'games/side-catch'
+        (project / 'LICENSE').write_bytes((ROOT / 'games/relic-dive/LICENSE').read_bytes())
+        sdk_inputs = json.loads((project / 'build.json').read_text(encoding='utf-8'))[
+            'inputs']['sdk']
+        notice = project / 'THIRD_PARTY_NOTICES.md'
+        notices_at_release = 'BSD-3-Clause\n' + '\n'.join(sdk_inputs) + '\n'
+        notice.write_text(notices_at_release, encoding='utf-8')
         gallery_path = project / 'media/gallery.json'
         gallery = json.loads(gallery_path.read_text(encoding='utf-8'))
         gallery['capture']['artifact_sha256'] = self.fixture.artifact_sha256
@@ -394,13 +401,24 @@ class WikiGenerationTests(unittest.TestCase):
         source_commit = subprocess.check_output(
             ['git', 'rev-parse', 'HEAD'], cwd=self.fixture.root, text=True).strip()
         self.fixture.write_package(ready=True, source_commit=source_commit)
-        subprocess.check_call(['git', 'add', 'games/catalog.json'], cwd=self.fixture.root)
+        notice.write_text(notices_at_release + 'Development notice update\n', encoding='utf-8')
+        subprocess.check_call(
+            ['git', 'add', 'games/catalog.json', 'games/side-catch/THIRD_PARTY_NOTICES.md'],
+            cwd=self.fixture.root)
         subprocess.check_call(
             ['git', '-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
              'commit', '-m', 'catalog hash'], cwd=self.fixture.root,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         current_commit = subprocess.check_output(
             ['git', 'rev-parse', 'HEAD'], cwd=self.fixture.root, text=True).strip()
+        fixed_archive = self.fixture.package.read_bytes()
+        fixed_hash = item['package']['sha256']
+        self.fixture.write_package(ready=True, source_commit=source_commit)
+        with self.assertRaisesRegex(WikiError, 'package license or notice mismatch'):
+            render_pages(self.fixture.root, None, False, expected_commit=current_commit)
+        self.fixture.package.write_bytes(fixed_archive)
+        item['package']['sha256'] = fixed_hash
+        self.fixture.write_catalog()
         expectations_path = project / 'tests/expectations.json'
         expectations = json.loads(expectations_path.read_text(encoding='utf-8'))
         for profile in expectations['runtime']['profiles']:
