@@ -104,7 +104,7 @@ REVIEWED_GALLERY_VIDEOS = {
     'games/quiet-route/media/goal.webm':
         'e4ac5e1b3169f8878c8405bcd8598afe433c25641da2f005b8c6d3798ea2a9d3',
     'games/ribbon-snake/media/goal.webm':
-        '5ff5e94d2a83aca2ee8fa58df0d2277161e4b43113c519e8332b608931c444af',
+        '378f1222a98d189a5c0312d71850a1b389ded9e11369ff9e7fcdad5fdc4d9cb6',
     'games/ruin-lexicon/media/goal.webm':
         'cfd34f9dc71589ffdea8567438040d37603ad58d25cf02fe2c7103783eafa581',
     'games/sand-rescue/media/goal.webm':
