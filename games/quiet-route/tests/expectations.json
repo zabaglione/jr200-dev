@@ -2,6 +2,7 @@
   "schema_version": 2,
   "expected_entry_address": "0x1000",
   "runtime": {
+    "startup_delay_cycles": 121769,
     "default_profile": "synthetic-title",
     "profiles": [
       {
@@ -24,7 +25,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "fb018f3a5e80dbde1ce87473e6f845720644b3951917f54e82fa58d9ae5da6f8",
+          "framebuffer_sha256": "78e7eb695f7c409ab0adcadde0a738610c5b8939c2d1e9037392cc0415b1ce8b",
           "pcm": null,
           "cassette": null
         }
@@ -152,30 +153,30 @@
       {
         "profile": "synthetic-sound",
         "mode": "synthetic-injection",
-        "max_cycles": 5700000,
+        "max_cycles": 5578231,
         "return_address": "0x7ff0",
         "replay": [
           {
             "kind": "key",
-            "cycle": 400000,
+            "cycle": 278231,
             "code": "0x0d",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 450000,
+            "cycle": 328231,
             "code": "0x0d",
             "pressed": false
           },
           {
             "kind": "key",
-            "cycle": 5500000,
+            "cycle": 5378231,
             "code": "0x64",
             "pressed": true
           },
           {
             "kind": "key",
-            "cycle": 5550000,
+            "cycle": 5428231,
             "code": "0x64",
             "pressed": false
           }
@@ -781,7 +782,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "fb018f3a5e80dbde1ce87473e6f845720644b3951917f54e82fa58d9ae5da6f8",
+          "framebuffer_sha256": "78e7eb695f7c409ab0adcadde0a738610c5b8939c2d1e9037392cc0415b1ce8b",
           "pcm": null,
           "cassette": {
             "state": 6,

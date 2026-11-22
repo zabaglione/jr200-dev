@@ -129,6 +129,7 @@ start:
 ; NEW_GAME: keep the original seed for each point in the title melody,
 ; independent of the link address of the notes.
 game_init:
+        CLR     [JR200_BORDER]
         LDAA    [JR_AU_VOICE + 1]
         ADDA    (0x3f - dr_title_melody) & 0xff
         EORA    [JR_AU_VOICE + 2]
@@ -1106,6 +1107,11 @@ dr_draw_workshop_done:
         JMP     dr_draw_error
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     dr_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -1144,6 +1150,7 @@ game_draw_title:
         JMP     jr_gfx_putc
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    DR_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1457,3 +1464,8 @@ dr_lose_bass:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

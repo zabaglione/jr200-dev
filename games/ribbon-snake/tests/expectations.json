@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/ribbon-snake/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six gardens with their input scripts; synthetic-demo-clear plays garden 1 with the same script at normal speed. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 125910,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "000000000000000100000000000000800000000000000000000000000000000000030c112241408600c03088448202098986404728100f00150902028c70f000000001030c10262800800060980402022820201008060100020202040830c00000001f204c52524c0000f804324a4a324c52524c201f0000324a4a3204f8000000030c1026294a4600c030086494526240404344402020200202c2220204040420202040444340400404040222c20202464a2926100c0300625294640830c00000030c1026294b4400f8070000102020444b2926100c0300202010000007f800001fe0000008040400c030086494d2220404080000e01f0022d294640830c000"
           },
-          "framebuffer_sha256": "359b03e5e8517bd628dc97f2995c0668c83de2b2ef7e2f3df8330fba8b389b95",
+          "framebuffer_sha256": "d6d6f5a8c9c6bc67f387461361b4849c33fd359186446c8622195ff6225d9fe5",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -613,7 +614,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "359b03e5e8517bd628dc97f2995c0668c83de2b2ef7e2f3df8330fba8b389b95",
+          "framebuffer_sha256": "d6d6f5a8c9c6bc67f387461361b4849c33fd359186446c8622195ff6225d9fe5",
           "pcm": null,
           "cassette": {
             "state": 6,

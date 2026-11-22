@@ -114,6 +114,7 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init_state:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    27
@@ -843,6 +844,11 @@ ns_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     ns_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -876,6 +882,7 @@ ns_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    NS_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1068,3 +1075,8 @@ ns_lose_bass:
         .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

@@ -124,6 +124,7 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
+        CLR     [JR200_BORDER]
         ; continue after a clear: the port has just moved one stage on
         LDAA    [JR_PORT_LEVEL]
         BEQ     or_init_fresh
@@ -1251,6 +1252,11 @@ or_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     or_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -1279,6 +1285,7 @@ or_title_card:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    OR_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1492,3 +1499,8 @@ or_lose_bass:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

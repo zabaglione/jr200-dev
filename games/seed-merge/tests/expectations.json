@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "Provisional deterministic replay profiles for the new JR-200 port; expectations will be tightened against the independent rule model. ROM/FONT and real BASIC loading are separate gates.",
   "runtime": {
+    "startup_delay_cycles": 123734,
     "default_profile": "synthetic-start",
     "profiles": [
       {
@@ -16,7 +17,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "00"},
-          "framebuffer_sha256": "eb06a73b5b80fae08514e88ee09f69e6f2ad36feac136eb8de66aac1bd9b62ab", "pcm": null, "cassette": null
+          "framebuffer_sha256": "ae0ce3388038e8a9dc5973c9f037a860e4fc6b5fd2463790f3c36f6e083c5c08", "pcm": null, "cassette": null
         }
       },
       {
@@ -84,13 +85,13 @@
       {
         "profile": "synthetic-sound",
         "mode": "synthetic-injection",
-        "max_cycles": 2300000,
+        "max_cycles": 2176266,
         "return_address": "0x7ff0",
         "replay": [
-          {"kind": "key", "cycle": 400000, "code": "0x0d", "pressed": true},
-          {"kind": "key", "cycle": 450000, "code": "0x0d", "pressed": false},
-          {"kind": "key", "cycle": 1900000, "code": "0x64", "pressed": true},
-          {"kind": "key", "cycle": 1950000, "code": "0x64", "pressed": false}
+          {"kind": "key", "cycle": 276266, "code": "0x0d", "pressed": true},
+          {"kind": "key", "cycle": 326266, "code": "0x0d", "pressed": false},
+          {"kind": "key", "cycle": 1776266, "code": "0x64", "pressed": true},
+          {"kind": "key", "cycle": 1826266, "code": "0x64", "pressed": false}
         ],
         "observations": [{"name": "mode", "address": "0x4620", "length": 1}],
         "breakpoints": [],
@@ -263,7 +264,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "00"},
-          "framebuffer_sha256": "eb06a73b5b80fae08514e88ee09f69e6f2ad36feac136eb8de66aac1bd9b62ab", "pcm": null,
+          "framebuffer_sha256": "ae0ce3388038e8a9dc5973c9f037a860e4fc6b5fd2463790f3c36f6e083c5c08", "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         }
       },

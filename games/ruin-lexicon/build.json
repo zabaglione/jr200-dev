@@ -23,7 +23,8 @@
   "inputs": {
     "assembly": [
       "src/art.inc",
-      "src/main.asm"
+      "src/main.asm",
+      "src/title_art.inc"
     ],
     "sdk": [
       "sdk/audio.inc",
@@ -42,7 +43,8 @@
       "sdk/port_input.inc",
       "sdk/port_runtime.inc",
       "sdk/session.inc",
-      "sdk/sound.inc"
+      "sdk/sound.inc",
+      "sdk/title_art.inc"
     ],
     "assets": []
   },

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/orbit-draft/tests/model.py (upstream rules 3.0.1). The only emulator-derived input is origin, upstream's entropy(): each new game samples the title-song position, logged at 0x4720 (count, values) and fed to the model; every other byte is the model's prediction, read from the kept state at 0x4740. The moves come from a greedy two-move search on the model; synthetic-second-clear continues into the next round with the board and score kept, and synthetic-lose fills the board without spins. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 128562,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -37,7 +38,7 @@
             "pcg": "000003070f3f6fc70000c0e3f6fcf0e0070f0f0703000000e0f0f0e0c00000000001010303ff7f1f008080c0c0fffef80f1f1e3830000000f0f8781c0c00000000071e3c7878f0f000c0000000000000f078783c1e0700000000000000c000000000000000000103000e1f3f7ffef0c0070c1020400000000000000000000000",
             "origins": "0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
           },
-          "framebuffer_sha256": "8a3fa90525b38c9f26608da21af858aba0944f76fec1ff86654e11c02074a8ff",
+          "framebuffer_sha256": "092374b03dc4b0efb524229e5d3c085186f674d74a624db3e36cca9633f26493",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -3403,7 +3404,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "8a3fa90525b38c9f26608da21af858aba0944f76fec1ff86654e11c02074a8ff",
+          "framebuffer_sha256": "092374b03dc4b0efb524229e5d3c085186f674d74a624db3e36cca9633f26493",
           "pcm": null,
           "cassette": {
             "state": 6,

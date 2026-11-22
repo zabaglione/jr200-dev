@@ -4,13 +4,16 @@ import json
 import re
 from pathlib import Path
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile
 import unittest
 import zipfile
+import zlib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+from png_rgba import decode_rgba
 from test_gallery import gallery_expectations_snapshot
 from wiki.generate import (WikiError, apply_files, render_pages,
                            require_git_worktree, sync_plan)
@@ -64,6 +67,19 @@ def make_cjr(payload=b'\x01\x39', start=0x1000):
     return bytes(header + block + bytes((2, 0x2a, 0xff, 0xff, end >> 8, end & 0xff)))
 
 
+def synthetic_rgba_png(width=320, height=224, color=(16, 24, 32, 255)):
+    pixel = bytes(color)
+    rows = b''.join(b'\0' + pixel * width for _ in range(height))
+
+    def chunk(kind, payload):
+        return (struct.pack('>I', len(payload)) + kind + payload
+                + struct.pack('>I', zlib.crc32(kind + payload) & 0xffffffff))
+
+    header = struct.pack('>IIBBBBB', width, height, 8, 6, 0, 0, 0)
+    return (b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', header)
+            + chunk(b'IDAT', zlib.compress(rows)) + chunk(b'IEND', b''))
+
+
 class WikiFixture:
     def __init__(self):
         self.temporary = tempfile.TemporaryDirectory()
@@ -87,15 +103,28 @@ class WikiFixture:
         self.metadata_path.write_text(json.dumps(self.metadata) + '\n', encoding='utf-8')
         self.artifact = make_cjr()
         self.artifact_sha256 = hashlib.sha256(self.artifact).hexdigest()
-        self.expectations_sha256 = hashlib.sha256(
-            (self.root / 'games/side-catch/tests/expectations.json').read_bytes()
-        ).hexdigest()
+        gallery_path = self.root / 'games/side-catch/media/gallery.json'
+        gallery = json.loads(gallery_path.read_text(encoding='utf-8'))
+        title_scene = next(scene for scene in gallery['scenes']
+                           if scene['role'] == 'title')
+        self.screenshot_profile = title_scene['profile']
         screenshot = self.root / 'games/side-catch/media/screenshot.png'
-        self.screenshot_sha256 = hashlib.sha256(screenshot.read_bytes()).hexdigest()
-        self.framebuffer_sha256 = json.loads((ROOT / 'games/catalog.json').read_text())[
-            'games'][0]['wiki']['screenshot']['framebuffer_sha256']
+        screenshot_bytes = screenshot.read_bytes()
+        width, height, pixels = decode_rgba(screenshot_bytes)
+        if (width, height) != (320, 224):
+            raise AssertionError('fixture title capture must be 320x224')
+        self.screenshot_sha256 = hashlib.sha256(screenshot_bytes).hexdigest()
+        self.framebuffer_sha256 = hashlib.sha256(pixels).hexdigest()
+        expectations_path = self.root / 'games/side-catch/tests/expectations.json'
+        expectations = json.loads(expectations_path.read_text(encoding='utf-8'))
+        profiles = {profile['profile']: profile
+                    for profile in expectations['runtime']['profiles']}
+        for scene in gallery['scenes']:
+            profiles[scene['profile']]['expect']['framebuffer_sha256'] = (
+                scene['framebuffer_sha256'])
+        expectations_path.write_text(json.dumps(expectations) + '\n', encoding='utf-8')
+        self.expectations_sha256 = hashlib.sha256(expectations_path.read_bytes()).hexdigest()
         self.version = self.metadata['version']
-        self.screenshot_profile = 'local-rom-title'
         self.package = (self.root / 'games/side-catch/build/package/'
                         f'side-catch-{self.version}.zip')
         self.catalog = {
@@ -319,6 +348,23 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertNotIn('## タイトル画面', all_games)
         self.assertIn('| [SIDE CATCH](Game-side-catch) |', all_games)
 
+    def test_title_preview_manifest_rejects_a_candidate_game(self):
+        preview_dir = self.fixture.root / 'wiki'
+        preview_dir.mkdir()
+        manifest = {
+            'schema_version': 1,
+            'source_commit': 'a' * 40,
+            'games': {'side-catch': {
+                'sha256': 'b' * 64,
+                'framebuffer_sha256': 'c' * 64,
+                'artifact_sha256': 'd' * 64,
+            }},
+        }
+        (preview_dir / 'title-previews.json').write_text(
+            json.dumps(manifest) + '\n', encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'Invalid title preview game ID'):
+            render_pages(self.fixture.root, None, True)
+
     def test_candidate_rejects_unsafe_capture_path(self):
         self.fixture.catalog['games'][0]['wiki']['screenshot']['file'] = (
             'media/../screenshot.png')
@@ -467,6 +513,66 @@ class WikiGenerationTests(unittest.TestCase):
         self.assertTrue(games[0]['publish'])
         self.assertIn('検証済みの公開ゲームを作品一覧から選べます',
                       files['Home.md'].decode('utf-8'))
+
+        preview_dir = self.fixture.root / 'wiki/title-previews'
+        preview_dir.mkdir(parents=True)
+        preview_path = preview_dir / 'side-catch.png'
+        preview = synthetic_rgba_png()
+        preview_path.write_bytes(preview)
+        manifest_path = self.fixture.root / 'wiki/title-previews.json'
+        manifest = {
+            'schema_version': 1,
+            'source_commit': source_commit,
+            'games': {'side-catch': {
+                'sha256': hashlib.sha256(preview).hexdigest(),
+                'framebuffer_sha256': hashlib.sha256(
+                    bytes((16, 24, 32, 255)) * (320 * 224)).hexdigest(),
+                'artifact_sha256': self.fixture.artifact_sha256,
+            }},
+        }
+        manifest_path.write_text(json.dumps(manifest) + '\n', encoding='utf-8')
+        preview_files, _ = render_pages(
+            self.fixture.root, None, False, expected_commit=current_commit)
+        preview_asset = 'media/side-catch-title-preview.png'
+        self.assertEqual(set(preview_files) - set(files), {preview_asset})
+        for name, content in files.items():
+            if name != 'All-Games.md':
+                self.assertEqual(preview_files[name], content, name)
+        all_games = preview_files['All-Games.md'].decode('utf-8')
+        self.assertIn(f'<img src="{preview_asset}"', all_games)
+        self.assertIn('現在の開発ビルドを撮影したプレビュー', all_games)
+        self.assertLess(all_games.index('現在の開発ビルドを撮影したプレビュー'),
+                        all_games.index('<table width="100%">'))
+        self.assertEqual(preview_files[preview_asset], preview)
+        self.assertEqual(preview_files['Game-side-catch.md'], files['Game-side-catch.md'])
+
+        manifest['source_commit'] = current_commit
+        manifest_path.write_text(json.dumps(manifest) + '\n', encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'not an ancestor'):
+            render_pages(self.fixture.root, None, False, expected_commit=source_commit)
+        manifest['source_commit'] = source_commit
+        manifest_path.write_text(json.dumps(manifest) + '\n', encoding='utf-8')
+        manifest['games']['side-catch']['sha256'] = 'e' * 64
+        manifest_path.write_text(json.dumps(manifest) + '\n', encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'title preview hash or size'):
+            render_pages(self.fixture.root, None, False, expected_commit=current_commit)
+        manifest['games']['side-catch']['sha256'] = hashlib.sha256(preview).hexdigest()
+        manifest['games']['side-catch']['artifact_sha256'] = 'not-a-sha256'
+        manifest_path.write_text(json.dumps(manifest) + '\n', encoding='utf-8')
+        with self.assertRaisesRegex(WikiError, 'invalid title preview hashes'):
+            render_pages(self.fixture.root, None, False, expected_commit=current_commit)
+        manifest['games']['side-catch']['artifact_sha256'] = self.fixture.artifact_sha256
+        manifest_path.write_text(json.dumps(manifest) + '\n', encoding='utf-8')
+        target_path = preview_dir / 'capture.png'
+        target_path.write_bytes(preview)
+        preview_path.unlink()
+        preview_path.symlink_to(target_path)
+        with self.assertRaisesRegex(WikiError, 'title preview image is a symlink'):
+            render_pages(self.fixture.root, None, False, expected_commit=current_commit)
+        manifest_path.unlink()
+        preview_path.unlink()
+        target_path.unlink()
+
         item['wiki']['play_url'] = (
             'https://zabaglione.github.io/jr200-web-emulator/?game=side-catch')
         self.fixture.write_catalog()

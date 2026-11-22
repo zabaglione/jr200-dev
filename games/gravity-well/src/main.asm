@@ -8,7 +8,7 @@
         .filename.jr "GRAVITY-WELL"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
+JR_SHADOW:          .equ    0x6000
 JR_SAVE:            .equ    0x3600
 JR_RT:              .equ    0x4600
 JR_INPUT:          .equ    JR_RT + 0x300
@@ -112,6 +112,7 @@ game_level_par:
         RTS
 
 game_init:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDAA    [JR_PORT_LEVEL]
         JSR     gw_stage
@@ -454,6 +455,11 @@ gw_draw_ball_next:
         JMP     jr_rank_hud
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     gw_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -486,6 +492,7 @@ gw_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    GW_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -665,3 +672,8 @@ gw_lose_bass:
         .include "../../../sdk/ranked_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/iron-script/tests/model.py (upstream rules 2.0.1) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and, for all 24 rooms, types the upstream solutions.json program with the editing keys and runs it; synthetic-demo-clear plays room 1 the same way at normal speed; synthetic-empty-run runs the empty program to its end. A run steps one command per tick and keys are only read between runs, so the observed states do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-buffered-stop submits RETURN during a running command and expects a user stop.",
   "runtime": {
+    "startup_delay_cycles": 132108,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0000000000000001000000000000008000000000000000000000000000000000ff8181ffe0e0ff81ff8181ff6060ff8181ffe0e0ff8181ff81ff6060ff8181ff000103060d1b366c0080c060b0d86c366c361b0d06030100366cd8b060c0800000000f10171415150000f008e828a8a81417100f0000000028e808f0000000000003070d0f071f2f00c0e0b0f0e0f8f42d0f060c1c000000b4f06030380000000080c0a090888482000103050911214182848890a0c08000412111090503010010387c1010101000101010107c38100010307e3010000000080c7e0c08000000000000181800000080c0e0f0e0c0800000020f3efe3e0f021c2241404742221c"
           },
-          "framebuffer_sha256": "a5b1ccf0b7ac4d16aba13919dfe9411a6a55c7021f0bf8e2d265c00bce028d5d",
+          "framebuffer_sha256": "20938b93e284d13b518ec50e2904e3cc2f417bd6d5b62334ccab821618db8ea3",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -723,7 +724,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "a5b1ccf0b7ac4d16aba13919dfe9411a6a55c7021f0bf8e2d265c00bce028d5d",
+          "framebuffer_sha256": "20938b93e284d13b518ec50e2904e3cc2f417bd6d5b62334ccab821618db8ea3",
           "pcm": null,
           "cassette": {
             "state": 6,

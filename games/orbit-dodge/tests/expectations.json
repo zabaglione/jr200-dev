@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/orbit-dodge/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six sectors with their input scripts; synthetic-demo-clear plays sector 1 with the same script at normal speed; synthetic-no-input-clear stays still and survives sector 1 with one hull (the loss path is the fire-last-hull fixture). Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-rapid-taps expects all three right taps spaced 32 ms apart to move the player.",
   "runtime": {
+    "startup_delay_cycles": 129682,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "00000000000304040000000000c0202004040300000000002020c000000000000001030509113f110080c0a09088fc88090503010000000090a0c08000000000001810000304050500180800c020a0a0040300101800000020c00008180000000001030206070d1d0080c04060e0b0b83c272302040000003ce4c44020000000000719234240838700e00c02190d01818380584c20180700010109190418e0001818181818181818000000ffff000000c06030180c06030103060c183060c080925438fe3854920000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "64dd5a522d3943a7ba8ee04e19bcfb22b78baa4ba4fc279cf41cefa3db144b6f",
+          "framebuffer_sha256": "9f50c34050a719e62d91cc882362303e162e7786ad7ae4b3e62098961e823a1a",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -693,7 +694,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "64dd5a522d3943a7ba8ee04e19bcfb22b78baa4ba4fc279cf41cefa3db144b6f",
+          "framebuffer_sha256": "9f50c34050a719e62d91cc882362303e162e7786ad7ae4b3e62098961e823a1a",
           "pcm": null,
           "cassette": {
             "state": 6,

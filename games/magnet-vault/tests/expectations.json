@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/magnet-vault/tests/model.py (upstream rules 1.6.1) and tests/ranked_model.py (upstream ranked campaign runtime and password), not from the emulator; best is the per-stage rating table at 0x4760. Stages replay upstream solutions.json (three stars) and the challenges.json clear route (two stars); synthetic-vaults-1-20, -21-30 and -31-40 (resumed by password) rate all forty stages. synthetic-password types a code made by the model and restores stage 13 and its ratings. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 123083,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -37,7 +38,7 @@
             "pcg": "0000000000000001000000000000008000000000000000000000000000000000ff8181ffe0e0ff81ff8181ff6060ff8181ffe0e0ff8181ff81ff6060ff8181ff0001020409122448008040209048241248241209040201001224489020408000ffc0a09f90979495ff0305fe09e929a9959497909fa0c0ffa929e909fe0503ff",
             "best": "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
           },
-          "framebuffer_sha256": "97bf326a2a859524f0b2255b4aef637487ab7e0be82a87a9b0531829a732d341",
+          "framebuffer_sha256": "ef5a90ecac79af9f5827bbc7ed707dfc2a88ed2d14a88eda29f051bf4b5a8ccb",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -14475,7 +14476,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "97bf326a2a859524f0b2255b4aef637487ab7e0be82a87a9b0531829a732d341",
+          "framebuffer_sha256": "ef5a90ecac79af9f5827bbc7ed707dfc2a88ed2d14a88eda29f051bf4b5a8ccb",
           "pcm": null,
           "cassette": {
             "state": 6,

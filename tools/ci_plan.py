@@ -20,11 +20,12 @@ TEST_POLICY = ('ci/runner.lock.json', 'emulator.lock.json',
                'tools/emulator_runner.py', 'tools/runner_fetch.py',
                'tools/runner_joystick_smoke.mjs',
                'tools/jr200_wasm_runner.mjs',
-               'tools/png_rgba.py')
+               'tools/png_rgba.py', 'tools/title_art/**')
 DOCS = ('README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'AGENTS.md',
         'docs/**', 'sdk/README.md', '.github/ISSUE_TEMPLATE/**',
         '.github/pull_request_template.md')
-WIKI = ('tools/wiki/**', 'tools/web_export.py', 'games/catalog.json')
+WIKI = ('tools/wiki/**', 'tools/web_export.py', 'games/catalog.json', 'wiki/title-previews.json',
+        'wiki/title-previews/**')
 INFRA = ('.gitignore', '.gitattributes', '.editorconfig')
 # Interactive local tools that neither build nor test targets.
 LOCAL_TOOLS = ('tools/game_play.py', 'tools/capture_video.py', 'tools/jr200_capture.mjs')

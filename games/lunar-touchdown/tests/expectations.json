@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/lunar-touchdown/tests/model.py (upstream rules 2.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six sites with their input scripts; synthetic-demo-clear plays site 1 with the same script at normal speed; synthetic-no-input-loss falls without thrust and crashes. Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-rapid-taps expects all three right taps spaced 32 ms apart to move the player. synthetic-thrust-buffer submits right during the thrust hold and checks the resulting move.",
   "runtime": {
+    "startup_delay_cycles": 122755,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "010304090a091f2080c020905090f8042f3014244484f000f40c282422210f00a55a6624241818002418180000000000ffaaff242400000080442a118042249810107c1028440000000000100000000000ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff"
           },
-          "framebuffer_sha256": "03b750e465d258a2857e1495ddc5b007961693a3f44950c9e5b14ba1f4ee67de",
+          "framebuffer_sha256": "7fb7892d5389773e55093548311bd0c93bdb374108cc38eaa5d3a2101910b7ba",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -761,7 +762,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "03b750e465d258a2857e1495ddc5b007961693a3f44950c9e5b14ba1f4ee67de",
+          "framebuffer_sha256": "7fb7892d5389773e55093548311bd0c93bdb374108cc38eaa5d3a2101910b7ba",
           "pcm": null,
           "cassette": {
             "state": 6,

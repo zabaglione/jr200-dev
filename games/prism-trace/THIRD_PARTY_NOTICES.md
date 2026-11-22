@@ -21,6 +21,7 @@ The built CJR incorporates code from these jr200-dev SDK modules:
 - `sdk/port_runtime.inc`
 - `sdk/session.inc`
 - `sdk/sound.inc`
+- `sdk/title_art.inc`
 
 They are distributed under the BSD-3-Clause license. The complete license text is
 included in `LICENSES/BSD-3-Clause.txt` in the package. PRISM TRACE's own source and

@@ -114,6 +114,7 @@ start:
 ; A field starts: the next field after a clear takes the kept water and total;
 ; anything else (a loss, a restart) begins again at field 1 with 108 water.
 game_init:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    [SR_KEEP]
@@ -960,6 +961,11 @@ sr_draw_plant_feed:
         JMP     jr_gfx_putc
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     sr_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -993,6 +999,7 @@ sr_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    SR_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1254,3 +1261,8 @@ sr_lose_bass:
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

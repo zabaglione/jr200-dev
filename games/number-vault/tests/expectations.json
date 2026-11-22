@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/number-vault/tests/model.py (upstream rules 2.1.0). The only emulator-derived input is origin, upstream's entropy(): each stage start samples the title-song position, logged at 0x4720 (count, values) and fed to the model in order; every other byte is the model's prediction. Each vault is cracked with the model's consistent-guess solver (at most six tries); synthetic-all-vaults opens all ten. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 136864,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -37,7 +38,7 @@
             "pcg": "ff80bfa0a3a5a9afff01fd05c5a595f5afa9a5a3a0bf80fff595a5c505fd01ff0f000f000305090ff000f000c0a090f00f090503000f000ff090a0c000f000f00100010001010101800080008080808001010101000100018080808000800080",
             "origins": "0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff"
           },
-          "framebuffer_sha256": "4761dea9b95822fc2776d4992c1f05555ab793d27bd119b216b25cf57ba58ac2",
+          "framebuffer_sha256": "0d67b4048a5d078a0a3fe0b29c0c47416db7ac5c3a9be8bc28ffeefac74749cb",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -5627,7 +5628,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "4761dea9b95822fc2776d4992c1f05555ab793d27bd119b216b25cf57ba58ac2",
+          "framebuffer_sha256": "0d67b4048a5d078a0a3fe0b29c0c47416db7ac5c3a9be8bc28ffeefac74749cb",
           "pcm": null,
           "cassette": {
             "state": 6,

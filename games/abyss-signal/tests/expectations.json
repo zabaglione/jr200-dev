@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/abyss-signal/tests/model.py, whose advance() is the upstream model.py (jr100dev games/abyss_signal 1.6.1) and whose panel, photo and questions follow upstream src/main.asm, not from the emulator. synthetic-survey plays the upstream replay.py route (sonar at each leg, the shortest route to each site, record from the panel, then home): 117 actions. Key gaps leave 650000 cycles per action and 1650000 for a sonar sweep (a move or a drift also draws its half-cell frame). synthetic-title, synthetic-survey and synthetic-lost require a PCM peak of 21000. The local-rom profiles load the CJR with MLOAD from the owned ROM, type A=USR($1000) at cycle 110000000 and replay the synthetic keys 113700000 cycles later; they need owned ROM/FONT.",
   "runtime": {
+    "startup_delay_cycles": 134108,
     "default_profile": "synthetic-survey",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "00000001010f3f7f00000080c0f0fcfe7e3f0f00000000007efcf000000000000f3970f0e0c0e0f1f0fc7f3f3f7ffffffefcf8fc7e3f0f003f1f0f1f3efcf00000010204091224490080402090482492241209040201000024489020408000000020110b073f6d9f000488d0e0fcb6fe6d3f070b11200000b6fce0d0880400008000000008000000000080000000080080000000080000000000800000000800000030180c060c18000030180c060c1830000000000000003000000000000000ffffffffffffffff003c7effff7e3c001818181818181818000000ffff0000002810281028102810"
           },
-          "framebuffer_sha256": "03879e3eb9a487d1b50ca47db495e544ade0d00cbc36b52d0e3a14f006379295",
+          "framebuffer_sha256": "8aba2cabe4e5607ddfc80d24b29015590b493aaeb58ee7f55d3ca119d5f6ccb1",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,

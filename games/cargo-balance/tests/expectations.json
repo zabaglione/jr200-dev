@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/cargo-balance/tests/model.py (upstream rules 2.0.0), not from the emulator. Each voyage follows the hold plan found by plan() and never tips; synthetic-all-voyages completes all six. synthetic-title and synthetic-first-clear require a PCM peak of 21000 (channels F, D and C together). Drops leave 1500000 cycles for the crate to fall and the ship to roll.",
   "runtime": {
+    "startup_delay_cycles": 120380,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "ff80bfb0a8a4a2a1ff01fd0d15254585a1a2a4a8b0bf80ff854525150dfd01ff010101010101010780808080808080e0"
           },
-          "framebuffer_sha256": "2a9350900a05a36e05d3687f1404c3a785b1d039c78e712083023459ae264118",
+          "framebuffer_sha256": "ce551544f536b6676780879638e282baca58d511d941746c6510a0f422cc8bf3",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -2851,7 +2852,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "2a9350900a05a36e05d3687f1404c3a785b1d039c78e712083023459ae264118",
+          "framebuffer_sha256": "ce551544f536b6676780879638e282baca58d511d941746c6510a0f422cc8bf3",
           "pcm": null,
           "cassette": {
             "state": 6,

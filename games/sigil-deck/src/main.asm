@@ -153,6 +153,7 @@ start:
 
 ; NEW_RUN: HP 60, the eight-card deck; the seed is the music's position.
 game_init:
+        CLR     [JR200_BORDER]
         ; Keep the original song-based seeds when the melody moves in memory.
         LDAA    [JR_AU_VOICE + 1]
         ADDA    (0x54 - sd_music_title_f) & 0xff
@@ -1543,6 +1544,11 @@ sd_logo_cell:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     sd_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -1587,6 +1593,7 @@ sd_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    SD_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -1889,3 +1896,8 @@ sd_lose_bass:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

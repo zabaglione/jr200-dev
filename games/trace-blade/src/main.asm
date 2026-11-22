@@ -117,6 +117,7 @@ start:
 
 ; Unpack the room (27 bytes, four 2-bit cells each) and count its targets.
 game_init:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         JSR     jr_test_level
         ; room * 27 passes 255, so step X one room at a time
@@ -669,6 +670,11 @@ tb_draw_done:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     tb_title_song
         JSR     jr_music_play
 game_test_draw:
@@ -702,6 +708,7 @@ tb_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    TB_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -938,3 +945,8 @@ tb_win_bass:
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/phase-pairs/tests/model.py (upstream rules 1.6.1), not from the emulator. Each round replays the pairs in upstream solutions.json; synthetic-all-rounds clears all ten boards from upstream levels.json. Key gaps leave 60000 cycles per animation frame. synthetic-title and synthetic-first-clear require a PCM peak of 21000.",
   "runtime": {
+    "startup_delay_cycles": 132965,
     "default_profile": "synthetic-first-clear",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "003cffc3c3c3c3c3c3c3c3c3c3ff3c0000000303030303030303030303030000003c3f030303033ffcc0c0c0c0fc3c00003c3f030303033f3f030303033f3c000000c3c3c3c3c3ff3f03030303030000003cfcc0c0c0c0fc3f030303033f3c00003cfcc0c0c0c0fcffc3c3c3c3ff3c00003c3f03030303030303030303030000003cffc3c3c3c3ffffc3c3c3c3ff3c00003cffc3c3c3c3ff3f030303033f3c00"
           },
-          "framebuffer_sha256": "e7664aa3ab32f5a7ec7567fd26feade6576c26ea1789a1e6da5c304defa9c876",
+          "framebuffer_sha256": "6683188b6c0ae2ef5e44f59839eddfe5fa00c7702945007e7fd56e76c70d7cc6",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -6777,7 +6778,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "e7664aa3ab32f5a7ec7567fd26feade6576c26ea1789a1e6da5c304defa9c876",
+          "framebuffer_sha256": "6683188b6c0ae2ef5e44f59839eddfe5fa00c7702945007e7fd56e76c70d7cc6",
           "pcm": null,
           "cassette": {
             "state": 6,

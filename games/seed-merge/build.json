@@ -11,7 +11,8 @@
   "id": "seed-merge",
   "inputs": {
     "assembly": [
-      "src/main.asm"
+      "src/main.asm",
+      "src/title_art.inc"
     ],
     "assets": [],
     "sdk": [
@@ -30,7 +31,8 @@
       "sdk/port_runtime.inc",
       "sdk/session.inc",
       "sdk/sfx.inc",
-      "sdk/sound.inc"
+      "sdk/sound.inc",
+      "sdk/title_art.inc"
     ]
   },
   "load_address": "0x1000",

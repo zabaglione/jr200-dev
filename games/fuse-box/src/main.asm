@@ -79,6 +79,7 @@ start:
 
 ; d[i] = 1 if (i * 3 + i // 5 + level) % 7 < 3 else 0
 game_init:
+        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         CLR     [FB_I]
 fb_init_cell:
@@ -447,6 +448,11 @@ fb_cell_xy:
         RTS
 
 game_draw_title:
+        JSR     game_prepare_title
+        LDX     game_title_art
+        JMP     jr_title_draw
+
+game_prepare_title:
         LDX     fb_title_song
         JSR     jr_music_play
         LDAA    0x20
@@ -479,6 +485,7 @@ fb_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
+        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    FB_ATTR_TEXT
         JSR     jr_gfx_fill
@@ -670,3 +677,8 @@ fb_lose_bass:
         .include "../../../sdk/port_buffered.inc"
         .include "../../../sdk/guide.inc"
         .include "../../../sdk/font_data.inc"
+
+JR_TITLE_SCREEN:    .equ    JR_SHADOW
+JR_TITLE_ATTRIBUTES: .equ   JR_SHADOW_ATTRS
+        .include "../../../sdk/title_art.inc"
+        .include "title_art.inc"

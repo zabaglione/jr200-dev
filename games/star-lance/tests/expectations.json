@@ -3,6 +3,7 @@
   "expected_entry_address": "0x1000",
   "notes": "State expectations come from games/star-lance/tests/model.py (upstream rules 4.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six waves with their input scripts (held buttons included); synthetic-demo-clear plays wave 1 with the same script at normal speed; synthetic-no-input-loss never moves and is shot down; synthetic-hold-left holds A until the lance stops at column 1. Timed key replays only observe values that do not depend on tick timing. Replays start at 1.3M cycles because the MCU scan start-up drains the ROM-less font transfer. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-start samples the fully drawn opening board before the first tick.",
   "runtime": {
+    "startup_delay_cycles": 122614,
     "default_profile": "synthetic-self-test",
     "profiles": [
       {
@@ -31,7 +32,7 @@
             "mode": "00",
             "pcg": "0010081f3b7f5f50000810f8dcfefa0a0c00000000000000300000000000000000281c3f67ffbfaf001438fce6fffdf51a30000000000000580c00000000000001010303074d5fff8080c0c0e0b2faffffd9880000000000ff9b1100000000000010081f3f7f7f50000810f8fcfefe0a0c000000000000003000000000000000000002050b050200000040a0d0a040000000000000000000000000000000000000110a2411240a11008850248824508800000000000000000000000000000000218810420880124004218410228210440200000000000000080000000000000018181818000000003c7e3c3c1818000010081020100800000810080408100000"
           },
-          "framebuffer_sha256": "22a7ea70a3570270cac6227714bf83608e0be7c39bfa971a38aa81d977922021",
+          "framebuffer_sha256": "f5031bea227a689005545099454efd854fe940a05930829bcac55ff06c536ca9",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -619,7 +620,7 @@
           "memory": {
             "mode": "00"
           },
-          "framebuffer_sha256": "22a7ea70a3570270cac6227714bf83608e0be7c39bfa971a38aa81d977922021",
+          "framebuffer_sha256": "f5031bea227a689005545099454efd854fe940a05930829bcac55ff06c536ca9",
           "pcm": null,
           "cassette": {
             "state": 6,
