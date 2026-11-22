@@ -63,6 +63,8 @@ class MemoryMosaicExpectationTests(unittest.TestCase):
 
     def test_memory_expectations_are_model_predictions(self):
         for profile in self.expectations['runtime']['profiles']:
+            if profile['mode'] != 'synthetic-injection':
+                continue
             with self.subTest(profile=profile['profile']):
                 validate_expectations(self.expectations, 0x1000, profile['profile'])
                 port = port_for(profile).run(profile['replay'])

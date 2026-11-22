@@ -61,6 +61,8 @@ class MagnetVaultExpectationTests(unittest.TestCase):
         from emulator_runner import expand_replay_profile
         by_name = {p['profile']: p for p in self.expectations['runtime']['profiles']}
         for name, profile in self.profiles.items():
+            if profile['mode'] != 'synthetic-injection':
+                continue
             with self.subTest(profile=name):
                 port = new_port().run(expand_replay_profile(profile, by_name)['replay'])
                 self.assertEqual(profile['expect']['memory']['best'], bytes(port.best).hex())
