@@ -269,6 +269,10 @@ class WikiGenerationTests(unittest.TestCase):
                           'media/side-catch-title.png', 'media/side-catch-goal.png',
                           'media/side-catch-play.png', 'media/side-catch-goal.webm']))
         page = files['Game-side-catch.md'].decode('utf-8')
+        all_games = files['All-Games.md'].decode('utf-8')
+        self.assertIn('| タイトル画面 | 作品 |', all_games)
+        self.assertIn('<a href="Game-side-catch"><img src="media/side-catch-title.png" '
+                      'alt="SIDE CATCHのタイトル画面" width="160"></a>', all_games)
         self.assertIn('非公開の候補版プレビュー', page)
         self.assertIn('media/side-catch-title.png', page)
         self.assertIn('通常MLOAD/USRで実行', page)
@@ -305,6 +309,12 @@ class WikiGenerationTests(unittest.TestCase):
         files, _ = render_pages(self.fixture.root, None, True)
         self.assertEqual(files['media/side-catch.png'],
                          (project / 'media/gameplay.png').read_bytes())
+
+    def test_all_games_leaves_title_image_empty_without_gallery(self):
+        (self.fixture.root / 'games/side-catch/media/gallery.json').unlink()
+        files, _ = render_pages(self.fixture.root, None, True)
+        all_games = files['All-Games.md'].decode('utf-8')
+        self.assertIn('| — | [SIDE CATCH](Game-side-catch) |', all_games)
 
     def test_candidate_rejects_unsafe_capture_path(self):
         self.fixture.catalog['games'][0]['wiki']['screenshot']['file'] = (

@@ -1067,6 +1067,7 @@ def render_pages(root: Path, packages: Path | None,
         metadata = entry['_metadata']
         entry['_intro'] = first_paragraph(readme_parts(entry['_readme'])[0], metadata['summary'])
         files[f'media/{slug}.png'] = entry['_thumbnail']
+        entry['_title_image'] = None
         gallery = entry['_gallery']
         if gallery is None:
             entry['_scenes'] = [{'path': f'media/{slug}.png',
@@ -1081,6 +1082,8 @@ def render_pages(root: Path, packages: Path | None,
                 path = f'media/{slug}-{scene["id"]}.png'
                 files[path] = scene['bytes']
             entry['_scenes'].append({'path': path, 'caption': scene['caption']})
+            if scene['role'] == 'title' and entry['_title_image'] is None:
+                entry['_title_image'] = path
         video = gallery['video']
         if video is None:
             entry['_video'] = None
@@ -1139,10 +1142,18 @@ def render_pages(root: Path, packages: Path | None,
             genre['description'], '',
             *tier_sections(counts[genre['id']], genres, '公開作品準備中'),
         ]).encode('utf-8')
-    rows = ['| 作品 | ジャンル | 状態 | 版 | 紹介 |', '| --- | --- | --- | --- | --- |']
+    rows = ['| タイトル画面 | 作品 | ジャンル | 状態 | 版 | 紹介 |',
+            '| --- | --- | --- | --- | --- | --- |']
     for entry in selected:
         genre = genres[entry['genre']]
-        rows.append(f'| [{entry["_metadata"]["title"]}](Game-{entry["wiki"]["slug"]}) | '
+        title = entry['_metadata']['title']
+        page = f'Game-{entry["wiki"]["slug"]}'
+        image = entry['_title_image']
+        thumbnail = '—'
+        if image is not None:
+            alt = html.escape(f'{title}のタイトル画面', quote=True)
+            thumbnail = f'<a href="{page}"><img src="{image}" alt="{alt}" width="160"></a>'
+        rows.append(f'| {thumbnail} | [{title}]({page}) | '
                     f'[{genre["title"]}]({genre["page"]}) | {TIERS[entry["tier"]]} | '
                     f'`{entry["version"]}` | {first_sentence(entry["_intro"])} |')
     files['All-Games.md'] = '\n'.join([
