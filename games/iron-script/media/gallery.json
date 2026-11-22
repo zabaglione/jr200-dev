@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 3.8,
     "frames": 113,
-    "frames_sha256": "b0cd6e9741fb8fb56fa9ad57a144c60ff3501f1e8c130d36e4be05ffa8092714",
-    "pcm_sha256": "afcac2a6cc1915764442efd9d348f188e5337cccb04f4f70284b8be4b2693ef4",
-    "sha256": "edfb233f955157a78a0adede6e1e521b6a32d437994ec5abb3e1a059d2b1d738",
+    "frames_sha256": "e4213a24df75701cc71f9a1af1956c1d5bcab811a2d9a6267c91b4544789fac5",
+    "pcm_sha256": "036ec618b407f4912f22dec3237deef88a30c31cee77c25c42c56d50d3970231",
+    "sha256": "1cada940c8674897d51f1904fce0efad689e1ac421ceb09ac528b6c5e234d46d",
     "caption": "1つ目の部屋の自動デモ（プログラムを入力して実行）"
   }
 }

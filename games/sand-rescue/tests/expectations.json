@@ -124,7 +124,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "4261a5eceede568029544c111aa1e9d2083c395742aad001415649f00ef86c53",
+          "framebuffer_sha256": "567a04d504a1c0582dc4979752c71a5e109c039610a9aac3ab52354b8e298510",
           "pcm": null,
           "cassette": null
         }
@@ -498,7 +498,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "56a2be6169fd63e8bcae7f80352facc451968df2628dfb1fdfbf3f5677d72a40",
+          "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749",
           "pcm": null,
           "cassette": null
         }

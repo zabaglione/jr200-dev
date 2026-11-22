@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 2.9,
     "frames": 88,
-    "frames_sha256": "fdd5121eb810693583f4fa00a1ba730f6b562ca08092e0c53149e591b05fd24d",
-    "pcm_sha256": "6d15aafd6337db47766cc08a0efb433bb78434db3675df12d80f3bd8ac6162e1",
-    "sha256": "1aa47c7469a80b395afa3e88bf0227825a3d34d28adf697650305c959a4f417a",
+    "frames_sha256": "b109fe7343140cc2c97725cbbaebe01653ef39a2a4c40fba73c5dbadccafdfd1",
+    "pcm_sha256": "3130071c37e7f6ce511fe8f5133fe928a6bdaa4a9eec37a1222cf67ac6f5fe02",
+    "sha256": "c6b9185bfdeb65badd35f62fc9f7fbd74c1430a7fa5c6f93554909d92702aadb",
     "caption": "1部屋目で両方のルーンを拾い、PAR以内でクリスタルを集めるまで"
   }
 }

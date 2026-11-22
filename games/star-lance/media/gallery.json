@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで艦隊を撃つ場面",
-      "sha256": "99e5e8c6c41f80e41db4a3e3586a096d921e8824386b7892b92e448795b776cc",
-      "framebuffer_sha256": "8ccc6667ed547c963f4389cfeec5e35408d0e7f9fa1ea316230da1b66a53298a"
+      "sha256": "ad474847f6d7c1222f366212aabbf149ea91e7bef5e9c4edbd3c9d913d21786f",
+      "framebuffer_sha256": "fc1a8c02eca098f69e7bd64359fa1674f9234ae3c04b3e19d37c18bf219227b0"
     },
     {
       "id": "clear",
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 19.1,
     "frames": 573,
-    "frames_sha256": "81e4e08105275dddaaf9c3f0f9c3e73908c7d45205ede9fac9a26d30f90169c4",
-    "pcm_sha256": "63aa5aa4b42abfc4cb856bc66c2b93e465a089047f8558ff48b4c7dd639d2e53",
-    "sha256": "673569a0c8b79a76e17987052af5e3e3519264427529314d1c06f47e480ae0ee",
+    "frames_sha256": "044dc781d902115d28b67f5c3646ab92cb4412b859653e17cce7938f958123bc",
+    "pcm_sha256": "726c8933a19e6c0c0d5d13bd7b503c6356424998e527efbc725da8aa51233437",
+    "sha256": "9ac19d881a1766e73e9e4832f4b719e3715cef84c35852068d1bdee6b58eeff3",
     "caption": "1つ目の波の自動デモ（18隻を撃ち落とす）"
   }
 }

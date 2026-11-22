@@ -45,9 +45,9 @@
     "speed": 1.0,
     "seconds": 10.4,
     "frames": 312,
-    "frames_sha256": "985266b0b89483150f6bb59667ad8c1e09a99fda04f874d2d2ef733e96208d9f",
-    "pcm_sha256": "e7455fe4f52f935b225fa024dd9a6a7c65d8f888849680262119c3e4f013a3f5",
-    "sha256": "4742339007b22830e3954c858150e02e78611cfad79b77f1221259c62ca4d039",
+    "frames_sha256": "607f0727e8934738e7ad501526287dbb8ea2366675ae493c7ec4563e21159708",
+    "pcm_sha256": "82c3eb6f52676a47438f276c1ab52ff2cb5d17fd1c3784d667fdae374ba9ed3c",
+    "sha256": "2b73cb76091717fb51d47760567ed9f5bca52624bd62ccbb1ecbe2523ca6fc8a",
     "caption": "最初の敵ASH WRAITHに勝ち、報酬を選ぶ画面へ（等速）"
   }
 }

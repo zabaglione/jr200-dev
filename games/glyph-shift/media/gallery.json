@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 4.2,
     "frames": 127,
-    "frames_sha256": "09cccdb0567d59655a6ad4efb6096c711e14d3dd4df00bb7909be81b860beb6a",
-    "pcm_sha256": "a65acdf7cded6c7e9ae0dd7f25d4511c3a02cf80358cbc7c2bcb41e5c7ee4f36",
-    "sha256": "3876f0608106e2e876b6ffad4a44f557b4d973dbbb99b50d40a2049265bddbbc",
+    "frames_sha256": "56cdc608b8b1eb881114031eccf24a34b9880933bb858b3455a8bc46fa52674e",
+    "pcm_sha256": "b3dedd76cc74fe7ffc5f2649fde66c28a380fabcfa8261afe1cab2afaa6a4504",
+    "sha256": "b5b4b923c12251ca04c6947c07061d6c151945b28e5973db4245db75bbd37634",
     "caption": "1部屋目で規則を書き換え、両方のルーンを通って門に着くまで"
   }
 }

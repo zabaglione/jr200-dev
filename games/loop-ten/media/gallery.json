@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで封印へ向かう場面",
-      "sha256": "4978580f5aec3904f4e91230070737baddca4eb7d723600c188378e9c7c808a9",
-      "framebuffer_sha256": "7b10c8aa252c773cfab1e6fd534dc92ef34ea9adf78d96f39770c7db92cfdc0e"
+      "sha256": "40170a7ac938f04461335a3841ed8a9add00cfa8f2fa9c693ce473eee19516e9",
+      "framebuffer_sha256": "1d9053a16241ade800789523d66c6e163103aabe892c8d5a6ba7817512a919a8"
     },
     {
       "id": "goal",
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 32.0,
     "frames": 960,
-    "frames_sha256": "4a6afac42b4a5d214c347c05dab19d46f2ddf35f5113ea1e0d825f7a0b03a451",
-    "pcm_sha256": "1b62c11d5d2a8db2dfb72e27a609225de76e978333f6fa9146a3e133b9df19ed",
-    "sha256": "5ce39df36c4a7526bab7273511bd2c76a6545175f8b0819225e216a8d6fce157",
+    "frames_sha256": "03708d66ac07a801a6df816a0d3d5ed25eceafeb42c495fbc569f0b933c6fb62",
+    "pcm_sha256": "ea0530f72bed3d9f46171ea6f5e4ffeb427093ca237d230052451d0a420703eb",
+    "sha256": "baf76ce820c291b7d17e5a320b5e229224073d90189a5c110d709a059745702b",
     "caption": "自動デモで12の封印を点灯させて脱出する（等速）"
   }
 }

@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで門へ走る場面",
-      "sha256": "10b4bd9b890726bd766c91770be5a4f41012b445d1d54af3be7b72bdb4486fc7",
-      "framebuffer_sha256": "5e08cac6c8d7b140916dfb62bf9df3722bd8c66c7a12723704947a92986c28a0"
+      "sha256": "bd70831da2affe7ef7781b22581be7583a502d70c3b56173c2784ad9e8476455",
+      "framebuffer_sha256": "630f43651dc9724aa70b5486a66d7611f2b4a442b5107030f4b0351ac5d2c30b"
     },
     {
       "id": "clear",
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 19.1,
     "frames": 573,
-    "frames_sha256": "bb5eced7ab7b53e4ce7d8cc0c4550c4b524bc81f4a7abe307854bc6af30e5220",
-    "pcm_sha256": "84cc792b2fea819ed8744eec2058482951914c37491a6ae30654495001c63058",
-    "sha256": "bae2898070b8ecc5a5e8cdff3d7968abd548a7a356d87e4c4aa08160e49ce604",
+    "frames_sha256": "7217d5e928b5f93ee63197f371c85cf527875fd46bf05fc63c0a8d1615215a67",
+    "pcm_sha256": "d7a16fd7685db510a0d37f433a686ac41363076cd9c1b8e9656eb8a00f132e48",
+    "sha256": "bf310951316fe665a7da157747967d4dcf73ca695d4d904ce4b1a671c779877e",
     "caption": "1つ目のコースの自動デモ（9つの門を越え、結晶をすべて取る）"
   }
 }

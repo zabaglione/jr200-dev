@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 5.5,
     "frames": 166,
-    "frames_sha256": "a574971a607163ccff6c0bc3332b66e88dcdca22d96853033726939079629ead",
-    "pcm_sha256": "8498fe316538711b8f0525f028b4899e8173b859cc9025a350275faa61bf23c6",
-    "sha256": "9759281cc683bef4295e6dc05c91483b5e98a9a3a5bf1433e5ae92a11b00779d",
+    "frames_sha256": "40f00c96e3ec2c7363c27c79c4238f80a8ace59bf1ce59e57b1ee5bc0f3d47a7",
+    "pcm_sha256": "3d1848cffaa961bb9d76703f1b7715fa5db5d1b79bd9057ac29af0105faf829b",
+    "sha256": "5c4b46ebe0c48c9f21fcd43266bb9b0486c81e10d582c286fb19d015ba03978c",
     "caption": "1面目で4本の行・列を反転し、主人公が門まで歩くまで"
   }
 }

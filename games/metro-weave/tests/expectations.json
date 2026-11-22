@@ -414,7 +414,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "1ca826fd4544bbb8276eeb01ceb6c624aec1c28ee42c6222d6e87eea31611bf9",
+          "framebuffer_sha256": "cfa553fcd71426381a451c2c3eb2b0ea8e09094b67bbe320eb23af7151105c9a",
           "pcm": null,
           "cassette": null
         }

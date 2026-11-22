@@ -11,6 +11,6 @@
 | `photo.png` | `synthetic-first-site` | 最初の遺構LOST RELAYの観測画面 |
 | `goal.png` | `synthetic-survey` | 5地点を記録して基地へ帰還する |
 
-`goal.webm`は`synthetic-survey`のreplayを固定エミュレータで記録した映像と音です（34.5秒、等速、音源F・D・Cの出力を混合したPCM）。
+`goal.webm`は`synthetic-survey`のreplayを固定エミュレータで記録した映像と音です（34.5秒、2倍速、音源F・D・Cの出力を混合したPCM）。
 
 これは固定エミュレータの証拠です。物理JR-200の表示、入力、音声は未確認です。

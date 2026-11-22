@@ -26,8 +26,13 @@
 ;   Input: A = code, B = attribute for all 768 cells. S walks the shadow,
 ;   so IRQs must be masked. Clobbers A, B and X.
 ; jr_gfx_present
-;   Copies the shadow to $C100-$C3FF and $C500-$C7FF. IRQs must be masked
-;   (jr_session_enter does this) because S walks the shadow. Clobbers A and X.
+;   Copies the shadow to $C100-$C3FF and $C500-$C7FF eight cells at a
+;   time: eight codes, then the same eight attributes. Copying all codes
+;   and then all attributes showed each new code with its old attribute (a
+;   PCG pattern as a font glyph, or the reverse) for about half a frame;
+;   now that window is about 100 cycles. Uses JR_RT + 46 and 56..63. IRQs
+;   must be masked (jr_session_enter does this) because S walks the shadow.
+;   Clobbers A and X; preserves B.
 
 JR_RT_CURSOR:       .equ    JR_RT + 15
 JR_RT_COLOR:        .equ    JR_RT + 17
@@ -36,6 +41,11 @@ JR_RT_NUM:          .equ    JR_RT + 20
 JR_RT_DIGIT:        .equ    JR_RT + 21
 JR_RT_TEXT:         .equ    JR_RT + 22
 JR_RT_PRESENT_SP:   .equ    JR_RT + 24
+JR_RT_PRESENT_SC:   .equ    JR_RT + 56
+JR_RT_PRESENT_SA:   .equ    JR_RT + 58
+JR_RT_PRESENT_XC:   .equ    JR_RT + 60
+JR_RT_PRESENT_XA:   .equ    JR_RT + 62
+JR_RT_PRESENT_B:    .equ    JR_RT + 46
 
 JR_SHADOW_ATTRS:    .equ    JR_SHADOW + 0x300
 
@@ -205,37 +215,19 @@ jr_gfx_fill_attrs:
 
 jr_gfx_present:
         STS     [JR_RT_PRESENT_SP]
-        LDS     JR_SHADOW - 1
+        STAB    [JR_RT_PRESENT_B]
+        LDX     JR_SHADOW - 1
+        STX     [JR_RT_PRESENT_SC]
+        LDX     JR_SHADOW + 0x2ff
+        STX     [JR_RT_PRESENT_SA]
         LDX     JR200_SCREEN_CODES
-jr_gfx_present_codes:
-        PULA
-        STAA    [X]
-        PULA
-        STAA    [X + 1]
-        PULA
-        STAA    [X + 2]
-        PULA
-        STAA    [X + 3]
-        PULA
-        STAA    [X + 4]
-        PULA
-        STAA    [X + 5]
-        PULA
-        STAA    [X + 6]
-        PULA
-        STAA    [X + 7]
-        INX
-        INX
-        INX
-        INX
-        INX
-        INX
-        INX
-        INX
-        CPX     JR200_SCREEN_CODES_END
-        BNE     jr_gfx_present_codes
+        STX     [JR_RT_PRESENT_XC]
         LDX     JR200_SCREEN_ATTRIBUTES
-jr_gfx_present_attrs:
+        STX     [JR_RT_PRESENT_XA]
+jr_gfx_present_group:
+        ; eight codes, then the same eight attributes
+        LDS     [JR_RT_PRESENT_SC]
+        LDX     [JR_RT_PRESENT_XC]
         PULA
         STAA    [X]
         PULA
@@ -252,17 +244,81 @@ jr_gfx_present_attrs:
         STAA    [X + 6]
         PULA
         STAA    [X + 7]
-        INX
-        INX
-        INX
-        INX
-        INX
-        INX
-        INX
-        INX
-        CPX     JR200_SCREEN_ATTRIBUTES_END
-        BNE     jr_gfx_present_attrs
+        STS     [JR_RT_PRESENT_SC]
+        LDS     [JR_RT_PRESENT_SA]
+        LDX     [JR_RT_PRESENT_XA]
+        PULA
+        STAA    [X]
+        PULA
+        STAA    [X + 1]
+        PULA
+        STAA    [X + 2]
+        PULA
+        STAA    [X + 3]
+        PULA
+        STAA    [X + 4]
+        PULA
+        STAA    [X + 5]
+        PULA
+        STAA    [X + 6]
+        PULA
+        STAA    [X + 7]
+        STS     [JR_RT_PRESENT_SA]
+        ; eight codes, then the same eight attributes
+        LDS     [JR_RT_PRESENT_SC]
+        LDX     [JR_RT_PRESENT_XC]
+        PULA
+        STAA    [X + 8]
+        PULA
+        STAA    [X + 9]
+        PULA
+        STAA    [X + 10]
+        PULA
+        STAA    [X + 11]
+        PULA
+        STAA    [X + 12]
+        PULA
+        STAA    [X + 13]
+        PULA
+        STAA    [X + 14]
+        PULA
+        STAA    [X + 15]
+        STS     [JR_RT_PRESENT_SC]
+        LDS     [JR_RT_PRESENT_SA]
+        LDX     [JR_RT_PRESENT_XA]
+        PULA
+        STAA    [X + 8]
+        PULA
+        STAA    [X + 9]
+        PULA
+        STAA    [X + 10]
+        PULA
+        STAA    [X + 11]
+        PULA
+        STAA    [X + 12]
+        PULA
+        STAA    [X + 13]
+        PULA
+        STAA    [X + 14]
+        PULA
+        STAA    [X + 15]
+        STS     [JR_RT_PRESENT_SA]
+        ; both VRAM pointers + 16 (their low bytes are equal)
+        LDAA    [JR_RT_PRESENT_XA + 1]
+        ADDA    16
+        STAA    [JR_RT_PRESENT_XA + 1]
+        STAA    [JR_RT_PRESENT_XC + 1]
+        BCC     jr_gfx_present_same_page
+        INC     [JR_RT_PRESENT_XA]
+        INC     [JR_RT_PRESENT_XC]
+jr_gfx_present_same_page:
+        LDX     [JR_RT_PRESENT_XC]
+        CPX     JR200_SCREEN_CODES_END
+        BEQ     jr_gfx_present_done
+        JMP     jr_gfx_present_group
+jr_gfx_present_done:
         LDS     [JR_RT_PRESENT_SP]
+        LDAB    [JR_RT_PRESENT_B]
         RTS
 
 ; jr_gfx_lines
