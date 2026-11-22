@@ -87,7 +87,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDAA    3
         STAA    [PP_X]
@@ -582,7 +581,6 @@ pp_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    PP_ATTR_TEXT
         JSR     jr_gfx_fill

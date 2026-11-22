@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。4つのスート",
-      "sha256": "579995155e32f194da1a8ba36e8de33fcfe840824b1638b9bc92bcdb0387e679",
+      "sha256": "dad00a4ce5046afc00db6fd5cd9da870d2d59c989a52e08b4275d19bc77b7b84",
       "framebuffer_sha256": "e8da02ba824df338f93d4e14ac712cc954ab930506ecde165176552f25026aa7"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-redraw",
       "role": "play",
       "caption": "1枚目と3枚目を引き直してスリーカードになった手札",
-      "sha256": "4aab3a22cbd53de5ca1ce5aafab6aa93994fdd6cf109ace9222b9ddb57c0799e",
-      "framebuffer_sha256": "1fe4e0b6c8730b4db1cd23fc25150146829c714ec692823e1d1ffa8b6920113e"
+      "sha256": "39bfa9f7ee006ab7addba8e7f48fb2c4c4c047b39cb02b8a86948be41d34628c",
+      "framebuffer_sha256": "4deda23dd4cc940191cc719d59bb0d2deb20636b73227e35a5fb2492543b5daf"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "3回目の手札を採点して25点を超えたクリア",
-      "sha256": "87ee0b7ad0847ddd62b575c602149f281c1f778af6e5a5235d9e53aaee111c0f",
-      "framebuffer_sha256": "4710060fc6c38d9cb980ee7a8622bf3a04f595bf251b0f3c87dba11ddbf7bd42"
+      "sha256": "29a5ceb4f9331c664cb5a2197a9be63e78a7a5a5f49b4b9c6c9a07194cf734b5",
+      "framebuffer_sha256": "38a72c8cd99915980bb7b82071df56f4a34ded641f96ca5f7648fb7638ee6fe6"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 23.9,
     "frames": 716,
-    "frames_sha256": "18da93d7d92931505613d647272ec6584f3b346dcfdf24138d775aea03a5a928",
-    "pcm_sha256": "6cc36e52fc16510cba55fe5499946fe7732a7d867ed1867aa8bbaf2a4574d8b8",
-    "sha256": "7f50a93770f216c5289fe73ce5bd89f2592d0fa580f5331c3e6d4d630cc9ceae",
+    "frames_sha256": "d89c4b01c769b5cee9415d8dfbf591c31a4fa84b9611eca046859ac6cf67a819",
+    "pcm_sha256": "200999ec08dc25dc40c83722d4e3f82dffe1be140033012fa71b2da17936fd02",
+    "sha256": "7b13320cf2e2c6950549537799f286fb96df817d33092af7182875c7f7e5e4ea",
     "caption": "3回の手札で引き直して48点を取るまで"
   }
 }

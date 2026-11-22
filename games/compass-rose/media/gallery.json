@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。砂地、足跡、探検家、岩、光",
-      "sha256": "0e3e61ea5a4be5ec1f98e858a2c64da6396ba2174783cc08260b843bc6d71744",
+      "sha256": "e3927ce014863673be280d1645eb3bcf61206a64d34c8be46bfa18aa18b4ef63",
       "framebuffer_sha256": "cf6cfa1aae1b9c86a71a27577a3528a205d11e12e5568cc06964863d3f85f6a9"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-survey",
       "role": "play",
       "caption": "岩にぶつかった後、東へ2歩進んで測り直した場面",
-      "sha256": "48791c03985ae7064408ffb6f8e53c3e4b113a152ed0807c23920b1271d3ef3e",
-      "framebuffer_sha256": "c854e857e66ae4be9f98e6c05279686da4ea74cbb7a63e075c5e175d8885a89b"
+      "sha256": "5c56a287017bca3431b9ddfe6395c573bffe9a9adbcb5912f46796be1c9ac2aa",
+      "framebuffer_sha256": "9f599d6c9d6918587cead2dd4f451016f527c67156550e51a64b9373321a84e3"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "遺物を掘り当てた1地点目のクリア",
-      "sha256": "85b4a70d6e035c779526d919103e892f961df42cd86fdf593ab7ff2c5b7d8449",
-      "framebuffer_sha256": "43df75aaf5fdd958e69074da81fb29976a68b753718269159694c205115518a8"
+      "sha256": "8ca1044bc1669691c3e5d8ad10976e2e9d0e7b72edca45ce643992bcefe07eaa",
+      "framebuffer_sha256": "7676429e27624de8e9bfbe9d8802077da29ed54d36d39a87bd33d3907c54ce2a"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 5.4,
     "frames": 163,
-    "frames_sha256": "a7f4c0a0faf21dc83c47c4e6b9f67c9c8171b5166065e5db900bcc6f175ef004",
-    "pcm_sha256": "6f5234f1687ae35ba88a91f1b087596818dc96a53e508a6008aa1317e3d222fe",
-    "sha256": "5030caec20d412b39dbd57cc63036d0d7e140a76d043e0ee8948c5d94be93df1",
+    "frames_sha256": "4e235df253a6d2c851813260077a29ffaa76bf2aed317485a296725141d9ed49",
+    "pcm_sha256": "7aa336afbb8d2225c6e0d9cda1999b5049c8b3113a56e104ed8053933b7445d0",
+    "sha256": "8fec9abb15fd3bba0d2279e57c23da4149947f6692653cedf5d1fb47e30f8913",
     "caption": "1地点目で測定し、岩を回り込んで遺物を掘り当てるまで"
   }
 }

@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。重さ別の色の木箱とクレーン",
-      "sha256": "26be989ca5327fffb26008f7bfad3f90bdac3654ae294d239648f0c10d42717e",
+      "sha256": "ca2faec59a9d7c9dc2d5b266237962b7e0750ca946b75b4a9fe75ba6390909e1",
       "framebuffer_sha256": "ce551544f536b6676780879638e282baca58d511d941746c6510a0f422cc8bf3"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-load",
       "role": "play",
       "caption": "最初の4個を外側の船倉へ積んだ後",
-      "sha256": "4d6c70b10ce563ba69890c0ad6068737cc3d4fc2e00a9fbbae9ca53e39fc9d57",
-      "framebuffer_sha256": "2bd85f2782cca8dfdaabcc5666ffa3e1b89e68f7cb8084a938a3fe1858d19a02"
+      "sha256": "406901885afa3557a6b9b2790dda28082ee1abb31be1d72b035479e108866bad",
+      "framebuffer_sha256": "fd20de67abfff0d9d3a01bd9db6887008e9ab2770eb8bcb48faba9a6244a355b"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "12個を積み終えて1航海目のクリア",
-      "sha256": "a2d04ea199d855dfe50d4043dc92982ef475a1454a847e1573e5c3150475e2a5",
-      "framebuffer_sha256": "09e5be2f044287f7453ebc12da272bda2a54194307a1a61946dc51fbabcdceb9"
+      "sha256": "94c0603c3f36fa97c62baa98bf60e7c4e0e694ba701f6f4a87549a7ba659c4ad",
+      "framebuffer_sha256": "41862a9e665d237ba780e42ada8763767b5be5e166ec711e0664f1165bdd0329"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 15.1,
     "frames": 453,
-    "frames_sha256": "5a8d3c446e1d7ced5101e4f6e49bd5f3a4a44c75e70cd24699433ea45d161b58",
-    "pcm_sha256": "688fa3acbbc25d5ccc4f9009ef373697e9cd2a883bd818a8f8655c5709dc3e61",
-    "sha256": "b193ffbc74c68ff6e191cceb5dd2691cf27d27f284f16c231d1af3655d53e2d1",
+    "frames_sha256": "5523406617d9ec8ae5197d23b8f4a3e299992673fafdf4cf4c48fd54d81de218",
+    "pcm_sha256": "03bf98593383ea4e255e8730348a51cc57d0deccfad05f890d7dcfe926fdaff2",
+    "sha256": "c9792d1f3cdeaefe6dbda14ee681322f4f2015e2f5e7945ea2ae5d36e104c539",
     "caption": "1航海目の12個を積み終えて出航するまで"
   }
 }

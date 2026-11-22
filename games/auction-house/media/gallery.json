@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。木槌、壺、コイン",
-      "sha256": "d09b3d352bce7fd65e368c5e4654d6cf194d2e3141ddeaf47302b19a269492c2",
+      "sha256": "003693fad17ec5225be5f1aefb6e54ebcd02261941b793a77114d6aa8e859596",
       "framebuffer_sha256": "6b316a91d79f2e6b4745338d158245a43ffec1022952a02c4ddd94e15348bc20"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-inspect",
       "role": "play",
       "caption": "鑑定で価値を確かめてから入札し、相手が+2で応じた場面",
-      "sha256": "902fa059fd4997022fdc80f2013552eb188a0224563702fac6707d0945e6de7e",
-      "framebuffer_sha256": "f4d49f16d9bbb28facba274d0657af1e736c8e7d0755db5fdda22950093c3e7e"
+      "sha256": "f1abf34fa46e46eda68afde18fddc67431083b3c1d20e00153c9b06e83a402b0",
+      "framebuffer_sha256": "a62e40ccb5ce949f13b5a112f3e7bbcbe62fbfeab91f434e8220f5c57dde4b14"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "6品を終えて持ち金が目標に届いた1市場目のクリア",
-      "sha256": "d38a8999fb0866e30972e329162bba1aa1b180656e64ee1e06d837ee5e6cff43",
-      "framebuffer_sha256": "8ba8d1746248bd10060ea8237b726db105bc85709b05329cbf38c9abd8bdb401"
+      "sha256": "ecfae6c361cfe896213ef67f49f93854412ad9496423ca8300bbd84242aeb0c1",
+      "framebuffer_sha256": "2cbd6399190d8e776bc1dd3c0038d1bb25ad5e8bd16ad3fdf5adc6a97a9c4060"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 18.4,
     "frames": 551,
-    "frames_sha256": "7e7b29e9c4302b02be2486e070718139dcd0b0d08a26a7843b324120b8709b6c",
-    "pcm_sha256": "93321e842891a47492789a47a524162a2a447e6a5e48570ed94d5a32f9f51c04",
-    "sha256": "6aab45beb0051c622d36ee7546a4e736488eacc31be3b0f2270e51efa67de24d",
+    "frames_sha256": "c5569dc9df54e6cb1caf2cfd46e281e6a70db567c6495d73388f54ba93fee44c",
+    "pcm_sha256": "721dad84cf3cda79291d4222df388d45c9b8bcb00f854cca228947b0ba432aa5",
+    "sha256": "a95ed2a6fbb316d8886d0422c03766d39943d6bb7ba2c5283a66c26e79efcb23",
     "caption": "1市場目の6品を競り、目標に届くまで"
   }
 }

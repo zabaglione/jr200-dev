@@ -75,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "160b9d679d1fe7fe5390a35f688efe53bb21e9598edc7f436adafec78e0e047b",
+          "framebuffer_sha256": "ab20631d03550561644708b661e7dc6fb3784ecc2f9976733f1f0030017c57c3",
           "pcm": null,
           "cassette": null
         }
@@ -125,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "a01b4d1e6e3d61f5c628ac14cdd5b902641e256745e636562b98bec202ab4aae",
+          "framebuffer_sha256": "991251c6ec62c99e95e5cb4a6928a21ff2e8d5c30152ebcc19003b30614b2008",
           "pcm": null,
           "cassette": null
         }
@@ -243,7 +243,7 @@
             "level": "00",
             "status": "48495420425920454e454d592053484f54"
           },
-          "framebuffer_sha256": "f561e3912a9c552f8de650e9ec8917e28b41f55018a569e1cb6ca534b40559e7",
+          "framebuffer_sha256": "aeea023070e3d102cf7c30036704148c83b9cd11b43c9110d26d9689085cb7d3",
           "pcm": null,
           "cassette": null
         }
@@ -421,7 +421,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "fc1a8c02eca098f69e7bd64359fa1674f9234ae3c04b3e19d37c18bf219227b0",
+          "framebuffer_sha256": "e4f4b1c662d232389557796f3fa0c57a6546ddd4fa30f517e91130b4a591b619",
           "pcm": null,
           "cassette": null
         }
@@ -471,7 +471,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "e9bf9cdaf5a2ac9d2f9d7af1ff66e9aa4fe90d037e6392ffc6dfbfcd205cd30b",
+          "framebuffer_sha256": "923bed4bf8b8cc579298ebd25ebf6d2e2596d926af82167752ad62888e75a893",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -664,7 +664,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "a01b4d1e6e3d61f5c628ac14cdd5b902641e256745e636562b98bec202ab4aae",
+          "framebuffer_sha256": "991251c6ec62c99e95e5cb4a6928a21ff2e8d5c30152ebcc19003b30614b2008",
           "pcm": null,
           "cassette": {
             "state": 6,

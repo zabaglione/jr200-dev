@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。壁、歩く人、箱、敵、ルーン、門",
-      "sha256": "18275f8efa8d3d2f29eb05ea1075f882740c810987b5f0f2f0c8781585df6ffa",
+      "sha256": "a394a318e4867e5ffc60ef1879cdba2b52d64e20758f3936fea23f135d4f6085",
       "framebuffer_sha256": "4ae613e9ba1e77c7eb9e95a77b1c356b059a5b91b702b4295d82d0d148f03e72"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-slides",
       "role": "play",
       "caption": "規則を書き換えて進む途中",
-      "sha256": "25d4586f4898d1a0eeb79bf40960155c163a3896b0249bac39ec7fafe5902882",
-      "framebuffer_sha256": "d09a474b98b892eb483835ba2fa77bbfb7c4df298c0ca957920beb8e2f1daa90"
+      "sha256": "4a12afc046b89eeba91321ce7c18033381f730b2de640a46cad2cdd7cc2169bf",
+      "framebuffer_sha256": "4dcd61bdc94455eec42a9ceaae3c1b5e9cb31a62ad7d6c28418740873a613a76"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "星3つで1部屋目をクリア",
-      "sha256": "63920000450decc9285e08d0606dfdbd157fe72ec21e40c1a3c3044ee99cc5ce",
-      "framebuffer_sha256": "e114069f27b5f13874d70582617640f986f9a95de74ecd744815ce161bdddae6"
+      "sha256": "11e3814d1077cccaf4e8adef06dd4a9af0c1016ce3b8fcbbd346feb76dc8aa2f",
+      "framebuffer_sha256": "980602bb6b2e1f0584d56cfb0eb4b8b8b55a304f13f3d4262cc58d774247bba0"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 4.3,
     "frames": 130,
-    "frames_sha256": "aeaa34b81a2f33e968e5bd304bb94b68f896411071ebc55226e64a5243eac84b",
-    "pcm_sha256": "ded87060e0be820baa54b4bb25f2f0e06100eed7d48e9b48a7cc9406ec6c88b2",
-    "sha256": "26d3467ccad25cbaf432ece76aa532afb183afe9ed8a6bc2b84fc425455526b2",
+    "frames_sha256": "a4e45a7503a281678df2b95ccc102e72324646dad8e4d0cde61b39e056396df3",
+    "pcm_sha256": "7b03c742bf11d5920a8a7fa2d8f9d0fdaa2236a821f083a7a5984732516e303f",
+    "sha256": "b3088e1ed5b978fb897eb3e0874c70063eab95edfa5b1ae188c0528376b23f3e",
     "caption": "1部屋目で規則を書き換え、両方のルーンを通って門に着くまで"
   }
 }

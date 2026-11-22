@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "5884324484b437e813a2313d37cc70468d5b740a2705ef206b8a1faff293ba38",
+      "sha256": "84e38ec7bdbf1ba46847faf252d268da6a7f574567bdf6a3ec5db43b5febfbfa",
       "framebuffer_sha256": "b54b8b184e305fcc7faf15ffb7d0c6f12682d55e377d99461ef8a49f16307b22"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで群れを迎え撃つ場面",
-      "sha256": "2c42ad74f320ba4bc8d6df9d0311ff895ad8db86267affd472ca329f82c5e05f",
-      "framebuffer_sha256": "6884fd67919396218d8f7f132f49a908c55eed5bad5eb2bae3ab5660f48acbdd"
+      "sha256": "362ce4f6b7dde33fd8426ec2f724fdf408d680869a971c9b73daecfe5cb72736",
+      "framebuffer_sha256": "241fe09c4740738820cb905b666da80cbd552fe1a74ca49b370be526295b8756"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "12体を倒して1つ目の波をクリア",
-      "sha256": "7d2d223992eb97ba6f9b14b729131c79f3061168cf66089e4a868b7529b06d62",
-      "framebuffer_sha256": "c558447a61f704801b56c4d74f2ec62230bfc5298615c538dd9de75f8ed97cef"
+      "sha256": "1207e7d0e4228afedc45efdacca4a0e2d38b6a1f5546540025b15e780a21215e",
+      "framebuffer_sha256": "4af56280f8427155c5df85ce54acac3530e87b78f7a34eb22d71c1a9206e4549"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 17.1,
     "frames": 513,
-    "frames_sha256": "4975f637259656494cee545c11ae694e20c4f7e2123203cc1bc9d61ff5e82f9e",
-    "pcm_sha256": "f179bc061684234c7c4a4b34812af3a90ffc7ad5f1af54f5a3719e64cb51dc16",
-    "sha256": "6ad9c517bb8fcfed7bf83eef4ff82338baa48c8b566b64b54cd38bc815e6167f",
+    "frames_sha256": "3a1d80f4b9ec9a46c5e601f52094e5c68bf5ec6adb640556243d3e034cd34a23",
+    "pcm_sha256": "5bb200a5638aa691e04081b26860d2883b695bdfcd4f5d6ef2f7fb3ca6431320",
+    "sha256": "6b6813b5cc0573e70076f58792953cfe149aa0a10eba0d31529449fb94e63641",
     "caption": "1つ目の波の自動デモ（12体を倒して夜明け）"
   }
 }

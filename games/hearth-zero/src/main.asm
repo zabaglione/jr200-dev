@@ -71,7 +71,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         LDAA    10
         STAA    [HZ_FOOD]
         LDAA    8
@@ -568,7 +567,6 @@ hz_title_cell:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    HZ_ATTR_TEXT
         JSR     jr_gfx_fill

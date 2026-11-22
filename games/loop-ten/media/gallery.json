@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "d7094188c21a7b5d8448390701f88ae93259d33339d7e7c14a4a902801ff0d6a",
+      "sha256": "c086ccd431537ca804d0141f1ec57b24e321e2ae75cbff18c4285c29c807fd29",
       "framebuffer_sha256": "74913235d03b39c344ea69a8f706834a366647c96b69fc6bed7bcc041725d710"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで封印へ向かう場面",
-      "sha256": "75d19fb4b1d22916dd8e69d58a8d3aaef22d58ad4d8d78134370c4eac5fd1491",
-      "framebuffer_sha256": "1d9053a16241ade800789523d66c6e163103aabe892c8d5a6ba7817512a919a8"
+      "sha256": "044ca2aaab7af9cf2cb8c7c17d7fc43d5989bc0afc4e21a8dc16b5d1b3f7c3bd",
+      "framebuffer_sha256": "eac2d9c4e377060d5d380f488f1b0d2bcf384bc7047cca0fd6940ddc1bfad199"
     },
     {
       "id": "goal",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "12番目の封印を点灯させ、ループから脱出する",
-      "sha256": "c0617104d1f38046e448ad109f5febed4487d37920126f56c3864bdcc7aa0d28",
-      "framebuffer_sha256": "7443398c46f050aba629c84761bc2640a39dc54a4c2d4d4a7ff0a001f7ed8532"
+      "sha256": "3f356764e1077284aca6604714cd84293bb4b8af014def52f9f22badaf5089e1",
+      "framebuffer_sha256": "fd858b869827347fcc14895fec0d3ac7bfc17f651007aa5654ffb41e497b428d"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 32.1,
     "frames": 963,
-    "frames_sha256": "556fcf4c302e93c7f7c21f7298e31e7f0d4843034bde92f7f00cc1df786fa550",
-    "pcm_sha256": "35d9cde64d5e26ea9390bbc006b743a9acadaa31b52fb1a86dd8f971f47ed42f",
-    "sha256": "42e3f7897823c51c3b5fcf457bb501494b1011806cf2748bc70268b2b2e58084",
+    "frames_sha256": "4ffa19e8025d24305caa6780f2b56473621461cdd571571e54803cdab057da61",
+    "pcm_sha256": "dbb4e58b019ebedbcc68a23bfc03940b0935965d9e24bfcd702904ebcf0b56c4",
+    "sha256": "7ac1cfa8709d8dc410da2fe1898e363b22645b018ac35e79664005c453b17047",
     "caption": "自動デモで12の封印を点灯させて脱出する（等速）"
   }
 }

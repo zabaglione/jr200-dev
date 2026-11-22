@@ -95,7 +95,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         LDAA    2
         STAA    [CC_B + 27]
         STAA    [CC_B + 36]
@@ -663,7 +662,6 @@ cc_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    CC_ATTR_TEXT
         JSR     jr_gfx_fill

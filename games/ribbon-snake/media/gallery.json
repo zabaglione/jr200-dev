@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "b549ba81f2ed09ae1fe195dcb06a42cdb0ba101fec6567934b1d8c325600446a",
+      "sha256": "73ba59fe1052b19b89f3c5b64622b15d59a00d5bfbe505fae830b33517853eae",
       "framebuffer_sha256": "d6d6f5a8c9c6bc67f387461361b4849c33fd359186446c8622195ff6225d9fe5"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで餌へ向かうリボン",
-      "sha256": "837f8638b5944f1b8b10045c14f595a1481571544f23ee3469186af98b502df0",
-      "framebuffer_sha256": "3052924bfef38d423965d51af75fa7f75e1b931b2c4b7670df6e1cf596daa2c0"
+      "sha256": "7413b49c243182502047af32091a41c3436df80cc7cd14853772c0b7db09765a",
+      "framebuffer_sha256": "e926e2fbfd5f8d6ca1655e2e58a5d2c6f02df1495a676793200ef921cd698dfa"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "8個目を食べて1つ目の庭をクリア",
-      "sha256": "83aa6b2bdc74bb7b6361ea47e9800f65f9e755e866b95421769afba239a48a4a",
-      "framebuffer_sha256": "7bd4d8cdce32052f47834f5a0dc0b73425d29e4a9ef50800484a7c4ee83eccc7"
+      "sha256": "0e9ceac332f0a321658938ca263e74de9b1ebbdac7d0bbddcf796f9dfac9dbf2",
+      "framebuffer_sha256": "016de59a42543c9459b4d2ff63a76ba24ade9e692f5dbd107c8bb2b2820b7fdb"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 19.6,
     "frames": 587,
-    "frames_sha256": "b6ad3719b2c7458b97879cd4dc0154fbf57bb08d509cfeabd92d31137d622ce1",
-    "pcm_sha256": "9913e27a53069fd2b3fcaaf32480fb42670eacf55f85847aa71dcc76d5ff7688",
-    "sha256": "fbe772148b9ba0fe8f28afb9150aa1cfaf33e17645292096ed8ec542a281151b",
+    "frames_sha256": "0f6625ac788e3599a9b16e6f5c10335a52212fec3c4825de56fbd5ebf816963e",
+    "pcm_sha256": "001acdb8872fe14175785b82effe5f0becce16bc8311de89e208a72a06be6426",
+    "sha256": "5ff5e94d2a83aca2ee8fa58df0d2277161e4b43113c519e8332b608931c444af",
     "caption": "1つ目の庭の自動デモ（8個食べてクリア）"
   }
 }

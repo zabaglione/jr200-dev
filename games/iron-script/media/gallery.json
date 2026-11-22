@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "dd24f89966303d28bceabaeb7c1f9bee189b4c9f833f2d229ba20a817f32d827",
+      "sha256": "af8eaa0a43cfabefe993af0946eabd3efe1f9d9379a2d607c400798145acbb0f",
       "framebuffer_sha256": "20938b93e284d13b518ec50e2904e3cc2f417bd6d5b62334ccab821618db8ea3"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモでプログラムを実行する場面",
-      "sha256": "2fe7c4caddb5c43ba05e4455c91ae9f91a87beccc2b8e1c427ea53a6fc3f4513",
-      "framebuffer_sha256": "f7fee48a1601feaa7558de3ef7ea4dc52a89444c9317844e0bd5a946b6ae7cfc"
+      "sha256": "182ead1e9f68c2175204e2510a539b74e2ff09b26708f2383b7677a6aba75a39",
+      "framebuffer_sha256": "52a80084b667cdcbf56a6c55ac6d50eba40672b7da37cc4f544f688e740bae51"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-demo-clear",
       "role": "goal",
       "caption": "端末に着いて1つ目の部屋をクリア",
-      "sha256": "c37051f32b247741530061ba8f9fa0c64a75a60d22cd0119d0646959f35d61ce",
-      "framebuffer_sha256": "e0e94d06ea6f67ec71c11007b1b3292425c46020cadc71a2fd2b4c3dad28bdcf"
+      "sha256": "93cd09d89976880b41f29d4ce7c382dcb84c94bcb28ee73b4512c4be794e1b85",
+      "framebuffer_sha256": "d990c12e5ee47fb90ae1c0c350d307fd62fb38fcf56f2036511304f34482d5bb"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 3.9,
     "frames": 116,
-    "frames_sha256": "6e5405ad8fa4621d0b34d917bc1636d523ddf0ec4ab486a24be6fe32cfcb1340",
-    "pcm_sha256": "8b24ebc0bb4bb22386308063617ec04a4d2844d9cb448e9ad0d82d59b4e12bd0",
-    "sha256": "24992a81dabd7bac73329f31f658ea81cf70ce1ac50fe8655fd93a80367c4dc0",
+    "frames_sha256": "af1ad6b3845c1c779282b55ae266983e5c259b6740b4f66f934e034a692b3b1f",
+    "pcm_sha256": "fbb347b6293f7f0d1cd7535fb1fb892d08c679af94126da7de077ca66cdac741",
+    "sha256": "00efded33bf647573043a8c8362b51f25c7c2fc64335e8e64057203784869557",
     "caption": "1つ目の部屋の自動デモ（プログラムを入力して実行）"
   }
 }

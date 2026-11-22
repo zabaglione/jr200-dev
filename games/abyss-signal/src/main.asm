@@ -168,7 +168,6 @@ start:
 
 ; NEW_MISSION.
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDX     GAME_STATE
 as_init_clear:
@@ -1615,7 +1614,6 @@ game_prepare_title:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    AS_ATTR_TEXT
         JSR     jr_gfx_fill

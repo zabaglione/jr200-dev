@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "number-vault",
   "title": "NUMBER VAULT",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Crack a four-dial code from exact and near counts within ten tries across ten vaults.",
   "genre": "puzzle",
   "license": "MIT",

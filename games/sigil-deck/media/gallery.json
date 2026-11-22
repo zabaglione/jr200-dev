@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "2811a61e2761ac7fef7d02c6e6c195b9859a402da4798b2344d299d1a8a089ea",
+      "sha256": "1ee2199661fc480c79825b40ba5f700dc768d4575bf96eb6cbdff2780f9179b4",
       "framebuffer_sha256": "54fb63ee773bdceeb8ce06efaf4e19249217f60a22792b858f189c5e6ae73981"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-strike",
       "role": "play",
       "caption": "STRIKEで敵に斬りつける場面",
-      "sha256": "5db7b8f3c74d7717f59c8598a19e2b4cbf257e254edaa3fb561e2e666d58169f",
-      "framebuffer_sha256": "d519f0e9d53b6cf875a178a9930b46b53328c337b634119317e6f65bf76a21fd"
+      "sha256": "79d6bcf905c8448b11b8c515f70d4e2c279312679fcad532550fc43ca4fe1c6b",
+      "framebuffer_sha256": "0f1973106285b2027dc2369e009172513b1ca6036d07471ee43a3bbf6256cf3e"
     },
     {
       "id": "reward",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-win",
       "role": "play",
       "caption": "勝利後に3枚の報酬から選ぶ画面",
-      "sha256": "9422642ea3169ae77e9d1dda94a6094b788cf0c49adb8a01dbb424d347896309",
-      "framebuffer_sha256": "9c043fea018604d0244f515ca5b9fbcca1f80e266288fcae0abe8dfca0dfdd6f"
+      "sha256": "0663fa3d7e1f37f18928832d8232b5b511d1a064132b8f58bc1617f4c22a1153",
+      "framebuffer_sha256": "6fad47e633c7c72c84665f89edd63f3de50e3b81f218539aff99678b03fe690d"
     },
     {
       "id": "goal",
@@ -34,8 +34,8 @@
       "profile": "synthetic-victory",
       "role": "goal",
       "caption": "10戦を勝ち抜いた結果画面",
-      "sha256": "4189774a50eecebe86eaa9b81e01fa64249c5def98f0be6a3fb9a8f8e12b24dd",
-      "framebuffer_sha256": "3d6975b01292c11863945e25fb756a39b717a8da123bfe4ad9d8f1dc6b858b46"
+      "sha256": "47f3e14fa1dba88dcfa66a34e404c922ca5487b4e09d2f74f6a40feb5c81630b",
+      "framebuffer_sha256": "2f50f5be7d5a3d7c12b221aa0c6ee8b2cb615b32c7e1b2e95abef08fccb84d5b"
     }
   ],
   "video": {
@@ -45,9 +45,9 @@
     "speed": 1.0,
     "seconds": 10.5,
     "frames": 315,
-    "frames_sha256": "d3eaa0e0846a072f73a89655bb6f3c7ad203b0f80d9221dd14fd18ab4e982a26",
-    "pcm_sha256": "a69394bb3c4e8cea42a2536c13ad73b946cb1794bab44c21f3d08b77755bee0b",
-    "sha256": "2ec854cfdf2516cd43bcf98d6ba88a59a45d0e54e7479dad4ff63b568d5507cb",
+    "frames_sha256": "a5accb104af77384c73d754ace6d07f014e4b0a0806f6f9322596feffea98a9c",
+    "pcm_sha256": "87802a50b3f3921d405374c5f8097f3027e05c2157c751c4bdfeb0b4534751bc",
+    "sha256": "c175cd4e839fda9f365a9e10953579290f984470c17a5e6f16467aa46aa16e06",
     "caption": "最初の敵ASH WRAITHに勝ち、報酬を選ぶ画面へ（等速）"
   }
 }

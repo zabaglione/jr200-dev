@@ -89,7 +89,6 @@ start:
 ; origin = entropy(): (voice 0 offset * 8 + frames left) of the song playing
 ; when the stage starts. secret = origin ^ (level * 23 + 17).
 game_init:
-        CLR     [JR200_BORDER]
         LDAA    [JR_AU_VOICE + 1]
         SUBA    [JR_AU_VOICE + 4]
         ASLA
@@ -555,7 +554,6 @@ game_prepare_title:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    NV_ATTR_TEXT
         JSR     jr_gfx_fill

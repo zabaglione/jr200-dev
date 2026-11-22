@@ -92,7 +92,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init_state:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    3
@@ -526,7 +525,6 @@ lt_title_pad:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    LT_ATTR_TEXT
         JSR     jr_gfx_fill

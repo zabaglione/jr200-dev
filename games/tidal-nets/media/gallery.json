@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。波と2つの群れ",
-      "sha256": "b5244d8ed99ecb1e5beaed5c3e48f465687bbb09314f9f05066f4e44439a9fdf",
+      "sha256": "fb2673cec350bfbd2f1d1202590786e75223e3f102d2c76c3889a327c9e1c777",
       "framebuffer_sha256": "33f18c7acd2b996e9e8fb9dc4725e78d14d7b7a53a5a5c973b02fbc5a2b0b05d"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-catch",
       "role": "play",
       "caption": "広い網で最初の投網をした後",
-      "sha256": "0887551d9dbc8b1f52a6211fb96b596c0987924b8519337c63ba915318b6e8db",
-      "framebuffer_sha256": "835455f321f554bac1f428b4cd95034ea65d93c4fdb6e6f0e5d07a1fa39c80c5"
+      "sha256": "5c1c4a5c33a24d6f8d3ab550f88a440d986333cf999320feca0c61f5798e5231",
+      "framebuffer_sha256": "a76f8964f3e2b6774b5a9475389899d82155ce68c56eb807ea5d969c2ce244cd"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "漁獲が目標に届いて1回目のクリア",
-      "sha256": "4c759f4a96e03ca916edbd5498430c383c197dfbfbc4a827af3918895248ba92",
-      "framebuffer_sha256": "41160b1321255b9a9ad021ac747f24930c08a6d0a6a48661fa73501f9ca82bfb"
+      "sha256": "def1b94b60a9bb7bca1b9f5aae1792cba9f4f8114a7b7b174ac233664e288dbf",
+      "framebuffer_sha256": "72c6ab021bedfbb3f5c9deae13e5143b1dcd18b993957fa4044d39640eed8a8d"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 21.1,
     "frames": 633,
-    "frames_sha256": "2856d419dc5227329e72be75a41c2cb8fd0c25f075a434458fcea35334e824b5",
-    "pcm_sha256": "8b0792490a5f31b5521394f3e6108631c544087955f19468309eb3020f132b53",
-    "sha256": "6c4583e82ddb47c845d6c24680fff1f1cb671bcf514dfddab8b9fd3e22315a60",
+    "frames_sha256": "8f2dc578aa0d1f424a9b42b711b7ee6e475ceba927941811631e4c5d8f0ef931",
+    "pcm_sha256": "723e1ac4ea1e064b66371bed2b4f378a9cc67256e84d9d8aed868bd293abf9d6",
+    "sha256": "7a6aca1bdebb5511ed5b76cab781a8e5a2393fd30532932f65123cff95e41bd2",
     "caption": "1回目の漁で9回の投網で目標30に届き、3声のジングルが鳴るまで（音付き）"
   }
 }

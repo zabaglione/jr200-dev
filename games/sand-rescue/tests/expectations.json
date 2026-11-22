@@ -75,7 +75,7 @@
           "memory": {
             "mode": "05"
           },
-          "framebuffer_sha256": "bc84ae63585870f4d9d74380a636840ff33c70b12e30001dd357ee406a0514cf",
+          "framebuffer_sha256": "a41933c8adcb17255f3f93fbeb0900229c370355ff1ca81c4d0acc6166c9a6bc",
           "pcm": null,
           "cassette": null
         }
@@ -125,7 +125,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "567a04d504a1c0582dc4979752c71a5e109c039610a9aac3ab52354b8e298510",
+          "framebuffer_sha256": "7e0d7633d346e829988fb39864a67daf833ecb8e7beb72fad743d86ffaf83be0",
           "pcm": null,
           "cassette": null
         }
@@ -291,7 +291,7 @@
             "tank": "00",
             "score": "0b"
           },
-          "framebuffer_sha256": "1526be409effe0b0c942193876e495a83eb7fddcc87971b7883ca0a977bb4804",
+          "framebuffer_sha256": "c9a6e381faf0f7bc9bd9dc5f36ef4624c7eaf18c256c9ddc4682dbadde72d739",
           "pcm": null,
           "cassette": null
         }
@@ -499,7 +499,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {},
-          "framebuffer_sha256": "f8de957afcf9f6d1ea14187631b292fd15c7add7a993057906bb53e7326c2749",
+          "framebuffer_sha256": "31f886f9c99fdd84a0f11539c5c834345f3a658ce8042b9066b6dc158c5a89ce",
           "pcm": null,
           "cassette": null
         }
@@ -549,7 +549,7 @@
             "mode": "02",
             "level": "00"
           },
-          "framebuffer_sha256": "ab667b72b0776464913b90c683a80288ee92eaabc90f56eff04e5d6126584c67",
+          "framebuffer_sha256": "b93be4757f7f122dccf948e4256d4b8fcba3603908dfa6bbe8984667b0028c43",
           "pcm": {
             "minimum_frames": 4096,
             "minimum_nonzero_frames": 1000,
@@ -742,7 +742,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "567a04d504a1c0582dc4979752c71a5e109c039610a9aac3ab52354b8e298510",
+          "framebuffer_sha256": "7e0d7633d346e829988fb39864a67daf833ecb8e7beb72fad743d86ffaf83be0",
           "pcm": null,
           "cassette": {
             "state": 6,

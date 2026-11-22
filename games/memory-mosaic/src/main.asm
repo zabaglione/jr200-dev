@@ -93,7 +93,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         ; origin = entropy(): voice 0 offset * 8 + frames left of the song
         LDAA    [JR_AU_VOICE + 1]
         SUBA    [JR_AU_VOICE + 4]
@@ -553,7 +552,6 @@ mm_title_motif:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    MM_ATTR_TEXT
         JSR     jr_gfx_fill

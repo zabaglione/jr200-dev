@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。8種類の絵柄と色",
-      "sha256": "efba60247c42213beaf5296d612e9c9cc35eab23fbf0ff20b466cc604959b779",
+      "sha256": "5e804f2cff0eeae382b9cb8f3419d7ff979648ae21b7bad0824959bd6fc44ad8",
       "framebuffer_sha256": "b8859a3d8fa28165df724fe17ec04b90204bce7e1829153ea6bce43803316df9"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-match",
       "role": "play",
       "caption": "最初の2枚が同じ絵柄でそろった場面",
-      "sha256": "d4ddec22beee3385031f19825ba99d6ff5cb5d7817a4f9b0e959d7b01b33067b",
-      "framebuffer_sha256": "8f95f61e44aa321a549c3da14a4d96b701ab04f59f70ac6b6fda848b303f6efd"
+      "sha256": "d9d9d4a138ba2a40cc5276352b3ae01d0488291b3ca1234623724ab2e1e8b575",
+      "framebuffer_sha256": "668f8291bef87fa2aab85496167cdb0db055491298bc324e27c9099a8e7c3f00"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "8組がそろって1面クリア",
-      "sha256": "aaa01ad112beae471da3625e1eb402d43936f5067f4da4390d94f22659e59e1c",
-      "framebuffer_sha256": "36d5988a3c7b0280db6d608f12d4cb14681567c190e763c904de672b0bb82a92"
+      "sha256": "b2e893d3ba016e4c7d39738d1be7dfb3a2031aa1e38fca932f79b21c85cc81d0",
+      "framebuffer_sha256": "ec11791ab1fc723de60fedd438d0c795ced0faa43dc9c24517a89d28d21d0c6c"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 18.9,
     "frames": 568,
-    "frames_sha256": "d3a0327e7428fd9f62372a4144a9398af3511dc318e877fe84fa95fea5bda99d",
-    "pcm_sha256": "e0608d20b8143e07922af357e369f32c42d7b0b7d2f612fbd4987e563b0b39eb",
-    "sha256": "38a72c970057b6658ad02271373e9f84ee42525265b151d96e5ca0a6d6cc1d78",
+    "frames_sha256": "637ef8f0652c018bd8729056a8ea60e92fd2955893297cfca5dcaca09bef33e5",
+    "pcm_sha256": "565bae14f38ecb7aca2bd24c7b5b0e6fd0d46ab390b4c66ed4f72f91d8f4f3cf",
+    "sha256": "ffb213a5fc0f25d642901f99c3321c4365724b034b4ea76ea859fc2131d720ea",
     "caption": "1面で8組をそろえてクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

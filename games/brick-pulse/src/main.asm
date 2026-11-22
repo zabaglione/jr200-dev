@@ -128,7 +128,6 @@ start:
 ; ---------------------------------------------------------------- rules
 
 game_init:
-        CLR     [JR200_BORDER]
         ; arena address = bp_arenas + level * 24 (up to 264: 16-bit steps)
         LDX     bp_arenas
         LDAB    [JR_PORT_LEVEL]
@@ -1132,7 +1131,6 @@ bp_title_brick_hits:
         JMP     jr_gfx_putc
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    BP_ATTR_TEXT
         JSR     jr_gfx_fill

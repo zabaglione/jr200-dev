@@ -117,7 +117,6 @@ start:
 
 ; Unpack the room (27 bytes, four 2-bit cells each) and count its targets.
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         JSR     jr_test_level
         ; room * 27 passes 255, so step X one room at a time
@@ -708,7 +707,6 @@ tb_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    TB_ATTR_TEXT
         JSR     jr_gfx_fill

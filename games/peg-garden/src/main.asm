@@ -79,7 +79,6 @@ start:
 
 ; b[i] = 1 on the four corners, else 4; b[12] = 0.
 game_init:
-        CLR     [JR200_BORDER]
         JSR     jr_music_stop
         LDX     PG_BOARD
         CLRA
@@ -410,7 +409,6 @@ pg_title_text:
         JMP     jr_gfx_lines
 
 game_draw_help:
-        CLR     [JR200_BORDER]
         LDAA    0x20
         LDAB    PG_ATTR_TEXT
         JSR     jr_gfx_fill

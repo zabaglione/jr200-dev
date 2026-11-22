@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。白い石の五連と黒い石",
-      "sha256": "66089d0bd7775d93a294258843b663f0f2feedbe7dcc6a432e79aeefc438d591",
+      "sha256": "5ad8d0d0455e1b2ef6d2333da5fe1b03032ba7e686ea648c516c4be6076cd86a",
       "framebuffer_sha256": "17f037e44f3b006895b42e406a131fa52efd53885fe3191a71297617d0f5baad"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-moves",
       "role": "play",
       "caption": "3手目を置き、相手が打ち返した場面",
-      "sha256": "6fb4662943ab50ee546f6d6d53b89c6fa6b3099b462ed176e7716b5a0e18c528",
-      "framebuffer_sha256": "ef584d5f384c9a64add32e3462a55bbaeb2883c2a15ffc67b9dcb4d7bc22b68c"
+      "sha256": "05430d7b39d5c91c42bca218becf768afd95789e3400d0c1d4fae5a5250507ad",
+      "framebuffer_sha256": "a068afc1aceab1e38d02a1abbda16796cd5e8f69dcd95b7a2a74c14a9387b211"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "斜めの五連ができたクリア",
-      "sha256": "a67904e2e8ebe16eca21b773f1a5a5f45486624a1b0e431b83cff149e1e3da5d",
-      "framebuffer_sha256": "ae5bd567505abc12eb3c7b5f33460420b379b1f257be1ea0adae473b46d0e213"
+      "sha256": "228c434af657d636a38245a8004aa2b76723d3d68775fa85426bea38dcd457b5",
+      "framebuffer_sha256": "74f04364e3931527fbb06ff0bbd1689d373a7ce2c78894211459636e6e2513a9"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 22.8,
     "frames": 685,
-    "frames_sha256": "d4b58bde132389349b7d84f6b908936536b70e89e86a39a32476ab8ba60e4aad",
-    "pcm_sha256": "aa622defffd7ac44156add03ef17f85e304429748ec7d18e402e52ef9f44bc7d",
-    "sha256": "596e4580a36e7dfdfba3ba10d85898e1f68933514c51951d41c37d7637074631",
+    "frames_sha256": "2de7144f8786168e83a27545ffb846131976e7f15c9e9d65789d20e2923908f9",
+    "pcm_sha256": "b195968fcbbe8aed7db09cc1576d4735b6ad7203c42f3d7dea5574a173125359",
+    "sha256": "9a1b825880c93deab33b111c6c08b2a42327bb4722d9c348419e9c31f16b1bba",
     "caption": "5手で斜めの五連を作ってクリアするまで"
   }
 }

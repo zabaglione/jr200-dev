@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。5種類の札",
-      "sha256": "873d439e4c2b39d8018f6350c344da9d5d3a8eb56d4729017e042ae0a03b3138",
+      "sha256": "6315dbefc8ea4eda4af18223983cee9be4611988a5f710b667de43b76059c48b",
       "framebuffer_sha256": "092374b03dc4b0efb524229e5d3c085186f674d74a624db3e36cca9633f26493"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-moves",
       "role": "play",
       "caption": "2枚を落とした盤面とメニュー",
-      "sha256": "dd8f3cd786e386b90c1e4f5b67abcffa86d342eb90463675113c8bd8b0d26b0e",
-      "framebuffer_sha256": "e121b5a42678d99989b6e29ddd25b7a74c0711e291372f256379f74aa3b2ad9a"
+      "sha256": "a0d4d5684aa647461e2f3caa8bf71983873494c6da6e38aa700db24f6306a8cc",
+      "framebuffer_sha256": "c366a672dbb51a7841a6806ff241f8757b9a2a820ada9488ec008310833de413"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "連鎖で目標に届いた1ラウンド目のクリア",
-      "sha256": "a84cf05cbf38043f866a63dba9d749c344b13dc77ab8947d73304ed1f70e8d4e",
-      "framebuffer_sha256": "f1cc92dbf2d186429dc6c42aab5c3702aa9db6f509e76887e2fc698c5ac1c1d5"
+      "sha256": "48e9945eec3d95ed36df03876ca4600e2a4f782e9e165e8a7b25329fe520a6ea",
+      "framebuffer_sha256": "850c2db75cda630f59a6326d27fdd443f0c965e3d4922ac3beacf7d194e3c398"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 12.6,
     "frames": 377,
-    "frames_sha256": "a1436f4cda80b9c458a1948759e918073fbc6e50001eda711badd06c03bdcd0b",
-    "pcm_sha256": "73cbb3c71793929d1a2306e9a9a0d4acfeb461e47b34459f87bcae47e5122f49",
-    "sha256": "b944d96f31947dc982e6e17061547db0042d61f37fb66e30ede390d700b24518",
+    "frames_sha256": "5caed15a74411e33acf23341642ce0a3e935b8cab8241c8f8f8aa16fb48b21c1",
+    "pcm_sha256": "b124d90d0fe93024ee1fa2ed374ec17e8fc7fbefec2ec5f00b28fedc5b202168",
+    "sha256": "547a7da9652e5b66598fa7de6b8acbce675b0d7081ca2a03bc13993921813e02",
     "caption": "札を落として3つ並べ、1ラウンド目の目標に届くまで"
   }
 }

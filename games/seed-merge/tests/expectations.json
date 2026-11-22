@@ -35,7 +35,7 @@
           "stop_reason": "cycle-limit",
           "pc": null,
           "memory": {"mode": "05"},
-          "framebuffer_sha256": "4f7697841cef2e8dc588beb4f355e5b80ffe5ffb4b4a9d2e0e9fea5c79c57c4e",
+          "framebuffer_sha256": "ea2aa4fd47126251a9f0ed3e599067f3b6b2e6c3226b5414b062704cd5400ba0",
           "pcm": null,
           "cassette": null
         }
@@ -57,7 +57,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "01", "state": "00000000010100000000000000000000b50100"},
-          "framebuffer_sha256": "995f956d0097b01b78bbfeb3ebe0d78aa020dbf1a0290bb6bf56d26cdd2ca5da", "pcm": null, "cassette": null
+          "framebuffer_sha256": "7e5900b781a1e801fa743830918b8af2629d7f83ff7a582964c86b54df223703", "pcm": null, "cassette": null
         }
       },
       {
@@ -79,7 +79,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "01", "state": "000000000000000200000100000000008a0201"},
-          "framebuffer_sha256": "5ddebf5f89030d39ddc5afb748ba422ed9ed1149fa9825a8a74b2027ec26b473", "pcm": null, "cassette": null
+          "framebuffer_sha256": "5f25f109d8733304813098927eb348b6b6c1f03abe6e7db2af1f99ed9d0200db", "pcm": null, "cassette": null
         }
       },
       {
@@ -121,7 +121,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "02", "state": "06010100020000000100000000000000600623"},
-          "framebuffer_sha256": "4b5d295d5258b51a9a5800f19c6d657a6df6b66e5c470a40d3902913464908a6", "pcm": null, "cassette": null
+          "framebuffer_sha256": "1e064f5c23add7526282cd1f480a8e000ef8fc9c2e4b9875a573a379b58605ab", "pcm": null, "cassette": null
         }
       },
       {
@@ -142,7 +142,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "03", "state": "020102010103010202010201010201023d0318"},
-          "framebuffer_sha256": "e6fcc437b550b8c1dab807993bbe61bab368b6e0a9da6bfdc9855f917d9b92db", "pcm": null, "cassette": null
+          "framebuffer_sha256": "0cdbd1721929b3cedfdafaf473e866d18ed1d4e23afc1a807789425ec086ed87", "pcm": null, "cassette": null
         }
       },
       {
@@ -285,7 +285,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "01", "state": "00000000010100000000000000000000b50100"},
-          "framebuffer_sha256": "995f956d0097b01b78bbfeb3ebe0d78aa020dbf1a0290bb6bf56d26cdd2ca5da", "pcm": null,
+          "framebuffer_sha256": "7e5900b781a1e801fa743830918b8af2629d7f83ff7a582964c86b54df223703", "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         },
         "replay_from": "synthetic-start",
@@ -308,7 +308,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "02", "state": "06010100020000000100000000000000600623"},
-          "framebuffer_sha256": "4b5d295d5258b51a9a5800f19c6d657a6df6b66e5c470a40d3902913464908a6", "pcm": null,
+          "framebuffer_sha256": "1e064f5c23add7526282cd1f480a8e000ef8fc9c2e4b9875a573a379b58605ab", "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         },
         "replay_from": "synthetic-win",
@@ -331,7 +331,7 @@
         "expect": {
           "stop_reason": "cycle-limit", "pc": null,
           "memory": {"mode": "03", "state": "020102010103010202010201010201023d0318"},
-          "framebuffer_sha256": "e6fcc437b550b8c1dab807993bbe61bab368b6e0a9da6bfdc9855f917d9b92db", "pcm": null,
+          "framebuffer_sha256": "0cdbd1721929b3cedfdafaf473e866d18ed1d4e23afc1a807789425ec086ed87", "pcm": null,
           "cassette": {"state": 6, "mode": 1, "remote": false}
         },
         "replay_from": "synthetic-lose",

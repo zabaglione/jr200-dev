@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "memory-mosaic",
   "title": "MEMORY MOSAIC",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Turn cards two at a time and match eight motif pairs before the misses run out.",
   "genre": "tabletop",
   "license": "MIT",

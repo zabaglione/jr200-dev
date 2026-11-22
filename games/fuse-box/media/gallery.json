@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。入と切のヒューズと切り替え中の形",
-      "sha256": "dc943e82e5582f1fb5b17d2658273a6f28429d7fe22a6eef38a92a5e0713dcc5",
+      "sha256": "5f2692b7cd81b87db4ba92cdd4b2a9b20996cbfdc860fc0a8f0a6bdf18b560a0",
       "framebuffer_sha256": "1e7aaa525c982540beedb26012ce82bc09cafdd76a77c36aa4fee03fd3e9f1dd"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-partial",
       "role": "play",
       "caption": "1面で4個のスイッチを入れた途中。合った行と列の数字が緑に反転",
-      "sha256": "97acd024caeb2d4b91dbdbfbfaf211da27793cbee6683a6f760045967c54e714",
-      "framebuffer_sha256": "ceacc0b48bbfb23a3d15e419390ae129671ee179351b79657998bb85296c9931"
+      "sha256": "9028f55e8c1f37d30d5298593c95a3226b6f89121d50c334fe36286155afdbbe",
+      "framebuffer_sha256": "d4e04854ffc01d7365e8cd2ee2275b1e6fc55308171afb0ac7c9c7e9de13da83"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "すべての行と列の個数がそろって1面クリア",
-      "sha256": "9cecb01898a33b16a88f570dc37ad4f0e7d85dacfd454e38ee408196f0845032",
-      "framebuffer_sha256": "aef4da5f69fef831c9ce7dd134f310aead654df25d539ab1702c37e9d6963b02"
+      "sha256": "859adcac0200c4f26b6a3f1c42561b1fc78b9c9cbc83eb11b55f824718e5b6ee",
+      "framebuffer_sha256": "c3406ac913973ba0e9ded8480af8cade2bab3343a8ac83887ee4f84eac1130a7"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 9.0,
     "frames": 269,
-    "frames_sha256": "12fca7e3cf10f615ccf57ed806f6de1d46ca429a451f5dc0103a9d7046b878a8",
-    "pcm_sha256": "55b5d7ec015f3b6f07f519f656a5f28e09124928ce8bcaf347989143adefcbf0",
-    "sha256": "33fc3b5b0874d2f7e61db66816c284b0e3481ea7cedd0635667852902127bba2",
+    "frames_sha256": "b119ce79705bcf56c1185d234ef2ad066f69640e565352cec11713af2f210778",
+    "pcm_sha256": "5ce5f46ea5ab8ef3da770881c1f2b1a45822c3d0991c10a8f559509c75fde7f0",
+    "sha256": "9f523c5ef890fd1f7b057c48d91f796a107cd077ae25e86672b42021c8d50232",
     "caption": "1面の開始から10個のスイッチを入れてクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }

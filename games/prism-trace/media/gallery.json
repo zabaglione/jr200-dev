@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。光源、鏡、受光器をつなぐ光",
-      "sha256": "ef19827c0d4eda6df7255624b406ca95fbadb3335a4074957c7712b18c6b873c",
+      "sha256": "808a59394ca05e2d49fbdcd6256e4685edb9c23140f968476679f65b086bde20",
       "framebuffer_sha256": "37da5d529ef993893e0b3065a6a1800be18a6c02bbc48cbbe1ce5f0bac24443e"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-turns",
       "role": "play",
       "caption": "3枚回して光が伸びた途中",
-      "sha256": "ae4201c4b775862381a175efb040001a4b5cdbd842e5b6197a8b9e8d87056959",
-      "framebuffer_sha256": "11ee52cddcbb635d7e1099d1f5dc60d7c78b66cad1246a2ed0cc627b0bfabd6e"
+      "sha256": "a7d75c5d8853d25121238d9c73eb3500ca225ae93980d9b369caf462312a9dd7",
+      "framebuffer_sha256": "9be75d3e49a2e36f274533c93c2fe9b0c9029986560d90f2144169842eb0fdb0"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-first-clear",
       "role": "goal",
       "caption": "光が受光器に届いたクリア",
-      "sha256": "15e80fbcc2dd399f30e25667ea44a909223f15137459d2fd43a543253f2dfe7e",
-      "framebuffer_sha256": "cb6b93781d1c008a2362cab605d3118bb4765fd9426faccc6550b4752dc094e0"
+      "sha256": "7d9185f6126697532d2b861cd036c103f2d6fe3684f307451bdfde3c5698e45e",
+      "framebuffer_sha256": "e0bd476ba935bf5c3cf6039fb1b27392368f2a46cc8ef279f34ec07386ff910b"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 7.9,
     "frames": 236,
-    "frames_sha256": "6fb739e943eca878e3716d36673d09a1a9ad6148840d9d17653dad3b55ae709c",
-    "pcm_sha256": "9603eb1e5fd7a45707b9be46179ba77b850fc7a7c9b56d2cc525fa898b616398",
-    "sha256": "9f50ea394843880e0fb3d08e37184ab1cf7f9196b464d125c6125152487775b0",
+    "frames_sha256": "bd2868036a4bf856bd17b4f2b6f37b2b74ba563d07b75b80caf6176b47c1ef15",
+    "pcm_sha256": "cda16ab99d2d4ea57b93e62f4dd44e2f7e48f8583e538203dea5377f43be8446",
+    "sha256": "f5fbb7af07b9883e7c422721d3e353c42ced0aa6a660a924e71e894608252de4",
     "caption": "5枚の鏡を回して光を受光器へ届けるまで"
   }
 }

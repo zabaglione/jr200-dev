@@ -2,7 +2,7 @@
   "schema_version": 2,
   "id": "tide-bridge",
   "title": "TIDE BRIDGE",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Raise and lower whole rows and columns of tide planks to link the shore to the gate.",
   "genre": "puzzle",
   "license": "MIT",

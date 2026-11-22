@@ -7,7 +7,7 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面。ペグが隣のペグを飛び越える図",
-      "sha256": "e33edfd03fdec8d68ac4e2ad7ccf682b8789a9b3f25fa253980d8bc93ce4a956",
+      "sha256": "a4fe61b7313f69c7f0f38dc5e72dc14c64ecac92713793322f4611576c9f3bde",
       "framebuffer_sha256": "c669dbd0461985c2630ea2bc7b2d802a6684a9a9e841a81b0dbd81d51c5144c3"
     },
     {
@@ -16,8 +16,8 @@
       "profile": "synthetic-first-jump",
       "role": "play",
       "caption": "最初の1手。上の石が中央の穴へ飛び込み、間の石が消えた",
-      "sha256": "5ce9c97def7a4d8d96222055aecda0d239d316a6a6d29d35025a4b43167e0e33",
-      "framebuffer_sha256": "4be9311e8493012929e07a27ce88921112a9bf3810a145ddf5c25357a0542b1a"
+      "sha256": "190262cb63ff0ece4975e4700152d52c77b3ab46ff8294af908ca012b2637dc6",
+      "framebuffer_sha256": "747d03fb0798d2cc594f914d9c8cdac18a66a3e1736eb55b4271f3e5d8604697"
     },
     {
       "id": "clear",
@@ -25,8 +25,8 @@
       "profile": "synthetic-clear",
       "role": "goal",
       "caption": "15回飛び越して残り5個でクリア",
-      "sha256": "af9d09c5328227f3e3e4a09b9a7fce24cfced84a073e151b9f101177bf6db21e",
-      "framebuffer_sha256": "715c890f14294b97723958b599ac44c61351ff0106825294023a6a26a75bbead"
+      "sha256": "8e3bc09d2b27e435766eea8ba72292a080be8271fd726a3e42d3cb5aaa0ce906",
+      "framebuffer_sha256": "659b48266803c0a1f89de37303083982baebe4ae1619c57328dd90092db00b43"
     }
   ],
   "video": {
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 16.7,
     "frames": 501,
-    "frames_sha256": "217a47a0a36529421c9575143eddc4c50f780168cd0b0b5f766c77c3e9ed4fa5",
-    "pcm_sha256": "064a8d754627c113342776cca8281473dd4c6a72287d33545cf5863b4c4add63",
-    "sha256": "df6eb916c90f457f9711953d466c3bdcc7a5627c6ac8cd7252d5c85118d58a1e",
+    "frames_sha256": "471a6a1a9ed64066d9abf43cf757eb98c65bc6afc5bc0e74554df48a98571af4",
+    "pcm_sha256": "e004f6ef3cc2c1b052c2ec52569e1e6d05af555a529c635d8444948877b67bbe",
+    "sha256": "d10b9bd182da23bf12a82ff2f6656fea5f583250d02f8dbb46a29638eca93a90",
     "caption": "開始から15回の飛び越しでクリアし、3声のジングルが鳴るまで（音付き）"
   }
 }
