@@ -10,13 +10,14 @@
         .filename.jr "ABYSS-SIGNAL"
         .include "../../../sdk/jr200.inc"
 
-JR_SHADOW:          .equ    0x3000
-JR_SAVE:            .equ    0x3600
-JR_RT:              .equ    0x4600
-GAME_STATE:         .equ    0x4640
-GAME_STATE_END:     .equ    0x46a0
-JR_AUDIO:           .equ    0x46c0
-JR_STACK_TOP:       .equ    0x4fff
+; The code needs more than 8KB: the work area starts at $4000.
+JR_SHADOW:          .equ    0x4000
+JR_SAVE:            .equ    0x4600
+JR_RT:              .equ    0x5600
+GAME_STATE:         .equ    0x5640
+GAME_STATE_END:     .equ    0x56a0
+JR_AUDIO:           .equ    0x56c0
+JR_STACK_TOP:       .equ    0x5fff
 
 GAME_LEVELS:        .equ    1
 GAME_RATE:          .equ    0
@@ -53,6 +54,16 @@ AS_TY:              .equ    GAME_STATE + 28
 AS_I:               .equ    GAME_STATE + 29
 AS_SWEEP:           .equ    GAME_STATE + 30     ; sonar sweep column
 ; Drawing work bytes (game_draw runs inside effects: never shared with rules).
+; Glide bytes (set by the rules, read by game_draw): a move shows one frame
+; half a cell (one character) along the way.
+AS_MID:             .equ    GAME_STATE + 32     ; 1 while the half step shows
+AS_GX:              .equ    GAME_STATE + 33     ; the cell the submarine left
+AS_GY:              .equ    GAME_STATE + 34
+AS_SDX:             .equ    GAME_STATE + 35     ; drawing: the view's half step
+AS_SDY:             .equ    GAME_STATE + 36
+AS_PC:              .equ    GAME_STATE + 37     ; drawing: a cell's first character
+AS_PR:              .equ    GAME_STATE + 38
+AS_CCODE:           .equ    GAME_STATE + 39
 AS_VX:              .equ    GAME_STATE + 40
 AS_VY:              .equ    GAME_STATE + 41
 AS_RAD:             .equ    GAME_STATE + 42
@@ -68,6 +79,10 @@ AS_DI:              .equ    GAME_STATE + 52
 AS_TGX:             .equ    GAME_STATE + 53
 AS_TGY:             .equ    GAME_STATE + 54
 AS_TGI:             .equ    GAME_STATE + 55
+AS_CC:              .equ    GAME_STATE + 56     ; drawing: a clipped character
+AS_CR:              .equ    GAME_STATE + 57
+AS_CELLV:           .equ    GAME_STATE + 58     ; drawing: the cell's kind
+AS_GLIDE_FRAMES:    .equ    4
 
 AS_SUB_SEA:         .equ    0
 AS_SUB_PANEL:       .equ    1
@@ -440,12 +455,9 @@ as_navigate_go:
         JSR     as_damage
         BRA     as_world_step
 as_navigate_move:
-        LDAA    [AS_CX]
-        STAA    [AS_X]
-        LDAA    [AS_CY]
-        STAA    [AS_Y]
         LDX     as_sfx_move
         JSR     jr_sfx_play
+        JSR     as_glide
         ; fall through
 
 ; WORLD_STEP: counters, the current, the hunter, contact, the mission.
@@ -480,14 +492,11 @@ as_world_current:
         JSR     as_cell
         CMPA    1
         BEQ     as_world_hunter
-        LDAA    [AS_CX]
-        STAA    [AS_X]
-        LDAA    [AS_CY]
-        STAA    [AS_Y]
         LDAA    1
         JSR     as_spend
         LDX     as_sfx_current
         JSR     jr_sfx_play
+        JSR     as_glide
 as_world_hunter:
         LDAA    [AS_TURN]
         TST     [AS_QUIET]
@@ -546,6 +555,25 @@ as_world_alarm:
         LDX     as_sfx_warning
         JMP     jr_sfx_play
 as_world_done:
+        RTS
+
+; The submarine moves from AS_X / AS_Y to AS_CX / AS_CY: one frame half a
+; cell along the way (the view scrolls by one character with it), then the
+; new cell.
+as_glide:
+        LDAA    [AS_X]
+        STAA    [AS_GX]
+        LDAA    [AS_Y]
+        STAA    [AS_GY]
+        LDAA    [AS_CX]
+        STAA    [AS_X]
+        LDAA    [AS_CY]
+        STAA    [AS_Y]
+        LDAA    1
+        STAA    [AS_MID]
+        LDAA    AS_GLIDE_FRAMES
+        JSR     jr_port_animate
+        CLR     [AS_MID]
         RTS
 
 ; MOVE_HUNTER: chase within six or while the sonar echoes, else patrol.
@@ -936,27 +964,36 @@ as_draw_to:
         LDX     [X]
         JMP     jr_gfx_text
 
+; A = submarine column -> the view's first column (A - 4 within 0-22).
+as_view_left:
+        SUBA    4
+        BCC     as_view_left_max
+        CLRA
+as_view_left_max:
+        CMPA    22
+        BLS     as_view_left_done
+        LDAA    22
+as_view_left_done:
+        RTS
+; A = submarine row -> the view's first row (A - 4 within 0-23).
+as_view_top:
+        SUBA    4
+        BCC     as_view_top_max
+        CLRA
+as_view_top_max:
+        CMPA    23
+        BLS     as_view_top_done
+        LDAA    23
+as_view_top_done:
+        RTS
+
 ; The view: 10 x 9 cells around the submarine, radius 2 (6 with sonar).
 as_draw_view:
         LDAA    [AS_X]
-        SUBA    4
-        BCC     as_draw_view_x
-        CLRA
-as_draw_view_x:
-        CMPA    22
-        BLS     as_draw_view_xs
-        LDAA    22
-as_draw_view_xs:
+        JSR     as_view_left
         STAA    [AS_VX]
         LDAA    [AS_Y]
-        SUBA    4
-        BCC     as_draw_view_y
-        CLRA
-as_draw_view_y:
-        CMPA    23
-        BLS     as_draw_view_ys
-        LDAA    23
-as_draw_view_ys:
+        JSR     as_view_top
         STAA    [AS_VY]
         LDAA    2
         TST     [AS_SIGHT]
@@ -964,10 +1001,22 @@ as_draw_view_ys:
         LDAA    6
 as_draw_view_radius:
         STAA    [AS_RAD]
+        TST     [AS_MID]
+        BEQ     as_draw_view_whole
+        JMP     as_draw_view_mid
+as_draw_view_whole:
         CLR     [AS_DR]
 as_draw_view_row:
         CLR     [AS_DC]
 as_draw_view_cell:
+        JSR     as_view_content
+        LDAA    [AS_DCODE]
+        LDAB    [AS_DATTR]
+        JMP     as_draw_view_put
+
+; AS_DC / AS_DR (view cell) -> AS_WX / AS_WY, AS_DCODE / AS_DATTR (0x20:
+; open water) and AS_LETTER (a current's letter, or 0).
+as_view_content:
         CLR     [AS_LETTER]
         LDAA    [AS_DC]
         ADDA    [AS_VX]
@@ -981,12 +1030,15 @@ as_draw_view_cell:
         CMPA    [AS_RAD]
         BLS     as_draw_view_seen
         LDAA    AS_TILE_FOG
-        LDAB    AS_ATTR_FOG
-        BRA     as_draw_view_put
+        STAA    [AS_DCODE]
+        LDAA    AS_ATTR_FOG
+        STAA    [AS_DATTR]
+        RTS
 as_draw_view_seen:
         LDAA    [AS_WX]
         LDAB    [AS_WY]
         JSR     as_cell
+        STAA    [AS_CELLV]
         ASLA
         LDX     as_sea_tiles
         JSR     jr_add_x_a
@@ -995,9 +1047,7 @@ as_draw_view_seen:
         STAA    [AS_DCODE]
         STAB    [AS_DATTR]
         ; a current carries its letter in the lower right
-        LDAA    [AS_WX]
-        LDAB    [AS_WY]
-        JSR     as_cell
+        LDAA    [AS_CELLV]
         CMPA    2
         BCS     as_draw_view_hunter
         CMPA    6
@@ -1017,6 +1067,8 @@ as_draw_view_hunter:
         LDAB    AS_ATTR_HUNTER
         BRA     as_draw_view_actor
 as_draw_view_sub:
+        TST     [AS_MID]            ; mid-glide, the submarine is drawn apart
+        BNE     as_draw_view_code
         LDAA    [AS_WX]
         CMPA    [AS_X]
         BNE     as_draw_view_code
@@ -1030,8 +1082,8 @@ as_draw_view_actor:
         STAB    [AS_DATTR]
         CLR     [AS_LETTER]
 as_draw_view_code:
-        LDAA    [AS_DCODE]
-        LDAB    [AS_DATTR]
+        RTS
+
 as_draw_view_put:
         STAA    [AS_DCODE]
         STAB    [JR_RT_COLOR]
@@ -1076,6 +1128,182 @@ as_draw_view_row_done:
         JMP     as_draw_view_row
 as_draw_view_sweep:
 as_draw_view_done:
+        RTS
+
+; Mid-glide: the view half a cell (one character) back towards the old one,
+; cells clipped at its edges, and the submarine half a cell from its old cell.
+as_draw_view_mid:
+        LDAA    [AS_GX]
+        JSR     as_view_left
+        STAA    [AS_SDX]
+        LDAA    [AS_VX]
+        SUBA    [AS_SDX]
+        STAA    [AS_SDX]            ; new - old view column: -1, 0 or 1
+        LDAA    [AS_GY]
+        JSR     as_view_top
+        STAA    [AS_SDY]
+        LDAA    [AS_VY]
+        SUBA    [AS_SDY]
+        STAA    [AS_SDY]
+        LDAA    0xff
+        STAA    [AS_DR]
+as_mid_row:
+        LDAA    0xff
+        STAA    [AS_DC]
+as_mid_cell:
+        ; the extra column / row only on the side the view steps from
+        LDAA    [AS_DC]
+        CMPA    0xff
+        BNE     as_mid_cell_right
+        LDAA    [AS_SDX]
+        CMPA    1
+        BEQ     as_mid_next_near1159
+        JMP     as_mid_next
+as_mid_next_near1159:
+        BRA     as_mid_cell_top
+as_mid_cell_right:
+        CMPA    10
+        BNE     as_mid_cell_top
+        LDAA    [AS_SDX]
+        CMPA    0xff
+        BEQ     as_mid_next_near1169
+        JMP     as_mid_next
+as_mid_next_near1169:
+as_mid_cell_top:
+        LDAA    [AS_DR]
+        CMPA    0xff
+        BNE     as_mid_cell_bottom
+        LDAA    [AS_SDY]
+        CMPA    1
+        BEQ     as_mid_next_near1178
+        JMP     as_mid_next
+as_mid_next_near1178:
+        BRA     as_mid_cell_draw
+as_mid_cell_bottom:
+        CMPA    9
+        BNE     as_mid_cell_draw
+        LDAA    [AS_SDY]
+        CMPA    0xff
+        BNE     as_mid_next
+as_mid_cell_draw:
+        JSR     as_view_content
+        LDAA    [AS_DC]
+        ASLA
+        ADDA    [AS_SDX]
+        STAA    [AS_PC]
+        LDAA    [AS_DR]
+        ASLA
+        ADDA    2
+        ADDA    [AS_SDY]
+        STAA    [AS_PR]
+        LDAA    [AS_DATTR]
+        STAA    [JR_RT_COLOR]
+        LDAA    [AS_DCODE]
+        CMPA    0x20
+        BEQ     as_mid_letter
+        STAA    [AS_CCODE]
+        ; a whole tile inside the view (columns 0-18, rows 2-18) in one go
+        LDAA    [AS_PC]
+        CMPA    19
+        BCC     as_mid_clipped
+        LDAB    [AS_PR]
+        CMPB    2
+        BCS     as_mid_clipped
+        CMPB    19
+        BCC     as_mid_clipped
+        JSR     jr_gfx_at
+        LDAA    [AS_CCODE]
+        JSR     jr_gfx_tile
+        BRA     as_mid_letter
+as_mid_clipped:
+        CLRA
+        CLRB
+        JSR     as_clip_put
+        LDAA    1
+        CLRB
+        JSR     as_clip_put
+        CLRA
+        LDAB    1
+        JSR     as_clip_put
+        LDAA    1
+        LDAB    1
+        JSR     as_clip_put
+as_mid_letter:
+        LDAA    [AS_LETTER]
+        BEQ     as_mid_next
+        STAA    [AS_CCODE]
+        LDAA    AS_ATTR_DIM
+        STAA    [JR_RT_COLOR]
+        CLR     [AS_LETTER]
+        LDAA    1
+        LDAB    1
+        JSR     as_clip_put_char
+as_mid_next:
+        INC     [AS_DC]
+        LDAA    [AS_DC]
+        CMPA    11
+        BEQ     as_mid_cell_near1226
+        JMP     as_mid_cell
+as_mid_cell_near1226:
+        INC     [AS_DR]
+        LDAA    [AS_DR]
+        CMPA    10
+        BEQ     as_mid_row_near1232
+        JMP     as_mid_row
+as_mid_row_near1232:
+        ; the submarine: 2 * (new - view) - (new - old) + the view's step
+        LDAA    AS_ATTR_SUB
+        STAA    [JR_RT_COLOR]
+        LDAA    [AS_X]
+        SUBA    [AS_VX]
+        ASLA
+        SUBA    [AS_X]
+        ADDA    [AS_GX]
+        ADDA    [AS_SDX]
+        PSHA
+        LDAB    [AS_Y]
+        SUBB    [AS_VY]
+        ASLB
+        SUBB    [AS_Y]
+        ADDB    [AS_GY]
+        ADDB    [AS_SDY]
+        ADDB    2
+        PULA
+        JSR     jr_gfx_at
+        LDAA    AS_TILE_SUB
+        JMP     jr_gfx_tile
+
+; A / B = character offset in the cell at AS_PC / AS_PR: AS_CCODE + A + 2B
+; there, inside the view (columns 0-19, rows 2-19) only.
+as_clip_put:
+        PSHA
+        PSHB
+        ASLB
+        ABA
+        ADDA    [AS_CCODE]
+        STAA    [AS_DCODE]
+        PULB
+        PULA
+        BRA     as_clip_at
+; The same with AS_CCODE itself.
+as_clip_put_char:
+        PSHA
+        LDAA    [AS_CCODE]
+        STAA    [AS_DCODE]
+        PULA
+as_clip_at:
+        ADDA    [AS_PC]
+        CMPA    20
+        BCC     as_clip_done        ; also column -1 (0xff)
+        ADDB    [AS_PR]
+        CMPB    2
+        BCS     as_clip_done
+        CMPB    20
+        BCC     as_clip_done
+        JSR     jr_gfx_at
+        LDAA    [AS_DCODE]
+        JMP     jr_gfx_putc
+as_clip_done:
         RTS
 
 ; The control panel over the view, and its question.
