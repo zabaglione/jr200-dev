@@ -37,6 +37,7 @@ class RibbonSnake:
             setattr(self, name, 0 if length == 1 else [0] * length)
         self.c = [0] * 20
         self.held = 0
+        self.turn = 0
         self.effects = []
 
     def food_place(self):
@@ -64,16 +65,18 @@ class RibbonSnake:
             self.brakes -= 1
             self.slow = 8
             self.effects.append(('sound', 2))
-        if 1 <= action <= 4:
+        if 1 <= action <= 4 and not self.turn:
             opposite = {1: 2, 2: 1, 3: 4, 4: 3}[self.dir]
-            if action != opposite:
-                self.dir = action
+            if action not in (self.dir, opposite):
+                self.turn = action
 
     def tick(self):
         if self.slow:
             self.slow -= 1
             if self.slow % 2 == 0:
                 return
+        if self.turn:
+            self.dir, self.turn = self.turn, 0
         head = self.b[0]
         p = move(head, self.dir)
         if p == head:
