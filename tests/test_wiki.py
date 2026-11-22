@@ -271,6 +271,7 @@ class WikiGenerationTests(unittest.TestCase):
         page = files['Game-side-catch.md'].decode('utf-8')
         all_games = files['All-Games.md'].decode('utf-8')
         self.assertIn('## タイトル画面', all_games)
+        self.assertIn('[作品情報を見る](#user-content-作品情報)', all_games)
         self.assertIn('<a href="Game-side-catch"><img src="media/side-catch-title.png" '
                       'alt="SIDE CATCHのタイトル画面" width="320"><br>SIDE CATCH</a>', all_games)
         self.assertIn('</a></td>\n<td></td>\n<td></td>\n</tr>', all_games)
