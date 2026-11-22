@@ -20,6 +20,7 @@ GAME_STATE_END:     .equ    0x46a0
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -112,7 +113,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    15
@@ -358,7 +359,7 @@ gr_tick_hit:
         LDAA    1
         STAA    [GR_FLASH]
         LDAA    15
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [GR_FLASH]
         TST     [GR_HP]
         BNE     gr_tick_passed
@@ -399,7 +400,7 @@ gr_tick_air:
         LDAA    2
         STAA    [GR_FLASH]
         LDAA    6
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [GR_FLASH]
         BRA     gr_tick_passed
 gr_tick_pass:
@@ -592,6 +593,7 @@ game_draw:
         JSR     jr_gfx_lines
         CLR     [GR_DI]
 gr_draw_road:
+        JSR     jr_live_capture
         LDAA    [GR_DI]
         JSR     gr_camera
         LDAA    GR_ATTR_EDGE
@@ -647,6 +649,7 @@ gr_draw_stripe_depth:
         STAA    [GR_SLOT]
         JSR     gr_gate
 gr_draw_current:
+        JSR     jr_live_capture
         LDAA    [GR_AGE]
         JSR     gr_camera
         CLR     [GR_SLOT]
@@ -684,6 +687,7 @@ gr_draw_runner_colour:
         ASLA
         ADDA    GR_TILE_RUNNER
 gr_draw_runner:
+        JSR     jr_live_capture
         JSR     jr_gfx_tile
         ; the panel
         LDAA    GR_ATTR_TEXT
@@ -1036,5 +1040,6 @@ gr_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"

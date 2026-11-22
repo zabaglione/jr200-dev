@@ -17,6 +17,7 @@ GAME_STATE_END:     .equ    0x46a0
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -112,7 +113,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    27
@@ -323,7 +324,7 @@ ns_hurt_gone:
         JSR     jr_port_sound
 ns_hurt_show:
         LDAA    4
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_FLASH]
         LDAA    [NS_KILLS]
         CMPA    [NS_LIMIT]
@@ -358,7 +359,7 @@ ns_act_face:
         JSR     ns_move8
         STAA    [NS_POS]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [NS_POS]
         STAA    [NS_ORIGIN]
         CMPA    [NS_CELL]
@@ -381,7 +382,7 @@ ns_act_salvage:
         LDAA    1
         JSR     jr_port_sound
         LDAA    6
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_FLASH]
 ns_act_done:
         RTS
@@ -394,7 +395,7 @@ ns_act_pulse:
 ns_act_ring:
         STAA    [NS_PULSE]
         LDAA    3
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [NS_PULSE]
         INCA
         CMPA    4
@@ -497,7 +498,7 @@ ns_tick_foe_next:
         LDAA    1
         STAA    [NS_MARCHING]
         LDAA    3
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_MARCHING]
 ns_tick_contact:
         ; foes that reach the ship crash into it: one hull for any number
@@ -526,7 +527,7 @@ ns_tick_contact_next:
         LDX     ns_sfx_crash
         JSR     jr_sfx_play
         LDAA    8
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_FLASH]
         TST     [NS_HP]
         BNE     ns_tick_spawn
@@ -595,7 +596,7 @@ ns_tick_fire_foe:
         INCA
         STAA    [NS_SHOT]
         LDAA    4
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [NS_SHOT]
         JMP     ns_hurt
 ns_tick_fire_next:
@@ -702,6 +703,7 @@ ns_draw_floor:
         LDAA    NS_CHAR_PULSE
         JSR     jr_gfx_putc
 ns_draw_floor_next:
+        JSR     jr_live_capture
         INC     [NS_DI]
         LDAA    [NS_DI]
         CMPA    64
@@ -721,6 +723,7 @@ ns_draw_floor_next:
         STAB    [NS_DCODE]
         JSR     ns_put
 ns_draw_foes:
+        JSR     jr_live_capture
         CLR     [NS_DI]
 ns_draw_foe:
         LDX     NS_B
@@ -776,6 +779,7 @@ ns_draw_shot:
         LDAA    NS_CHAR_PULSE
         JSR     jr_gfx_putc
 ns_draw_ship:
+        JSR     jr_live_capture
         LDAA    NS_ATTR_SHIP
         STAA    [JR_RT_COLOR]
         LDAA    [NS_POS]
@@ -1056,5 +1060,6 @@ ns_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"

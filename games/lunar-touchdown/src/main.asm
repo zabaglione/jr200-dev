@@ -16,6 +16,7 @@ GAME_STATE_END:     .equ    0x4680
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -90,7 +91,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    3
@@ -160,7 +161,7 @@ lt_act_speed:
         CLRA
         JSR     jr_port_sound
         LDAA    3
-        JSR     jr_test_animate
+        JSR     jr_live_animate
 lt_act_moved:
         LDAA    [LT_X]
         CMPA    [LT_OLD]
@@ -244,7 +245,7 @@ lt_tick_height:
         LDAA    1
         STAA    [LT_DESCENDING]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [LT_DESCENDING]
         LDAA    [LT_HEIGHT]
         CMPA    30
@@ -287,7 +288,7 @@ lt_tick_score:
         LDAA    1
         STAA    [LT_SPARK]
         LDAA    24
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [LT_SPARK]
         JMP     jr_port_win
 lt_tick_crash:
@@ -303,7 +304,7 @@ lt_tick_crash_show:
         LDX     lt_sfx_crash
         JSR     jr_sfx_play
         LDAA    8
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDX     [LT_MSG]
         JMP     jr_port_lose
 
@@ -334,6 +335,7 @@ lt_draw_sky:
         JSR     jr_gfx_putc
         BRA     lt_draw_sky
 lt_draw_ground:
+        JSR     jr_live_capture
         LDAA    LT_ATTR_GROUND
         STAA    [JR_RT_COLOR]
         CLRA
@@ -377,6 +379,7 @@ lt_draw_pad:
         BEQ     lt_draw_lander
         LDAA    [LT_MIDDLE]
 lt_draw_lander:
+        JSR     jr_live_capture
         LSRA
         STAA    [LT_DY]
         LDAA    LT_ATTR_LANDER
@@ -413,6 +416,7 @@ lt_draw_flame:
         JSR     jr_gfx_putc
         JSR     jr_gfx_putc
 lt_draw_panel:
+        JSR     jr_live_capture
         LDAA    LT_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    5
@@ -674,5 +678,6 @@ lt_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"

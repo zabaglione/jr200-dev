@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "expected_entry_address": "0x1000",
-  "notes": "State expectations come from games/orbit-dodge/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six sectors with their input scripts; synthetic-demo-clear plays sector 1 with the same script at normal speed; synthetic-no-input-clear stays still and survives sector 1 with one hull (the loss path is the fire-last-hull fixture). Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
+  "notes": "State expectations come from games/orbit-dodge/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six sectors with their input scripts; synthetic-demo-clear plays sector 1 with the same script at normal speed; synthetic-no-input-clear stays still and survives sector 1 with one hull (the loss path is the fire-last-hull fixture). Timed key replays only observe values that do not depend on tick timing. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-rapid-taps expects all three right taps spaced 32 ms apart to move the player.",
   "runtime": {
     "default_profile": "synthetic-self-test",
     "profiles": [
@@ -185,6 +185,86 @@
             "mode": "01",
             "level": "00",
             "orbit": "01"
+          },
+          "framebuffer_sha256": null,
+          "pcm": null,
+          "cassette": null
+        }
+      },
+      {
+        "profile": "synthetic-rapid-taps",
+        "mode": "synthetic-injection",
+        "max_cycles": 925000,
+        "return_address": "0x7ff0",
+        "replay": [
+          {
+            "kind": "key",
+            "cycle": 300000,
+            "code": "0x0d",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 316000,
+            "code": "0x0d",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 425000,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 441000,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 467857,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 483857,
+            "code": "0x64",
+            "pressed": false
+          },
+          {
+            "kind": "key",
+            "cycle": 510714,
+            "code": "0x64",
+            "pressed": true
+          },
+          {
+            "kind": "key",
+            "cycle": 526714,
+            "code": "0x64",
+            "pressed": false
+          }
+        ],
+        "observations": [
+          {
+            "name": "mode",
+            "address": "0x4620",
+            "length": 1
+          },
+          {
+            "name": "pos",
+            "address": "0x464a",
+            "length": 1
+          }
+        ],
+        "breakpoints": [],
+        "expect": {
+          "stop_reason": "cycle-limit",
+          "pc": null,
+          "memory": {
+            "mode": "01",
+            "pos": "03"
           },
           "framebuffer_sha256": null,
           "pcm": null,
@@ -392,7 +472,7 @@
       {
         "profile": "synthetic-demo-play",
         "mode": "synthetic-injection",
-        "max_cycles": 15500000,
+        "max_cycles": 15740000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -625,7 +705,7 @@
       {
         "profile": "local-rom-play",
         "mode": "rom-cassette",
-        "max_cycles": 123700000,
+        "max_cycles": 123752000,
         "return_address": "0x7ff0",
         "replay": [
           {

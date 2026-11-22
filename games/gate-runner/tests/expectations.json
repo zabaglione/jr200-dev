@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "expected_entry_address": "0x1000",
-  "notes": "State expectations come from games/gate-runner/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six courses with their input scripts (held A/D included); synthetic-demo-clear plays course 1 with the same script at normal speed; synthetic-no-input-loss runs straight and falls into the pits; synthetic-hold-right holds D until the runner stops at column 28. Timed key replays only observe values that do not depend on tick timing. Replays start at 1.3M cycles because the MCU scan start-up drains the ROM-less font transfer. synthetic-title and synthetic-demo-clear require a PCM peak of 21000.",
+  "notes": "State expectations come from games/gate-runner/tests/model.py (upstream rules 3.0.0) and tests/selftest_model.py (sdk/selftest.inc), not from the emulator. synthetic-self-test runs every fixture of tests/selftest.py and plays all six courses with their input scripts (held A/D included); synthetic-demo-clear plays course 1 with the same script at normal speed; synthetic-no-input-loss runs straight and falls into the pits; synthetic-hold-right holds D until the runner stops at column 28. Timed key replays only observe values that do not depend on tick timing. Replays start at 1.3M cycles because the MCU scan start-up drains the ROM-less font transfer. synthetic-title and synthetic-demo-clear require a PCM peak of 21000. synthetic-start and local-rom-play sample the fully drawn opening board.",
   "runtime": {
     "default_profile": "synthetic-self-test",
     "profiles": [
@@ -82,7 +82,7 @@
       {
         "profile": "synthetic-start",
         "mode": "synthetic-injection",
-        "max_cycles": 1380000,
+        "max_cycles": 1404000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -124,7 +124,7 @@
             "mode": "01",
             "level": "00"
           },
-          "framebuffer_sha256": "df5e6debf72851402b545d31e927a2f14d392d87f4a24b0993d1d35333d7b28d",
+          "framebuffer_sha256": "401f83cc518b766f3da2baa685c6de9eb9041e88a1e9dcab61c4908ad5e63a82",
           "pcm": null,
           "cassette": null
         }
@@ -392,7 +392,7 @@
       {
         "profile": "synthetic-demo-play",
         "mode": "synthetic-injection",
-        "max_cycles": 13250000,
+        "max_cycles": 13580000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -625,7 +625,7 @@
       {
         "profile": "local-rom-play",
         "mode": "rom-cassette",
-        "max_cycles": 124630000,
+        "max_cycles": 124665000,
         "return_address": "0x7ff0",
         "replay": [
           {
@@ -657,7 +657,7 @@
           "memory": {
             "mode": "01"
           },
-          "framebuffer_sha256": "6243981ac7f71caf18012e032f4dfceb555b69316e32132e390949b2bf325932",
+          "framebuffer_sha256": "b48b67e96fafd1d03c1905b30dd20cedb7eacb75b574d49f781b7da2a85d5962",
           "pcm": null,
           "cassette": {
             "state": 6,

@@ -19,6 +19,7 @@ GAME_STATE_END:     .equ    0x4740
 JR_AUDIO:           .equ    0x4740
 JR_TEST:            .equ    0x4760
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -112,7 +113,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    14
@@ -561,7 +562,7 @@ sl_act_done_near553:
         LDAA    1
         STAA    [SL_FLASH]
         LDAA    8
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [SL_FLASH]
         RTS
 
@@ -747,6 +748,7 @@ game_draw:
         LDX     sl_stars
         STX     [JR_RT_TABLE]
 sl_draw_star:
+        JSR     jr_live_capture
         LDX     [JR_RT_TABLE]
         LDAA    [X]
         CMPA    0xff
@@ -828,6 +830,7 @@ sl_draw_ship_put:
         LDAA    [SL_DCODE]
         JSR     jr_gfx_tile
 sl_draw_ship_next:
+        JSR     jr_live_capture
         INC     [SL_DI]
         LDAA    [SL_DI]
         CMPA    24
@@ -850,6 +853,7 @@ sl_draw_lance:
         LDAA    SL_TILE_SHIP
         JSR     jr_gfx_tile
 sl_draw_shots:
+        JSR     jr_live_capture
         LDAA    SL_ATTR_SHOT
         STAA    [JR_RT_COLOR]
         LDX     SL_D
@@ -1180,5 +1184,6 @@ sl_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"

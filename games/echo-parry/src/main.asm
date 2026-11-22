@@ -16,6 +16,7 @@ GAME_STATE_END:     .equ    0x4680
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -84,7 +85,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    4
@@ -180,7 +181,7 @@ ep_act_armor:
         LDAA    1
         JSR     jr_port_sound
         LDAA    8
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    7
         LDAB    24
         JSR     ep_flight_hero
@@ -191,7 +192,7 @@ ep_act_armor:
         BNE     ep_act_impact
         LDAA    12
 ep_act_impact:
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [EP_HIT]
         TST     [EP_ENEMY]
         BNE     ep_act_riposte_done
@@ -218,7 +219,7 @@ ep_hurt:
         LDAA    1
         STAA    [EP_HIT]
         LDAA    6
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [EP_HIT]
         RTS
 
@@ -244,17 +245,17 @@ ep_flight:
         LDAA    1
         STAA    [EP_FLY]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [EP_FX]
         ADDA    [EP_F1]
         LSRA
         STAA    [EP_FX]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [EP_F1]
         STAA    [EP_FX]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [EP_FLY]
         RTS
 
@@ -292,7 +293,7 @@ ep_tick_turn_mod:
         LDX     ep_sfx_warn
         JSR     jr_sfx_play
         LDAA    12
-        JSR     jr_test_animate
+        JSR     jr_live_animate
 ep_tick_phase:
         LDAA    [EP_PHASE]
         BNE     ep_tick_attack
@@ -402,6 +403,7 @@ ep_draw_armor:
         DECB
         BNE     ep_draw_armor
 ep_draw_hero:
+        JSR     jr_live_capture
         LDAA    EP_ATTR_HERO
         LDAB    [EP_HIT]
         CMPB    1
@@ -475,6 +477,7 @@ ep_draw_recovery:
 ep_draw_phase_text:
         JSR     jr_gfx_text
 ep_draw_panel:
+        JSR     jr_live_capture
         LDAA    EP_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    9
@@ -746,5 +749,6 @@ ep_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"

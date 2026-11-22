@@ -36,6 +36,7 @@
       "sdk/jr200.inc",
       "sdk/keys.inc",
       "sdk/keyscan.inc",
+      "sdk/live_input.inc",
       "sdk/math.inc",
       "sdk/pcg.inc",
       "sdk/port.inc",

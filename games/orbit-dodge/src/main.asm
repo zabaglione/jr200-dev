@@ -16,6 +16,7 @@ GAME_STATE_END:     .equ    0x4680
 JR_AUDIO:           .equ    0x46c0
 JR_TEST:            .equ    0x46e0
 JR_TEST_OUT:        .equ    0x5000
+JR_LIVE:            .equ    0x4780
 JR_STACK_TOP:       .equ    0x4fff
 
 GAME_LEVELS:        .equ    6
@@ -108,7 +109,7 @@ start:
 
 ; ---------------------------------------------------------------- rules
 
-game_init:
+game_init_state:
         JSR     jr_music_stop
         JSR     jr_test_level
         LDAA    3
@@ -237,7 +238,7 @@ od_act_fly:
         LSRB
         STAB    [OD_FY]
         LDAA    2
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [OD_TRAVEL]
 od_act_done:
         RTS
@@ -276,7 +277,7 @@ game_tick:
 od_tick_beam:
         STAA    [OD_BEAM]
         LDAA    3
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         LDAA    [OD_BEAM]
         ADDA    5
         CMPA    20
@@ -331,7 +332,7 @@ od_tick_chain:
         JSR     jr_port_sound
 od_tick_flash:
         LDAA    6
-        JSR     jr_test_animate
+        JSR     jr_live_animate
         CLR     [OD_FLASH]
         BRA     od_tick_wave
 od_tick_nothing:
@@ -482,6 +483,7 @@ game_draw:
         STAA    [OD_DCODE]
         CLR     [OD_DI]
 od_draw_dot:
+        JSR     jr_live_capture
         LDAA    [OD_DI]
         ANDA    7
         LDAB    [OD_DI]
@@ -521,6 +523,7 @@ od_draw_target:
         LDAA    [OD_OTHER]
         JSR     od_put
 od_draw_beams:
+        JSR     jr_live_capture
         TST     [OD_FIRING]
         BEQ     od_draw_ship
         LDAA    OD_ATTR_BEAM
@@ -559,6 +562,7 @@ od_draw_ship_at:
         LDAB    [OD_ORBIT]
         JSR     od_put
 od_draw_panel:
+        JSR     jr_live_capture
         LDAA    OD_ATTR_TEXT
         STAA    [JR_RT_COLOR]
         LDAA    5
@@ -828,5 +832,6 @@ od_lose_bass:
         .include "../../../sdk/audio.inc"
         .include "../../../sdk/audio_notes.inc"
         .include "../../../sdk/port.inc"
+        .include "../../../sdk/live_input.inc"
         .include "../../../sdk/selftest.inc"
         .include "../../../sdk/font_data.inc"
