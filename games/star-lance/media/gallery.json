@@ -7,8 +7,8 @@
       "profile": "synthetic-title",
       "role": "title",
       "caption": "タイトル画面",
-      "sha256": "6c8186ae4423bdcd7d3068963b09565d72ab4b359e294f1761c1967162008443",
-      "framebuffer_sha256": "f5031bea227a689005545099454efd854fe940a05930829bcac55ff06c536ca9"
+      "sha256": "6d9e318dcd59f68dce96e5f17b98099dc145958591cf88b5a42a890518976d0f",
+      "framebuffer_sha256": "822dcace4488e7adab30b3c0fa044430fe1eba87ce67e283f8c8a5c530126f10"
     },
     {
       "id": "play",
@@ -16,8 +16,8 @@
       "profile": "synthetic-demo-play",
       "role": "play",
       "caption": "自動デモで艦隊を撃つ場面",
-      "sha256": "1e3ed1da78cd2743e1428bae72bc861e264048a5430200e0b11a5e63a8f00054",
-      "framebuffer_sha256": "e4f4b1c662d232389557796f3fa0c57a6546ddd4fa30f517e91130b4a591b619"
+      "sha256": "bbca886f1dc5844e573b292f1d409ba4d6251e8b1361be22356c403d8c902b87",
+      "framebuffer_sha256": "7d5ec8b055da29a55509e9d9294b22d64176659b10f43afe761392b84eb48d2f"
     },
     {
       "id": "clear",
@@ -36,9 +36,9 @@
     "speed": 1.0,
     "seconds": 19.3,
     "frames": 578,
-    "frames_sha256": "9bf8afed3d07b5f656234d0b19ad36c78be9adbcb0c127e10ae61ba6e1845fe8",
-    "pcm_sha256": "dd77dc168745e9352be47fa737b66df2155a338c17664332a227efd1cf35d7bf",
-    "sha256": "14bef4d068beb5f2d85676af715dc3afbb09ae4d81fa766dbb08189f391f762c",
+    "frames_sha256": "8319121ffffd94bd826411617055f45e17ecba9ff61963df12291769bed54bc1",
+    "pcm_sha256": "cc0ff52b768f568662554ef6b581854bb29d6c71fd85bd9a2ca3335226dec64c",
+    "sha256": "24c3abfeea88534922b6cda937e3f85ad890336880d03a89f21dc8972863ea0d",
     "caption": "1つ目の波の自動デモ（18隻を撃ち落とす）"
   }
 }

@@ -116,7 +116,7 @@ REVIEWED_GALLERY_VIDEOS = {
     'games/sigil-deck/media/goal.webm':
         'c175cd4e839fda9f365a9e10953579290f984470c17a5e6f16467aa46aa16e06',
     'games/star-lance/media/goal.webm':
-        '14bef4d068beb5f2d85676af715dc3afbb09ae4d81fa766dbb08189f391f762c',
+        '24c3abfeea88534922b6cda937e3f85ad890336880d03a89f21dc8972863ea0d',
     'games/stone-balance/media/goal.webm':
         '14a4364249ffd9a9c4279ff4c8535a8719480c707cf6daa91086868e0e8e1230',
     'games/tidal-nets/media/goal.webm':
