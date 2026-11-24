@@ -1085,13 +1085,13 @@
       "id": "star-lance",
       "project": "games/star-lance",
       "status": "verified",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "genre": "action",
       "artifact_sha256": "533e148de9746d8d6746b54bb6fa6f0596a3bbfe0af30dab905a8757bf887f0b",
       "package": {
-        "file": "star-lance-0.1.3.zip",
-        "sha256": "4da5fbe9dd83ff14d30de0952e1b65791136dd231dd1915ca20acb04eae56ffe",
-        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/star-lance-0.1.3/star-lance-0.1.3.zip"
+        "file": "star-lance-0.1.4.zip",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/wiki-ci-proof-only/star-lance-0.1.4.zip"
       },
       "wiki": {
         "slug": "star-lance",
