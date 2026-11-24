@@ -21,10 +21,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: jr200-wiki-sync
-  cancel-in-progress: false
-
 jobs:
   validate:
     runs-on: ubuntu-24.04
@@ -34,26 +30,31 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Check repository and generated Wiki without publishing
+      - name: Check source, catalog and gallery contracts
         run: make check
-      - name: Verify public assets and obtain only fixed packages
+      - name: Select changed CJR candidates
+        id: candidates
+        if: github.event_name == 'pull_request'
         env:
-          APPROVED_GAMES: ${{ inputs.approved_games }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: python3 tools/wiki/check_candidates.py --base "$BASE_SHA" --github-output "$GITHUB_OUTPUT"
+      - name: Check out locked external jrasm source
+        if: steps.candidates.outputs.build_required == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ypsitau/jrasm
+          ref: 45d0ba18aed74bf09465db5dde3933618ae0b314
+          path: .external/jrasm
+          persist-credentials: false
+      - name: Build and verify changed CJR candidates
+        if: steps.candidates.outputs.build_required == 'true'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          JRASM: ${{ github.workspace }}/.external/jrasm/build/src/jrasm/jrasm
         run: |
-          set -euo pipefail
-          if [ "${{ github.event_name }}" = workflow_dispatch ]; then
-            python3 tools/wiki/public_check.py --packages-dir build/wiki-packages --approved-games "$APPROVED_GAMES"
-          else
-            python3 tools/wiki/public_check.py --packages-dir build/wiki-packages
-          fi
-      - name: Validate generated pages from exact packages
-        env:
-          SOURCE_SHA: ${{ github.sha }}
-        run: >-
-          python3 tools/wiki/generate.py
-          --packages build/wiki-packages
-          --expected-commit "$SOURCE_SHA"
-          check
+          python3 tools/build_jrasm.py --source .external/jrasm
+          make jrasm-check
+          python3 tools/wiki/check_candidates.py --base "$BASE_SHA" --jrasm "$JRASM"
 
   publish:
     if: >-
@@ -63,6 +64,9 @@ jobs:
     needs: validate
     permissions:
       contents: write
+    concurrency:
+      group: jr200-wiki-sync
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment: wiki-publish
@@ -80,6 +84,7 @@ jobs:
           test "$REQUESTED_SHA" = "$SOURCE_SHA"
           test "$(git ls-remote https://github.com/${{ github.repository }}.git refs/heads/main | cut -f1)" = "$SOURCE_SHA"
       - name: Verify public CJR, release packages and generated pages
+        id: public-assets
         env:
           APPROVED_GAMES: ${{ inputs.approved_games }}
           SOURCE_SHA: ${{ github.sha }}
@@ -88,6 +93,7 @@ jobs:
           python3 tools/wiki/public_check.py --packages-dir build/wiki-packages --approved-games "$APPROVED_GAMES"
           python3 tools/wiki/generate.py --packages build/wiki-packages --expected-commit "$SOURCE_SHA" check
       - name: Synchronize only generated Wiki files
+        if: steps.public-assets.outcome == 'success'
         env:
           WIKI_PUSH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
