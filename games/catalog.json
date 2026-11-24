@@ -1085,13 +1085,13 @@
       "id": "star-lance",
       "project": "games/star-lance",
       "status": "verified",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "genre": "action",
-      "artifact_sha256": "3d24ff7a928e9480a73e5ba570124abd5c8e5ffdbc554c781745349ba0c239be",
+      "artifact_sha256": "533e148de9746d8d6746b54bb6fa6f0596a3bbfe0af30dab905a8757bf887f0b",
       "package": {
-        "file": "star-lance-0.1.2.zip",
-        "sha256": "07f1049132f7fda3cbfc299e72e96d3b19b667088532d3f8ada3ed367418e4e4",
-        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/jr200-play-border-2026-11-22/star-lance-0.1.2.zip"
+        "file": "star-lance-0.1.3.zip",
+        "sha256": "4da5fbe9dd83ff14d30de0952e1b65791136dd231dd1915ca20acb04eae56ffe",
+        "release_url": "https://github.com/zabaglione/jr200-dev/releases/download/star-lance-0.1.3/star-lance-0.1.3.zip"
       },
       "wiki": {
         "slug": "star-lance",
@@ -1099,8 +1099,8 @@
         "play_url": "https://zabaglione.github.io/jr200-web-emulator/?game=star-lance&launch=1",
         "screenshot": {
           "file": "media/play.png",
-          "sha256": "1e3ed1da78cd2743e1428bae72bc861e264048a5430200e0b11a5e63a8f00054",
-          "framebuffer_sha256": "e4f4b1c662d232389557796f3fa0c57a6546ddd4fa30f517e91130b4a591b619",
+          "sha256": "bbca886f1dc5844e573b292f1d409ba4d6251e8b1361be22356c403d8c902b87",
+          "framebuffer_sha256": "7d5ec8b055da29a55509e9d9294b22d64176659b10f43afe761392b84eb48d2f",
           "profile": "synthetic-demo-play"
         }
       }
