@@ -8,8 +8,51 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from wiki.generate import WikiError
+from wiki.check_candidates import candidates, check_cjr
+from wiki.generate import ROOT, WikiError
 from wiki.public_check import SITE, WIKI_RAW, check_public
+
+
+class CandidateCheckTests(unittest.TestCase):
+    def test_selects_new_versions_and_artifacts_without_fetching_public_assets(self):
+        entry = {'id': 'side-catch', 'version': '0.1.2', 'artifact_sha256': 'a' * 64,
+                 'status': 'verified'}
+        other = {**entry, 'id': 'brick-pulse'}
+        draft = {**entry, 'id': 'draft-game', 'status': 'draft'}
+        new_version = {**entry, 'version': '0.1.3'}
+        new_artifact = {**other, 'artifact_sha256': 'b' * 64}
+        new_game = {**entry, 'id': 'new-game', 'status': 'candidate'}
+        previous = json.dumps({'games': [entry, other, draft]}).encode()
+        with patch('wiki.check_candidates.subprocess.check_output', return_value=previous), \
+                patch('wiki.check_candidates.catalog_entries',
+                      return_value=[new_version, new_artifact, new_game, draft]), \
+                patch('urllib.request.urlopen', side_effect=AssertionError('unexpected network')):
+            self.assertEqual(candidates(ROOT, '1' * 40),
+                             [new_version, new_artifact, new_game])
+            with patch('wiki.check_candidates.catalog_entries', return_value=[entry, other]):
+                self.assertEqual(candidates(ROOT, '1' * 40), [])
+
+    def test_build_must_match_catalog_cjr_hash(self):
+        entry = {'id': 'side-catch', '_project': ROOT / 'games/side-catch',
+                 'artifact_sha256': 'a' * 64}
+        artifact = {'sha256': 'a' * 64}
+        with patch('wiki.check_candidates.build_project',
+                   return_value=(None, {'artifact': artifact})):
+            check_cjr(ROOT, entry, 'jrasm')
+            artifact['sha256'] = 'b' * 64
+            with self.assertRaisesRegex(WikiError, 'candidate CJR hash mismatch'):
+                check_cjr(ROOT, entry, 'jrasm')
+
+    def test_publication_step_requires_successful_public_asset_check(self):
+        workflow = (ROOT / '.github/workflows/wiki-sync.yml').read_text(encoding='utf-8')
+        validation, publication = workflow.split('\n  publish:\n', maxsplit=1)
+        self.assertIn('tools/wiki/check_candidates.py', validation)
+        self.assertNotIn('tools/wiki/public_check.py', validation)
+        self.assertNotIn('contents: write', validation)
+        gate, synchronization = publication.split('- name: Synchronize only generated Wiki files')
+        self.assertIn('id: public-assets', gate)
+        self.assertIn('tools/wiki/public_check.py', gate)
+        self.assertIn("if: steps.public-assets.outcome == 'success'", synchronization)
 
 
 class PublicCheckTests(unittest.TestCase):
@@ -53,16 +96,25 @@ class PublicCheckTests(unittest.TestCase):
                                         'wiki_files': 0})
         self.assertEqual(self.check(after=True)['wiki_files'], 1)
 
-    def test_wrong_version_and_hash_fail_before_wiki(self):
+    def test_old_pages_version_fails_before_staging_packages(self):
         self.catalog['games'][0]['version'] = '0.1.1'
         self.responses[SITE + 'game-catalog.json'] = json.dumps(self.catalog).encode()
-        with self.assertRaisesRegex(WikiError, 'Public catalog differs'):
-            self.check()
-        self.catalog['games'][0]['version'] = '0.1.2'
-        self.responses[SITE + 'game-catalog.json'] = json.dumps(self.catalog).encode()
-        self.responses[SITE + 'games/side-catch/0.1.2/side-catch.cjr'] = b'wrong'
-        with self.assertRaisesRegex(WikiError, 'Public CJR hash mismatch'):
-            self.check()
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary) / 'packages'
+            with self.assertRaisesRegex(WikiError, 'Public catalog differs'):
+                self.check(packages_dir=destination)
+            self.assertFalse(destination.exists())
+
+    def test_public_hash_mismatches_fail_before_staging_packages(self):
+        for url, message in (
+                (SITE + 'games/side-catch/0.1.2/side-catch.cjr', 'Public CJR hash mismatch'),
+                (self.entry['package']['release_url'], 'Public release hash mismatch')):
+            with self.subTest(url=url), tempfile.TemporaryDirectory() as temporary:
+                destination = Path(temporary) / 'packages'
+                with patch.dict(self.responses, {url: b'wrong'}):
+                    with self.assertRaisesRegex(WikiError, message):
+                        self.check(packages_dir=destination)
+                self.assertFalse(destination.exists())
 
     def test_missing_wiki_update_fails_post_push(self):
         self.responses[WIKI_RAW + 'Game-side-catch.md'] = b'old-page'

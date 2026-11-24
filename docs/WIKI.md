@@ -178,14 +178,20 @@ commitは現在のmainではないため、main専用の`wiki-sync.yml`手動実
 `tests/test_wiki.py`は隔離worktreeで生成ページの差戻しと手書きページの維持を試験します。
 この手順は復旧の準備であり、公開Wikiを実際に巻き戻した証拠ではありません。
 
-`.github/workflows/wiki-sync.yml`のPR経路は読み取り専用で、公開資格情報を受け取りません。
-remote経路はmain上の`workflow_dispatch`だけです。`source_sha`に現在のmainの完全SHA、
+`.github/workflows/wiki-sync.yml`のPR検査は、ソース・カタログ・ギャラリーの契約を
+`make check`で検査します。PRのベースから版またはCJRのSHA-256が変わった配布候補は、
+固定jrasmで再ビルドし、生成したCJRをカタログのSHA-256と照合します。
+公開PagesとRelease ZIPの照合はWiki公開工程で行います。所有ROM/FONTの実行記録を含む
+候補ZIPは、公開準備時にローカル受入と`make wiki-check`で検査できます。
+
+公開経路はmain上の`workflow_dispatch`だけです。`source_sha`に現在のmainの完全SHA、
 `approved_games`に公開対象の`id@version`全件をID順でカンマ区切り、`confirmation`に
-`publish-wiki`を指定します。事前にWeb配信とReleaseの公開hashが一致しない場合、
-Wikiを変更しません。remote同期は公開jobだけに`contents: write`を付けた短命の
+`publish-wiki`を指定します。Wiki同期の直前に公開Webカタログの版・パス、CJRとRelease ZIPの
+SHA-256、固定ZIPの内容、生成ページを照合します。すべての検査に合格した場合だけWiki同期へ進みます。
+remote同期は公開jobだけに`contents: write`を付けた短命の
 GitHub標準トークンを使い、追加の長期トークンは不要です。`wiki-publish`環境に
 承認者は現在未設定です。必要ならGitHubの環境設定で追加してください。
-PR jobには書込み権限を渡しません。jobは直列、Wikiの既存revisionを再確認して
+PR jobは読み取り専用です。公開jobを直列化し、Wikiの既存revisionを再確認して
 非強制pushします。差分0ならcommit/pushしません。新しいCJR/Release/Pagesをこのworkflowは
 配信しません。`workflow_dispatch`自体も、作品・版・公開先の事前承認を代替しません。
 
